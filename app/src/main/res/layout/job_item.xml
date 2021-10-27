@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="10"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginTop="3dp"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="9"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_job_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên Công Việc"
+            android:textColor="@color/blue"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/tv_job_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả công việc"
+            android:textSize="12sp"
+            />
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thời gian tới hạn"
+            android:textSize="12sp"
+            android:textColor="@color/yel"
+            />
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/prg_"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/green"
+        android:layout_gravity="center_vertical"
+        />
+
+
+</LinearLayout>

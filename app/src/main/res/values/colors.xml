@@ -9,5 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pink">#ff3399</color>
     <color name="blue">#0066cc</color>
+    <color name="sea_blue">#0099cc</color>
+    <color name="light_blue">#66a3ff</color>
+    <color name="yel">#ffcc00</color>
+    <color name="green">#33cc33</color>
 
 </resources>
