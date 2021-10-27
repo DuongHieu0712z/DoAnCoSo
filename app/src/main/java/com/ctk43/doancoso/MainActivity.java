@@ -1,6 +1,7 @@
 package com.ctk43.doancoso;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
@@ -8,16 +9,24 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    FloatingActionButton btn_add_new_job;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        showFrg(new Splast_Fragment());
         initView();
     }
 
     private void initView() {
-        btn_add_new_job = findViewById(R.id.add_new_job);
-        btn_add_new_job.setBackgroundTintMode(null);
+
+    }
+    private void showFrg(Fragment frg) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, frg,
+                null).commit();
+    }
+    public void gotoM001Screen() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
+                JobFragment(), null).commit();
     }
 }

@@ -6,10 +6,19 @@
     android:weightSum="10"
     android:layout_marginHorizontal="10dp"
     android:layout_marginTop="3dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:id="@+id/item_topic">
+    <ImageView
+        android:id="@+id/img_level"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_star_24"
+        android:layout_gravity="top"
+        />
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="9"
+        android:layout_weight="7.5"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
@@ -37,14 +46,33 @@
             android:textColor="@color/yel"
             />
     </LinearLayout>
-    <ProgressBar
-        android:id="@+id/prg_"
+    <FrameLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/green"
-        android:layout_gravity="center_vertical"
-        />
+        >
+        <ProgressBar
+            android:id="@+id/prg_progress"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:indeterminateTint="@color/green"
+            android:layout_gravity="center"
+            android:min="0"
+            android:max="100"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/prg_circle"
+            android:progress="60"
+            />
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            />
+    </FrameLayout>
+
 
 
 </LinearLayout>
