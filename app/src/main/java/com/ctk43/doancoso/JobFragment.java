@@ -1,6 +1,8 @@
 package com.ctk43.doancoso;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,14 +21,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class JobFragment extends Fragment {
+public class JobFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
+    FloatingActionButton btn_Add_New_Job;
     //private ArrayList<JobEnitity> listJob;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -44,8 +50,8 @@ public class JobFragment extends Fragment {
     private void initViews(View v) {
         LinearLayout lnMain = v.findViewById(R.id.ln_job);
         lnMain.removeAllViews();
-
-
+        btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);
+        btn_Add_New_Job.setOnClickListener(this);
 
         ArrayList<JobEnitity> listJob = readJob();
 
@@ -58,6 +64,7 @@ public class JobFragment extends Fragment {
             TextView tvProgress = vJob.findViewById(R.id.tv_progress);
             ProgressBar pb_Progress = vJob.findViewById(R.id.prg_progress);
             ImageView img_Priority = vJob.findViewById(R.id.img_level);
+            TextView tvStatus = vJob.findViewById(R.id.tv_Status);
 
             String prg = String.valueOf((int) (job.Progress*100));
 
@@ -70,6 +77,22 @@ public class JobFragment extends Fragment {
                 img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
             else if(job.Priority==false)
                 img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
+            if(job.Status==0) {
+                tvStatus.setTextColor(Color.GREEN);
+                tvStatus.setText("On going");
+            }
+            else if(job.Status == -1){
+                tvStatus.setTextColor(Color.rgb(64,64,64));
+                tvStatus.setText("Droped");
+            }
+            else if(job.Status == 1) {
+                tvStatus.setTextColor(Color.GREEN);
+                tvStatus.setText("Completed");
+            }
+            else if(job.Status == 2) {
+                tvStatus.setTextColor(Color.RED);
+                tvStatus.setText("Over time");
+            }
             lnMain.addView(vJob);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) vJob.getLayoutParams();
@@ -86,6 +109,19 @@ public class JobFragment extends Fragment {
         LocalDateTime end = LocalDateTime.now();
         listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         return listJob;
+    }
+
+    @Override
+    public void onClick(View view) {
+        ((MainActivity) getActivity()).gotoAddNewJobScreen();
     }
 }

@@ -29,4 +29,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
                 JobFragment(), null).commit();
     }
+    public void gotoAddNewJobScreen(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
+                AddJobFragment(), null).commit();
+    }
 }

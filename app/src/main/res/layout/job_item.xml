@@ -37,14 +37,28 @@
             android:text="Mô tả công việc"
             android:textSize="12sp"
             />
-        <TextView
-            android:id="@+id/tv_end_time"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thời gian tới hạn"
-            android:textSize="12sp"
-            android:textColor="@color/yel"
-            />
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="Thời gian tới hạn"
+                android:textSize="12sp"
+                android:textColor="@color/yel"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_Status"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
     </LinearLayout>
     <FrameLayout
         android:layout_width="0dp"
