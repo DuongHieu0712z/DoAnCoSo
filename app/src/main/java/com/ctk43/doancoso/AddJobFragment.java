@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,19 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
             }
         });
         TextView tv_time = v.findViewById(R.id.tv_time);
+        tv_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).gotoShowTimeDialogScreen();
+            }
+        });
+        ImageView img_back=v.findViewById(R.id.img_back);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).gotoM001Screen();
+            }
+        });
     }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

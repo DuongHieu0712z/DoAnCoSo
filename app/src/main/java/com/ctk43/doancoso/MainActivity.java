@@ -6,16 +6,18 @@ import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     public String currentDate;
 
     @Override
@@ -45,7 +47,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         DialogFragment dateDialog = new DatePickerFragment();
         FragmentManager fm = getSupportFragmentManager();
         dateDialog.show(getFragmentManager(), "");
-
+    }
+    public void gotoShowTimeDialogScreen(){
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getFragmentManager(), "time picker");
     }
 
     @Override
@@ -57,5 +62,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         TextView tv_date = findViewById(R.id.tv_date);
         tv_date.setText(currentDate);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        TextView textView = (TextView) findViewById(R.id.tv_time);
+        textView.setText("Hour: " + hourOfDay + " Minute: " + minute);
     }
 }

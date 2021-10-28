@@ -51,7 +51,12 @@ public class JobFragment extends Fragment implements View.OnClickListener{
         LinearLayout lnMain = v.findViewById(R.id.ln_job);
         lnMain.removeAllViews();
         btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);
-        btn_Add_New_Job.setOnClickListener(this);
+        btn_Add_New_Job.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).gotoAddNewJobScreen();
+            }
+        });
 
         ArrayList<JobEnitity> listJob = readJob();
 
