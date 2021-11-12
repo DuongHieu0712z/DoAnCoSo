@@ -1,8 +1,6 @@
-package com.ctk43.doancoso;
+package com.ctk43.doancoso.View;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.ctk43.doancoso.View.MainActivity;
+import com.ctk43.doancoso.R;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -30,6 +31,7 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
         initView(rootView);
         return rootView;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

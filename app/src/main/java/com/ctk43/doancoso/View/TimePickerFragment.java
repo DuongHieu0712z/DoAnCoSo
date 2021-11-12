@@ -1,4 +1,4 @@
-package com.ctk43.doancoso;
+package com.ctk43.doancoso.View;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

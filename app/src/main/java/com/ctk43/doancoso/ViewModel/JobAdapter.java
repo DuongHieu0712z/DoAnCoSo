@@ -1,4 +1,4 @@
-package com.ctk43.doancoso;
+package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,12 +8,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.R;
+
 import java.util.ArrayList;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
-    private final ArrayList<JobEnitity> listJob;
+    private final ArrayList<Job> listJob;
     private final Context mContext;
-    public JobAdapter(ArrayList<JobEnitity> listJob, Context mContext) {
+    public JobAdapter(ArrayList<Job> listJob, Context mContext) {
         this.listJob = listJob;
         this.mContext = mContext;
     }
@@ -24,7 +27,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     }
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, int position) {
-        JobEnitity item = listJob.get(position);
+        Job item = listJob.get(position);
        // holder.tvName.setTag(item);
         //holder.tvName.setText(item.getName());
     }
