@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
                 JobFragment(), null).commit();
     }
+    public void gotoM002Screen(JobEnitity job) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
+                JobDetailFragment(job), null).commit();
+    }
     public void gotoAddNewJobScreen(){
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
                 AddJobFragment(), null).commit();
