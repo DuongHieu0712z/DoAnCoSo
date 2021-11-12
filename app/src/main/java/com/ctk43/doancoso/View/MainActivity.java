@@ -1,4 +1,4 @@
-package com.ctk43.doancoso;
+package com.ctk43.doancoso.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,7 +12,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ctk43.doancoso.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;

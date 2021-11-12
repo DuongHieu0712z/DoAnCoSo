@@ -1,8 +1,11 @@
-package com.ctk43.doancoso;
+package com.ctk43.doancoso.View;
 
 import android.content.Context;
+<<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/JobFragment.java
 import android.content.Intent;
 import android.content.res.ColorStateList;
+=======
+>>>>>>> 698eeb83f0981b946d9ee55d8ef18a7636df095f:app/src/main/java/com/ctk43/doancoso/View/JobFragment.java
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,23 +16,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class JobFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
@@ -60,10 +61,10 @@ public class JobFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        ArrayList<JobEnitity> listJob = readJob();
+        ArrayList<Job> listJob = readJob();
 
         //lnMain.removeAllViews();
-        for (JobEnitity job:listJob) {
+        for (Job job:listJob) {
             View vJob = LayoutInflater.from(mContext).inflate(R.layout.job_item, null);
             TextView tvJobName = vJob.findViewById(R.id.tv_job_name);
             TextView tvDes = vJob.findViewById(R.id.tv_job_description);
@@ -129,6 +130,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     }
     //fake data
     @RequiresApi(api = Build.VERSION_CODES.O)
+<<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/JobFragment.java
     private ArrayList<JobEnitity> readJob() {
         ArrayList<JobEnitity> listJob = new ArrayList<>();
         LocalDateTime start = LocalDateTime.now();
@@ -153,6 +155,22 @@ public class JobFragment extends Fragment implements View.OnClickListener{
         jobDetails.add(new JobDetailEnitity("Job detail name", "Job Detail Description", 30));
 
         listJob.get(0).JobDetails = jobDetails;
+=======
+    private ArrayList<Job> readJob() {
+        ArrayList<Job> listJob = new ArrayList<>();
+        Date start = Calendar.getInstance().getTime();
+        Date end = Calendar.getInstance().getTime();
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
+>>>>>>> 698eeb83f0981b946d9ee55d8ef18a7636df095f:app/src/main/java/com/ctk43/doancoso/View/JobFragment.java
         return listJob;
     }
 
