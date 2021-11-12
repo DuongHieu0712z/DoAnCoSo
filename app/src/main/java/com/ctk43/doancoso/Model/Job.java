@@ -1,5 +1,6 @@
 package com.ctk43.doancoso.Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Job {
@@ -12,6 +13,7 @@ public class Job {
     public Double Progress;
     public int Status; //0 - on going; -1 - drop; 1 - complete; 2- over
     public int CategoryID;
+    public ArrayList<JobDetail> JobDetails;
 
     public Job(int ID, String name, Date start, Date end, String description, Boolean priority, Double progress, int status, int categoryID) {
         this.ID = ID;
@@ -33,6 +35,8 @@ public class Job {
         Priority = priority;
         Progress = progress;
         Status = 0;
+        JobDetails = new ArrayList<>();
     }
+
 
 }

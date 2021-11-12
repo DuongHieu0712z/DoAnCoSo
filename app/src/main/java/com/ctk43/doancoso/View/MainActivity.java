@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 
 import java.text.DateFormat;
@@ -39,9 +40,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
                 JobFragment(), null).commit();
     }
-    public void gotoM002Screen(JobEnitity job) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
-                JobDetailFragment(job), null).commit();
+    public void gotoM002Screen(Job job) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new JobDetailFragment(job), null).commit();
     }
     public void gotoAddNewJobScreen(){
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new

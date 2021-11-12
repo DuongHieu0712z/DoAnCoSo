@@ -1,11 +1,7 @@
 package com.ctk43.doancoso.View;
 
 import android.content.Context;
-<<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/JobFragment.java
-import android.content.Intent;
-import android.content.res.ColorStateList;
-=======
->>>>>>> 698eeb83f0981b946d9ee55d8ef18a7636df095f:app/src/main/java/com/ctk43/doancoso/View/JobFragment.java
+
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +20,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -130,37 +127,11 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     }
     //fake data
     @RequiresApi(api = Build.VERSION_CODES.O)
-<<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/JobFragment.java
-    private ArrayList<JobEnitity> readJob() {
-        ArrayList<JobEnitity> listJob = new ArrayList<>();
-        LocalDateTime start = LocalDateTime.now();
-        LocalDateTime end = LocalDateTime.now();
-        listJob.add(new JobEnitity("Tên Công Việc 1 nnnnnnnnnnnnnnnnnnnnnnn", "Đây là công việc đầu tiên rat nhieu chu nnnnnnnnnnnnnnnnn", start, end, true, 1.0));
-        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
-        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
-        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
-        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        listJob.add(new JobEnitity("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 0.4));
-        listJob.add(new JobEnitity("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.2));
-
-        ArrayList<JobDetailEnitity> jobDetails = new ArrayList<>();
-        jobDetails.add(new JobDetailEnitity("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetailEnitity("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetailEnitity("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetailEnitity("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetailEnitity("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetailEnitity("Job detail name", "Job Detail Description", 30));
-
-        listJob.get(0).JobDetails = jobDetails;
-=======
     private ArrayList<Job> readJob() {
         ArrayList<Job> listJob = new ArrayList<>();
         Date start = Calendar.getInstance().getTime();
         Date end = Calendar.getInstance().getTime();
-        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 1 nnnnnnnnnnnnnnnnnnnnnnn", "Đây là công việc đầu tiên rat nhieu chu nnnnnnnnnnnnnnnnn", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
@@ -168,10 +139,19 @@ public class JobFragment extends Fragment implements View.OnClickListener{
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
-        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
->>>>>>> 698eeb83f0981b946d9ee55d8ef18a7636df095f:app/src/main/java/com/ctk43/doancoso/View/JobFragment.java
-        return listJob;
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 0.4));
+        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.2));
+
+        ArrayList<JobDetail> jobDetails = new ArrayList<>();
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+
+        listJob.get(0).JobDetails = jobDetails;
+        return  listJob;
     }
 
     @Override
