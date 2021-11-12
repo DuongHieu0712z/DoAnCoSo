@@ -23,6 +23,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class JobFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
@@ -105,8 +107,8 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.O)
     private ArrayList<Job> readJob() {
         ArrayList<Job> listJob = new ArrayList<>();
-        LocalDateTime start = LocalDateTime.now();
-        LocalDateTime end = LocalDateTime.now();
+        Date start = Calendar.getInstance().getTime();
+        Date end = Calendar.getInstance().getTime();
         listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
