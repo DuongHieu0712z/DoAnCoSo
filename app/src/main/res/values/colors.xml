@@ -13,6 +13,14 @@
     <color name="light_blue">#66a3ff</color>
     <color name="yel">#ffcc00</color>
     <color name="green">#33cc33</color>
-    <color name="orange">#ff6600</color>
+    <color name="orange">#ffa500</color>
+    <color name="olive">#808000</color>
+    <color name="DarkSlateGray">#2F4F4F</color>
+    <color name="LightSlateGray">#778899</color>
+    <color name="SkyBlue">#87ceeb</color>
+    <color name="PaleTurquoise">#afeeee</color>
+    <color name="SteelBlue">#4862b4</color>
+
+
 
 </resources>

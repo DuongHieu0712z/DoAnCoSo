@@ -2,25 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="85dp"
     android:weightSum="10"
     android:layout_marginHorizontal="10dp"
-    android:layout_marginTop="3dp"
-    android:background="@color/white"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:background="@drawable/bg_job"
     android:id="@+id/item_topic">
     <ImageView
         android:id="@+id/img_level"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/ic_baseline_star_24"
         android:layout_gravity="top"
         />
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="7.5"
+        android:layout_weight="8"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginLeft="5dp"
         >
         <TextView
             android:id="@+id/tv_job_name"
@@ -31,6 +32,7 @@
             android:textSize="18sp"
             />
         <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/tv_job_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:layout_marginTop="10dp"
+            >
             <TextView
                 android:id="@+id/tv_end_time"
                 android:layout_width="0dp"
@@ -49,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="Thời gian tới hạn"
                 android:textSize="12sp"
-                android:textColor="@color/yel"
+                android:textColor="@color/orange"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -62,13 +66,14 @@
     </LinearLayout>
     <FrameLayout
         android:layout_width="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="2"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         >
         <ProgressBar
             android:id="@+id/prg_progress"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:indeterminateTint="@color/green"
             android:layout_gravity="center"
             android:min="0"

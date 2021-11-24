@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.View;
 
 import android.content.Context;
+
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -73,6 +76,18 @@ public class JobFragment extends Fragment implements View.OnClickListener{
             tvEndTime.setText(job.End.toString());
             tvProgress.setText(prg+"%");
             pb_Progress.setProgress((int) (job.Progress*100));
+            /*if(job.Progress>=0.5)
+            {
+                pb_Progress.setIndeterminate(false);
+                pb_Progress.setIndeterminateTintList(ColorStateList.valueOf(Color.GREEN));
+                pb_Progress.setProgressDrawable(getResources().getDrawable(R.drawable.prg_circle));
+            }
+            else if(job.Progress<50)
+            {
+                pb_Progress.setIndeterminate(false);
+                pb_Progress.setIndeterminateTintList(ColorStateList.valueOf(Color.RED));
+                pb_Progress.setProgressDrawable(getResources().getDrawable(R.drawable.prg_circle2));
+            }*/
             if(job.Priority==true)
                 img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
             else if(job.Priority==false)
@@ -93,21 +108,28 @@ public class JobFragment extends Fragment implements View.OnClickListener{
                 tvStatus.setTextColor(Color.RED);
                 tvStatus.setText("Over time");
             }
+            vJob.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((MainActivity) getActivity()).gotoM002Screen(job);
+                }
+            });
             lnMain.addView(vJob);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) vJob.getLayoutParams();
-            params.bottomMargin = 40;
+            params.topMargin = 10;
             vJob.setLayoutParams(params);
         }
 
 
     }
+    //fake data
     @RequiresApi(api = Build.VERSION_CODES.O)
     private ArrayList<Job> readJob() {
         ArrayList<Job> listJob = new ArrayList<>();
         Date start = Calendar.getInstance().getTime();
         Date end = Calendar.getInstance().getTime();
-        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 1 nnnnnnnnnnnnnnnnnnnnnnn", "Đây là công việc đầu tiên rat nhieu chu nnnnnnnnnnnnnnnnn", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
@@ -115,9 +137,19 @@ public class JobFragment extends Fragment implements View.OnClickListener{
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
-        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        return listJob;
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 0.4));
+        listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.2));
+
+        ArrayList<JobDetail> jobDetails = new ArrayList<>();
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+
+        listJob.get(0).JobDetails = jobDetails;
+        return  listJob;
     }
 
     @Override
