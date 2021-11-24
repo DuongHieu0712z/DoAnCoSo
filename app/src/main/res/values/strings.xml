@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QUẢN LÝ NHẮC VIỆC</string>
+    <string name="app_name">Quản lý nhắc việc</string>
     <string name="edt_name_job">Tên công việc</string>
     <string name="edt_description_job">Mô tả</string>
     <string name="tv_add_new_job">Thêm công việc</string>

@@ -2,96 +2,119 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
-    android:weightSum="10"
-    android:layout_marginHorizontal="10dp"
-    android:layout_margin="5dp"
-    android:padding="5dp"
-    android:background="@drawable/bg_job"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_color"
     android:id="@+id/item_topic">
     <ImageView
         android:id="@+id/img_level"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:src="@drawable/ic_baseline_star_24"
-        android:layout_gravity="top"
         />
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="8"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="5dp"
         >
-        <TextView
-            android:id="@+id/tv_job_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tên Công Việc"
-            android:textColor="@color/blue"
-            android:textSize="18sp"
-            />
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/tv_job_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mô tả công việc"
-            android:textSize="12sp"
-            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:weightSum="5"
+            >
+
+            <TextView
+                android:id="@+id/tv_job_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên Công Việc"
+                android:textColor="@color/text_title_color"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:weightSum="3"
-            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginHorizontal="20dp"
             >
             <TextView
-                android:id="@+id/tv_end_time"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:text="Thời gian tới hạn"
-                android:textSize="12sp"
-                android:textColor="@color/orange"
-                />
-            <TextView
+                android:id="@+id/tv_job_description"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_Status"
+                android:text="Mô tả công việc"
+                android:textColor="@color/white"
                 android:textSize="12sp"
+                android:textAlignment="center"
+                android:layout_marginVertical="5dp"
                 />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                >
+                <ProgressBar
+                    android:id="@+id/prg_progress"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:indeterminateTint="@color/green"
+                    android:layout_gravity="center"
+                    android:min="0"
+                    android:max="100"
+                    android:indeterminateOnly="false"
+                    android:progressDrawable="@drawable/prg_circle"
+                    android:progress="60"
+                    />
+                <TextView
+                    android:id="@+id/tv_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100%"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_03"
+                    android:textStyle="bold"
+                    />
+
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian tới hạn"
+                    android:textSize="12sp"
+                    android:textColor="@color/orange"
+                    />
+                <TextView
+                    android:text="abc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_Status"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_01"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        >
-        <ProgressBar
-            android:id="@+id/prg_progress"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:indeterminateTint="@color/green"
-            android:layout_gravity="center"
-            android:min="0"
-            android:max="100"
-            android:indeterminateOnly="false"
-            android:progressDrawable="@drawable/prg_circle"
-            android:progress="60"
-            />
         <TextView
-            android:id="@+id/tv_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100%"
-            android:layout_gravity="center"
-            android:textSize="12sp"
-            />
-    </FrameLayout>
-
-
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/sub_bg_color"
+            android:layout_marginHorizontal="7dp"/>
+    </LinearLayout>
 
 </LinearLayout>
