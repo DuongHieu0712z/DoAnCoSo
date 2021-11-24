@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.ctk43.doancoso.Model.Database;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
@@ -58,7 +59,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        ArrayList<Job> listJob = readJob();
+        ArrayList<Job> listJob = Database.getInstance().GetCurr_Week();
 
         //lnMain.removeAllViews();
         for (Job job:listJob) {
@@ -123,7 +124,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
 
 
     }
-    //fake data
+  /*  //fake data
     @RequiresApi(api = Build.VERSION_CODES.O)
     private ArrayList<Job> readJob() {
         ArrayList<Job> listJob = new ArrayList<>();
@@ -150,7 +151,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
 
         listJob.get(0).JobDetails = jobDetails;
         return  listJob;
-    }
+    }*/
 
     @Override
     public void onClick(View view) {
