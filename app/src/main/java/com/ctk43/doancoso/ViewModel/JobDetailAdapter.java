@@ -1,8 +1,4 @@
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f148df589b6f97dde4438138dafa17cd1960233c
 package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
@@ -19,13 +15,15 @@ import com.ctk43.doancoso.R;
 
 import java.util.ArrayList;
 
-public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.StoryHolder>{
+public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.StoryHolder> {
     private final ArrayList<JobDetail> listJobDetail;
     private final Context mContext;
+
     public JobDetailAdapter(ArrayList<JobDetail> listJobDetail, Context mContext) {
         this.listJobDetail = listJobDetail;
         this.mContext = mContext;
     }
+
     @Override
     public JobDetailAdapter.StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.job_detail_item, parent, false);
@@ -41,8 +39,10 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
     public int getItemCount() {
         return listJobDetail.size();
     }
+
     public class StoryHolder extends RecyclerView.ViewHolder {
         TextView tvName;
+
         public StoryHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_jd_name);
@@ -51,9 +51,4 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
             //});
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> f148df589b6f97dde4438138dafa17cd1960233c

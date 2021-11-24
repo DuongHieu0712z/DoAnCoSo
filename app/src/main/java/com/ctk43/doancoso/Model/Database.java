@@ -32,7 +32,7 @@ public class Database {
          curr_week = new ArrayList<>();
         Date start = Calendar.getInstance().getTime();
         Date end = Calendar.getInstance().getTime();
-        curr_week.add(new Job("Tên Công Việc 1 nnnnnnnnnnnnnnnnnnnnnnn", "Đây là công việc đầu tiên rat nhieu chu nnnnnnnnnnnnnnnnn", start, end, true, 1.0));
+        curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên rat nhieu chu", start, end, true, 1.0));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
