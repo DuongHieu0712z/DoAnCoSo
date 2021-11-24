@@ -69,6 +69,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
             TextView tvProgress = vJob.findViewById(R.id.tv_progress);
             ProgressBar pb_Progress = vJob.findViewById(R.id.prg_progress);
             ImageView img_Priority = vJob.findViewById(R.id.img_level);
+            img_Priority.bringToFront();
             TextView tvStatus = vJob.findViewById(R.id.tv_Status);
 
             String prg = String.valueOf((int) (job.Progress*100));
@@ -95,7 +96,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
             else if(job.Priority==false)
                 img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
             if(job.Status==0) {
-                tvStatus.setTextColor(Color.GREEN);
+                tvStatus.setTextColor(Color.rgb(154,183,114));
                 tvStatus.setText("On going");
             }
             else if(job.Status == -1){
@@ -131,7 +132,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
         ArrayList<Job> listJob = new ArrayList<>();
         Date start = Calendar.getInstance().getTime();
         Date end = Calendar.getInstance().getTime();
-        listJob.add(new Job("Tên Công Việc 1 nnnnnnnnnnnnnnnnnnnnnnn", "Đây là công việc đầu tiên rat nhieu chu nnnnnnnnnnnnnnnnn", start, end, true, 1.0));
+        listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         listJob.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         listJob.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
