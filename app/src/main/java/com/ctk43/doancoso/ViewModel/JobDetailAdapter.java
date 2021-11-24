@@ -1,2 +1,3 @@
-package com.ctk43.doancoso.ViewModel;public class JobDetailAdapter {
+package com.ctk43.doancoso.ViewModel;public class
+JobDetailAdapter {
 }

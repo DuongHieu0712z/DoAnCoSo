@@ -23,6 +23,8 @@ public class Splast_Fragment extends Fragment {
 
     private void initViews() {
         new Handler().postDelayed(this::gotoM001Screen, 2000);
+
+
     }
     private void gotoM001Screen() {
         ((MainActivity) getActivity()).gotoM001Screen();

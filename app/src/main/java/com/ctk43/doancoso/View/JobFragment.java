@@ -67,9 +67,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
             ProgressBar pb_Progress = vJob.findViewById(R.id.prg_progress);
             ImageView img_Priority = vJob.findViewById(R.id.img_level);
             TextView tvStatus = vJob.findViewById(R.id.tv_Status);
-
             String prg = String.valueOf((int) (job.Progress*100));
-
             tvJobName.setText(job.Name);
             tvDes.setText(job.Description);
             tvEndTime.setText(job.End.toString());
