@@ -1,8 +1,5 @@
 
-<<<<<<< HEAD
-=======
 
->>>>>>> f148df589b6f97dde4438138dafa17cd1960233c
 package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
@@ -51,9 +48,4 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
             //});
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> f148df589b6f97dde4438138dafa17cd1960233c
