@@ -1,5 +1,7 @@
 package com.ctk43.doancoso.Model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,8 +32,20 @@ public class Database {
     }
     private void fakeData(){
          curr_week = new ArrayList<>();
+         Calendar cal = Calendar.getInstance();
+        String Date = "31/12/2021";
+        Date date;
+        try {
+            date = new SimpleDateFormat("dd/MM/yyyy").parse(Date);
+            cal.setTime(date);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        cal.set(Calendar.HOUR_OF_DAY, 6);// for 6 hour
+        cal.set(Calendar.MINUTE, 0);// for 0 min
+        cal.set(Calendar.SECOND, 0);// for 0 sec
         Date start = Calendar.getInstance().getTime();
-        Date end = Calendar.getInstance().getTime();
+        Date end = cal.getTime();
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên rat nhieu chu", start, end, true, 1.0));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));

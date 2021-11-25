@@ -10,4 +10,5 @@
     <string name="tv_date_end">Ngày kết thúc</string>
     <string name="tv_time_start">Giờ bắt đầu</string>
     <string name="tv_time_end">Giờ kết thúc</string>
+    <string name="testdate">1 ngày 12 giờ</string>
 </resources>

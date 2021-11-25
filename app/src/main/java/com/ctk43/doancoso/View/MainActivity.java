@@ -3,7 +3,6 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
@@ -17,7 +16,6 @@ import android.widget.TimePicker;
 
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.DateFormat;

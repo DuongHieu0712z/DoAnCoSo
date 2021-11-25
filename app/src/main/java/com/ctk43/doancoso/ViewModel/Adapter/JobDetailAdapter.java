@@ -1,6 +1,6 @@
 
-package com.ctk43.doancoso.ViewModel;
 
+package com.ctk43.doancoso.ViewModel.Adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +42,6 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
 
     public class StoryHolder extends RecyclerView.ViewHolder {
         TextView tvName;
-
         public StoryHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_jd_name);

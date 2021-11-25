@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -25,7 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -36,16 +37,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Model.Database;
 import com.ctk43.doancoso.Model.Job;
-import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.JobAdapter;
+import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class JobFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
