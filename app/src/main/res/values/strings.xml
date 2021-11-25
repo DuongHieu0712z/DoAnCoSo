@@ -4,4 +4,10 @@
     <string name="edt_description_job">Mô tả</string>
     <string name="tv_add_new_job">Thêm công việc</string>
     <string name="btn_submit">Thêm</string>
+    <string name="hint_job_name">Nhập tên công việc</string>
+    <string name="hint_job_description">Nhập mô tả công việc</string>
+    <string name="tv_date_start">Ngày bắt đầu</string>
+    <string name="tv_date_end">Ngày kết thúc</string>
+    <string name="tv_time_start">Giờ bắt đầu</string>
+    <string name="tv_time_end">Giờ kết thúc</string>
 </resources>

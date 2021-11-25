@@ -10,6 +10,7 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public String currentDate;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private int dlg_mode = 0;
+    public String result="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +55,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
                 AddJobFragment(), null).commit();
     }
-    public void gotoShowDialogScreen(){
+    public void gotoShowDialogScreen(int mode){
+        dlg_mode=mode;
         DialogFragment dateDialog = new DatePickerFragment();
         FragmentManager fm = getSupportFragmentManager();
         dateDialog.show(getFragmentManager(), "");
     }
-    public void gotoShowTimeDialogScreen(){
+    public void gotoShowTimeDialogScreen(int mode){
+        dlg_mode=mode;
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getFragmentManager(), "time picker");
     }
@@ -69,13 +74,26 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        TextView tv_date = findViewById(R.id.tv_date);
-        tv_date.setText(currentDate);
+
+        /*TextView tv_date;
+        if(dlg_mode==0){
+            tv_date = findViewById(R.id.tv_dlg_date_start);
+            tv_date.setText(currentDate);
+        }
+        else{
+            tv_date = findViewById(R.id.tv_dlg_date_end);
+            tv_date.setText(currentDate);
+        }*/
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        TextView textView = (TextView) findViewById(R.id.tv_time);
-        textView.setText("Hour: " + hourOfDay + " Minute: " + minute);
+        /*TextView textView;
+        if(dlg_mode==0)
+            textView = (TextView) findViewById(R.id.tv_dlg_time_start);
+        else
+            textView = (TextView) findViewById(R.id.tv_dlg_time_end);
+        textView.setText("Hour: " + hourOfDay + " Minute: " + minute);*/
+        result="Hour: " + hourOfDay + " Minute: " + minute;
     }
 }
