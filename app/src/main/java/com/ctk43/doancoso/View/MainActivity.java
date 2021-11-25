@@ -3,6 +3,8 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
@@ -14,19 +16,22 @@ import android.widget.TimePicker;
 
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.ViewModel.ViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     public String currentDate;
-
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showFrg(new Splast_Fragment());
-        initView();
+        //initView();
     }
 
     private void initView() {
@@ -37,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 null).commit();
     }
     public void gotoM001Screen() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
-                JobFragment(), null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new MainFragment(), null).commit();
+        //initView();
     }
     public void gotoM002Screen(Job job) {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new JobDetailFragment(job), null).commit();
