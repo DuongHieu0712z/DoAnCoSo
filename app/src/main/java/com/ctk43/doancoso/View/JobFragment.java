@@ -2,18 +2,12 @@ package com.ctk43.doancoso.View;
 
 import android.content.Context;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -23,15 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Model.Database;
 import com.ctk43.doancoso.Model.Job;
-import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.JobAdapter;
+import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class JobFragment extends Fragment implements View.OnClickListener{
     private Context mContext;

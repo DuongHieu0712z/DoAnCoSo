@@ -1,7 +1,6 @@
-package com.ctk43.doancoso.ViewModel;
+package com.ctk43.doancoso.ViewModel.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     private final ArrayList<Job> listJob;
@@ -41,13 +39,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
             holder.img_level.setImageResource(R.drawable.ic_baseline_star_24);
         else
             holder.img_level.setImageResource(R.drawable.ic_baseline_star_outline_24);
-        Date date=item.End;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(String.valueOf(item.End));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        holder.tv_job_end.setText(String.valueOf(date));
+
+        holder.tv_job_end.setText(Extension.TimeRemaining(Calendar.getInstance().getTime(),item.End));
         double prg = item.Progress*100;
         holder.tv_job_prg.setText(String.valueOf((int)prg)+"%");
         holder.progressBar.setProgress((int) (prg));
@@ -89,12 +82,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
              tv_job_name = view.findViewById(R.id.tv_job_name);
              tv_job_des = view.findViewById(R.id.tv_job_description);
              tv_job_prg = view.findViewById(R.id.tv_progress);
-             tv_job_end = view.findViewById(R.id.tv_end_time);
+             tv_job_end = view.findViewById(R.id.tv_remainning_time);
              tv_job_status = view.findViewById(R.id.tv_Status);
              progressBar = view.findViewById(R.id.prg_progress);
-            //itemView.setOnClickListener(v -> {
-             //   ((MainActivity)mContext).gotoM003Screen(listJob, (StoryEntity)tvName.getTag());
-            //});
+           /*  itemView.setOnClickListener(v -> {
+                ((MainActivity)mContext).gotoM003Screen(listJob, (StoryEntity)tvName.getTag());
+            });*/
         }
     }
 }

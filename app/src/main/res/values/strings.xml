@@ -4,4 +4,6 @@
     <string name="edt_description_job">Mô tả</string>
     <string name="tv_add_new_job">Thêm công việc</string>
     <string name="btn_submit">Thêm</string>
+    <string name="testdate">1 ngày 12 giờ</string>
+
 </resources>
