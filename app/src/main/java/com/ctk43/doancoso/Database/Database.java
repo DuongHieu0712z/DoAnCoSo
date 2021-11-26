@@ -1,11 +1,14 @@
-package com.ctk43.doancoso.Model;
+package com.ctk43.doancoso.Database;
+
+import com.ctk43.doancoso.Model.Categoty;
+import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.JobDetail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class Database {
     private static Database instance;
@@ -27,11 +30,12 @@ public class Database {
     }
     public void LoadDataBase(){
         Date date = Calendar.getInstance().getTime();
+
         fakeData();
 
     }
     private void fakeData(){
-         curr_week = new ArrayList<>();
+         curr_week = new ArrayList<Job>();
          Calendar cal = Calendar.getInstance();
         String Date = "31/12/2021";
         Date date;
@@ -57,7 +61,7 @@ public class Database {
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 0.4));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.2));
 
-        ArrayList<JobDetail> jobDetails = new ArrayList<>();
+        ArrayList<JobDetail> jobDetails = new ArrayList<JobDetail>();
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));

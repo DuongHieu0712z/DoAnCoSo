@@ -10,9 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ctk43.doancoso.Model.Database;
+import com.ctk43.doancoso.Database.Database;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.MainActivity;
 
 public class Splast_Fragment extends Fragment {
     @Nullable
@@ -24,6 +23,7 @@ public class Splast_Fragment extends Fragment {
 
     private void initViews() {
         Database.getInstance().LoadDataBase();
+        ((MainActivity)getActivity()).progressCopyDataBase();
         new Handler().postDelayed(this::gotoM001Screen, 1000);
     }
     private void gotoM001Screen() {

@@ -78,13 +78,13 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         ProgressBar progressBar;
         public StoryHolder(View view) {
             super(view);
-             img_level = view.findViewById(R.id.img_level);
-             tv_job_name = view.findViewById(R.id.tv_job_name);
-             tv_job_des = view.findViewById(R.id.tv_job_description);
-             tv_job_prg = view.findViewById(R.id.tv_progress);
-             tv_job_end = view.findViewById(R.id.tv_remainning_time);
-             tv_job_status = view.findViewById(R.id.tv_Status);
-             progressBar = view.findViewById(R.id.prg_progress);
+             img_level = (ImageView) view.findViewById(R.id.img_level);
+             tv_job_name = (TextView) view.findViewById(R.id.tv_job_name);
+             tv_job_des = (TextView) view.findViewById(R.id.tv_job_description);
+             tv_job_prg = (TextView) view.findViewById(R.id.tv_progress);
+             tv_job_end = (TextView) view.findViewById(R.id.tv_remainning_time);
+             tv_job_status = (TextView) view.findViewById(R.id.tv_Status);
+             progressBar = (ProgressBar) view.findViewById(R.id.prg_progress);
            /*  itemView.setOnClickListener(v -> {
                 ((MainActivity)mContext).gotoM003Screen(listJob, (StoryEntity)tvName.getTag());
             });*/
