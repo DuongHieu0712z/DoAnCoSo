@@ -16,10 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.ViewModel.Adapter.JobDetailAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -31,6 +34,14 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
 
         public JobDetailFragment(Job job) {
             this.job = job;
+            ArrayList<JobDetail> jobDetails = new ArrayList<>();
+            jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+            jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+            jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+            jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+            jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+            jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        job.JobDetails=jobDetails;
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
@@ -48,8 +59,7 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
         }
         @RequiresApi(api = Build.VERSION_CODES.O)
         private void initViews(View v) {
-            LinearLayout lnMain = v.findViewById(R.id.ln_job_detail);
-            lnMain.removeAllViews();
+
             btn_Add_New_Job_detail = (FloatingActionButton) v.findViewById(R.id.add_new_job_detail);
             btn_Add_New_Job_detail.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -57,19 +67,8 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
                     ((MainActivity) getActivity()).gotoAddNewJobScreen();
                 }
             });
-
-            TextView tvJtName = v.findViewById(R.id.tv_jt_job_name);
-            TextView tvJtDes = v.findViewById(R.id.tv_jt_description);
-            TextView tvStart = v.findViewById(R.id.tv_jt_time_start);
-            TextView tvEnd = v.findViewById(R.id.tv_jt_time_end);
-            SeekBar sb_job_progress =  v.findViewById(R.id.sb_jt_progress);
             ImageView img_back = v.findViewById(R.id.img_jt_back);
 
-            tvJtName.setText(job.Name);
-            tvJtDes.setText(job.Description);
-            tvStart.setText(job.Start.toString());
-            tvEnd.setText(job.End.toString());
-            sb_job_progress.setProgress((int)(job.Progress*100));
             img_back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -77,46 +76,11 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
                 }
             });
 
-
-
             ArrayList<JobDetail> listJobDetail = job.JobDetails;
-
-            //lnMain.removeAllViews();
-            if(!listJobDetail.isEmpty()) {
-                for (JobDetail jobDetail : listJobDetail) {
-                    View vJobDetail = LayoutInflater.from(mContext).inflate(R.layout.job_detail_item, null);
-                    TextView tvJdName = vJobDetail.findViewById(R.id.tv_jd_name);
-                    TextView tvJdDes = vJobDetail.findViewById(R.id.tv_jd_description);
-                    TextView tvEstimatedTime = vJobDetail.findViewById(R.id.tv_jd_estimated_time);
-                    TextView tvActualTime = vJobDetail.findViewById(R.id.tv_jd_actual_time);
-                    SeekBar sb_Progress = vJobDetail.findViewById(R.id.sb_jd_progress);
-                    ImageView img_Priority = vJobDetail.findViewById(R.id.img_jd_level);
-                    CheckBox cb_status = vJobDetail.findViewById(R.id.chk_status);
-
-                    //String prg = String.valueOf((int) (job.Progress*100));
-
-                    tvJdName.setText(jobDetail.Name);
-                    tvJdDes.setText(jobDetail.Description);
-                    tvEstimatedTime.setText(String.valueOf(jobDetail.EstimatedCompletedTime));
-                    tvActualTime.setText(String.valueOf(jobDetail.ActualCompletedTime));
-                    sb_Progress.setProgress((int) (jobDetail.Progress * 100));
-
-                    if (jobDetail.Priority == true)
-                        img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
-                    else if (jobDetail.Priority == false)
-                        img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
-
-                    if (jobDetail.Status == 1) cb_status.setChecked(true);
-                    else if (jobDetail.Status != 1) cb_status.setChecked(false);
-
-                    lnMain.addView(vJobDetail);
-
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) vJobDetail.getLayoutParams();
-                    params.topMargin = 10;
-                    vJobDetail.setLayoutParams(params);
-                }
-            }
-
+            RecyclerView rcv= v.findViewById(R.id.rcv_job_detail);
+            JobDetailAdapter adapter = new JobDetailAdapter(listJobDetail, mContext);
+            rcv.setAdapter(adapter);
+            rcv.setLayoutManager(new LinearLayoutManager(mContext));
         }
         @Override
         public void onClick(View view) {

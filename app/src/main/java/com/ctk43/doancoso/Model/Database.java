@@ -64,7 +64,7 @@ public class Database {
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
-        curr_week.get(0).JobDetails = jobDetails;
+        curr_week.get(1).JobDetails = jobDetails;
     }
 
 }

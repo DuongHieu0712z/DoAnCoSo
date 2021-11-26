@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     private final ArrayList<Job> listJob;
     private final Context mContext;
+    private Job currentJob;
     public JobAdapter(ArrayList<Job> listJob, Context mContext) {
         this.listJob = listJob;
         this.mContext = mContext;
@@ -27,12 +29,18 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     @Override
     public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.job_item, parent, false);
-
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)mContext).gotoM002Screen(currentJob);
+            }
+        });
         return new StoryHolder(view);
     }
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, int position) {
         Job item = listJob.get(position);
+        currentJob = item;
         holder.tv_job_name.setText(item.Name);
         holder.tv_job_des.setText(item.Description);
         if(item.Priority ==true)
