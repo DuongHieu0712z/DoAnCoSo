@@ -13,7 +13,12 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+import android.view.Menu;
+import android.view.View;
+>>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -40,7 +45,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class MainActivity extends AppCompatActivity {
     public String currentDate;
     public List<Job> listjob = new ArrayList<>();
     private static final String DATABASE_NAME = "databases/JobManagement.db";
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         listjob = jobRepository.getAlljob();
         showFrg(new Splast_Fragment());
 
+<<<<<<< HEAD
     }
     public static Job[] populateMovieData(){
         Calendar cal = Calendar.getInstance();
@@ -78,6 +84,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         Date start = Calendar.getInstance().getTime();
         Date end = cal.getTime();
         return new Job[]{
+=======
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        return true;
+    }
+
+    private void initView() {
+>>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703
 
                 new Job(1,"Tên Công Việc 2", "Đây là công việc 3 rat nhieu chu", start,end , true, 0.0),
                     };
@@ -118,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getFragmentManager(), "time picker");
     }
+<<<<<<< HEAD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -177,4 +193,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             Toast.makeText(this,"ALOOOOOOOOO coppy_database",Toast.LENGTH_LONG).show();
 
     }
+=======
+
+>>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703
 }

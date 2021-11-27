@@ -13,4 +13,5 @@
     <string name="name_job">tên công việc</string>
     <string name="tv_time_end">Giờ kết thúc</string>
     <string name="testdate">1 ngày 12 giờ</string>
+    <string name="title_search">Tìm kiếm</string>
 </resources>

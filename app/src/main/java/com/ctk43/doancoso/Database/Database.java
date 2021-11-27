@@ -58,17 +58,18 @@ public class Database {
         cal.set(Calendar.SECOND, 0);// for 0 sec
         Date start = Calendar.getInstance().getTime();
         Date end = cal.getTime();
-        curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên rat nhieu chu", start, end, true, 1.0));
+        /*curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên rat nhieu chu", start, end, true, 1.0));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 1.0));
-        curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));
-        curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 0.4));
-        curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.2));
+        curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.5));*/
+        curr_week.add(new Job("Làm đồ án cơ sở", "Hoàn thành công việc theo kế hoạch đã đặt ra", start, end, true, 0.4));
+        curr_week.add(new Job("Lab 8 - LTCSDL", "Mô hình ba tầng đơn giản", start, end, false, 0.2));
 
+<<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/Database/Database.java
         jobDetails = new ArrayList<>();
 
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
@@ -77,6 +78,15 @@ public class Database {
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+=======
+        ArrayList<JobDetail> jobDetails = new ArrayList<>();
+        jobDetails.add(new JobDetail("Thiết kế giao diện", "Giao diện phải đơn giản", 300));
+        jobDetails.add(new JobDetail("Thiết kế csdl", "Bạn Thanh làm nên em từ chối hiểu", 300));
+        jobDetails.add(new JobDetail("Trình bày", "Trình bày demo sương sương", 30));
+        //curr_week.get(1).JobDetails = jobDetails;
+        curr_week.get(0).JobDetails = jobDetails;
+
+>>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703:app/src/main/java/com/ctk43/doancoso/Model/Database.java
     }
 
 }
