@@ -3,12 +3,9 @@ package com.ctk43.doancoso.Library;
 
 
 
-<<<<<<< HEAD
 
 import android.database.Cursor;
 
-=======
->>>>>>> parent of 1bb4a00 (thanh)
 import java.util.Calendar;
 import java.util.Date;
 
@@ -86,8 +83,5 @@ public class Extension {
         }
         return  timeRe;
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 1bb4a00 (thanh)
 }

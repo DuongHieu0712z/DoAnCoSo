@@ -18,8 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.AddJobActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".View.AddJobActivity" />
     </application>
 
 </manifest>

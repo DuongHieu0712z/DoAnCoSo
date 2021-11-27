@@ -29,6 +29,7 @@
             android:backgroundTint="@color/splat_text_color_lighter"
             android:src="@drawable/ic_baseline_add_24"
              />
+
     </FrameLayout>
 
 </LinearLayout>

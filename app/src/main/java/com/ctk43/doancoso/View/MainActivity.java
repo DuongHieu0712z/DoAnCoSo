@@ -13,23 +13,13 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import android.util.Log;
-=======
-import android.view.Menu;
-=======
->>>>>>> parent of 1bb4a00 (thanh)
-import android.view.View;
->>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-<<<<<<< HEAD
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
-=======
->>>>>>> parent of 1bb4a00 (thanh)
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
@@ -37,6 +27,11 @@ import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
 import com.ctk43.doancoso.ViewModel.Adapter.MyApplication;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,14 +40,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     public String currentDate;
-<<<<<<< HEAD
     public List<Job> listjob = new ArrayList<>();
     private static final String DATABASE_NAME = "databases/JobManagement.db";
     private static final String DB_PATH_SUFFIX  = "/databases/";
-=======
->>>>>>> parent of 1bb4a00 (thanh)
     private TabLayout tabLayout;
     private JobViewModel jobViewModel;
     private ViewPager viewPager;
@@ -63,16 +55,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
      //   Job[] PopulateMovieData =populateMovieData();
         JobRepository jobRepository = new JobRepository(this);
        // jobRepository.insert(PopulateMovieData[0]);
         listjob = jobRepository.getAlljob();
-=======
->>>>>>> parent of 1bb4a00 (thanh)
         showFrg(new Splast_Fragment());
 
-<<<<<<< HEAD
     }
     public static Job[] populateMovieData(){
         Calendar cal = Calendar.getInstance();
@@ -90,15 +78,6 @@ public class MainActivity extends AppCompatActivity {
         Date start = Calendar.getInstance().getTime();
         Date end = cal.getTime();
         return new Job[]{
-=======
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        return true;
-    }
-
-    private void initView() {
->>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703
 
                 new Job(1,"Tên Công Việc 2", "Đây là công việc 3 rat nhieu chu", start,end , true, 0.0),
                     };
@@ -139,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getFragmentManager(), "time picker");
     }
-<<<<<<< HEAD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -168,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
         textView.setText("Hour: " + hourOfDay + " Minute: " + minute);*/
         result="Hour: " + hourOfDay + " Minute: " + minute;
     }
-<<<<<<< HEAD
     public String getDatabasePathstring(){
         return getApplicationInfo().dataDir + DB_PATH_SUFFIX +DATABASE_NAME;
     }
@@ -200,9 +177,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"ALOOOOOOOOO coppy_database",Toast.LENGTH_LONG).show();
 
     }
-=======
-
->>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703
-=======
->>>>>>> parent of 1bb4a00 (thanh)
 }

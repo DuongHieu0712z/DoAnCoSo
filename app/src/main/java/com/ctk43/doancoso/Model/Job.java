@@ -51,7 +51,6 @@ public class Job {
     public Job() {
     }
 
-   
     public Job(int ID, String name, Date start, Date end, String description, Boolean priority, Double progress, int status, int categoryID) {
         this.ID = ID;
         Name = name;
@@ -65,7 +64,6 @@ public class Job {
     }
 
     public Job(String name, String description, Date start, Date end, Boolean priority, Double progress) {
-
         Name = name;
         Description = description;
         StartDate = start;
