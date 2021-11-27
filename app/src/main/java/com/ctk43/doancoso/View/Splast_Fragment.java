@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.MainActivity;
 
 public class Splast_Fragment extends Fragment {
     @Nullable
@@ -21,13 +24,20 @@ public class Splast_Fragment extends Fragment {
     }
 
     private void initViews() {
-    //   ((MainActivity)getActivity()).progressCopyDataBase();
-       //  Context context = (MainActivity)getActivity().getApplicationContext();
-      //   Database.getInstance().setLast_week( JobDAO.getInstance().getAllJob(context)) ;
-     //   Database.getInstance().LoadDataBase();
+       // Database.getInstance().LoadDataBase();
         new Handler().postDelayed(this::gotoM001Screen, 1000);
     }
     private void gotoM001Screen() {
         ((MainActivity) getActivity()).gotoM001Screen();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 }

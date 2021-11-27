@@ -52,8 +52,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     private void initViews(View v) {
 
         RecyclerView rcv = v.findViewById(R.id.rcv_display_job);
-        jobListAdapter = new JobAdapter();
-        jobListAdapter.setJobs(((MainActivity)getActivity()).listjob);
+        jobListAdapter = new JobAdapter(((MainActivity)getActivity()).listjob,mContext);
         rcv.setAdapter(jobListAdapter);
         rcv.setLayoutManager(new LinearLayoutManager(mContext));
         btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);

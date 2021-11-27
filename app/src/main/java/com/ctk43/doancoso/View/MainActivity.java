@@ -3,6 +3,10 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Update;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
@@ -14,11 +18,13 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
+import com.ctk43.doancoso.ViewModel.Adapter.MyApplication;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -44,14 +50,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private ViewPager viewPager;
     private int dlg_mode = 0;
     public String result="";
-    JobAdapter jobAdapter = new JobAdapter();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-     //   Job[] PopulateMovieData =populateMovieData();
+        //   Job[] PopulateMovieData =populateMovieData();
         JobRepository jobRepository = new JobRepository(this);
-       // jobRepository.insert(PopulateMovieData[0]);
+        // jobRepository.insert(PopulateMovieData[0]);
         listjob = jobRepository.getAlljob();
         showFrg(new Splast_Fragment());
 
@@ -74,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return new Job[]{
 
                 new Job(1,"Tên Công Việc 2", "Đây là công việc 3 rat nhieu chu", start,end , true, 0.0),
-                    };
+        };
     }
    /* private void initViewMobdel() {
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
@@ -168,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         File dbFile = getDatabasePath(DATABASE_NAME);
         if(!dbFile.exists())
             CoppyDataBaseFormAsset();
-            Toast.makeText(this,"ALOOOOOOOOO coppy_database",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"ALOOOOOOOOO coppy_database",Toast.LENGTH_LONG).show();
 
     }
 }

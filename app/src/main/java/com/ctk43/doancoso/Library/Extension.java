@@ -3,9 +3,6 @@ package com.ctk43.doancoso.Library;
 
 
 
-
-import android.database.Cursor;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -83,5 +80,4 @@ public class Extension {
         }
         return  timeRe;
     }
-
 }
