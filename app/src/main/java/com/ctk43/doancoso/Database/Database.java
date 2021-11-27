@@ -71,12 +71,9 @@ public class Database {
 
         jobDetails = new ArrayList<>();
 
-        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
-        jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
+        jobDetails.add(new JobDetail("Thiết kế giao diện", "Giao diện phải đơn giản", 300));
+        jobDetails.add(new JobDetail("Thiết kế csdl", "Bạn Thanh làm nên em từ chối hiểu", 300));
+        jobDetails.add(new JobDetail("Trình bày", "Trình bày demo sương sương", 30));
     }
 
 }

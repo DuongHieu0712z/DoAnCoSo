@@ -1,17 +1,11 @@
 package com.ctk43.doancoso.Database.Reponsitory;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Update;
-
 import com.ctk43.doancoso.Database.AppDatabase;
-import com.ctk43.doancoso.Database.Database;
 import com.ctk43.doancoso.Database.JobDAO;
 import com.ctk43.doancoso.Model.Job;
-import com.ctk43.doancoso.ViewModel.Adapter.MyApplication;
 
 import java.util.List;
 

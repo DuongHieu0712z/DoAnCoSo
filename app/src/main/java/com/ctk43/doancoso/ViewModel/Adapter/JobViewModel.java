@@ -1,19 +1,11 @@
 package com.ctk43.doancoso.ViewModel.Adapter;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
 import com.ctk43.doancoso.Model.Job;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class JobViewModel extends ViewModel {

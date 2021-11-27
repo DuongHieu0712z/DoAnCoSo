@@ -3,10 +3,6 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Update;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
@@ -18,13 +14,11 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
-import com.ctk43.doancoso.ViewModel.Adapter.MyApplication;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;

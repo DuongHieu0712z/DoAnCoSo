@@ -1,7 +1,5 @@
 package com.ctk43.doancoso.View;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -12,9 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ctk43.doancoso.Database.Database;
-import com.ctk43.doancoso.Database.JobDAO;
-import com.ctk43.doancoso.Database.Sqlite_Helper;
 import com.ctk43.doancoso.R;
 
 public class Splast_Fragment extends Fragment {
