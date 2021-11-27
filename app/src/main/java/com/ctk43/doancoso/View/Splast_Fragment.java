@@ -13,10 +13,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+<<<<<<< HEAD
 import com.ctk43.doancoso.Database.Database;
 import com.ctk43.doancoso.Database.JobDAO;
 import com.ctk43.doancoso.Database.Sqlite_Helper;
+=======
+import com.ctk43.doancoso.Model.Database;
+>>>>>>> parent of 1bb4a00 (thanh)
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.MainActivity;
 
 public class Splast_Fragment extends Fragment {
     @Nullable
@@ -27,10 +32,14 @@ public class Splast_Fragment extends Fragment {
     }
 
     private void initViews() {
+<<<<<<< HEAD
     //   ((MainActivity)getActivity()).progressCopyDataBase();
        //  Context context = (MainActivity)getActivity().getApplicationContext();
       //   Database.getInstance().setLast_week( JobDAO.getInstance().getAllJob(context)) ;
      //   Database.getInstance().LoadDataBase();
+=======
+        Database.getInstance().LoadDataBase();
+>>>>>>> parent of 1bb4a00 (thanh)
         new Handler().postDelayed(this::gotoM001Screen, 1000);
     }
     private void gotoM001Screen() {

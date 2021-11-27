@@ -137,6 +137,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         public StoryHolder(View view) {
             super(view);
 <<<<<<< HEAD
+<<<<<<< HEAD
              img_level = (ImageView) view.findViewById(R.id.img_level);
              tv_job_name = (TextView) view.findViewById(R.id.tv_job_name);
              tv_job_des = (TextView) view.findViewById(R.id.tv_job_description);
@@ -146,6 +147,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
              progressBar = (ProgressBar) view.findViewById(R.id.prg_progress);
 =======
              itemLayout = view.findViewById(R.id.item_topic);
+=======
+>>>>>>> parent of 1bb4a00 (thanh)
              img_level = view.findViewById(R.id.img_level);
              tv_job_name = view.findViewById(R.id.tv_job_name);
              tv_job_des = view.findViewById(R.id.tv_job_description);
@@ -153,7 +156,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
              tv_job_end = view.findViewById(R.id.tv_remainning_time);
              tv_job_status = view.findViewById(R.id.tv_Status);
              progressBar = view.findViewById(R.id.prg_progress);
+<<<<<<< HEAD
 >>>>>>> ca30ae89b3add29b618d9bec225a2dd4a62a1703
+=======
+>>>>>>> parent of 1bb4a00 (thanh)
            /*  itemView.setOnClickListener(v -> {
                 ((MainActivity)mContext).gotoM003Screen(listJob, (StoryEntity)tvName.getTag());
             });*/

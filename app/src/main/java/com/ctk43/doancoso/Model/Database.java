@@ -1,8 +1,12 @@
+<<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/Database/Database.java
 package com.ctk43.doancoso.Database;
 
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
+=======
+package com.ctk43.doancoso.Model;
+>>>>>>> parent of 1bb4a00 (thanh):app/src/main/java/com/ctk43/doancoso/Model/Database.java
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +47,7 @@ public class Database {
         fakeData();
     }
     private void fakeData(){
-         curr_week = new ArrayList<Job>();
+         curr_week = new ArrayList<>();
          Calendar cal = Calendar.getInstance();
         String Date = "31/12/2021";
         Date date;
@@ -72,6 +76,10 @@ public class Database {
 <<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/Database/Database.java
         jobDetails = new ArrayList<>();
 
+<<<<<<< HEAD:app/src/main/java/com/ctk43/doancoso/Database/Database.java
+=======
+        ArrayList<JobDetail> jobDetails = new ArrayList<>();
+>>>>>>> parent of 1bb4a00 (thanh):app/src/main/java/com/ctk43/doancoso/Model/Database.java
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
