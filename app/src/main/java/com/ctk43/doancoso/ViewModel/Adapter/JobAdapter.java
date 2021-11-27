@@ -19,15 +19,18 @@ import java.util.Calendar;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
+
     private Context mContext;
     private List<Job> listJob = new ArrayList<Job>();
 
 
     @Override
     public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.job_item, parent, false);
         return new StoryHolder(view);
     }
+
     public void setJobs(List<Job> jobs){
         this.listJob = jobs;
         notifyDataSetChanged();
@@ -35,15 +38,16 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, int position) {
         Job item = listJob.get(position);
+        if(item == null)
+            return;
         holder.tv_job_name.setText(item.Name);
         holder.tv_job_des.setText(item.Description);
-        if(item.Priority ==true)
+        if( item.Priority ==true)
             holder.img_level.setImageResource(R.drawable.ic_baseline_star_24);
         else
             holder.img_level.setImageResource(R.drawable.ic_baseline_star_outline_24);
-
         holder.tv_job_end.setText(Extension.TimeRemaining(Calendar.getInstance().getTime(),item.EndDate));
-        double prg = item.Progress*100;
+       double prg = item.Progress*100;
         holder.tv_job_prg.setText(String.valueOf((int)prg)+"%");
         holder.progressBar.setProgress((int) (prg));
         String status ="";

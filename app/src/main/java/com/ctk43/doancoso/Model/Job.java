@@ -2,6 +2,7 @@ package com.ctk43.doancoso.Model;
 
 import android.database.Cursor;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -19,21 +20,20 @@ import java.util.Date;
         parentColumns = "ID",
         childColumns = "CategoryID",
         onDelete = ForeignKey.CASCADE)})
-
 public class Job {
     @PrimaryKey(autoGenerate = true)
     public int ID;
 
-    @ColumnInfo(name = "CategoryID")
+    @ColumnInfo(name = "CategoryID") @NonNull
     public int CategoryID;
 
-    @ColumnInfo(name = "Name")
+    @ColumnInfo(name = "Name")  @NonNull
     public String Name;
 
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateTypeConvertor.class})  @NonNull
     public Date StartDate;
 
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateTypeConvertor.class})  @NonNull
     public Date EndDate;
 
     @ColumnInfo(name = "Description")

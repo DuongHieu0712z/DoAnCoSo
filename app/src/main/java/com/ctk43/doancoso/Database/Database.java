@@ -32,6 +32,7 @@ public class Database {
     }
 
     public ArrayList<Job> GetCurr_Week(){
+        fakeData();
         return curr_week;
     }
     public ArrayList<Job> GetLast_Week(){

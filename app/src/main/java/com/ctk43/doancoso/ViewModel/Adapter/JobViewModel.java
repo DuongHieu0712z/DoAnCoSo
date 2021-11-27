@@ -16,14 +16,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class JobViewModel extends AndroidViewModel {
+public class JobViewModel extends ViewModel {
     private JobRepository jobRepository;
     private LiveData<List<Job>> allJob;
 
-    public JobViewModel(@NonNull Application application) {
-        super(application);
-        jobRepository = new JobRepository(application);
-        allJob = jobRepository.getAlljob();
+    public JobViewModel() {
+     //   jobRepository = new JobRepository();
+   //     allJob = jobRepository.getAlljob();
     }
 /*    private MutableLiveData<List<Job>> listOfJob;
     private AppDatabase appDatabase;

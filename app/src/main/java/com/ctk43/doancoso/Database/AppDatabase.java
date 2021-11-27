@@ -22,9 +22,8 @@ import java.util.Date;
 
 @Database(entities = {Category.class, Job.class, JobDetail.class, User.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    private static String DATABASE_NAME = "JobManagement";
-    public static AppDatabase instance;
-
+    private static String DATABASE_NAME = "JobManagement.db";
+    private static AppDatabase instance;
     public abstract CategoryDAO categoryDAO();
 
     public abstract JobDAO jobDAO();
@@ -32,33 +31,48 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract JobDetailDAO jobDetailDAO();
 
     public abstract UserDAO userDAO();
-
-    public static synchronized AppDatabase getInstance(Context context) {
+      public static AppDatabase getInstance(final Context context) {
+          if (instance == null) {
+              instance = Room.databaseBuilder(context.getApplicationContext(),
+                      AppDatabase.class, DATABASE_NAME)
+                      .allowMainThreadQueries()
+                      .createFromAsset(DATABASE_NAME).build();
+          }
+              return instance;
+      }
+/*    public static AppDatabase getInstance(final Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, DATABASE_NAME)
-                    .addCallback(callback).build();
+                    .allowMainThreadQueries()
+                    .addCallback(new Callback() {
+                        @Override
+                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                            super.onCreate(db);
+                            new prePopulateData(instance).execute();
+                        }
+                    }).build();
         }
-            return instance;
-    }
+        return instance;
+    }*/
     private static RoomDatabase.Callback callback = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new PolateDpuBAsyncTask(instance).execute();
+            new prePopulateData(instance).execute();
         }
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
         }
     };
-    private static class  PolateDpuBAsyncTask extends AsyncTask<Void,Void,Void>{
+    private static class  prePopulateData extends AsyncTask<Void,Void,Void>{
             private JobDAO jobDAO;
-            private PolateDpuBAsyncTask(AppDatabase db){
+            private prePopulateData(AppDatabase db){
                 jobDAO = db.jobDAO();
             }
-
-        @Override        protected Void doInBackground(Void... voids) {
+        @Override
+        protected Void doInBackground(Void... voids) {
             Calendar cal = Calendar.getInstance();
             String Date = "31/12/2021";
             Date date;

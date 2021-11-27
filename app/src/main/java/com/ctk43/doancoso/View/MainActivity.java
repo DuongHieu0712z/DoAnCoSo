@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Update;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
@@ -17,10 +18,13 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.ctk43.doancoso.Database.AppDatabase;
+import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
+import com.ctk43.doancoso.ViewModel.Adapter.MyApplication;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -29,11 +33,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     public String currentDate;
+    public List<Job> listjob = new ArrayList<>();
     private static final String DATABASE_NAME = "databases/JobManagement.db";
     private static final String DB_PATH_SUFFIX  = "/databases/";
     private TabLayout tabLayout;
@@ -46,22 +55,42 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViewMobdel();
+     //   Job[] PopulateMovieData =populateMovieData();
+        JobRepository jobRepository = new JobRepository(this);
+       // jobRepository.insert(PopulateMovieData[0]);
+        listjob = jobRepository.getAlljob();
         showFrg(new Splast_Fragment());
 
-
     }
-    private void initViewMobdel() {
+    public static Job[] populateMovieData(){
+        Calendar cal = Calendar.getInstance();
+        String Date = "31/12/2021";
+        Date date;
+        try {
+            date = new SimpleDateFormat("dd/MM/yyyy").parse(Date);
+            cal.setTime(date);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        cal.set(Calendar.HOUR_OF_DAY, 6);// for 6 hour
+        cal.set(Calendar.MINUTE, 0);// for 0 min
+        cal.set(Calendar.SECOND, 0);// for 0 sec
+        Date start = Calendar.getInstance().getTime();
+        Date end = cal.getTime();
+        return new Job[]{
+
+                new Job(1,"Tên Công Việc 2", "Đây là công việc 3 rat nhieu chu", start,end , true, 0.0),
+                    };
+    }
+   /* private void initViewMobdel() {
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         jobViewModel.getAllJob().observe(this, new Observer<List<Job>>() {
             @Override
             public void onChanged(List<Job> jobs) {
-                // update recycleView
-                Toast.makeText(MainActivity.this,"thay ddooi",Toast.LENGTH_SHORT).show();
-                jobAdapter.setJobs(jobs);
+                listjob = jobs;
             }
         });
-    }
+    }*/
 
     private void showFrg(Fragment frg) {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, frg,
@@ -89,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getFragmentManager(), "time picker");
     }
-
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -97,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-
         /*TextView tv_date;
         if(dlg_mode==0){
             tv_date = findViewById(R.id.tv_dlg_date_start);

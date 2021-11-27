@@ -86,7 +86,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             public void onClick(View view) {
                 String name =edt_job_name.getText().toString();
                 if(TextUtils.isEmpty(name)){
-                    Toast.makeText(AddJobActivity.this,R.string.notification_emty +" "+ R.string.name_job,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddJobActivity.this,"Không được phép để trống tên công việc",Toast.LENGTH_SHORT).show();
                 }
             }
         });

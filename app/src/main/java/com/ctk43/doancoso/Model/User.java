@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 public class User {
     @PrimaryKey @NonNull
     public String Email;
+    @NonNull
     public String Name;
     public String Pass;
 

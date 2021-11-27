@@ -15,12 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Database.Database;
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
+import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class JobFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
@@ -44,9 +50,10 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initViews(View v) {
+
         RecyclerView rcv = v.findViewById(R.id.rcv_display_job);
         jobListAdapter = new JobAdapter();
-        jobListAdapter.setJobs();
+        jobListAdapter.setJobs(((MainActivity)getActivity()).listjob);
         rcv.setAdapter(jobListAdapter);
         rcv.setLayoutManager(new LinearLayoutManager(mContext));
         btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);

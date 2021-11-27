@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
         childColumns = "JobID",
         onDelete = ForeignKey.CASCADE)})
     public class JobDetail {
-    @PrimaryKey(autoGenerate = true)  @NonNull
+    @PrimaryKey(autoGenerate = true)
     public int ID;
 
-    @ColumnInfo(name = "Name")
+    @ColumnInfo(name = "Name")  @NonNull
     public String Name;
 
     @ColumnInfo(name = "JobID",index = true)  @NonNull
