@@ -3,6 +3,9 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
@@ -10,15 +13,14 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.ctk43.doancoso.Database.Sqlite_Helper;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
+import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -28,35 +30,46 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     public String currentDate;
-    private static final String DATABASE_NAME = "JobManagement.db";
-    private static final String DB_PATH_SUFFIX  = "/database/";
-
+    private static final String DATABASE_NAME = "databases/JobManagement.db";
+    private static final String DB_PATH_SUFFIX  = "/databases/";
     private TabLayout tabLayout;
+    private JobViewModel jobViewModel;
     private ViewPager viewPager;
     private int dlg_mode = 0;
     public String result="";
+    JobAdapter jobAdapter = new JobAdapter();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        initViewMobdel();
         showFrg(new Splast_Fragment());
-        //initView();
-    }
 
-    private void initView() {
 
     }
+    private void initViewMobdel() {
+        jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
+        jobViewModel.getAllJob().observe(this, new Observer<List<Job>>() {
+            @Override
+            public void onChanged(List<Job> jobs) {
+                // update recycleView
+                Toast.makeText(MainActivity.this,"thay ddooi",Toast.LENGTH_SHORT).show();
+                jobAdapter.setJobs(jobs);
+            }
+        });
+    }
+
     private void showFrg(Fragment frg) {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, frg,
                 null).commit();
     }
     public void gotoM001Screen() {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new MainFragment(), null).commit();
-        //initView();
+
     }
     public void gotoM002Screen(Job job) {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new JobDetailFragment(job), null).commit();
@@ -106,15 +119,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         textView.setText("Hour: " + hourOfDay + " Minute: " + minute);*/
         result="Hour: " + hourOfDay + " Minute: " + minute;
     }
-    private String getDatabasePath(){
+    public String getDatabasePathstring(){
         return getApplicationInfo().dataDir + DB_PATH_SUFFIX +DATABASE_NAME;
     }
     private void CoppyDataBaseFormAsset(){
         try{
             InputStream myInput;
             myInput = getAssets().open(DATABASE_NAME);
-            String outputFileName =getDatabasePath();
-            File f = new File(getApplicationInfo().dataDir+DB_PATH_SUFFIX);
+            String outputFileName = getDatabasePathstring();
+            File f = new File(getApplicationInfo().dataDir+DB_PATH_SUFFIX+DATABASE_NAME);
             if(!f.exists())
                 f.mkdir();
             OutputStream myOutput = new FileOutputStream(outputFileName);
@@ -132,13 +145,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
     public void progressCopyDataBase(){
         File dbFile = getDatabasePath(DATABASE_NAME);
-    if(!dbFile.exists())
-        try {
+        if(!dbFile.exists())
             CoppyDataBaseFormAsset();
+            Toast.makeText(this,"ALOOOOOOOOO coppy_database",Toast.LENGTH_LONG).show();
 
-        }catch (Exception e)
-        {
-            Toast.makeText(this,e.toString(),Toast.LENGTH_LONG).show();
-        }
     }
 }

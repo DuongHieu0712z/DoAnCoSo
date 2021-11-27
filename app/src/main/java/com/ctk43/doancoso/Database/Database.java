@@ -1,6 +1,6 @@
 package com.ctk43.doancoso.Database;
 
-import com.ctk43.doancoso.Model.Categoty;
+import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 
@@ -9,11 +9,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Database {
     private static Database instance;
-    ArrayList<Categoty> listcate ;
+    ArrayList<Category> listcate ;
     ArrayList<Job> curr_week;
+
+    public void setLast_week(ArrayList<Job> last_week) {
+        this.last_week = last_week;
+    }
+    public List<JobDetail> jobDetails;
     ArrayList<Job> last_week;
     ArrayList<Job> next_week;
     private Database(){}
@@ -28,11 +34,12 @@ public class Database {
     public ArrayList<Job> GetCurr_Week(){
         return curr_week;
     }
+    public ArrayList<Job> GetLast_Week(){
+        return last_week;
+    }
     public void LoadDataBase(){
         Date date = Calendar.getInstance().getTime();
-
         fakeData();
-
     }
     private void fakeData(){
          curr_week = new ArrayList<Job>();
@@ -61,14 +68,14 @@ public class Database {
         curr_week.add(new Job("Tên Công Việc 1", "Đây là công việc đầu tiên", start, end, true, 0.4));
         curr_week.add(new Job("Tên Công Việc 2", "Đây là công việc đầu tiên", start, end, false, 0.2));
 
-        ArrayList<JobDetail> jobDetails = new ArrayList<JobDetail>();
+        jobDetails = new ArrayList<>();
+
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
         jobDetails.add(new JobDetail("Job detail name", "Job Detail Description", 30));
-        curr_week.get(0).JobDetails = jobDetails;
     }
 
 }

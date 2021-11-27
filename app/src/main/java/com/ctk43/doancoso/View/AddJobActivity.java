@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -82,7 +84,10 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Bạn thanh xử lý thêm công việc ở đây nha
+                String name =edt_job_name.getText().toString();
+                if(TextUtils.isEmpty(name)){
+                    Toast.makeText(AddJobActivity.this,R.string.notification_emty +" "+ R.string.name_job,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

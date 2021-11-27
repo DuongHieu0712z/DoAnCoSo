@@ -16,19 +16,21 @@ import com.ctk43.doancoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
-    private final ArrayList<Job> listJob;
-    private final Context mContext;
-    public JobAdapter(ArrayList<Job> listJob, Context mContext) {
-        this.listJob = listJob;
-        this.mContext = mContext;
-    }
+    private Context mContext;
+    private List<Job> listJob = new ArrayList<Job>();
+
+
     @Override
     public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.job_item, parent, false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_item, parent, false);
         return new StoryHolder(view);
+    }
+    public void setJobs(List<Job> jobs){
+        this.listJob = jobs;
+        notifyDataSetChanged();
     }
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, int position) {
@@ -40,7 +42,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         else
             holder.img_level.setImageResource(R.drawable.ic_baseline_star_outline_24);
 
-        holder.tv_job_end.setText(Extension.TimeRemaining(Calendar.getInstance().getTime(),item.End));
+        holder.tv_job_end.setText(Extension.TimeRemaining(Calendar.getInstance().getTime(),item.EndDate));
         double prg = item.Progress*100;
         holder.tv_job_prg.setText(String.valueOf((int)prg)+"%");
         holder.progressBar.setProgress((int) (prg));
@@ -60,14 +62,23 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
                 break;
         }
         holder.tv_job_status.setText(status);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
        // holder.tvName.setTag(item);
         //holder.tvName.setText(item.getName());
     }
     @Override
     public int getItemCount() {
+        if(listJob == null ||listJob.size()==0)
+            return 0;
         return listJob.size();
     }
+
     public class StoryHolder extends RecyclerView.ViewHolder {
         ImageView img_level;
         TextView tv_job_name;
@@ -89,5 +100,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
                 ((MainActivity)mContext).gotoM003Screen(listJob, (StoryEntity)tvName.getTag());
             });*/
         }
+    }
+    public interface HandleCategoryClick{
+        void itemClick(Job job);
     }
 }

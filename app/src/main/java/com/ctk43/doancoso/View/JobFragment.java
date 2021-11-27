@@ -18,18 +18,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ctk43.doancoso.Database.Database;
-import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-
 public class JobFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
     FloatingActionButton btn_Add_New_Job;
+    private JobAdapter jobListAdapter;
     private int dlg_mode=0;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -46,12 +44,11 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initViews(View v) {
-        ArrayList<Job> listJob = Database.getInstance().GetCurr_Week();
         RecyclerView rcv = v.findViewById(R.id.rcv_display_job);
-        JobAdapter adapter = new JobAdapter(listJob, mContext);
-        rcv.setAdapter(adapter);
+        jobListAdapter = new JobAdapter();
+        jobListAdapter.setJobs();
+        rcv.setAdapter(jobListAdapter);
         rcv.setLayoutManager(new LinearLayoutManager(mContext));
-
         btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +58,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
             }
         });
     }
+
     @Override
     public void onClick(View view) {
         ((MainActivity) getActivity()).gotoAddNewJobScreen();

@@ -27,7 +27,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
     @Override
     public JobDetailAdapter.StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.job_detail_item, parent, false);
-        return new JobDetailAdapter.StoryHolder(view);
+        return new StoryHolder(view);
     }
 
     @Override

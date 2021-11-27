@@ -17,12 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.ctk43.doancoso.Database.Database;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JobDetailFragment extends Fragment implements View.OnClickListener {
         private Context mContext;
@@ -67,8 +69,8 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
 
             tvJtName.setText(job.Name);
             tvJtDes.setText(job.Description);
-            tvStart.setText(job.Start.toString());
-            tvEnd.setText(job.End.toString());
+            tvStart.setText(job.StartDate.toString());
+            tvEnd.setText(job.EndDate.toString());
             sb_job_progress.setProgress((int)(job.Progress*100));
             img_back.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,7 +81,7 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
 
 
 
-            ArrayList<JobDetail> listJobDetail = job.JobDetails;
+            List<JobDetail> listJobDetail = Database.getInstance().jobDetails;
 
             //lnMain.removeAllViews();
             if(!listJobDetail.isEmpty()) {
