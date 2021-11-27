@@ -24,7 +24,6 @@ import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
-import com.ctk43.doancoso.ViewModel.Adapter.MyApplication;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      //   Job[] PopulateMovieData =populateMovieData();
         JobRepository jobRepository = new JobRepository(this);
        // jobRepository.insert(PopulateMovieData[0]);
-        listjob = jobRepository.getAlljob();
+        listjob = (List<Job>) jobRepository.getAlljob();
         showFrg(new Splast_Fragment());
 
     }
