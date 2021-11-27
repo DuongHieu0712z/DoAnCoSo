@@ -45,7 +45,7 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
         tv_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).gotoShowDialogScreen();
+                //((MainActivity) getActivity()).gotoShowDialogScreen();
                 //tv_date.setText(((MainActivity) getActivity()).currentDate);
             }
         });
@@ -53,7 +53,7 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
         tv_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).gotoShowTimeDialogScreen();
+                //((MainActivity) getActivity()).gotoShowTimeDialogScreen();
             }
         });
         ImageView img_back=v.findViewById(R.id.img_back);

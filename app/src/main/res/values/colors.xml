@@ -20,6 +20,20 @@
     <color name="SkyBlue">#87ceeb</color>
     <color name="PaleTurquoise">#afeeee</color>
     <color name="SteelBlue">#4862b4</color>
+    <color name="splat_text_color">#b39466</color>
+    <color name="green_01">#98b793</color>
+    <color name="green_02">#719678</color>
+    <color name="green_03">#e9ecac</color>
+
+    <color name="splat_text_color_lighter">#eece83</color>
+    <color name="Transparent">#00000000</color>
+    <color name="Black_Transparent">#99000000</color>
+    <color name="white_Transparent">#4d000000</color>
+
+    <color name="bg_color">#3e4556</color>
+    <color name="sub_bg_color">#535968</color>
+
+    <color name="text_title_color">#d3bc8e</color>
 
 
 

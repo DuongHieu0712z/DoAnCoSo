@@ -6,11 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class DataBase extends SQLiteOpenHelper {
+public class Sqlite_Helper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "JobManagement";
+    private static final int DATABASE_VERSION = 1;
 
-
-    public DataBase(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public Sqlite_Helper(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
