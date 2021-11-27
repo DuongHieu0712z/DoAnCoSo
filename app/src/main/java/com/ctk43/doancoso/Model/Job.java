@@ -15,6 +15,9 @@ public class Job {
     public int CategoryID;
     public ArrayList<JobDetail> JobDetails;
 
+    public Job() {
+    }
+
     public Job(int ID, String name, Date start, Date end, String description, Boolean priority, Double progress, int status, int categoryID) {
         this.ID = ID;
         Name = name;
@@ -28,6 +31,11 @@ public class Job {
     }
 
     public Job(String name, String description, Date start, Date end, Boolean priority, Double progress) {
+        ArrayList<Job> listJob = Database.getInstance().GetCurr_Week();
+        if(listJob ==null)
+            this.ID=1;
+        else
+            this.ID = listJob.size()+1;
         Name = name;
         Description = description;
         Start = start;

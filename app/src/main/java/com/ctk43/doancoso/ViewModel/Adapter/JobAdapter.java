@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,17 +30,34 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     @Override
     public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.job_item, parent, false);
-        view.setOnClickListener(new View.OnClickListener() {
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)mContext).gotoM002Screen(currentJob);
+                Job _job=new Job();
+                for (Job job : listJob){
+                    //if(job.Name.compareTo(((TextView)view.findViewById(R.id.tv_job_name)).getText().toString())==0)
+                    if (job.ID==currentJob.ID)
+                    _job=job;
+                }
+                ((MainActivity)mContext).gotoM002Screen(_job);
             }
-        });
+        });*/
         return new StoryHolder(view);
     }
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, int position) {
+
+
         Job item = listJob.get(position);
+
+        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ((MainActivity)mContext).gotoM002Screen(item);
+            }
+        });
+
         currentJob = item;
         holder.tv_job_name.setText(item.Name);
         holder.tv_job_des.setText(item.Description);
@@ -84,8 +102,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         TextView tv_job_end;
         TextView tv_job_status;
         ProgressBar progressBar;
+        LinearLayout itemLayout;
         public StoryHolder(View view) {
             super(view);
+             itemLayout = view.findViewById(R.id.item_topic);
              img_level = view.findViewById(R.id.img_level);
              tv_job_name = view.findViewById(R.id.tv_job_name);
              tv_job_des = view.findViewById(R.id.tv_job_description);
