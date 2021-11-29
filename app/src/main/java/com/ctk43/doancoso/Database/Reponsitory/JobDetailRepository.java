@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.JobDetailDAO;
-import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public class JobDetailRepository {
 
         @Override
         protected Void doInBackground(JobDetail... details) {
-            jobDetailDAO.deletaJobDetail(details[0]);
+            jobDetailDAO.deleteJobDetail(details[0]);
             return null;
         }
     }
@@ -69,7 +68,7 @@ public class JobDetailRepository {
 
         @Override
         protected Void doInBackground(JobDetail... jobDetails) {
-            jobDetailDAO.deletaJobDetail(jobDetails[0]);
+            jobDetailDAO.deleteJobDetail(jobDetails[0]);
             return null;
         }
     }

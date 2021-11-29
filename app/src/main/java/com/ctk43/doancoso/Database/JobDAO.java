@@ -16,12 +16,8 @@ import java.util.List;
 
 @Dao
 public interface JobDAO {
-
     @Query("SELECT * FROM Job")
     List<Job> getAllJobList();
-
-//    @Query("SELECT * FROM Job")
-//    LiveData<List<Job>> getAllJobList();
 
     @Insert
     void insertJob(Job... jobs);
@@ -35,7 +31,3 @@ public interface JobDAO {
     @Query("SELECT * FROM job where CategoryID = :catID")
     List<Job> getAllJobs(int catID);
 }
-
-
-
-

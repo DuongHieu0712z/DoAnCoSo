@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         //   Job[] PopulateMovieData =populateMovieData();
         // jobRepository.insert(PopulateMovieData[0]);
-       // listjob = jobRepository.getAlljob();
-       // jobViewModel.setData(jobRepository.getAlljob());
+       // listjob = jobRepository.getAllJob();
+       // jobViewModel.setData(jobRepository.getAllJob());
        jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         showFrg(new Splast_Fragment());
     }
