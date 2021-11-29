@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.ViewModel.Adapter;
+package com.ctk43.doancoso.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,16 +16,14 @@ import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.MainActivity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
-    private final List<Job> listJob;
+    private List<Job> listJob;
     private final Context mContext;
     private Job currentJob;
-    public JobAdapter(List<Job> listJob, Context mContext) {
-        this.listJob = listJob;
+    public JobAdapter( Context mContext) {
         this.mContext = mContext;
     }
     @Override
@@ -45,9 +43,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         });*/
         return new StoryHolder(view);
     }
+    public void setJob(List<Job> jobs){
+        listJob = jobs;
+    }
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, int position) {
-
 
         Job item = listJob.get(position);
 

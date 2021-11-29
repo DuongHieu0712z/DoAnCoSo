@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.JobDAO;
@@ -13,13 +15,13 @@ import java.util.List;
 
 public class JobRepository {
     private JobDAO jobDAO;
-//    private LiveData<List<Job>> allJob;
-    private List<Job> allJob;
-
-    public JobRepository(Context context) {
+    private MutableLiveData<List<Job>> allJob;
+    public JobRepository(Context context){
         AppDatabase data = AppDatabase.getInstance(context);
         jobDAO = data.jobDAO();
-        allJob = jobDAO.getAllJobList();
+        allJob = new MutableLiveData<>();
+        allJob.setValue(jobDAO.getAllJobList());
+
     }
 
     public void insert(Job job) {
@@ -34,7 +36,7 @@ public class JobRepository {
         new DeleteJobAsyncTask(jobDAO).execute(job);
     }
 
-    public List<Job> getAlljob() {
+    public LiveData<List<Job>> getAlljob(){
         return allJob;
     }
 
