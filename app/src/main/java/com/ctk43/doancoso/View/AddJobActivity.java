@@ -75,7 +75,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                 OpenTimeDialog(1);
             }
         });
-
         Button btn_Add = findViewById(R.id.btn_dlg_add_new_job);
         btn_Add.setBackgroundTintMode(null);
         btn_Add.setOnClickListener(new View.OnClickListener() {

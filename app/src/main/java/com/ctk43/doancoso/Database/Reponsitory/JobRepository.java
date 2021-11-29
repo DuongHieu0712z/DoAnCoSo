@@ -40,10 +40,6 @@ public class JobRepository {
         return allJob;
     }
 
-//    public LiveData<List<Job>> getAlljob() {
-//        return allJob;
-//    }
-
     private static class InsertJobAsyncTask extends AsyncTask<Job, Void, Void> {
         private JobDAO jobDAO;
 

@@ -81,6 +81,8 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         ((MainActivity) getActivity()).gotoAddNewJobScreen();
     }
+
+
     private void setPopUpBottomLongClickListener(){
 
     }

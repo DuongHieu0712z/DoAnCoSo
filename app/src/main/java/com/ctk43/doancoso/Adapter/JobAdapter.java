@@ -1,6 +1,10 @@
 package com.ctk43.doancoso.Adapter;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.opengl.EGLExt;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +15,21 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.MainActivity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     private List<Job> listJob;
     private final Context mContext;
+    private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
     private Job currentJob;
     public JobAdapter( Context mContext) {
         this.mContext = mContext;
@@ -29,6 +37,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     @Override
     public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.job_item, parent, false);
+
         /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,17 +56,41 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         listJob = jobs;
     }
     @Override
-    public void onBindViewHolder(JobAdapter.StoryHolder holder, int position) {
+    public void onBindViewHolder(JobAdapter.StoryHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Job item = listJob.get(position);
-
-        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
+        viewBinderHelper.bind(holder.swipeRevealLayout,String.valueOf(position));
+        holder.layoutDetele.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
+                listJob.remove(item);
+                notifyItemRemoved(position);
+            }
+        });
+        holder.itemJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 ((MainActivity)mContext).gotoM002Screen(item);
             }
         });
+   /*     holder.swipeRevealLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(mContext)
+                        .setIcon(R.drawable.ic_delete)
+                        .setTitle("Mày chắc chưa")
+                        .setMessage("mày muốn xóa công việc này")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                listJob.remove(item);
+
+                            }
+                        }).setNegativeButton("No",null)
+                        .show();
+                return true;
+            }
+        });*/
 
         currentJob = item;
         holder.tv_job_name.setText(item.Name);
@@ -96,6 +129,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         return listJob.size();
     }
     public class StoryHolder extends RecyclerView.ViewHolder {
+        SwipeRevealLayout swipeRevealLayout;
+        LinearLayout layoutDetele;
+        LinearLayout itemJob;
         ImageView img_level;
         TextView tv_job_name;
         TextView tv_job_des;
@@ -103,12 +139,13 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         TextView tv_job_end;
         TextView tv_job_status;
         ProgressBar progressBar;
-        LinearLayout itemLayout;
         public StoryHolder(View view) {
             super(view);
-             itemLayout = view.findViewById(R.id.item_topic);
-             img_level = view.findViewById(R.id.img_level);
-             tv_job_name = view.findViewById(R.id.tv_job_name);
+            swipeRevealLayout = view.findViewById(R.id.item_topic);
+            layoutDetele = view.findViewById(R.id.lnDelete);
+            itemJob = view.findViewById(R.id.item_job);
+            img_level = view.findViewById(R.id.img_level);
+            tv_job_name = view.findViewById(R.id.tv_job_name);
              tv_job_des = view.findViewById(R.id.tv_job_description);
              tv_job_prg = view.findViewById(R.id.tv_progress);
              tv_job_end = view.findViewById(R.id.tv_remainning_time);

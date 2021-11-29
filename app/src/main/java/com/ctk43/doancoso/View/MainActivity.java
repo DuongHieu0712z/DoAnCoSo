@@ -98,8 +98,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void gotoAddNewJobScreen() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new
-                AddJobFragment(), null).commit();
+
     }
 
     public void gotoShowDialogScreen(int mode) {
