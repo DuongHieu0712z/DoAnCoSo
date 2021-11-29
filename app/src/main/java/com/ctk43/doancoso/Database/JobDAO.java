@@ -24,7 +24,7 @@ public interface JobDAO {
 //    LiveData<List<Job>> getAllJobList();
 
     @Insert
-    void insertJob(Job...jobs);
+    void insertJob(Job... jobs);
 
     @Update
     void updateJob(Job job);
@@ -33,13 +33,9 @@ public interface JobDAO {
     void deleteJob(Job Job);
 
     @Query("SELECT * FROM job where CategoryID = :catID")
-<<<<<<< HEAD
-    LiveData<List<Job>> getAllJobs(int catID);
-
-
-
-
-=======
     List<Job> getAllJobs(int catID);
->>>>>>> c73e58aa893e6c809d4afaaba9c88be8f71da0b5
 }
+
+
+
+

@@ -41,11 +41,7 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
         mContext = context;
     }
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> c73e58aa893e6c809d4afaaba9c88be8f71da0b5
     private void initView(View v) {
         Button btn_add_new_Job = v.findViewById(R.id.btn_add_new_job);
         btn_add_new_Job.setBackgroundTintMode(null);

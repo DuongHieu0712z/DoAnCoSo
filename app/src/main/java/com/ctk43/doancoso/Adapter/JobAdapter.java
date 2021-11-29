@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.ViewModel.Adapter;
+package com.ctk43.doancoso.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.MainActivity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
