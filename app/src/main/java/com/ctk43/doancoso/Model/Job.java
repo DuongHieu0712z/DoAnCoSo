@@ -24,16 +24,20 @@ public class Job {
     @PrimaryKey(autoGenerate = true)
     public int ID;
 
-    @ColumnInfo(name = "CategoryID") @NonNull
+    @ColumnInfo(name = "CategoryID")
+    @NonNull
     public int CategoryID;
 
-    @ColumnInfo(name = "Name")  @NonNull
+    @ColumnInfo(name = "Name")
+    @NonNull
     public String Name;
 
-    @TypeConverters({DateTypeConvertor.class})  @NonNull
+    @TypeConverters({DateTypeConvertor.class})
+    @NonNull
     public Date StartDate;
 
-    @TypeConverters({DateTypeConvertor.class})  @NonNull
+    @TypeConverters({DateTypeConvertor.class})
+    @NonNull
     public Date EndDate;
 
     @ColumnInfo(name = "Description")
@@ -72,7 +76,8 @@ public class Job {
         Progress = progress;
         Status = 0;
     }
-    public Job(int categoryID,String name, String description, Date start, Date end, Boolean priority, Double progress) {
+
+    public Job(int categoryID, String name, String description, Date start, Date end, Boolean priority, Double progress) {
         Name = name;
         CategoryID = categoryID;
         Description = description;
@@ -100,6 +105,4 @@ public class Job {
         Progress = c.getDouble(5);
         Status = c.getInt(6);
     }
-
-
 }
