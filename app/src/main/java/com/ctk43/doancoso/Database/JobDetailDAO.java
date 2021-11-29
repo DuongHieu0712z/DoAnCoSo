@@ -29,5 +29,4 @@ public interface JobDetailDAO {
 
     @Query("SELECT * FROM jobdetail where ID = :jobID")
     List<JobDetail> GetListJobDetail(int jobID);
-
 }

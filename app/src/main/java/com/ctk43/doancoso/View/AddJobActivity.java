@@ -91,7 +91,9 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             public void onClick(View view) {
                 try {
                     String name = edt_job_name.getText().toString();
-                    Toast.makeText(getApplicationContext(), "Không được để tên công việc trống, vui lòng nhập tên công việc!", Toast.LENGTH_SHORT).show();
+                    if (name.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Không được để tên công việc trống, vui lòng nhập tên công việc!", Toast.LENGTH_SHORT).show();
+                    }
                     String description = edt_job_des.getText().toString();
 
                     String startDate = tv_date_start.getText().toString();
