@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Update;
+//import androidx.room.Update;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
@@ -40,7 +40,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class MainActivity extends AppCompatActivity  {
     public String currentDate;
     public List<Job> listjob = new ArrayList<>();
     private static final String DATABASE_NAME = "databases/JobManagement.db";
@@ -117,34 +117,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getFragmentManager(), "time picker");
     }
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        /*TextView tv_date;
-        if(dlg_mode==0){
-            tv_date = findViewById(R.id.tv_dlg_date_start);
-            tv_date.setText(currentDate);
-        }
-        else{
-            tv_date = findViewById(R.id.tv_dlg_date_end);
-            tv_date.setText(currentDate);
-        }*/
-    }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        /*TextView textView;
-        if(dlg_mode==0)
-            textView = (TextView) findViewById(R.id.tv_dlg_time_start);
-        else
-            textView = (TextView) findViewById(R.id.tv_dlg_time_end);
-        textView.setText("Hour: " + hourOfDay + " Minute: " + minute);*/
-        result="Hour: " + hourOfDay + " Minute: " + minute;
-    }
     public String getDatabasePathstring(){
         return getApplicationInfo().dataDir + DB_PATH_SUFFIX +DATABASE_NAME;
     }
