@@ -44,13 +44,13 @@ public class Job {
     public String Description;
 
     @ColumnInfo(name = "Priority")
-    public Boolean Priority;
+    public Boolean Priority = false;
 
     @ColumnInfo(name = "Progress")
-    public Double Progress;
+    public Double Progress = 0.0;
 
     @ColumnInfo(name = "Status")
-    public int Status; //0 - on going; -1 - drop; 1 - complete; 2- over
+    public int Status = 0; //0 - on going; -1 - drop; 1 - complete; 2- over
 
     public Job() {
     }
@@ -86,6 +86,14 @@ public class Job {
         Priority = priority;
         Progress = progress;
         Status = 0;
+    }
+
+    public Job(int categoryID, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {
+        CategoryID = categoryID;
+        Name = name;
+        StartDate = startDate;
+        EndDate = endDate;
+        Description = description;
     }
 
     public Job(Cursor c) {
