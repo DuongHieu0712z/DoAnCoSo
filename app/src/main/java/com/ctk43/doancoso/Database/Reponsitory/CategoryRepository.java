@@ -39,8 +39,6 @@ public class CategoryRepository {
         return allCategory;
     }
 
-
-
     private static class InsertCategoryAsyncTask extends AsyncTask<Category, Void, Void> {
         private CategoryDAO categoryDAO;
 
@@ -50,7 +48,7 @@ public class CategoryRepository {
 
         @Override
         protected Void doInBackground(Category... categories) {
-            categoryDAO.deletaCategory(categories[0]);
+            categoryDAO.delete(categories[0]);
             return null;
         }
     }
@@ -64,7 +62,7 @@ public class CategoryRepository {
 
         @Override
         protected Void doInBackground(Category... categories) {
-            categoryDAO.deletaCategory(categories[0]);
+            categoryDAO.delete(categories[0]);
             return null;
         }
     }
@@ -78,7 +76,7 @@ public class CategoryRepository {
 
         @Override
         protected Void doInBackground(Category... categories) {
-            categoryDAO.updateCategory(categories[0]);
+            categoryDAO.update(categories[0]);
             return null;
         }
     }

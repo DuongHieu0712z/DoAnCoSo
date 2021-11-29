@@ -16,12 +16,12 @@ import java.util.List;
 public class JobRepository {
     private JobDAO jobDAO;
     private MutableLiveData<List<Job>> allJob;
-    public JobRepository(Context context){
+
+    public JobRepository(Context context) {
         AppDatabase data = AppDatabase.getInstance(context);
         jobDAO = data.jobDAO();
         allJob = new MutableLiveData<>();
         allJob.setValue(jobDAO.getAllJobList());
-
     }
 
     public void insert(Job job) {
@@ -36,13 +36,9 @@ public class JobRepository {
         new DeleteJobAsyncTask(jobDAO).execute(job);
     }
 
-    public LiveData<List<Job>> getAlljob(){
+    public LiveData<List<Job>> getAllJob() {
         return allJob;
     }
-
-//    public LiveData<List<Job>> getAlljob() {
-//        return allJob;
-//    }
 
     private static class InsertJobAsyncTask extends AsyncTask<Job, Void, Void> {
         private JobDAO jobDAO;
@@ -85,5 +81,4 @@ public class JobRepository {
             return null;
         }
     }
-
 }

@@ -147,7 +147,7 @@
             android:gravity="left"
             android:text="@string/tv_date_start"
             android:textColor="@color/orange"
-            android:textSize="16dp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -168,7 +168,7 @@
             android:gravity="left"
             android:text="@string/tv_time_end"
             android:textColor="@color/orange"
-            android:textSize="16dp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 

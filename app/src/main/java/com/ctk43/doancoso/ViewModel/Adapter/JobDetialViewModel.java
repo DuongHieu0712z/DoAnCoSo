@@ -17,7 +17,7 @@ public class JobDetialViewModel extends ViewModel {
     private LiveData<List<JobDetail>> jobDetails;
 
     public JobDetialViewModel() {
-        //     allJob = jobRepository.getAlljob();
+        //     allJob = jobRepository.getAllJob();
     }
 
     public void setData(Context context) {

@@ -17,11 +17,11 @@ public interface CategoryDAO {
     List<Category> getAllCategoryList();
 
     @Insert
-    void insertCategory(Category...categoties);
+    void insert(Category... categories);
 
     @Update
-    void updateCategory(Category category);
+    void update(Category category);
 
     @Delete
-    void deletaCategory(Category category);
+    void delete(Category category);
 }

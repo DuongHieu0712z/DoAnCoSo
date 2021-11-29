@@ -1,5 +1,6 @@
 package com.ctk43.doancoso.Model;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 
 import androidx.annotation.NonNull;
@@ -96,6 +97,7 @@ public class Job {
         Description = description;
     }
 
+    @SuppressLint("SimpleDateFormat")
     public Job(Cursor c) {
         ID = c.getInt(0);
         CategoryID = c.getInt(1);
