@@ -21,9 +21,10 @@ import com.ctk43.doancoso.R;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
+public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
     private Context mContext;
     private String currentDate;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,8 +38,9 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
         super.onAttach(context);
         mContext = context;
     }
+
     private void initView(View v) {
-        Button btn_add_new_Job= v.findViewById(R.id.btn_add_new_job);
+        Button btn_add_new_Job = v.findViewById(R.id.btn_add_new_job);
         btn_add_new_Job.setBackgroundTintMode(null);
 
         TextView tv_date = v.findViewById(R.id.tv_date);
@@ -56,7 +58,7 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
                 //((MainActivity) getActivity()).gotoShowTimeDialogScreen();
             }
         });
-        ImageView img_back=v.findViewById(R.id.img_back);
+        ImageView img_back = v.findViewById(R.id.img_back);
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +66,7 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
             }
         });
     }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();

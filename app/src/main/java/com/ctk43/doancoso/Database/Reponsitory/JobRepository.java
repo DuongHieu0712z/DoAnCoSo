@@ -3,6 +3,8 @@ package com.ctk43.doancoso.Database.Reponsitory;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.JobDAO;
 import com.ctk43.doancoso.Model.Job;
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class JobRepository {
     private JobDAO jobDAO;
+//    private LiveData<List<Job>> allJob;
     private List<Job> allJob;
 
     public JobRepository(Context context) {
@@ -34,6 +37,10 @@ public class JobRepository {
     public List<Job> getAlljob() {
         return allJob;
     }
+
+//    public LiveData<List<Job>> getAlljob() {
+//        return allJob;
+//    }
 
     private static class InsertJobAsyncTask extends AsyncTask<Job, Void, Void> {
         private JobDAO jobDAO;
