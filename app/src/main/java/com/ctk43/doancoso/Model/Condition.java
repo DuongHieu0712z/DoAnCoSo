@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.Model;
 
 public class Condition {
+
     public  int IDNeed;
     public  int IDJobD;
 
