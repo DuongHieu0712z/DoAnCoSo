@@ -14,9 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.ctk43.doancoso.View.MainActivity;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -37,6 +39,9 @@ public class AddJobFragment extends Fragment implements DatePickerDialog.OnDateS
         super.onAttach(context);
         mContext = context;
     }
+
+
+
     private void initView(View v) {
         Button btn_add_new_Job= v.findViewById(R.id.btn_add_new_job);
         btn_add_new_Job.setBackgroundTintMode(null);

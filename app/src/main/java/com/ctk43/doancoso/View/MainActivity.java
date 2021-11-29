@@ -55,13 +55,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //   Job[] PopulateMovieData =populateMovieData();
-        JobRepository jobRepository = new JobRepository(this);
         // jobRepository.insert(PopulateMovieData[0]);
-        listjob = jobRepository.getAlljob();
+       // listjob = jobRepository.getAlljob();
+       // jobViewModel.setData(jobRepository.getAlljob());
+       jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         showFrg(new Splast_Fragment());
-
     }
-    public static Job[] populateMovieData(){
+  /*  public static Job[] populateMovieData(){
         Calendar cal = Calendar.getInstance();
         String Date = "31/12/2021";
         Date date;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
                 new Job(1,"Tên Công Việc 2", "Đây là công việc 3 rat nhieu chu", start,end , true, 0.0),
         };
-    }
+    }*/
    /* private void initViewMobdel() {
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         jobViewModel.getAllJob().observe(this, new Observer<List<Job>>() {
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
     public void gotoM001Screen() {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new MainFragment(), null).commit();
-
     }
     public void gotoM002Screen(Job job) {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new JobDetailFragment(job), null).commit();

@@ -1,6 +1,9 @@
 package com.ctk43.doancoso.ViewModel.Adapter;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
@@ -10,11 +13,28 @@ import java.util.List;
 
 public class JobViewModel extends ViewModel {
     private JobRepository jobRepository;
-    private LiveData<List<Job>> allJob;
+    private LiveData<List<Job>> jobs;
 
     public JobViewModel() {
-     //   jobRepository = new JobRepository();
    //     allJob = jobRepository.getAlljob();
+    }
+    public void setData(Context context){
+        jobRepository =new JobRepository(context);
+        jobs =jobRepository.getAlljob();
+
+    }
+    public void InsertJob(Job job){
+        jobRepository.insert(job);
+    }
+
+    public void UpdateJob(Job job){
+        jobRepository.update(job);
+    }
+    public void DeleteJob(Job job){
+        jobRepository.Delete(job);
+    }
+    public LiveData<List<Job>> getAllJob(){
+        return  jobs;
     }
 /*    private MutableLiveData<List<Job>> listOfJob;
     private AppDatabase appDatabase;
@@ -44,19 +64,6 @@ public class JobViewModel extends ViewModel {
         GetAllJobList();
     }*/
 
-    public void InsertJob(Job job){
-        jobRepository.insert(job);
-    }
-
-    public void UpdateJob(Job job){
-        jobRepository.update(job);
-    }
-    public void DeleteJob(Job job){
-        jobRepository.Delete(job);
-    }
-    public LiveData<List<Job>> getAllJob(){
-        return allJob;
-    }
 
    /* public void UpdateJob(Job job){
         appDatabase.jobDAO().updateJob(job);

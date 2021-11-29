@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.Database;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -29,7 +30,7 @@ public interface JobDAO {
     void deleteJob(Job Job);
 
     @Query("SELECT * FROM job where CategoryID = :catID")
-    List<Job> getAllJobs(int catID);
+    LiveData<List<Job>> getAllJobs(int catID);
 
 
 
