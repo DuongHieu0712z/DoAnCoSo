@@ -13,52 +13,63 @@ public class JobRepository {
     private JobDAO jobDAO;
     private List<Job> allJob;
 
-    public JobRepository(Context context){
+    public JobRepository(Context context) {
         AppDatabase data = AppDatabase.getInstance(context);
         jobDAO = data.jobDAO();
-        allJob =  jobDAO.getAllJobList();
+        allJob = jobDAO.getAllJobList();
     }
-    public void insert(Job job){
+
+    public void insert(Job job) {
         new InsertJobAsyncTask(jobDAO).execute(job);
     }
 
-    public void update(Job job){
+    public void update(Job job) {
         new UpdateJobAsyncTask(jobDAO).execute(job);
     }
 
-    public void Delete(Job job){
+    public void Delete(Job job) {
         new DeleteJobAsyncTask(jobDAO).execute(job);
     }
-    public List<Job> getAlljob(){
+
+    public List<Job> getAlljob() {
         return allJob;
     }
-    private  static  class InsertJobAsyncTask extends AsyncTask<Job,Void,Void>{
+
+    private static class InsertJobAsyncTask extends AsyncTask<Job, Void, Void> {
         private JobDAO jobDAO;
-        private InsertJobAsyncTask(JobDAO jobDAO){
+
+        private InsertJobAsyncTask(JobDAO jobDAO) {
             this.jobDAO = jobDAO;
         }
+
         @Override
         protected Void doInBackground(Job... jobs) {
             jobDAO.insertJob(jobs[0]);
             return null;
         }
     }
-    private  static  class DeleteJobAsyncTask extends AsyncTask<Job,Void,Void>{
+
+    private static class DeleteJobAsyncTask extends AsyncTask<Job, Void, Void> {
         private JobDAO jobDAO;
-        private DeleteJobAsyncTask(JobDAO jobDAO){
+
+        private DeleteJobAsyncTask(JobDAO jobDAO) {
             this.jobDAO = jobDAO;
         }
+
         @Override
         protected Void doInBackground(Job... jobs) {
             jobDAO.deleteJob(jobs[0]);
             return null;
         }
     }
-    private  static  class UpdateJobAsyncTask extends AsyncTask<Job,Void,Void>{
+
+    private static class UpdateJobAsyncTask extends AsyncTask<Job, Void, Void> {
         private JobDAO jobDAO;
-        private UpdateJobAsyncTask(JobDAO jobDAO){
+
+        private UpdateJobAsyncTask(JobDAO jobDAO) {
             this.jobDAO = jobDAO;
         }
+
         @Override
         protected Void doInBackground(Job... jobs) {
             jobDAO.updateJob(jobs[0]);
