@@ -21,8 +21,9 @@ import com.ctk43.doancoso.R;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private int mode = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +76,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-
-
         Button btn_Add = findViewById(R.id.btn_dlg_add_new_job);
         btn_Add.setBackgroundTintMode(null);
         btn_Add.setOnClickListener(new View.OnClickListener() {
@@ -87,17 +86,17 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         });
     }
 
-    private void OpenDateDialog(int mode){
+    private void OpenDateDialog(int mode) {
         this.mode = mode;
         DialogFragment dateDialog = new DatePickerFragment();
         dateDialog.show(getFragmentManager(), "");
     }
-    private void OpenTimeDialog(int mode){
+
+    private void OpenTimeDialog(int mode) {
         this.mode = mode;
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getFragmentManager(), "time picker");
     }
-
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -107,7 +106,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         c.set(Calendar.DAY_OF_MONTH, i2);
         String result = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         TextView textView;
-        if(mode == 0)
+        if (mode == 0)
             textView = findViewById(R.id.tv_dlg_date_start);
         else
             textView = findViewById(R.id.tv_dlg_date_end);
@@ -116,9 +115,9 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-       String result=i + " : " + i1;
+        String result = i + " : " + i1;
         TextView textView;
-        if(mode == 0)
+        if (mode == 0)
             textView = findViewById(R.id.tv_dlg_time_start);
         else
             textView = findViewById(R.id.tv_dlg_time_end);

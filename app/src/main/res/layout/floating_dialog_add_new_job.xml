@@ -1,177 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_round">
+    android:background="@drawable/bg_round"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
         android:layout_marginHorizontal="7dp"
-        android:layout_marginTop="7dp">
+        android:layout_marginTop="7dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
         <ImageView
             android:id="@+id/img_close"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/goback1"
-            />
+            android:src="@drawable/goback1" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1.99"
             android:layout_height="wrap_content"
-            android:text="@string/tv_add_new_job"
-            android:textColor="@color/text_title_color"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:fontFamily="@font/playfair_regular"
             android:layout_marginTop="8dp"
-            android:paddingRight="25dp"
-            />
+            android:layout_weight="1.99"
+            android:fontFamily="@font/playfair_regular"
+            android:paddingEnd="25dp"
+            android:text="@string/tv_add_new_job"
+            android:textAlignment="center"
+            android:textColor="@color/text_title_color"
+            android:textSize="20sp"
+            tools:ignore="RtlSymmetry" />
 
     </LinearLayout>
 
     <ImageView
-        android:layout_marginTop="-10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_marginHorizontal="7dp"/>
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/line" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_tab_layout"
+        android:layout_marginHorizontal="7dp"
         android:layout_marginTop="50dp"
-        android:layout_marginHorizontal="7dp">
+        android:background="@drawable/bg_tab_layout">
+
         <EditText
             android:id="@+id/edt_dlg_job_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_job_name"
-            android:layout_marginHorizontal="30dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="30dp"
             android:background="@null"
-            android:singleLine="true"
-            />
+            android:hint="@string/hint_job_name"
+            android:textColor="@color/black"
+            android:textColorHint="@color/LightSlateGray"
+            android:singleLine="true" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_title"
         android:layout_marginTop="-5dp"
-        android:layout_marginHorizontal="7dp">
+        android:background="@drawable/bg_tab_layout">
+
         <EditText
             android:id="@+id/edt_dlg_job_des"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_job_description"
-            android:layout_marginHorizontal="30dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="30dp"
             android:background="@null"
-            android:singleLine="true"
-            />
+            android:hint="@string/hint_job_description"
+            android:textColor="@color/black"
+            android:textColorHint="@color/LightSlateGray"
+            android:singleLine="true" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
+        android:layout_marginHorizontal="7dp"
         android:layout_marginTop="-5dp"
         android:background="@drawable/bg_tab_layout"
         android:gravity="center_vertical"
-        android:layout_marginHorizontal="7dp">
+        android:weightSum="2">
+
         <TextView
+            android:id="@+id/tv_dlg_date_start"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1.25"
-            android:id="@+id/tv_dlg_date_start"
+            android:gravity="left"
             android:text="@string/tv_date_start"
             android:textColor="@color/orange"
-            android:textSize="16dp"
-            android:gravity="left"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="5dp"/>
+            android:textSize="16dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/playfair_regular"
             android:text="|"
-            android:textSize="24sp"
-            android:fontFamily="@font/playfair_regular"/>
+            android:textColor="@color/LightSlateGray"
+            android:textSize="24sp" />
+
         <TextView
-            android:layout_marginLeft="5dp"
+            android:id="@+id/tv_dlg_time_start"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="30dp"
             android:layout_weight="0.75"
-            android:id="@+id/tv_dlg_time_start"
+            android:gravity="left"
             android:text="@string/tv_time_start"
             android:textColor="@color/orange"
             android:textSize="16dp"
-            android:gravity="left"
-            android:layout_marginRight="30dp"/>
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginTop="-5dp"
         android:background="@drawable/bg_tab_layout"
         android:gravity="center_vertical"
-        android:layout_marginTop="-5dp"
-        android:layout_marginHorizontal="7dp">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <TextView
             android:id="@+id/tv_dlg_date_end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1.25"
             android:gravity="left"
             android:text="@string/tv_date_start"
             android:textColor="@color/orange"
             android:textSize="16dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="5dp"/>
+            tools:ignore="RtlHardcoded" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/playfair_regular"
             android:text="|"
-            android:textSize="24sp"
-            android:fontFamily="@font/playfair_regular"/>
+            android:textColor="@color/LightSlateGray"
+            android:textSize="24sp" />
+
         <TextView
             android:id="@+id/tv_dlg_time_end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="30dp"
             android:layout_weight="0.75"
             android:gravity="left"
             android:text="@string/tv_time_end"
             android:textColor="@color/orange"
             android:textSize="16dp"
-            android:layout_marginRight="30dp"/>
+            tools:ignore="RtlHardcoded" />
     </LinearLayout>
+
     <ImageView
-        android:layout_marginHorizontal="7dp"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/line"/>
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/line" />
+
     <Button
         android:id="@+id/btn_dlg_add_new_job"
-        android:layout_marginTop="-5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="-5dp"
         android:background="@drawable/bg_btn_1"
         android:backgroundTint="@null"
         android:text="@string/btn_submit"
-        android:textColor="@color/text_title_color"
-        />
+        android:textColor="@color/text_title_color" />
+
     <ImageView
-        android:layout_marginHorizontal="7dp"
-        android:layout_marginTop="-5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/line" />
 </LinearLayout>

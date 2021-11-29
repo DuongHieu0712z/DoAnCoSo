@@ -3,6 +3,7 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity  {
     public String currentDate;
     public List<Job> listjob = new ArrayList<>();
+//    public LiveData<List<Job>> listjob ;
     private static final String DATABASE_NAME = "databases/JobManagement.db";
     private static final String DB_PATH_SUFFIX = "/databases/";
     private TabLayout tabLayout;
