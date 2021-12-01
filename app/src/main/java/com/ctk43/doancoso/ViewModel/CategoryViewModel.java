@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.ViewModel.Adapter;
+package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
 

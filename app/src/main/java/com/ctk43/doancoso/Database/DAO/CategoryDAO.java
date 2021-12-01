@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.Database;
+package com.ctk43.doancoso.Database.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

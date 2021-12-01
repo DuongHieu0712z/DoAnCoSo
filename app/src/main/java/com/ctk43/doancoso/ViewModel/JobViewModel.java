@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.ViewModel.Adapter;
+package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
 
@@ -15,12 +15,12 @@ public class JobViewModel extends ViewModel {
     private LiveData<List<Job>> jobs;
 
     public JobViewModel() {
+   //     jobRepository =new JobRepository(context);
    //     allJob = jobRepository.getAllJob();
     }
     public void setData(Context context){
         jobRepository =new JobRepository(context);
         jobs =jobRepository.getAllJob();
-
     }
     public void InsertJob(Job job){
         jobRepository.insert(job);

@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 
 import com.ctk43.doancoso.Database.AppDatabase;
-import com.ctk43.doancoso.Database.JobDAO;
+import com.ctk43.doancoso.Database.DAO.JobDAO;
 import com.ctk43.doancoso.Model.Job;
 
 import java.util.List;

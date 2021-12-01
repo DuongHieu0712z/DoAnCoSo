@@ -1,6 +1,5 @@
 package com.ctk43.doancoso.View;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -26,7 +25,7 @@ import com.ctk43.doancoso.Adapter.JobDetailAdapter;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.Adapter.JobDetailViewModel;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -99,6 +98,7 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
         btn_Add_New_Job_detail = (FloatingActionButton) v.findViewById(R.id.add_new_job_detail);
         AddJobDetail();
 
+
         ImageView img_back = v.findViewById(R.id.img_jt_back);
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +107,8 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-    /*    ArrayList<JobDetail> listJobDetail = job.JobDetails;
-     ;*/
+
+
     }
     @Override
     public void onClick(View view) {

@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.Database;
+package com.ctk43.doancoso.Database.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -29,5 +29,4 @@ public interface JobDetailDAO {
 
     @Query("SELECT * FROM jobdetail where JobID = :jobID")
     List<JobDetail> GetListJobDetail(int jobID);
-
 }

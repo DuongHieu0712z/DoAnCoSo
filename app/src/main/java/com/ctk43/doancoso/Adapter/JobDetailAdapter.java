@@ -16,9 +16,8 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.Adapter.JobDetailViewModel;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 
-import java.net.DatagramSocket;
 import java.util.List;
 
 public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.StoryHolder> {

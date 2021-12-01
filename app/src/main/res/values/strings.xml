@@ -3,13 +3,21 @@
     <string name="edt_name_job">Tên công việc</string>
     <string name="edt_description_job">Mô tả</string>
     <string name="tv_add_new_job">Thêm công việc</string>
+    <string name="tv_add_new_job_detail">Thêm chi tiết công việc</string>
     <string name="btn_submit">Thêm</string>
     <string name="hint_job_name">Nhập tên công việc</string>
+    <string name="hint_job_detail_name">Nhập tên chi tiết công việc</string>
     <string name="hint_job_description">Nhập mô tả công việc</string>
+    <string name="hint_job_detail_description">Nhập mô tả chi tiết công việc</string>
     <string name="tv_date_start">Ngày bắt đầu</string>
     <string name="tv_date_end">Ngày kết thúc</string>
     <string name="tv_time_start">Giờ bắt đầu</string>
     <string name="tv_time_end">Giờ kết thúc</string>
     <string name="testdate">1 ngày 12 giờ</string>
     <string name="title_search">Tìm kiếm</string>
+    <string name="tv_add_job_type">Thêm loại công việc</string>
+    <string name="hint_add_job_type">Nhập tên loại công việc</string>
+    <string name="tv_estimal_time">Thời gian hoàn thành dự kiến</string>
+    <string name="tv_value">Giá trị</string>
+    <string name="hint_estimate_time">Nhập thời gian hoàn thành dự kiến</string>
 </resources>

@@ -10,6 +10,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.ctk43.doancoso.Database.DAO.CategoryDAO;
+import com.ctk43.doancoso.Database.DAO.JobDAO;
+import com.ctk43.doancoso.Database.DAO.JobDetailDAO;
+import com.ctk43.doancoso.Database.DAO.UserDAO;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;

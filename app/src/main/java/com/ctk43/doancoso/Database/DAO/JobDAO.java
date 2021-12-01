@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.Database;
+package com.ctk43.doancoso.Database.DAO;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

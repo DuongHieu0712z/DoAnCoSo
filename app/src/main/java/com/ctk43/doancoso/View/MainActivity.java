@@ -3,7 +3,6 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 //import androidx.room.Update;
 import androidx.viewpager.widget.ViewPager;
 
@@ -13,10 +12,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
+import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;

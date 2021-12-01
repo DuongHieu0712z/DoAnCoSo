@@ -1,10 +1,7 @@
 package com.ctk43.doancoso.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.opengl.EGLExt;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
@@ -22,9 +18,8 @@ import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.MainActivity;
-import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
+import com.ctk43.doancoso.ViewModel.JobViewModel;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
