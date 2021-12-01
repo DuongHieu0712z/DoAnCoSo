@@ -16,12 +16,11 @@ public class JobDetailRepository {
     private JobDetailDAO jobDetailDAO;
     private MutableLiveData<List<JobDetail>> allJobDetail;
 
-    public JobDetailRepository(Context context) {
+    public JobDetailRepository(Context context,int idJob) {
         AppDatabase data = AppDatabase.getInstance(context);
         jobDetailDAO = data.jobDetailDAO();
         allJobDetail = new MutableLiveData<>();
-        allJobDetail.setValue(jobDetailDAO.getAllJobDetailList());
-
+        allJobDetail.setValue(jobDetailDAO.GetListJobDetail(idJob));
     }
 
     public void insert(JobDetail jobDetail) {

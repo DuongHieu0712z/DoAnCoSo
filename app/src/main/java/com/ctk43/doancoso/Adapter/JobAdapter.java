@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
@@ -21,6 +22,7 @@ import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.MainActivity;
+import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,10 +31,12 @@ import java.util.List;
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     private List<Job> listJob;
     private final Context mContext;
+    private JobViewModel jobViewModel;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
-    private Job currentJob;
-    public JobAdapter( Context mContext) {
+    Job currentJob ;
+    public JobAdapter( Context mContext,JobViewModel jobViewModel) {
         this.mContext = mContext;
+        this.jobViewModel = jobViewModel;
     }
     @Override
     public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -52,19 +56,23 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         });*/
         return new StoryHolder(view);
     }
+
+    public Job getJobAt(int position){
+        return listJob.get(position);
+    }
     public void setJob(List<Job> jobs){
         listJob = jobs;
     }
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, @SuppressLint("RecyclerView") int position) {
-
         Job item = listJob.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout,String.valueOf(position));
-        holder.layoutDetele.setOnClickListener(new View.OnClickListener() {
+        holder.layout_funcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listJob.remove(item);
-                notifyItemRemoved(position);
+                jobViewModel.DeleteJob(item);
+                notifyDataSetChanged();
             }
         });
         holder.itemJob.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +138,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     }
     public class StoryHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
-        LinearLayout layoutDetele;
+        LinearLayout layout_funcion;
         LinearLayout itemJob;
         ImageView img_level;
         TextView tv_job_name;
@@ -142,7 +150,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         public StoryHolder(View view) {
             super(view);
             swipeRevealLayout = view.findViewById(R.id.item_topic);
-            layoutDetele = view.findViewById(R.id.lnDelete);
+            layout_funcion = view.findViewById(R.id.job_funcion);
             itemJob = view.findViewById(R.id.item_job);
             img_level = view.findViewById(R.id.img_level);
             tv_job_name = view.findViewById(R.id.tv_job_name);

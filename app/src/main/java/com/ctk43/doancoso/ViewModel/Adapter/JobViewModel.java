@@ -25,7 +25,6 @@ public class JobViewModel extends ViewModel {
     public void InsertJob(Job job){
         jobRepository.insert(job);
     }
-
     public void UpdateJob(Job job){
         jobRepository.update(job);
     }

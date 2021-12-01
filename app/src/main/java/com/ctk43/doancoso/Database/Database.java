@@ -24,7 +24,6 @@ public class Database {
     ArrayList<Job> next_week;
     private Database(){}
 
-
     public static Database getInstance(){
         if (instance==null)
             instance = new Database();

@@ -39,6 +39,10 @@ import java.time.LocalDateTime;
 
     @ColumnInfo(name = "Status")
     public int Status; //0 - on going; -1 - drop; 1 - complete; 2- over
+
+    @ColumnInfo(name = "IDParent")
+    public int IDParent;
+
     public JobDetail(){
 
     }
@@ -62,5 +66,16 @@ import java.time.LocalDateTime;
         Priority = false;
         Status = 0;
         Progress = 0.0;
+      // IDParent = -1;
+    }    public JobDetail(int jobID,String name, String description, int estimatedCompletedTime) {
+        Name = name;
+        this.JobID = jobID;
+        EstimatedCompletedTime = estimatedCompletedTime;
+        Description = description;
+        ActualCompletedTime = 0;
+        Priority = false;
+        Status = 0;
+        Progress = 0.0;
+      // IDParent = -1;
     }
 }

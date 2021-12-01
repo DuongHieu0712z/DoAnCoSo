@@ -12,18 +12,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.ViewModel.Adapter.JobDetailViewModel;
 
-import java.util.ArrayList;
+import java.net.DatagramSocket;
+import java.util.List;
 
 public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.StoryHolder> {
-    private final ArrayList<JobDetail> listJobDetail;
+    private List<JobDetail> listJobDetail;
     private final Context mContext;
+    private JobDetailViewModel jobDetailViewModel;
+    private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobDetailAdapter(ArrayList<JobDetail> listJobDetail, Context mContext) {
-        this.listJobDetail = listJobDetail;
+    public JobDetailAdapter(Context mContext,JobDetailViewModel jobDetailViewModel) {
+        this.jobDetailViewModel = jobDetailViewModel;
         this.mContext = mContext;
+    }
+    public void setData(List<JobDetail> jobDetails){
+        listJobDetail = jobDetails;
     }
 
     @Override
@@ -35,6 +44,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
     @Override
     public void onBindViewHolder(@NonNull JobDetailAdapter.StoryHolder holder, int position) {
         JobDetail item = listJobDetail.get(position);
+        viewBinderHelper.bind(holder.swipeRevealLayout,String.valueOf(position));
         holder.tvJdName.setText(item.Name);
         holder.tvJdDes.setText(item.Description);
         holder.tvEstimatedTime.setText(String.valueOf(item.EstimatedCompletedTime));
@@ -55,6 +65,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
     }
 
     public class StoryHolder extends RecyclerView.ViewHolder {
+        SwipeRevealLayout swipeRevealLayout;
         TextView tvJdName;
         TextView tvJdDes;
         TextView tvEstimatedTime;
@@ -64,6 +75,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
         CheckBox cb_status;
         public StoryHolder(View itemView) {
             super(itemView);
+            swipeRevealLayout = itemView.findViewById(R.id.item_job_detail);
             tvJdName = itemView.findViewById(R.id.tv_jd_name);
             tvJdDes = itemView.findViewById(R.id.tv_jd_description);
             tvEstimatedTime = itemView.findViewById(R.id.tv_jd_estimated_time);

@@ -9,17 +9,12 @@
     app:mode="same_level"
     app:dragEdge="right"
    >
-    <LinearLayout
-        android:id="@+id/lnDelete"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/green">
-        </TextView>
-    </LinearLayout>
+    <include
+        android:id="@+id/job_funcion"
+        layout="@layout/funcion_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         android:id="@+id/item_job"
         android:layout_width="match_parent"

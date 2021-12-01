@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,115 +8,128 @@
     android:layout_marginHorizontal="10dp"
     android:layout_margin="5dp"
     android:padding="5dp"
+    app:mode="same_level"
+    app:dragEdge="right"
     android:background="@color/bg_color"
     android:id="@+id/item_job_detail">
+    <include
+        android:id="@+id/job_funcion"
+        layout="@layout/funcion_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_gravity="top">
-        <CheckBox
-            android:layout_marginLeft="3dp"
-            android:id="@+id/chk_status"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:gravity="center"/>
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:id="@+id/img_jd_level"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_baseline_star_24"
-            android:layout_gravity="top"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="9"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="5dp"
-        >
-        <TextView
-            android:id="@+id/tv_jd_name"
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Tên Chi Tiết Công Việc"
-            android:textColor="@color/text_title_color"
-            android:textSize="18sp"
-            android:fontFamily="@font/playfair_regular"
-            />
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="top">
+            <CheckBox
+                android:layout_marginLeft="3dp"
+                android:id="@+id/chk_status"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/img_jd_level"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_star_24"
+                android:layout_gravity="top"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            >
             <TextView
-                android:id="@+id/tv_jd_description"
+                android:id="@+id/tv_jd_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mô tả chi tiết công việc"
-                android:textSize="14sp"
-                android:textColor="@color/white"
+                android:text="Tên Chi Tiết Công Việc"
+                android:textColor="@color/text_title_color"
+                android:textSize="18sp"
                 android:fontFamily="@font/playfair_regular"
                 />
-        </ScrollView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1.25"
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:id="@+id/tv_jd_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mô tả chi tiết công việc"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/playfair_regular"
+                    />
+            </ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thời gian hoàn thành dự kiến :"
-                android:textSize="14sp"
-                android:textColor="@color/orange"
-                />
-            <TextView
-                android:id="@+id/tv_jd_estimated_time"
-                android:layout_width="0dp"
-                android:layout_weight="0.75"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.25"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian hoàn thành dự kiến :"
+                    android:textSize="14sp"
+                    android:textColor="@color/orange"
+                    />
+                <TextView
+                    android:id="@+id/tv_jd_estimated_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.75"
+                    android:layout_height="wrap_content"
+                    android:text="Value"
+                    android:textSize="14sp"
+                    android:textColor="@color/orange"
+                    android:gravity="right"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Value"
-                android:textSize="14sp"
-                android:textColor="@color/orange"
-                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.25"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian hoàn thành thực tế :"
+                    android:textSize="14sp"
+                    android:textColor="@color/orange"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.75"
+                    android:layout_height="wrap_content"
+                    android:text="value"
+                    android:textColor="@color/orange"
+                    android:id="@+id/tv_jd_actual_time"
+                    android:textSize="14sp"
+                    android:gravity="right"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/sub_bg_color"
+                android:layout_marginRight="37dp"
                 />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1.25"
-                android:layout_height="wrap_content"
-                android:text="Thời gian hoàn thành thực tế :"
-                android:textSize="14sp"
-                android:textColor="@color/orange"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.75"
-                android:layout_height="wrap_content"
-                android:text="value"
-                android:textColor="@color/orange"
-                android:id="@+id/tv_jd_actual_time"
-                android:textSize="14sp"
-                android:gravity="right"
-                />
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/sub_bg_color"
-            android:layout_marginRight="37dp"
-            />
     </LinearLayout>
 
-</LinearLayout>
+
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

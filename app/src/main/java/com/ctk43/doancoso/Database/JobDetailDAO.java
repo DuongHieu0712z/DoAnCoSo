@@ -27,7 +27,7 @@ public interface JobDetailDAO {
     @Delete
     void deleteJobDetail(JobDetail jobDetail);
 
-    @Query("SELECT * FROM jobdetail where ID = :jobID")
+    @Query("SELECT * FROM jobdetail where JobID = :jobID")
     List<JobDetail> GetListJobDetail(int jobID);
 
 }

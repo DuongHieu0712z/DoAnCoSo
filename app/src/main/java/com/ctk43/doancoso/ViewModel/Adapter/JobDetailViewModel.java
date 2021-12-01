@@ -12,18 +12,19 @@ import com.ctk43.doancoso.Model.JobDetail;
 
 import java.util.List;
 
-public class JobDetialViewModel extends ViewModel {
+public class JobDetailViewModel extends ViewModel {
     private JobDetailRepository jobDetailRepo;
     private LiveData<List<JobDetail>> jobDetails;
+    private Job job;
 
-    public JobDetialViewModel() {
+    public JobDetailViewModel() {
         //     allJob = jobRepository.getAllJob();
     }
 
-    public void setData(Context context) {
-        jobDetailRepo = new JobDetailRepository(context);
+    public void setData(Context context,Job job) {
+        this.job = job;
+        jobDetailRepo = new JobDetailRepository(context,job.ID);
         jobDetails = jobDetailRepo.getallJobDetail();
-
     }
 
     public void InsertJobDetail(JobDetail jobDetail) {

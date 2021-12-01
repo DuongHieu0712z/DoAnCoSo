@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
@@ -42,14 +43,14 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+       // jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         //   Job[] PopulateMovieData =populateMovieData();
         // jobRepository.insert(PopulateMovieData[0]);
        // listjob = jobRepository.getAllJob();
        // jobViewModel.setData(jobRepository.getAllJob());
-       jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
+
         showFrg(new Splast_Fragment());
     }
-
   /*  public static Job[] populateMovieData(){
 =======
 
@@ -88,8 +89,8 @@ public class MainActivity extends AppCompatActivity  {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, frg,
                 null).commit();
     }
-
     public void gotoM001Screen() {
+
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new MainFragment(), null).commit();
     }
 

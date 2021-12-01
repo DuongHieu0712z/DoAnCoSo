@@ -16,8 +16,7 @@ public class Category {
     public Category() {
     }
 
-    public Category(int ID, String name) {
-        this.ID = ID;
+    public Category( String name) {
         Name = name;
     }
 }

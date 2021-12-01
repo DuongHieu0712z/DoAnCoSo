@@ -17,9 +17,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -29,11 +32,13 @@ import java.util.Date;
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private int mode = 0;
-
+    JobViewModel jobViewModel;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.floating_dialog_add_new_job);
+        jobViewModel =new ViewModelProvider(this).get(JobViewModel.class);
+        jobViewModel.setData(getApplicationContext());
         initView();
     }
 
@@ -90,18 +95,16 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             public void onClick(View view) {
                 try {
                     String name = edt_job_name.getText().toString();
-                    Toast.makeText(getApplicationContext(), "Không được để tên công việc trống, vui lòng nhập tên công việc!", Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getApplicationContext(), "Không được để tên công việc trống, vui lòng nhập tên công việc!", Toast.LENGTH_SHORT).show();
                     String description = edt_job_des.getText().toString();
-
                     String startDate = tv_date_start.getText().toString();
                     String startTime = tv_time_start.getText().toString();
                     Date start = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(startDate + " " + startTime);
-
                     String endDate = tv_date_start.getText().toString();
                     String endTime = tv_time_start.getText().toString();
                     Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(endDate + " " + endTime);
-
                     Job job = new Job(1, name, start, end, description);
+                    jobViewModel.InsertJob(job);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
