@@ -1,16 +1,27 @@
 package com.ctk43.doancoso.View;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +30,9 @@ import androidx.fragment.app.FragmentManager;
 import com.ctk43.doancoso.R;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private int mode = 0;
@@ -32,6 +45,40 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     private void initView() {
+
+        Spinner spnCategory = (Spinner) findViewById(R.id.spiner_job_type);
+
+        List<String> list = new ArrayList<>();
+        list.add("Java");
+        list.add("Android");
+        list.add("PHP");
+        list.add("C#");
+        list.add("ASP.NET");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,list);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
+        spnCategory.setAdapter(adapter);
+        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(AddJobActivity.this, spnCategory.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
+        img_add_job_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onOpenDialog();
+            }
+        });
+
         ImageView img_close = findViewById(R.id.img_close);
         img_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +145,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         timePicker.show(getFragmentManager(), "time picker");
     }
 
+
+
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         Calendar c = Calendar.getInstance();
@@ -122,5 +171,31 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         else
             textView = findViewById(R.id.tv_dlg_time_end);
         textView.setText(result);
+    }
+    private void onOpenDialog(){
+        final Dialog dialog = new Dialog(AddJobActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.floating_dialog_add_job_type);
+        Window window = dialog.getWindow();
+        if(window==null)return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttribute = window.getAttributes();
+        windowAttribute.gravity= Gravity.CENTER;
+        window.setAttributes(windowAttribute);
+        dialog.setCancelable(true);
+
+        EditText edt_job_type_name = dialog.findViewById(R.id.edt_dlg_job_type);
+
+        Button btn_add_job_type = dialog.findViewById(R.id.btn_dlg_add_job_type);
+        btn_add_job_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //xu ly them loai cong viec
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

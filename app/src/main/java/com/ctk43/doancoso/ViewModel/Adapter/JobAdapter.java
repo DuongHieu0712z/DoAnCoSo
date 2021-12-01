@@ -54,7 +54,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 ((MainActivity)mContext).gotoM002Screen(item);
             }
         });

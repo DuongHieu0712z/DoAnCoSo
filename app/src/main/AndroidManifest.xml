@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".View.AddJobActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".View.AddJobDetailActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
     </application>
 
 </manifest>

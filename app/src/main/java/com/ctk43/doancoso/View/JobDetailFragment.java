@@ -82,7 +82,7 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View view) {
                 //((MainActivity) getActivity()).gotoAddNewJobScreen();
-                Intent intent = new Intent(mContext, AddJobActivity.class);
+                Intent intent = new Intent(mContext, AddJobDetailActivity.class);
                 mContext.startActivity(intent);
             }
         });
@@ -100,6 +100,7 @@ public class JobDetailFragment extends Fragment implements View.OnClickListener 
         JobDetailAdapter adapter = new JobDetailAdapter(listJobDetail, mContext);
         rcv.setAdapter(adapter);
         rcv.setLayoutManager(new LinearLayoutManager(mContext));*/
+
     }
     @Override
     public void onClick(View view) {
