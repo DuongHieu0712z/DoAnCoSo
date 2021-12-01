@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.Adapter.ViewPagerAdapter;
+import com.ctk43.doancoso.Adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainFragment extends Fragment {

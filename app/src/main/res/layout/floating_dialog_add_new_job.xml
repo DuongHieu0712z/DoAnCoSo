@@ -18,7 +18,13 @@
             android:id="@+id/img_close"
             android:layout_width="50dp"
             android:layout_height="50dp"
+<<<<<<< HEAD
             android:src="@drawable/goback1" />
+=======
+            android:src="@drawable/goback1"
+            tools:ignore="ContentDescription" />
+
+>>>>>>> 736de33a5619f8b582fe0f024ce101d5adedc10f
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -137,7 +143,8 @@
             android:gravity="left"
             android:text="Ngày"
             android:textColor="@color/orange"
-            android:textSize="16dp" />
+            android:textSize="16sp"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -157,7 +164,7 @@
             android:gravity="left"
             android:text="Giờ"
             android:textColor="@color/orange"
-            android:textSize="16dp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
@@ -189,7 +196,7 @@
             android:gravity="left"
             android:text="Ngày"
             android:textColor="@color/orange"
-            android:textSize="16dp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -210,7 +217,7 @@
             android:gravity="left"
             android:text="Giờ"
             android:textColor="@color/orange"
-            android:textSize="16dp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 

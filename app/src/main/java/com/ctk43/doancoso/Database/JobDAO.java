@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.Database;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,15 +16,11 @@ import java.util.List;
 
 @Dao
 public interface JobDAO {
-
     @Query("SELECT * FROM Job")
     List<Job> getAllJobList();
 
-//    @Query("SELECT * FROM Job")
-//    LiveData<List<Job>> getAllJobList();
-
     @Insert
-    void insertJob(Job...jobs);
+    void insertJob(Job... jobs);
 
     @Update
     void updateJob(Job job);

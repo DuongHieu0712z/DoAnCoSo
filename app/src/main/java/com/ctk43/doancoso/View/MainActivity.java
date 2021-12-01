@@ -3,30 +3,19 @@ package com.ctk43.doancoso.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 //import androidx.room.Update;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.DatePickerDialog;
 import android.app.DialogFragment;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.ctk43.doancoso.Database.AppDatabase;
-import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.Adapter.JobViewModel;
-import com.ctk43.doancoso.ViewModel.Adapter.MyApplication;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -34,12 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
@@ -59,14 +43,18 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //   Job[] PopulateMovieData =populateMovieData();
-        JobRepository jobRepository = new JobRepository(this);
         // jobRepository.insert(PopulateMovieData[0]);
-        listjob = jobRepository.getAlljob();
+       // listjob = jobRepository.getAllJob();
+       // jobViewModel.setData(jobRepository.getAllJob());
+       jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         showFrg(new Splast_Fragment());
-
     }
 
+  /*  public static Job[] populateMovieData(){
+=======
+
     public static Job[] populateMovieData() {
+>>>>>>> c73e58aa893e6c809d4afaaba9c88be8f71da0b5
         Calendar cal = Calendar.getInstance();
         String Date = "31/12/2021";
         Date date;
@@ -85,7 +73,7 @@ public class MainActivity extends AppCompatActivity  {
 
                 new Job(1, "Tên Công Việc 2", "Đây là công việc 3 rat nhieu chu", start, end, true, 0.0),
         };
-    }
+    }*/
    /* private void initViewMobdel() {
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         jobViewModel.getAllJob().observe(this, new Observer<List<Job>>() {
@@ -103,7 +91,6 @@ public class MainActivity extends AppCompatActivity  {
 
     public void gotoM001Screen() {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new MainFragment(), null).commit();
-
     }
 
     public void gotoM002Screen(Job job) {

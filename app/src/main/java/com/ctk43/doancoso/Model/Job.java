@@ -1,5 +1,6 @@
 package com.ctk43.doancoso.Model;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 
 import androidx.annotation.NonNull;
@@ -44,13 +45,13 @@ public class Job {
     public String Description;
 
     @ColumnInfo(name = "Priority")
-    public Boolean Priority;
+    public Boolean Priority = false;
 
     @ColumnInfo(name = "Progress")
-    public Double Progress;
+    public Double Progress = 0.0;
 
     @ColumnInfo(name = "Status")
-    public int Status; //0 - on going; -1 - drop; 1 - complete; 2- over
+    public int Status = 0; //0 - on going; -1 - drop; 1 - complete; 2- over
 
     public Job() {
     }
@@ -88,6 +89,15 @@ public class Job {
         Status = 0;
     }
 
+    public Job(int categoryID, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {
+        CategoryID = categoryID;
+        Name = name;
+        StartDate = startDate;
+        EndDate = endDate;
+        Description = description;
+    }
+
+    @SuppressLint("SimpleDateFormat")
     public Job(Cursor c) {
         ID = c.getInt(0);
         CategoryID = c.getInt(1);

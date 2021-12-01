@@ -15,20 +15,18 @@ import java.util.List;
 
 @Dao
 public interface JobDetailDAO {
-
     @Query("SELECT * FROM JobDetail")
     List<JobDetail> getAllJobDetailList();
 
     @Insert
-    void insertJobDetail(JobDetail...jobDetails);
+    void insertJobDetail(JobDetail... jobDetails);
 
     @Update
     void updateJobDetail(JobDetail jobDetail);
 
     @Delete
-    void deletaJobDetail(JobDetail jobDetail);
+    void deleteJobDetail(JobDetail jobDetail);
 
     @Query("SELECT * FROM jobdetail where ID = :jobID")
     List<JobDetail> GetListJobDetail(int jobID);
-
 }
