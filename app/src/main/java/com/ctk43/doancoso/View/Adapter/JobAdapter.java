@@ -1,15 +1,19 @@
 package com.ctk43.doancoso.View.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +23,7 @@ import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDeltailActivity;
+import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.Calendar;
@@ -30,6 +35,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     private JobViewModel jobViewModel;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
     Job currentJob ;
+    private StoryHolder holder;
+    private int position;
+
     public JobAdapter( Context mContext,JobViewModel jobViewModel) {
         this.mContext = mContext;
         this.jobViewModel = jobViewModel;
@@ -61,14 +69,34 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
     }
     @Override
     public void onBindViewHolder(JobAdapter.StoryHolder holder, @SuppressLint("RecyclerView") int position) {
+        this.holder = holder;
+        this.position = position;
         Job item = listJob.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout,String.valueOf(position));
         holder.layout_funcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listJob.remove(item);
-                jobViewModel.DeleteJob(item);
-                notifyDataSetChanged();
+                final Dialog dialogYesNo = new Dialog(mContext);
+                Extension.dialogYesNo(dialogYesNo,null,"Hay không");
+                Button buttn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+                Button buttn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+                dialogYesNo.setCancelable(true);
+                buttn_yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        jobViewModel.DeleteJob(item);
+                        notifyItemRemoved(listJob.indexOf(item));
+                        listJob.remove(item);
+                        dialogYesNo.dismiss();
+                    }
+                });
+                buttn_no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogYesNo.dismiss();
+                    }
+                });
+                dialogYesNo.show();
             }
         });
         holder.itemJob.setOnClickListener(new View.OnClickListener() {

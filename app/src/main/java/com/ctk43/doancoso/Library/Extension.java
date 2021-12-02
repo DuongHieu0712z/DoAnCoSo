@@ -3,11 +3,48 @@ package com.ctk43.doancoso.Library;
 
 
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ctk43.doancoso.R;
+
 import java.util.Calendar;
 import java.util.Date;
 
 
 public class Extension {
+
+    public static Dialog dialogYesNo (Dialog dialog,String title,String content){
+        boolean bool;
+        int theme = R.attr.dialogTheme;
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_yes_no);
+        Window window = dialog.getWindow();
+        if(window == null){
+            return null;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windownAtrributes = window.getAttributes();
+        windownAtrributes.gravity = Gravity.CENTER;
+        window.setAttributes(windownAtrributes);
+        TextView textView = dialog.findViewById(R.id.txt_dialog_string);
+        textView.setText(content);
+     /*   Button btnyes = dialog.findViewById(R.id.btn_dialog_yes);
+        Button btnno = dialog.findViewById(R.id.btn_dialog_no);*/
+        return dialog;
+    }
     public static int Curr_Week(){
         Date date = Calendar.getInstance().getTime();
         Calendar cal = Calendar.getInstance();

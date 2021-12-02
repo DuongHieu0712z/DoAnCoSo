@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,18 +61,18 @@ public class JobFragment extends Fragment implements View.OnClickListener{
     private void initViews(View v) {
 
         RecyclerView rcv = v.findViewById(R.id.rcv_display_job);
-        jobListAdapter = new JobAdapter(mContext,jobViewModel);
         jobViewModel.setData(mContext);
         Log.e("job","đang trong job");
     //    jobListAdapter.setJob((jobViewModel.getAllJob().getValue()));
         jobViewModel.getAllJob().observe(requireActivity(), new Observer<List<Job>>() {
             @Override
             public void onChanged(List<Job> jobs) {
+                jobListAdapter = new JobAdapter(mContext,jobViewModel);
                 jobListAdapter.setJob(jobs);
+                rcv.setAdapter(jobListAdapter);
+                rcv.setLayoutManager(new LinearLayoutManager(mContext));
             }
         });
-        rcv.setAdapter(jobListAdapter);
-        rcv.setLayoutManager(new LinearLayoutManager(mContext));
         btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(new View.OnClickListener() {
             @Override
