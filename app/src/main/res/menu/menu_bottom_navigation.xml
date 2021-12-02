@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_job"
-        android:icon="@drawable/ic_delete"
+        android:icon="@drawable/ic_baseline_work_24"
         android:title="@string/job" />
     <item
         android:id="@+id/menu_month"
-        android:icon="@drawable/ic_delete"
+        android:icon="@drawable/ic_baseline_calendar_month_24"
         android:title="@string/month" />
 
     <item
         android:id="@+id/menu_setting"
-        android:icon="@drawable/ic_delete"
+        android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/setting" />
 
     <item
         android:id="@+id/menu_account"
-        android:icon="@drawable/ic_delete"
+        android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/account" />
 
 </menu>

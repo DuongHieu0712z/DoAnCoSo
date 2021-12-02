@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
@@ -45,6 +46,11 @@ public class MainActivity extends AppCompatActivity  {
        // jobViewModel.setData(jobRepository.getAllJob());
 
        // showFrg(new Splast_Fragment());
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        return true;
     }
     private void init(){
         viewPager = findViewById(R.id.view_pager_main);

@@ -28,9 +28,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:backgroundTint="@color/text_title_color"
             android:src="@drawable/ic_baseline_add_24"
             android:layout_gravity="bottom|right"
+            app:tint="@color/black"
+            android:backgroundTint="@color/splat_text_color_lighter"
+            app:srcCompat="@drawable/ic_baseline_add_24"
             />
     </FrameLayout>
 
