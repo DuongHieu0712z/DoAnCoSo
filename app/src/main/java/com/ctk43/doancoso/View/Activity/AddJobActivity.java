@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -31,6 +31,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.DatePickerFragment;
+import com.ctk43.doancoso.View.TimePickerFragment;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
@@ -48,15 +50,13 @@ import java.util.Date;
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private int mode = 0;
     JobViewModel jobViewModel;
-    JobDetailViewModel jobDetailViewModel;
-    CategoryViewModel categoryViewModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.floating_dialog_add_new_job);
-        /*categoryViewModel= new CategoryViewModel(this);
-        jobDetailViewModel =new JobDetailViewModel(this);
-        jobViewModel =new JobViewModel(this);*/
+        jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
+        jobViewModel.setData(this);
         initView();
     }
 
@@ -65,7 +65,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
         Spinner spnCategory = (Spinner) findViewById(R.id.spiner_job_type);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,categoryViewModel.getAllCategory().getValue());
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,jobViewModel.getCategoriesName());
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 
         spnCategory.setAdapter(adapter);
@@ -80,7 +80,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
             }
         });
-
         ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
         img_add_job_type.setOnClickListener(new View.OnClickListener() {
             @Override

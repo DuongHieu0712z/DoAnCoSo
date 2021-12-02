@@ -22,6 +22,9 @@ public interface JobDAO {
     @Insert
     void insertJob(Job... jobs);
 
+    @Query("SELECT * FROM Job WHERE ID = :Id ")
+    Job getJobFormID(Integer Id);
+
     @Update
     void updateJob(Job job);
 

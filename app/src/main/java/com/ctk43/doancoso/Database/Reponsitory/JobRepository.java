@@ -39,6 +39,9 @@ public class JobRepository {
     public LiveData<List<Job>> getAllJob() {
         return allJob;
     }
+    public Job getJobFormID(int id) {
+        return jobDAO.getJobFormID(id);
+    }
 
     private static class InsertJobAsyncTask extends AsyncTask<Job, Void, Void> {
         private JobDAO jobDAO;

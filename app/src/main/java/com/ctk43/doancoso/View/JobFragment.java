@@ -23,7 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.Adapter.JobAdapter;
+import com.ctk43.doancoso.View.Adapter.JobAdapter;
+import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -96,7 +97,7 @@ public class JobFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        ((MainActivity) getActivity()).gotoAddNewJobScreen();
+      //  ((MainActivity) getActivity()).gotoAddNewJobScreen();
     }
 
 

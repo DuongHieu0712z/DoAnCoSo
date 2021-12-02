@@ -34,7 +34,6 @@ public class JobDetailRepository {
     public void Delete(JobDetail jobDetail) {
         new DeleteJobDetailAsyncTask(jobDetailDAO).execute(jobDetail);
     }
-
     public LiveData<List<JobDetail>> getallJobDetail() {
         return allJobDetail;
     }

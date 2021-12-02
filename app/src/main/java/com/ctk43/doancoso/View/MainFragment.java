@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.Adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainFragment extends Fragment {
@@ -37,8 +35,8 @@ public class MainFragment extends Fragment {
         tabLayout = v.findViewById(R.id.tab_layout_main);
         viewPager = v.findViewById(R.id.view_pager_main);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewPager.setAdapter(viewPagerAdapter);
+     //   ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+      //  viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
     }

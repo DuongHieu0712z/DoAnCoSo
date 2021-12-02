@@ -1,7 +1,8 @@
-package com.ctk43.doancoso.Adapter;
+package com.ctk43.doancoso.View.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.MainActivity;
+import com.ctk43.doancoso.View.Activity.JobDeltailActivity;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.Calendar;
@@ -73,7 +74,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         holder.itemJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)mContext).gotoM002Screen(item);
+                Intent intent = new Intent(mContext, JobDeltailActivity.class);
+                intent.putExtra("JobID",item.ID);
+                mContext.startActivity(intent);
             }
         });
    /*     holder.swipeRevealLayout.setOnLongClickListener(new View.OnLongClickListener() {
@@ -98,11 +101,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
         currentJob = item;
         holder.tv_job_name.setText(item.Name);
         holder.tv_job_des.setText(item.Description);
-        if(item.Priority ==true)
+     /*   if(item.Priority ==true)
             holder.img_level.setImageResource(R.drawable.ic_baseline_star_24);
         else
             holder.img_level.setImageResource(R.drawable.ic_baseline_star_outline_24);
-
+*/
         holder.tv_job_end.setText(Extension.TimeRemaining(Calendar.getInstance().getTime(),item.EndDate));
         double prg = item.Progress*100;
         holder.tv_job_prg.setText(String.valueOf((int)prg)+"%");
@@ -147,7 +150,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
             swipeRevealLayout = view.findViewById(R.id.item_topic);
             layout_funcion = view.findViewById(R.id.job_funcion);
             itemJob = view.findViewById(R.id.item_job);
-            img_level = view.findViewById(R.id.img_level);
+      //      img_level = view.findViewById(R.id.img_level);
             tv_job_name = view.findViewById(R.id.tv_job_name);
              tv_job_des = view.findViewById(R.id.tv_job_description);
              tv_job_prg = view.findViewById(R.id.tv_progress);

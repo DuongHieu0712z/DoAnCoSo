@@ -33,14 +33,14 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:gravity="center"/>
+
             <ImageView
-                android:layout_marginTop="10dp"
                 android:id="@+id/img_jd_level"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_baseline_star_24"
                 android:layout_gravity="top"
-                />
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_baseline_star_24" />
         </LinearLayout>
 
         <LinearLayout

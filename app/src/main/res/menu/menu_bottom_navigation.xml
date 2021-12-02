@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_job"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/job" />
+    <item
+        android:id="@+id/menu_month"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/month" />
+
+    <item
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/setting" />
+
+    <item
+        android:id="@+id/menu_account"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/account" />
+
+</menu>

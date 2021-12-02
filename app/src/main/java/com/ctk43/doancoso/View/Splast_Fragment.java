@@ -12,9 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
-import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.MainActivity;
 
 public class Splast_Fragment extends Fragment {
     @Nullable
@@ -28,7 +26,7 @@ public class Splast_Fragment extends Fragment {
         new Handler().postDelayed(this::gotoM001Screen, 1000);
     }
     private void gotoM001Screen() {
-        ((MainActivity) getActivity()).gotoM001Screen();
+       // ((MainActivity) getActivity()).gotoM001Screen();
     }
     @Override
     public void onResume() {

@@ -17,6 +17,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -32,6 +33,10 @@ android {
 dependencies {
     implementation "androidx.room:room-runtime:2.3.0"
     implementation 'androidx.room:room-common:2.2.6'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
     annotationProcessor "androidx.room:room-compiler:2.3.0"
     implementation 'androidx.lifecycle:lifecycle-livedata:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.4.0'

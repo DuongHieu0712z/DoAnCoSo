@@ -1,27 +1,21 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 //import androidx.room.Update;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.widget.Toast;
+import android.view.MenuItem;
 
+import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +26,9 @@ public class MainActivity extends AppCompatActivity  {
     private static final String DATABASE_NAME = "databases/JobManagement.db";
     private static final String DB_PATH_SUFFIX = "/databases/";
     private TabLayout tabLayout;
+    private BottomNavigationView  bottomMenu;
     private JobViewModel jobViewModel;
-    private ViewPager viewPager;
+    private ViewPager2 viewPager;
     private int dlg_mode = 0;
     public String result = "";
 
@@ -41,13 +36,45 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+
        // jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         //   Job[] PopulateMovieData =populateMovieData();
         // jobRepository.insert(PopulateMovieData[0]);
        // listjob = jobRepository.getAllJob();
        // jobViewModel.setData(jobRepository.getAllJob());
 
-        showFrg(new Splast_Fragment());
+       // showFrg(new Splast_Fragment());
+    }
+    private void init(){
+        viewPager = findViewById(R.id.view_pager_main);
+        bottomMenu = findViewById(R.id.bottom_Menu);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(adapter);
+        viewPager.setUserInputEnabled(false);
+        bottomMenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id){
+                    case R.id.menu_job:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.menu_month:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.menu_setting:
+                        viewPager.setCurrentItem(2);
+                        break;
+                    case R.id.menu_account:
+                        viewPager.setCurrentItem(3);
+                        break;
+                }
+                return true;
+            }
+        });
+
     }
   /*  public static Job[] populateMovieData(){
 =======
@@ -82,7 +109,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
     }*/
-
+/*
     private void showFrg(Fragment frg) {
         getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, frg,
                 null).commit();
@@ -150,5 +177,5 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
-    }
+    }*/
 }

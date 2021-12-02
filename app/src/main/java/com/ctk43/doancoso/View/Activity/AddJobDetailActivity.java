@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Activity;
 
 import android.os.Bundle;
 import android.view.View;

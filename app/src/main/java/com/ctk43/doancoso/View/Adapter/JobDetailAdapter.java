@@ -1,6 +1,6 @@
 
 
-package com.ctk43.doancoso.Adapter;
+package com.ctk43.doancoso.View.Adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

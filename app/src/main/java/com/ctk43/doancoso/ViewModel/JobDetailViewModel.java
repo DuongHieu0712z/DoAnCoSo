@@ -4,9 +4,12 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.ctk43.doancoso.Database.Reponsitory.CategoryRepository;
 import com.ctk43.doancoso.Database.Reponsitory.JobDetailRepository;
 import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
+import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 
@@ -14,7 +17,10 @@ import java.util.List;
 
 public class JobDetailViewModel extends ViewModel {
     private JobDetailRepository jobDetailRepo;
+    JobViewModel jobViewModel;
+
     private LiveData<List<JobDetail>> jobDetails;
+
     private Job job;
 
     public JobDetailViewModel () {
@@ -25,6 +31,8 @@ public class JobDetailViewModel extends ViewModel {
         this.job = job;
         jobDetailRepo = new JobDetailRepository(context,job.ID);
         jobDetails = jobDetailRepo.getallJobDetail();
+
+
     }
 
 
@@ -49,7 +57,6 @@ public class JobDetailViewModel extends ViewModel {
         jobDetailRepo.Delete(jobDetail);
         jobDetails.getValue().remove(jobDetail);
         UpdateJob();
-
     }
 
     public LiveData<List<JobDetail>> getAllJobDetail() {
@@ -65,7 +72,6 @@ public class JobDetailViewModel extends ViewModel {
         double after  = jobDetails.getValue().size();
         job.Progress = before / after;
     }
-
 }
 
 
