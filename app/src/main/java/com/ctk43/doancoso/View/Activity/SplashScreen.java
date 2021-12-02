@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Activity.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
     @Override
