@@ -47,7 +47,7 @@ public class JobDeltailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //((MainActivity) getActivity()).gotoAddNewJobScreen();
-                Intent intent = new Intent(getApplicationContext(), AddJobActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddJobDetailActivity.class);
                 startActivity(intent);
             }
         });
