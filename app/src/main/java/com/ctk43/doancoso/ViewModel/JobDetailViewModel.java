@@ -17,7 +17,6 @@ import java.util.List;
 
 public class JobDetailViewModel extends ViewModel {
     private JobDetailRepository jobDetailRepo;
-    JobViewModel jobViewModel;
 
     private LiveData<List<JobDetail>> jobDetails;
 
@@ -53,7 +52,6 @@ public class JobDetailViewModel extends ViewModel {
     }
 
     public void DeleteJobDetail(JobDetail jobDetail) {
-
         jobDetailRepo.Delete(jobDetail);
         jobDetails.getValue().remove(jobDetail);
         UpdateJob();

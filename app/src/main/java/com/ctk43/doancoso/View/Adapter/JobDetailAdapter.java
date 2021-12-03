@@ -1,12 +1,17 @@
 
 
 package com.ctk43.doancoso.View.Adapter;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,8 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.JobFragment;
+import com.ctk43.doancoso.View.ManagerJobFragment;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 
 import java.util.List;
@@ -48,6 +56,33 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
         holder.tvJdDes.setText(item.Description);
         holder.tvEstimatedTime.setText(String.valueOf(item.EstimatedCompletedTime));
         holder.tvActualTime.setText(String.valueOf(item.ActualCompletedTime));
+        viewBinderHelper.bind(holder.swipeRevealLayout,String.valueOf(position));
+        holder.layout_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialogYesNo = new Dialog(mContext);
+                Extension.dialogYesNo(dialogYesNo,null,"Hay không");
+                Button buttn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+                Button buttn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+                dialogYesNo.setCancelable(true);
+                buttn_yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        jobDetailViewModel.DeleteJobDetail(item);
+                        notifyItemRemoved(listJobDetail.indexOf(item));
+                         dialogYesNo.dismiss();
+                        new JobFragment();
+                    }
+                });
+                buttn_no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogYesNo.dismiss();
+                    }
+                });
+                dialogYesNo.show();
+            }
+        });
 
         if (item.Priority == true)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
@@ -69,12 +104,15 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
         TextView tvJdDes;
         TextView tvEstimatedTime;
         TextView tvActualTime;
+        FrameLayout layout_delete;
         //SeekBar sb_Progress = vJobDetail.findViewById(R.id.sb_jd_progress);
         ImageView img_Priority;
         CheckBox cb_status;
+        @SuppressLint("ResourceType")
         public StoryHolder(View itemView) {
             super(itemView);
             swipeRevealLayout = itemView.findViewById(R.id.item_job_detail);
+            layout_delete = itemView.findViewById(R.id.layout_delete_item);
             tvJdName = itemView.findViewById(R.id.tv_jd_name);
             tvJdDes = itemView.findViewById(R.id.tv_jd_description);
             tvEstimatedTime = itemView.findViewById(R.id.tv_jd_estimated_time);
@@ -83,5 +121,8 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
             img_Priority = itemView.findViewById(R.id.img_jd_level);
             cb_status = itemView.findViewById(R.id.chk_status);
         }
+    }
+    private void deleteItem(){
+
     }
 }

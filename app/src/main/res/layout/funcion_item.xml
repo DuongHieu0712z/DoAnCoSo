@@ -9,6 +9,7 @@
     android:paddingTop="10dp"
     >
     <FrameLayout
+        android:id="@+id/layout_update_item"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
@@ -30,6 +31,7 @@
             android:layout_marginLeft="10dp"/>
     </FrameLayout>
     <FrameLayout
+        android:id="@+id/layout_delete_item"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"

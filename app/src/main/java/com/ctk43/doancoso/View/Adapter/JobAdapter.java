@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
@@ -88,6 +90,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
                         notifyItemRemoved(listJob.indexOf(item));
                         listJob.remove(item);
                         dialogYesNo.dismiss();
+
                     }
                 });
                 buttn_no.setOnClickListener(new View.OnClickListener() {

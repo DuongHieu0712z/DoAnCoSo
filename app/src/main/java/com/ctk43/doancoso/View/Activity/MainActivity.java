@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-
                 switch (id){
                     case R.id.menu_job:
                         viewPager.setCurrentItem(0);

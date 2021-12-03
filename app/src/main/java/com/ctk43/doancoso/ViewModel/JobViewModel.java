@@ -29,6 +29,7 @@ public class JobViewModel extends ViewModel {
         categoryRepository = new CategoryRepository(context);
         categories = categoryRepository.getallCategory();
     }
+
     public void InsertJob(Job job){
         jobRepository.insert(job);
     }
