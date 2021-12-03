@@ -77,7 +77,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.StoryHolder>{
             @Override
             public void onClick(View v) {
                 final Dialog dialogYesNo = new Dialog(mContext);
-                Extension.dialogYesNo(dialogYesNo,null,"Hay không");
+                Extension.dialogYesNo(dialogYesNo,null,"Xác nhận xóa?", "Sau khi xóa sẽ mất toàn bộ dữ liệu");
+                //dialogYesNo.setContentView(R.layout.floating_dialog_add_new_job);
                 Button buttn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
                 Button buttn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
                 dialogYesNo.setCancelable(true);

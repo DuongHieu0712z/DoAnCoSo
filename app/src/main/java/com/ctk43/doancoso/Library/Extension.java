@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class Extension {
 
-    public static Dialog dialogYesNo (Dialog dialog,String title,String content){
+    public static Dialog dialogYesNo (Dialog dialog,String title,String content, String description){
         boolean bool;
         int theme = R.attr.dialogTheme;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -41,6 +41,12 @@ public class Extension {
         window.setAttributes(windownAtrributes);
         TextView textView = dialog.findViewById(R.id.txt_dialog_string);
         textView.setText(content);
+        Button btnYes = dialog.findViewById(R.id.btn_dialog_yes);
+        btnYes.setBackgroundTintMode(null);
+        Button btnNo = dialog.findViewById(R.id.btn_dialog_no);
+        btnNo.setBackgroundTintMode(null);
+        TextView tv_des = dialog.findViewById(R.id.tv_dialog_description);
+        tv_des.setText(description);
      /*   Button btnyes = dialog.findViewById(R.id.btn_dialog_yes);
         Button btnno = dialog.findViewById(R.id.btn_dialog_no);*/
         return dialog;
