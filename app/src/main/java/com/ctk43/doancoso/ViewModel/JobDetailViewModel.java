@@ -4,74 +4,61 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.ctk43.doancoso.Database.Reponsitory.CategoryRepository;
-import com.ctk43.doancoso.Database.Reponsitory.JobDetailRepository;
-import com.ctk43.doancoso.Database.Reponsitory.JobRepository;
-import com.ctk43.doancoso.Model.Category;
+import com.ctk43.doancoso.Database.Repository.JobDetailRepository;
+import com.ctk43.doancoso.Database.Repository.JobRepository;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 
 import java.util.List;
 
 public class JobDetailViewModel extends ViewModel {
-    private JobDetailRepository jobDetailRepo;
-    JobViewModel jobViewModel;
-
+    private JobDetailRepository jobDetailRepository;
     private LiveData<List<JobDetail>> jobDetails;
-
     private Job job;
 
-    public JobDetailViewModel () {
-
+    public JobDetailViewModel() {
     }
 
-    public void setData(Context context,Job job) {
+    public void setContext(Context context, Job job) {
         this.job = job;
-        jobDetailRepo = new JobDetailRepository(context,job.ID);
-        jobDetails = jobDetailRepo.getallJobDetail();
-
-
+        jobDetailRepository = new JobDetailRepository(context, job.getId());
+        jobDetails = jobDetailRepository.getJobDetails();
     }
 
-
-    public void InsertJobDetail(JobDetail jobDetail) {
-        jobDetailRepo.insert(jobDetail);
-        jobDetails.getValue().add(jobDetail);
-        UpdateJob();
+    public void setContext(Context context, int jobId) {
+        this.job = new JobRepository(context).getById(jobId);
+        jobDetailRepository = new JobDetailRepository(context, jobId);
+        jobDetails = jobDetailRepository.getJobDetails();
     }
 
-    public void UpdateJobDetail(JobDetail jobDetail) {
-        jobDetailRepo.update(jobDetail);
-        for (JobDetail mjobDetail : jobDetails.getValue()
-             ) {
-            if(jobDetail.ID == mjobDetail.ID)
-                mjobDetail = jobDetail;
-        }
-        UpdateJob();
-    }
-
-    public void DeleteJobDetail(JobDetail jobDetail) {
-
-        jobDetailRepo.Delete(jobDetail);
-        jobDetails.getValue().remove(jobDetail);
-        UpdateJob();
-    }
-
-    public LiveData<List<JobDetail>> getAllJobDetail() {
+    public LiveData<List<JobDetail>> getJobDetails() {
         return jobDetails;
     }
-    public void UpdateJob(){
-        double before =0;
-        for (JobDetail jobDetail: jobDetails.getValue()
-             ) {
-            if(jobDetail.Priority)
-                before++;
+
+    public void insert(JobDetail... jobDetails) {
+        jobDetailRepository.insert(jobDetails);
+        updateProgress();
+    }
+
+    public void update(JobDetail... jobDetails) {
+        jobDetailRepository.update(jobDetails);
+        updateProgress();
+    }
+
+    public void delete(JobDetail... jobDetails) {
+        jobDetailRepository.delete(jobDetails);
+        updateProgress();
+    }
+
+    private void updateProgress() {
+        double before = 0;
+        for (JobDetail jobDetail : jobDetails.getValue()) {
+            if (jobDetail.isPriority()) {
+                ++before;
+            }
         }
-        double after  = jobDetails.getValue().size();
-        job.Progress = before / after;
+        double after = jobDetails.getValue().size();
+        job.setProgress(before / after);
     }
 }
-
-

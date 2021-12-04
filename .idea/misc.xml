@@ -3,6 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable-nodpi/test.xml" value="0.15989583333333332" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.24259259259259258" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.15989583333333332" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/action_bar_2.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/activity_add_job_detail.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/activity_add_new_job.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/activity_flat.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/activity_job_detail.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/activity_jobs.xml" value="0.536" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/activity_main.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/activity_tab_layout_main.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/content_job_deltail.xml" value="0.8" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/dialog_yes_no.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/floating_dialog_add_job_type.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/floating_dialog_add_new_job.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/fragment_manager_job.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/fragment_month.xml" value="0.2617753623188406" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/funcion_item.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/job_detail_item.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/job_item.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/job_title.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/menu_bar.xml" value="0.22554347826086957" />
+        <entry key="..\:/Android/DoAnCoSo/app/src/main/res/layout/type_of_job_item.xml" value="0.22554347826086957" />
         <entry key="..\:/DACS/NewProject/app/src/main/res/drawable/bg_btn.xml" value="0.26481481481481484" />
         <entry key="..\:/DACS/NewProject/app/src/main/res/drawable/bg_btn_1.xml" value="0.26481481481481484" />
         <entry key="..\:/DACS/NewProject/app/src/main/res/drawable/bg_des.xml" value="0.26481481481481484" />

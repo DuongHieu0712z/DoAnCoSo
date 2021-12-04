@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_round"
     android:orientation="vertical">
 
@@ -14,11 +13,13 @@
         android:layout_marginTop="7dp"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <ImageView
             android:id="@+id/img_close_detail"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/goback1" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -56,16 +57,16 @@
             android:layout_marginHorizontal="30dp"
             android:background="@null"
             android:hint="@string/hint_job_detail_name"
+            android:singleLine="true"
             android:textColor="@color/black"
-            android:textColorHint="@color/LightSlateGray"
-            android:singleLine="true" />
+            android:textColorHint="@color/LightSlateGray" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/bg_des"
         android:layout_marginHorizontal="20dp"
+        android:background="@drawable/bg_des"
         android:orientation="horizontal">
 
         <EditText
@@ -73,14 +74,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="15dp"
             android:background="@null"
             android:hint="@string/hint_job_detail_description"
-            android:textColor="@color/black"
-            android:textColorHint="@color/LightSlateGray"
             android:inputType="text|textMultiLine"
-            />
+            android:textColor="@color/black"
+            android:textColorHint="@color/LightSlateGray" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,16 +94,16 @@
         <EditText
             android:id="@+id/edt_dlg_job_detail_estimate_time"
             android:layout_width="0dp"
-            android:layout_weight="1.75"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="30dp"
+            android:layout_weight="1.75"
             android:background="@null"
             android:hint="@string/hint_estimate_time"
+            android:inputType="number"
             android:textColor="@color/black"
-            android:textColorHint="@color/LightSlateGray"
-            android:inputType="text|textMultiLine"
-            />
+            android:textColorHint="@color/LightSlateGray" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,17 +111,17 @@
             android:text="|"
             android:textColor="@color/LightSlateGray"
             android:textSize="24sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:fontFamily="@font/playfair_regular"
             android:text="phút"
-            android:layout_marginLeft="10dp"
             android:textColor="@color/LightSlateGray"
             android:textSize="16sp" />
 
     </LinearLayout>
-
 
 
     <ImageView
@@ -139,7 +139,7 @@
         android:background="@drawable/bg_btn_1"
         android:backgroundTint="@null"
         android:text="@string/btn_submit"
-        android:textColor="@color/text_title_color"/>
+        android:textColor="@color/text_title_color" />
 
     <ImageView
         android:layout_width="match_parent"

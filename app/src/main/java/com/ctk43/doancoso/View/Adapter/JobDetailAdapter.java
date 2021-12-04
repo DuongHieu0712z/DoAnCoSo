@@ -1,6 +1,5 @@
-
-
 package com.ctk43.doancoso.View.Adapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,42 +19,43 @@ import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 
 import java.util.List;
 
-public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.StoryHolder> {
-    private List<JobDetail> listJobDetail;
+public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobDetailHolder> {
     private final Context mContext;
+    private List<JobDetail> listJobDetail;
     private JobDetailViewModel jobDetailViewModel;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobDetailAdapter(Context mContext,JobDetailViewModel jobDetailViewModel) {
+    public JobDetailAdapter(Context mContext, JobDetailViewModel jobDetailViewModel) {
         this.jobDetailViewModel = jobDetailViewModel;
         this.mContext = mContext;
     }
-    public void setData(List<JobDetail> jobDetails){
+
+    public void setData(List<JobDetail> jobDetails) {
         listJobDetail = jobDetails;
     }
 
     @Override
-    public JobDetailAdapter.StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public JobDetailHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.job_detail_item, parent, false);
-        return new JobDetailAdapter.StoryHolder(view);
+        return new JobDetailHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull JobDetailAdapter.StoryHolder holder, int position) {
+    public void onBindViewHolder(@NonNull JobDetailHolder holder, int position) {
         JobDetail item = listJobDetail.get(position);
-        viewBinderHelper.bind(holder.swipeRevealLayout,String.valueOf(position));
-        holder.tvJdName.setText(item.Name);
-        holder.tvJdDes.setText(item.Description);
-        holder.tvEstimatedTime.setText(String.valueOf(item.EstimatedCompletedTime));
-        holder.tvActualTime.setText(String.valueOf(item.ActualCompletedTime));
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(position));
+        holder.tvJdName.setText(item.getName());
+        holder.tvJdDes.setText(item.getDescription());
+        holder.tvEstimatedTime.setText(String.valueOf(item.getEstimatedCompletedTime()));
+        holder.tvActualTime.setText(String.valueOf(item.getActualCompletedTime()));
 
-        if (item.Priority == true)
+        if (item.isPriority() == true)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
-        else if (item.Priority == false)
+        else if (item.isPriority() == false)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
 
-        if (item.Status == 1) holder.cb_status.setChecked(true);
-        else if (item.Status != 1) holder.cb_status.setChecked(false);
+        if (item.getStatus() == 1) holder.cb_status.setChecked(true);
+        else if (item.getStatus() != 1) holder.cb_status.setChecked(false);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
         return listJobDetail.size();
     }
 
-    public class StoryHolder extends RecyclerView.ViewHolder {
+    public class JobDetailHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
         TextView tvJdName;
         TextView tvJdDes;
@@ -72,7 +72,8 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.Stor
         //SeekBar sb_Progress = vJobDetail.findViewById(R.id.sb_jd_progress);
         ImageView img_Priority;
         CheckBox cb_status;
-        public StoryHolder(View itemView) {
+
+        public JobDetailHolder(View itemView) {
             super(itemView);
             swipeRevealLayout = itemView.findViewById(R.id.item_job_detail);
             tvJdName = itemView.findViewById(R.id.tv_jd_name);

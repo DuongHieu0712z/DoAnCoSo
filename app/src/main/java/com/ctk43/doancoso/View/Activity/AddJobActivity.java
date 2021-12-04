@@ -8,9 +8,7 @@ import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import android.view.Gravity;
-
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,29 +25,29 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.DatePickerFragment;
 import com.ctk43.doancoso.View.TimePickerFragment;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
-import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.text.DateFormat;
-
-import java.util.Calendar;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private int mode = 0;
     JobViewModel jobViewModel;
+    CategoryViewModel categoryViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,22 +55,31 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.floating_dialog_add_new_job);
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         jobViewModel.setData(this);
+
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        categoryViewModel.setContext(this);
         initView();
     }
 
     @SuppressLint("SimpleDateFormat")
     private void initView() {
-
         Spinner spnCategory = (Spinner) findViewById(R.id.spiner_job_type);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,jobViewModel.getCategoriesName());
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-
-        spnCategory.setAdapter(adapter);
+        categoryViewModel.getCategories().observe(this, new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                spnCategory.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        });
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, jobViewModel.getCategoriesName());
+//        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+//        spnCategory.setAdapter(adapter);
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(AddJobActivity.this, spnCategory.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(AddJobActivity.this, spnCategory.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -80,6 +87,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
             }
         });
+
         ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
         img_add_job_type.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +158,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                     String endTime = tv_time_start.getText().toString();
                     Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(endDate + " " + endTime);
                     Job job = new Job(1, name, start, end, description);
-                    jobViewModel.InsertJob(job);
+                    jobViewModel.insert(job);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -169,7 +177,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getFragmentManager(), "time picker");
     }
-
 
 
     @Override
@@ -197,16 +204,17 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             textView = findViewById(R.id.tv_dlg_time_end);
         textView.setText(result);
     }
-    private void onOpenDialog(){
+
+    private void onOpenDialog() {
         final Dialog dialog = new Dialog(AddJobActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.floating_dialog_add_job_type);
         Window window = dialog.getWindow();
-        if(window==null)return;
+        if (window == null) return;
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams windowAttribute = window.getAttributes();
-        windowAttribute.gravity= Gravity.CENTER;
+        windowAttribute.gravity = Gravity.CENTER;
         window.setAttributes(windowAttribute);
         dialog.setCancelable(true);
 
@@ -217,6 +225,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onClick(View view) {
                 //xu ly them loai cong viec
+                categoryViewModel.insert(new Category(edt_job_type_name.getText().toString()));
                 dialog.dismiss();
             }
         });

@@ -8,15 +8,37 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Category {
     @PrimaryKey(autoGenerate = true)
-    public int ID;
+    @ColumnInfo(name = "ID")
+    private int id;
 
-    @ColumnInfo(name = "Name") @NonNull
-    public String Name;
+    @ColumnInfo(name = "Name")
+    @NonNull
+    private String name;
 
-    public Category() {
+    public Category(@NonNull String name) {
+        this.name = name;
     }
 
-    public Category( String name) {
-        Name = name;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }
