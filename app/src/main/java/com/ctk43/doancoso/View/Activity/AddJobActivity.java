@@ -46,8 +46,8 @@ import java.util.List;
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private int mode = 0;
-    JobViewModel jobViewModel;
-    CategoryViewModel categoryViewModel;
+    private JobViewModel jobViewModel;
+    private CategoryViewModel categoryViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,18 +64,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     @SuppressLint("SimpleDateFormat")
     private void initView() {
         Spinner spnCategory = (Spinner) findViewById(R.id.spiner_job_type);
-        categoryViewModel.getCategories().observe(this, new Observer<List<Category>>() {
-            @Override
-            public void onChanged(List<Category> categories) {
-                ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
-                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-                spnCategory.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-        });
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, jobViewModel.getCategoriesName());
-//        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-//        spnCategory.setAdapter(adapter);
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -85,6 +73,16 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        categoryViewModel.getCategories().observe(this, new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                spnCategory.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -178,7 +176,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         timePicker.show(getFragmentManager(), "time picker");
     }
 
-
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         Calendar c = Calendar.getInstance();
@@ -187,10 +184,11 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         c.set(Calendar.DAY_OF_MONTH, i2);
         String result = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
         TextView textView;
-        if (mode == 0)
+        if (mode == 0) {
             textView = findViewById(R.id.tv_dlg_date_start);
-        else
+        } else {
             textView = findViewById(R.id.tv_dlg_date_end);
+        }
         textView.setText(result);
     }
 
@@ -198,10 +196,11 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         String result = i + ":" + i1;
         TextView textView;
-        if (mode == 0)
+        if (mode == 0) {
             textView = findViewById(R.id.tv_dlg_time_start);
-        else
+        } else {
             textView = findViewById(R.id.tv_dlg_time_end);
+        }
         textView.setText(result);
     }
 

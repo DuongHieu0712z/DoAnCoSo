@@ -41,6 +41,7 @@ public class Database {
         Date date = Calendar.getInstance().getTime();
         fakeData();
     }
+
     private void fakeData(){
          curr_week = new ArrayList<Job>();
          Calendar cal = Calendar.getInstance();
