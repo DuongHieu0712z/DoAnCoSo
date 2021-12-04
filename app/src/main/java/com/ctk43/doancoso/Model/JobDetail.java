@@ -16,7 +16,7 @@ public class JobDetail {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "JobID")
+    @ColumnInfo(name = "JobID", index = true)
     private int jobId;
 
     @ColumnInfo(name = "Name")

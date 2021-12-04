@@ -2,6 +2,7 @@ package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,7 +21,7 @@ public class JobDetailViewModel extends ViewModel {
     public JobDetailViewModel() {
     }
 
-    public void setContext(Context context, Job job) {
+    public void setContext(Context context, @NonNull Job job) {
         this.job = job;
         jobDetailRepository = new JobDetailRepository(context, job.getId());
         jobDetails = jobDetailRepository.getJobDetails();

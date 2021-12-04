@@ -17,7 +17,7 @@ public class JobDetailRepository {
 
     public JobDetailRepository(Context context, int jobId) {
         AppDatabase data = AppDatabase.getInstance(context);
-        jobDetailDAO = data.jobDetailDAO();
+        jobDetailDAO = data.getJobDetailDAO();
         jobDetails = jobDetailDAO.getByJobId(jobId);
     }
 

@@ -22,7 +22,7 @@ public class Job {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "CategoryID")
+    @ColumnInfo(name = "CategoryID", index = true)
     private int categoryId;
 
     @ColumnInfo(name = "Name")

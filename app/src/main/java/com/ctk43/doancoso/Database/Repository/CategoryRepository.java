@@ -17,7 +17,7 @@ public class CategoryRepository {
 
     public CategoryRepository(Context context) {
         AppDatabase data = AppDatabase.getInstance(context);
-        categoryDAO = data.categoryDAO();
+        categoryDAO = data.getCategoryDAO();
         categories = categoryDAO.getAll();
     }
 

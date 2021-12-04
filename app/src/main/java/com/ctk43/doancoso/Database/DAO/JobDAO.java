@@ -20,7 +20,7 @@ public interface JobDAO {
     Job getById(int id);
 
     @Query("SELECT * FROM Job WHERE CategoryID = :categoryId")
-    List<Job> getByCategoryId(int categoryId);
+    LiveData<List<Job>> getByCategoryId(int categoryId);
 
     @Insert
     void insert(Job... jobs);
