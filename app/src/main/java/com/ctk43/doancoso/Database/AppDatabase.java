@@ -1,8 +1,8 @@
 package com.ctk43.doancoso.Database;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -24,7 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-@Database(entities = {Category.class, Job.class, JobDetail.class, User.class}, version = 1)
+@Database(entities = {Category.class, Job.class, JobDetail.class, User.class},
+        version = 1,
+        exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "JobManagement.db";
 
@@ -32,7 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new prePopulateData(instance).execute();
+            new SampledData(instance).execute();
         }
 
         @Override
@@ -61,35 +63,35 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserDAO getUserDAO();
 
-    private static class prePopulateData extends AsyncTask<Void, Void, Void> {
+    private static class SampledData extends AsyncTask<Void, Void, Void> {
         private final CategoryDAO categoryDAO;
         private final JobDAO jobDAO;
         private final JobDetailDAO jobDetailDAO;
 
-        private prePopulateData(AppDatabase db) {
+        private SampledData(AppDatabase db) {
             super();
             categoryDAO = db.getCategoryDAO();
             jobDAO = db.getJobDAO();
             jobDetailDAO = db.getJobDetailDAO();
         }
 
+        @SuppressLint("SimpleDateFormat")
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.e("database", "đang trong databse");
-            Calendar cal = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             String Date = "31/12/2021";
             Date date;
             try {
                 date = new SimpleDateFormat("dd/MM/yyyy").parse(Date);
-                cal.setTime(date);
+                calendar.setTime(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            cal.set(Calendar.HOUR_OF_DAY, 6);// for 6 hour
-            cal.set(Calendar.MINUTE, 0);// for 0 min
-            cal.set(Calendar.SECOND, 0);// for 0 sec
+            calendar.set(Calendar.HOUR_OF_DAY, 6); // for 6 hour
+            calendar.set(Calendar.MINUTE, 0); // for 0 min
+            calendar.set(Calendar.SECOND, 0); // for 0 sec
             Date start = Calendar.getInstance().getTime();
-            Date end = cal.getTime();
+            Date end = calendar.getTime();
 
             categoryDAO.insert(new Category("default"));
 
