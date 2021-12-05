@@ -1,8 +1,8 @@
 package com.ctk43.doancoso.Database;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -24,52 +24,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
-@Database(entities = {Category.class, Job.class, JobDetail.class, User.class}, version = 1)
+@Database(entities = {Category.class, Job.class, JobDetail.class, User.class},
+        version = 1,
+        exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-    private static String DATABASE_NAME = "JobManagement.db";
-    private static AppDatabase instance;
+    private static final String DATABASE_NAME = "JobManagement.db";
 
-    public abstract CategoryDAO categoryDAO();
-
-    public abstract JobDAO jobDAO();
-
-    public abstract JobDetailDAO jobDetailDAO();
-
-    public abstract UserDAO userDAO();
-
-    public static AppDatabase getInstance(final Context context) {
-        if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, DATABASE_NAME)
-                    .addCallback(callback)
-                    .allowMainThreadQueries()
-                    .build();
-        }
-        return instance;
-    }
-
-    /*    public static AppDatabase getInstance(final Context context) {
-            if (instance == null) {
-                instance = Room.databaseBuilder(context.getApplicationContext(),
-                        AppDatabase.class, DATABASE_NAME)
-                        .allowMainThreadQueries()
-                        .addCallback(new Callback() {
-                            @Override
-                            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                super.onCreate(db);
-                                new prePopulateData(instance).execute();
-                            }
-                        }).build();
-            }
-            return instance;
-        }*/
-    private static RoomDatabase.Callback callback = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback CALLBACK = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new prePopulateData(instance).execute();
-
+            new SampledData(instance).execute();
         }
 
         @Override
@@ -78,55 +43,76 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    private static class prePopulateData extends AsyncTask<Void, Void, Void> {
-        private JobDAO jobDAO;
-        private JobDetailDAO jobDetailDAO;
-        private CategoryDAO categoryDAO;
+    private static AppDatabase instance;
 
+    public static AppDatabase getInstance(final Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
+                    .addCallback(CALLBACK)
+                    .allowMainThreadQueries()
+                    .build();
+        }
+        return instance;
+    }
 
-        private prePopulateData(AppDatabase db) {
-            categoryDAO = db.categoryDAO();
-            jobDAO = db.jobDAO();
-            jobDetailDAO = db.jobDetailDAO();
+    public abstract CategoryDAO getCategoryDAO();
+
+    public abstract JobDAO getJobDAO();
+
+    public abstract JobDetailDAO getJobDetailDAO();
+
+    public abstract UserDAO getUserDAO();
+
+    private static class SampledData extends AsyncTask<Void, Void, Void> {
+        private final CategoryDAO categoryDAO;
+        private final JobDAO jobDAO;
+        private final JobDetailDAO jobDetailDAO;
+
+        private SampledData(AppDatabase db) {
+            super();
+            categoryDAO = db.getCategoryDAO();
+            jobDAO = db.getJobDAO();
+            jobDetailDAO = db.getJobDetailDAO();
         }
 
+        @SuppressLint("SimpleDateFormat")
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.e("database","đang trong databse");
-            Calendar cal = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             String Date = "31/12/2021";
             Date date;
             try {
                 date = new SimpleDateFormat("dd/MM/yyyy").parse(Date);
-                cal.setTime(date);
+                calendar.setTime(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            cal.set(Calendar.HOUR_OF_DAY, 6);// for 6 hour
-            cal.set(Calendar.MINUTE, 0);// for 0 min
-            cal.set(Calendar.SECOND, 0);// for 0 sec
+            calendar.set(Calendar.HOUR_OF_DAY, 6); // for 6 hour
+            calendar.set(Calendar.MINUTE, 0); // for 0 min
+            calendar.set(Calendar.SECOND, 0); // for 0 sec
             Date start = Calendar.getInstance().getTime();
-            Date end = cal.getTime();
+            Date end = calendar.getTime();
+
             categoryDAO.insert(new Category("default"));
-            jobDAO.insertJob(new Job(1,"Làm ", "Đây là công việc đầu 1 rat nhieu chu", start,end , true, 0.0));
-            jobDAO.insertJob(new Job(1,"Đi chơi", "Đây là công việc đầu 1 rat nhieu chu", start,end , false, 0.0));
-            jobDAO.insertJob(new Job(1,"Bài tập", "Đây là công việc đầu 1 rat nhieu chu", start,end , true, 0.0));
-            jobDAO.insertJob(new Job(1,"Cua kỳ cục", "Đây là công việc đầu 1 rat nhieu chu", start,end , false, 0.0));
-            jobDAO.insertJob(new Job(1,"Android", "Đây là công việc đầu 1 rat nhieu chu", start,end , false, 0.0));
-            jobDAO.insertJob(new Job(1,"Em ăn cơm chưa", "Đây là công việc đầu 1 rat nhieu chu", start,end , true, 0.0));
-            jobDAO.insertJob(new Job(1,"Em ăn uống rồi", "Đây là công việc đầu 1 rat nhieu chu", start,end , false, 0.0));
-            jobDAO.insertJob(new Job(1,"Thuaaaaaaa", "Đây là công việc đầu 1 rat nhieu chu", start,end , false, 0.0));
-            jobDAO.insertJob(new Job(1,"Thắng", "Đây là công việc đầu 1 rat nhieu chu", start,end , true, 0.0));
-            jobDAO.insertJob(new Job(1,"Daily", "Đây là công việc đầu 1 rat nhieu chu", start,end , false, 0.0));
 
-            jobDetailDAO.insertJobDetail(new JobDetail(1,"Học lý thuyết trường","Thêm 1 xíu về gì gì đó",5 ));
-            jobDetailDAO.insertJobDetail(new JobDetail(1,"Học lý trường trọng lực","Thêm 1 xíu về gì gì đó",7 ));
-            jobDetailDAO.insertJobDetail(new JobDetail(1,"Học lý thuyết trường kinh tế","Thêm 1 xíu về gì gì đó",6 ));
-            jobDetailDAO.insertJobDetail(new JobDetail(2,"Học lý luận cùn","Thêm 1 xíu về gì gì đó",1 ));
-            jobDetailDAO.insertJobDetail(new JobDetail(3,"làm không chơi kỳ lạ","Thêm 1 xíu về gì gì đó",3 ));
-            jobDetailDAO.insertJobDetail(new JobDetail(4,"Chơi không làm","Thêm 1 xíu về gì gì đó",4 ));
+            jobDAO.insert(new Job(1, "Làm ", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Đi chơi", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Bài tập", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Cua kỳ cục", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Android", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Em ăn cơm chưa", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Em ăn uống rồi", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Thuaaaaaaa", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Thắng", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Daily", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+
+            jobDetailDAO.insert(new JobDetail(1, "Học lý thuyết trường", 5, "Thêm 1 xíu về gì gì đó"));
+            jobDetailDAO.insert(new JobDetail(1, "Học lý trường trọng lực", 7, "Thêm 1 xíu về gì gì đó"));
+            jobDetailDAO.insert(new JobDetail(1, "Học lý thuyết trường kinh tế", 6, "Thêm 1 xíu về gì gì đó"));
+            jobDetailDAO.insert(new JobDetail(2, "Học lý luận cùn", 1, "Thêm 1 xíu về gì gì đó"));
+            jobDetailDAO.insert(new JobDetail(3, "làm không chơi kỳ lạ", 3, "Thêm 1 xíu về gì gì đó"));
+            jobDetailDAO.insert(new JobDetail(4, "Chơi không làm", 4, "Thêm 1 xíu về gì gì đó"));
             return null;
-
         }
     }
 }

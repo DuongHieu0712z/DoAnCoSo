@@ -13,7 +13,7 @@
     android:background="@color/bg_color"
     android:id="@+id/item_job_detail">
     <include
-        android:id="@+id/jobDeltail_funcion"
+        android:id="@+id/job_funcion"
         layout="@layout/funcion_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

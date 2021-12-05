@@ -1,17 +1,17 @@
 package com.ctk43.doancoso.View.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-//import androidx.room.Update;
-import androidx.viewpager2.widget.ViewPager2;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -20,18 +20,18 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  {
-    public String currentDate;
-    public List<Job> listjob = new ArrayList<>();
-//    public LiveData<List<Job>> listjob ;
+public class MainActivity extends AppCompatActivity {
+    //    public LiveData<List<Job>> listjob ;
     private static final String DATABASE_NAME = "databases/JobManagement.db";
     private static final String DB_PATH_SUFFIX = "/databases/";
+    public String currentDate;
+    public List<Job> listjob = new ArrayList<>();
+    public String result = "";
     private TabLayout tabLayout;
-    private BottomNavigationView  bottomMenu;
+    private BottomNavigationView bottomMenu;
     private JobViewModel jobViewModel;
     private ViewPager2 viewPager;
     private int dlg_mode = 0;
-    public String result = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,30 +39,34 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         init();
 
-       // jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
+        // jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         //   Job[] PopulateMovieData =populateMovieData();
         // jobRepository.insert(PopulateMovieData[0]);
-       // listjob = jobRepository.getAllJob();
-       // jobViewModel.setData(jobRepository.getAllJob());
+        // listjob = jobRepository.getJobs();
+        // jobViewModel.setContext(jobRepository.getJobs());
 
-       // showFrg(new Splast_Fragment());
+        // showFrg(new Splast_Fragment());
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
     }
-    private void init(){
+
+    private void init() {
         viewPager = findViewById(R.id.view_pager_main);
         bottomMenu = findViewById(R.id.bottom_Menu);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
         viewPager.setUserInputEnabled(false);
         bottomMenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch (id){
+
+                switch (id) {
                     case R.id.menu_job:
                         viewPager.setCurrentItem(0);
                         break;
@@ -107,7 +111,7 @@ public class MainActivity extends AppCompatActivity  {
     }*/
    /* private void initViewMobdel() {
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
-        jobViewModel.getAllJob().observe(this, new Observer<List<Job>>() {
+        jobViewModel.getJobs().observe(this, new Observer<List<Job>>() {
             @Override
             public void onChanged(List<Job> jobs) {
                 listjob = jobs;
