@@ -83,6 +83,7 @@ public abstract class AppDatabase extends RoomDatabase {
             Date date;
             try {
                 date = new SimpleDateFormat("dd/MM/yyyy").parse(Date);
+                assert date != null;
                 calendar.setTime(date);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -93,25 +94,23 @@ public abstract class AppDatabase extends RoomDatabase {
             Date start = Calendar.getInstance().getTime();
             Date end = calendar.getTime();
 
-            categoryDAO.insert(new Category("default"));
+            categoryDAO.insert(new Category("Học tập"), new Category("Giải trí"));
 
-            jobDAO.insert(new Job(1, "Làm ", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
-            jobDAO.insert(new Job(1, "Đi chơi", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
-            jobDAO.insert(new Job(1, "Bài tập", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
-            jobDAO.insert(new Job(1, "Cua kỳ cục", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
-            jobDAO.insert(new Job(1, "Android", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
-            jobDAO.insert(new Job(1, "Em ăn cơm chưa", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
-            jobDAO.insert(new Job(1, "Em ăn uống rồi", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
-            jobDAO.insert(new Job(1, "Thuaaaaaaa", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
-            jobDAO.insert(new Job(1, "Thắng", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
-            jobDAO.insert(new Job(1, "Daily", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Làm đồ án", start, end, "Một môn học gây trầm cảm"));
+            jobDAO.insert(new Job(1, "Làm lab 8", start, end, "Không hiểu j hết á"));
+            jobDAO.insert(new Job(1, "Làm lab 9", start, end, "Từ chối hiểu"));
+            jobDAO.insert(new Job(1, "Làm web", start, end, "Làm kiểu j á"));
 
-            jobDetailDAO.insert(new JobDetail(1, "Học lý thuyết trường", 5, "Thêm 1 xíu về gì gì đó"));
-            jobDetailDAO.insert(new JobDetail(1, "Học lý trường trọng lực", 7, "Thêm 1 xíu về gì gì đó"));
-            jobDetailDAO.insert(new JobDetail(1, "Học lý thuyết trường kinh tế", 6, "Thêm 1 xíu về gì gì đó"));
-            jobDetailDAO.insert(new JobDetail(2, "Học lý luận cùn", 1, "Thêm 1 xíu về gì gì đó"));
-            jobDetailDAO.insert(new JobDetail(3, "làm không chơi kỳ lạ", 3, "Thêm 1 xíu về gì gì đó"));
-            jobDetailDAO.insert(new JobDetail(4, "Chơi không làm", 4, "Thêm 1 xíu về gì gì đó"));
+            jobDAO.insert(new Job(2, "Khóc", start, end, "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Chơi game", start, end, "Không biết nói j cả"));
+            jobDAO.insert(new Job(2, "Ghi cho có", start, end, "Ghi cho có"));
+            jobDAO.insert(new Job(2, "Đây là một ví dụ", start, end, "Chỉ là một ví dụ"));
+
+            jobDetailDAO.insert(new JobDetail(1, "Tìm hiểu android", 300, "Tìm hiểu thôi"));
+            jobDetailDAO.insert(new JobDetail(1, "Tìm hiểu SQLite", 300, "Tìm hiểu thôi"));
+            jobDetailDAO.insert(new JobDetail(1, "Làm app demo", 300, "Làm kiểu j á"));
+            jobDetailDAO.insert(new JobDetail(1, "Ghi j bây giờ", 300, "Ghi cho có vậy"));
+
             return null;
         }
     }

@@ -43,7 +43,7 @@ public class Job {
     private String description;
 
     @ColumnInfo(name = "Priority")
-    private boolean priority = false;
+    private int priority = 0;
 
     @ColumnInfo(name = "Progress")
     private double progress = 0.0;
@@ -60,7 +60,7 @@ public class Job {
     }
 
     @Ignore
-    public Job(int id, int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, Boolean priority, Double progress, int status) {
+    public Job(int id, int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, int priority, double progress, int status) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
@@ -71,48 +71,6 @@ public class Job {
         this.progress = progress;
         this.status = status;
     }
-
-    @Ignore
-    public Job(@NonNull String name, String description, @NonNull Date start, @NonNull Date end, Boolean priority, Double progress) {
-        this.name = name;
-        this.description = description;
-        startDate = start;
-        endDate = end;
-        this.priority = priority;
-        this.progress = progress;
-        status = 0;
-    }
-
-    @Ignore
-    public Job(int categoryId, @NonNull String name, String description, @NonNull Date start, @NonNull Date end, Boolean priority, Double progress) {
-        this.name = name;
-        this.categoryId = categoryId;
-        this.description = description;
-        startDate = start;
-        endDate = end;
-        this.priority = priority;
-        this.progress = progress;
-        status = 0;
-    }
-
-//    @SuppressLint("SimpleDateFormat")
-//    public Job(Cursor c) {
-//        id = c.getInt(0);
-//        categoryId = c.getInt(1);
-//
-//        SimpleDateFormat outputFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//        try {
-//            String date = c.getString(2);
-//            StartDate = outputFormatter.parse(date);
-//            date = c.getString(3);
-//            EndDate = outputFormatter.parse(date);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        Priority = c.getInt(4) == 1;
-//        Progress = c.getDouble(5);
-//        Status = c.getInt(6);
-//    }
 
     public int getId() {
         return id;
@@ -165,11 +123,11 @@ public class Job {
         this.description = description;
     }
 
-    public boolean isPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(boolean priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
