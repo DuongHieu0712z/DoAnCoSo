@@ -155,10 +155,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                     Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(endDate + " " + endTime);
                     Job job = new Job(1, name, start, end, description);
                     jobViewModel.insert(job);
-<<<<<<< HEAD
                     finish();
-=======
->>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

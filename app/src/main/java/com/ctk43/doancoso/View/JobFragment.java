@@ -60,23 +60,15 @@ public class JobFragment extends Fragment implements View.OnClickListener {
         jobViewModel.setData(mContext);
         Log.e("job", "đang trong job");
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
-<<<<<<< HEAD
-        jobListAdapter = new JobAdapter(mContext, jobViewModel);
-        jobViewModel.getJobs().observe(requireActivity(), new Observer<List<Job>>() {
-            @Override
-            public void onChanged(List<Job> jobs) {
-=======
         jobViewModel.getJobs().observe(requireActivity(), new Observer<List<Job>>() {
             @Override
             public void onChanged(List<Job> jobs) {
                 jobListAdapter = new JobAdapter(mContext, jobViewModel);
->>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
                 jobListAdapter.setJob(jobs);
                 rcv.setLayoutManager(new LinearLayoutManager(mContext));
                 rcv.setAdapter(jobListAdapter);
             }
         });
-
         btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(new View.OnClickListener() {
             @Override

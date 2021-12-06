@@ -43,11 +43,8 @@ public class Job {
     private String description;
 
     @ColumnInfo(name = "Priority")
-<<<<<<< HEAD
     private int priority;
-=======
-    private boolean priority = false;
->>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
+
 
     @ColumnInfo(name = "Progress")
     private double progress = 0.0;
@@ -64,11 +61,8 @@ public class Job {
     }
 
     @Ignore
-<<<<<<< HEAD
     public Job(int id, int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, int priority, Double progress, int status) {
-=======
-    public Job(int id, int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, Boolean priority, Double progress, int status) {
->>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
+
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
@@ -81,11 +75,8 @@ public class Job {
     }
 
     @Ignore
-<<<<<<< HEAD
     public Job(@NonNull String name, String description, @NonNull Date start, @NonNull Date end, int priority, Double progress) {
-=======
-    public Job(@NonNull String name, String description, @NonNull Date start, @NonNull Date end, Boolean priority, Double progress) {
->>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
+
         this.name = name;
         this.description = description;
         startDate = start;
@@ -96,11 +87,8 @@ public class Job {
     }
 
     @Ignore
-<<<<<<< HEAD
     public Job(int categoryId, @NonNull String name, String description, @NonNull Date start, @NonNull Date end, int priority, Double progress) {
-=======
-    public Job(int categoryId, @NonNull String name, String description, @NonNull Date start, @NonNull Date end, Boolean priority, Double progress) {
->>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
+
         this.name = name;
         this.categoryId = categoryId;
         this.description = description;
@@ -181,19 +169,11 @@ public class Job {
         this.description = description;
     }
 
-<<<<<<< HEAD
     public int getPriority() {
         return priority;
     }
 
     public void setPriority(int priority) {
-=======
-    public boolean isPriority() {
-        return priority;
-    }
-
-    public void setPriority(boolean priority) {
->>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
         this.priority = priority;
     }
 
