@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,10 +35,8 @@ public class JobDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_detail);
-        jobDetailViewModel = new ViewModelProvider(this).get(JobDetailViewModel.class);
-        int jobID = getIntent().getIntExtra("JobID", 0);
-        job = new JobRepository(this).getById(jobID);
-        init();
+        initViewModel();
+
     }
 
     private void AddJobDetail() {
@@ -51,43 +50,39 @@ public class JobDetailActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void initViewModel(){
+        jobDetailViewModel = new ViewModelProvider(this).get(JobDetailViewModel.class);
+        int jobID = getIntent().getIntExtra("JobID",0);
+        jobDetailViewModel.setContext(this,jobID);
+        job = jobDetailViewModel.getJob();
+        init();
+    }
     private void init() {
         RecyclerView recyclerView = findViewById(R.id.rcv_job_detail);
-        jobDetailViewModel.setContext(this, job);
-        jobDetailViewModel = new ViewModelProvider(this).get(JobDetailViewModel.class);
+        TextView tv_job_name = findViewById(R.id.tv_jt_job_name);
+        TextView tv_job_des = findViewById(R.id.tv_jt_description);
+        TextView tv_job_start = findViewById(R.id.tv_jt_time_start);
+        TextView tv_job_end = findViewById(R.id.tv_jt_time_end);
+        TextView tv_job_progress = findViewById(R.id.tv_jt_prg);
+        SeekBar sb = findViewById(R.id.sb_jt_progress);
+        btn_Add_New_Job_detail = (FloatingActionButton)findViewById(R.id.add_new_job_detail);
+        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel);
         jobDetailViewModel.getJobDetails().observe(this, new Observer<List<JobDetail>>() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChanged(List<JobDetail> jobDetails) {
-                JobDetailAdapter adapter = new JobDetailAdapter(getApplicationContext(), jobDetailViewModel);
                 adapter.setData(jobDetails);
                 recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                tv_job_name.setText(job.getName());
+                tv_job_des.setText(job.getDescription());
+                tv_job_start.setText(job.getStartDate().toString());
+                tv_job_end.setText(job.getEndDate().toString());
+                double prg = job.getProgress() * 100;
+                tv_job_progress.setText(String.valueOf((int) prg) + "%");
+                sb.setProgress((int) prg);
+                recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        TextView tv_job_name = findViewById(R.id.tv_jt_job_name);
-        tv_job_name.setText(job.getName());
-
-        TextView tv_job_des = findViewById(R.id.tv_jt_description);
-        tv_job_des.setText(job.getDescription());
-
-        TextView tv_job_start = findViewById(R.id.tv_jt_time_start);
-        tv_job_start.setText(job.getStartDate().toString());
-
-        TextView tv_job_end = findViewById(R.id.tv_jt_time_end);
-        tv_job_end.setText(job.getEndDate().toString());
-
-        TextView tv_job_progress = findViewById(R.id.tv_jt_prg);
-        double prg = job.getProgress() * 100;
-
-        tv_job_progress.setText(String.valueOf((int) prg) + "%");
-        SeekBar sb = findViewById(R.id.sb_jt_progress);
-
-        sb.setProgress((int) prg);
-        btn_Add_New_Job_detail = (FloatingActionButton) findViewById(R.id.add_new_job_detail);
         AddJobDetail();
 
 

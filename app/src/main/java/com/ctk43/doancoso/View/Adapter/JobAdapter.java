@@ -38,6 +38,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
         this.jobViewModel = jobViewModel;
+        listJob = jobViewModel.getJobs().getValue();
     }
 
     @Override
@@ -158,6 +159,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     @Override
     public int getItemCount() {
+        if (listJob == null )
+            return 0;
         return listJob.size();
     }
 

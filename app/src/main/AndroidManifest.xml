@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Activity.MainActivity" />
+
         <activity
             android:name=".View.Activity.AddJobActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

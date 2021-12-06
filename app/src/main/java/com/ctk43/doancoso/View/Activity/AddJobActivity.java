@@ -104,10 +104,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
         EditText edt_job_name = findViewById(R.id.edt_dlg_job_name);
         EditText edt_job_des = findViewById(R.id.edt_dlg_job_des);
-
         TextView tv_date_start = findViewById(R.id.tv_dlg_date_start);
         TextView tv_time_start = findViewById(R.id.tv_dlg_time_start);
-
         TextView tv_date_end = findViewById(R.id.tv_dlg_date_end);
         TextView tv_time_end = findViewById(R.id.tv_dlg_time_end);
 
@@ -157,6 +155,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                     Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(endDate + " " + endTime);
                     Job job = new Job(1, name, start, end, description);
                     jobViewModel.insert(job);
+                    finish();
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
