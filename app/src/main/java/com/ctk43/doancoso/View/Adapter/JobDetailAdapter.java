@@ -48,7 +48,6 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         holder.tvJdDes.setText(item.getDescription());
         holder.tvEstimatedTime.setText(String.valueOf(item.getEstimatedCompletedTime()));
         holder.tvActualTime.setText(String.valueOf(item.getActualCompletedTime()));
-
         if (item.isPriority() == true)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
         else if (item.isPriority() == false)

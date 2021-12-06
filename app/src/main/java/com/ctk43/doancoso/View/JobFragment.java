@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
@@ -59,16 +60,15 @@ public class JobFragment extends Fragment implements View.OnClickListener {
         jobViewModel.setData(mContext);
         Log.e("job", "đang trong job");
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
+        jobListAdapter = new JobAdapter(mContext, jobViewModel);
         jobViewModel.getJobs().observe(requireActivity(), new Observer<List<Job>>() {
             @Override
             public void onChanged(List<Job> jobs) {
-                jobListAdapter = new JobAdapter(mContext, jobViewModel);
                 jobListAdapter.setJob(jobs);
-                rcv.setAdapter(jobListAdapter);
                 rcv.setLayoutManager(new LinearLayoutManager(mContext));
+                rcv.setAdapter(jobListAdapter);
             }
         });
-
         btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,13 +14,13 @@ import java.util.List;
 
 public class CategoryRepository {
     private CategoryDAO categoryDAO;
-    private MutableLiveData<List<Category>> allCategory;
+    private LiveData<List<Category>> allCategory;
 
     public CategoryRepository(Context context) {
         AppDatabase data = AppDatabase.getInstance(context);
-        categoryDAO = data.categoryDAO();
+        categoryDAO = data.getCategoryDAO();
         allCategory = new MutableLiveData<>();
-        allCategory.setValue(categoryDAO.getAllCategoryList());
+        allCategory = (categoryDAO.getAll());
     }
 
     public void insert(Category category) {
@@ -35,7 +35,7 @@ public class CategoryRepository {
         new DeleteCategoryAsyncTask(categoryDAO).execute(category);
     }
 
-    public LiveData<List<Category>> getallCategory() {
+    public LiveData<List<Category>> getAll() {
         return allCategory;
     }
 

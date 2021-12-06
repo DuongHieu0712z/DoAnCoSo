@@ -17,18 +17,13 @@ public class JobDetailViewModel extends ViewModel {
     private JobDetailRepository jobDetailRepository;
     private LiveData<List<JobDetail>> jobDetails;
     private Job job;
-
+    private JobRepository jobRepository;
     public JobDetailViewModel() {
     }
 
-    public void setContext(Context context, @NonNull Job job) {
-        this.job = job;
-        jobDetailRepository = new JobDetailRepository(context, job.getId());
-        jobDetails = jobDetailRepository.getJobDetails();
-    }
-
     public void setContext(Context context, int jobId) {
-        this.job = new JobRepository(context).getById(jobId);
+        jobRepository = new JobRepository(context);
+        this.job = jobRepository.getById(jobId);
         jobDetailRepository = new JobDetailRepository(context, jobId);
         jobDetails = jobDetailRepository.getJobDetails();
     }
@@ -51,6 +46,9 @@ public class JobDetailViewModel extends ViewModel {
         jobDetailRepository.delete(jobDetails);
         updateProgress();
     }
+    public Job getJob(){
+        return job;
+    }
 
     private void updateProgress() {
         double before = 0;
@@ -61,5 +59,6 @@ public class JobDetailViewModel extends ViewModel {
         }
         double after = jobDetails.getValue().size();
         job.setProgress(before / after);
+        jobRepository.update(job);
     }
 }

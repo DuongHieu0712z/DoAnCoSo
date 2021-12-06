@@ -10,11 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DoAnCoSo">
         <activity
-            android:name=".View.Activity.JobDetailActivity"
-            android:exported="true"
-            android:label="@string/title_activity_job_deltail"
-            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
-        <activity
             android:name=".View.Activity.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">

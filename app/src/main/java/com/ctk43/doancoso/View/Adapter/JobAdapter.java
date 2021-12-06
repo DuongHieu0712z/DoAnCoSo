@@ -20,7 +20,7 @@ import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Activity.JobDetailActivity;
+import com.ctk43.doancoso.View.Activity.JobDeltailActivity;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.Calendar;
@@ -38,6 +38,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
         this.jobViewModel = jobViewModel;
+        listJob = jobViewModel.getJobs().getValue();
     }
 
     @Override
@@ -99,7 +100,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         holder.itemJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, JobDetailActivity.class);
+                Intent intent = new Intent(context, JobDeltailActivity.class);
                 intent.putExtra("JobID", item.getId());
                 context.startActivity(intent);
             }
@@ -158,6 +159,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     @Override
     public int getItemCount() {
+        if (listJob == null )
+            return 0;
         return listJob.size();
     }
 

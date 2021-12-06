@@ -14,13 +14,13 @@ import java.util.List;
 
 public class JobDetailRepository {
     private JobDetailDAO jobDetailDAO;
-    private MutableLiveData<List<JobDetail>> allJobDetail;
+    private LiveData<List<JobDetail>> allJobDetail;
 
     public JobDetailRepository(Context context,int idJob) {
         AppDatabase data = AppDatabase.getInstance(context);
-        jobDetailDAO = data.jobDetailDAO();
+        jobDetailDAO = data.getJobDetailDAO();
         allJobDetail = new MutableLiveData<>();
-        allJobDetail.setValue(jobDetailDAO.GetListJobDetail(idJob));
+        allJobDetail = (jobDetailDAO.getByJobId(idJob));
     }
 
     public void insert(JobDetail jobDetail) {
@@ -34,9 +34,10 @@ public class JobDetailRepository {
     public void Delete(JobDetail jobDetail) {
         new DeleteJobDetailAsyncTask(jobDetailDAO).execute(jobDetail);
     }
-    public LiveData<List<JobDetail>> getallJobDetail() {
+    public LiveData<List<JobDetail>> getAll() {
         return allJobDetail;
     }
+
 
 //    public LiveData<List<Job>> getallJobD() {
 //        return allJobD;
@@ -52,7 +53,7 @@ public class JobDetailRepository {
 
         @Override
         protected Void doInBackground(JobDetail... details) {
-            jobDetailDAO.deleteJobDetail(details[0]);
+            jobDetailDAO.delete(details[0]);
             return null;
         }
     }
@@ -66,7 +67,7 @@ public class JobDetailRepository {
 
         @Override
         protected Void doInBackground(JobDetail... jobDetails) {
-            jobDetailDAO.deleteJobDetail(jobDetails[0]);
+            jobDetailDAO.delete(jobDetails[0]);
             return null;
         }
     }
@@ -80,7 +81,7 @@ public class JobDetailRepository {
 
         @Override
         protected Void doInBackground(JobDetail... jobDetails) {
-            jobDetailDAO.updateJobDetail(jobDetails[0]);
+            jobDetailDAO.update(jobDetails[0]);
             return null;
         }
     }

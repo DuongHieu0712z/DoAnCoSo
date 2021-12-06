@@ -15,13 +15,13 @@ import java.util.List;
 
 public class JobRepository {
     private JobDAO jobDAO;
-    private MutableLiveData<List<Job>> allJob;
+    private LiveData<List<Job>> allJob;
 
     public JobRepository(Context context) {
         AppDatabase data = AppDatabase.getInstance(context);
-        jobDAO = data.jobDAO();
+        jobDAO = data.getJobDAO();
         allJob = new MutableLiveData<>();
-        allJob.setValue(jobDAO.getAllJobList());
+        allJob = (jobDAO.getAll());
     }
 
     public void insert(Job job) {
@@ -40,7 +40,7 @@ public class JobRepository {
         return allJob;
     }
     public Job getJobFormID(int id) {
-        return jobDAO.getJobFormID(id);
+        return jobDAO.getById(id);
     }
 
     private static class InsertJobAsyncTask extends AsyncTask<Job, Void, Void> {
@@ -52,7 +52,7 @@ public class JobRepository {
 
         @Override
         protected Void doInBackground(Job... jobs) {
-            jobDAO.insertJob(jobs[0]);
+            jobDAO.insert(jobs[0]);
             return null;
         }
     }
@@ -66,7 +66,7 @@ public class JobRepository {
 
         @Override
         protected Void doInBackground(Job... jobs) {
-            jobDAO.deleteJob(jobs[0]);
+            jobDAO.delete(jobs[0]);
             return null;
         }
     }
@@ -80,7 +80,7 @@ public class JobRepository {
 
         @Override
         protected Void doInBackground(Job... jobs) {
-            jobDAO.updateJob(jobs[0]);
+            jobDAO.update(jobs[0]);
             return null;
         }
     }
