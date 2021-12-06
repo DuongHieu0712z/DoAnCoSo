@@ -95,6 +95,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
             categoryDAO.insert(new Category("default"));
 
+<<<<<<< HEAD
             jobDAO.insert(new Job(1, "Làm ", "Đây là công việc đầu 1 rat nhieu chu", start, end, 4, 0.0));
             jobDAO.insert(new Job(1, "Đi chơi", "Đây là công việc đầu 1 rat nhieu chu", start, end, 4, 0.0));
             jobDAO.insert(new Job(1, "Bài tập", "Đây là công việc đầu 1 rat nhieu chu", start, end, 4, 0.0));
@@ -105,6 +106,18 @@ public abstract class AppDatabase extends RoomDatabase {
             jobDAO.insert(new Job(1, "Thuaaaaaaa", "Đây là công việc đầu 1 rat nhieu chu", start, end, 0, 0.0));
             jobDAO.insert(new Job(1, "Thắng", "Đây là công việc đầu 1 rat nhieu chu", start, end, 1, 0.0));
             jobDAO.insert(new Job(1, "Daily", "Đây là công việc đầu 1 rat nhieu chu", start, end, 1, 0.0));
+=======
+            jobDAO.insert(new Job(1, "Làm ", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Đi chơi", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Bài tập", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Cua kỳ cục", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Android", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Em ăn cơm chưa", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Em ăn uống rồi", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Thuaaaaaaa", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+            jobDAO.insert(new Job(1, "Thắng", "Đây là công việc đầu 1 rat nhieu chu", start, end, true, 0.0));
+            jobDAO.insert(new Job(1, "Daily", "Đây là công việc đầu 1 rat nhieu chu", start, end, false, 0.0));
+>>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
 
             jobDetailDAO.insert(new JobDetail(1, "Học lý thuyết trường", 5, "Thêm 1 xíu về gì gì đó"));
             jobDetailDAO.insert(new JobDetail(1, "Học lý trường trọng lực", 7, "Thêm 1 xíu về gì gì đó"));

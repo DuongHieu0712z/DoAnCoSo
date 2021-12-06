@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DoAnCoSo">
         <activity
+<<<<<<< HEAD
+=======
+            android:name=".View.Activity.JobDetailActivity"
+            android:exported="true"
+            android:label="@string/title_activity_job_deltail"
+            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
+        <activity
+>>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
             android:name=".View.Activity.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
@@ -20,9 +28,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Activity.MainActivity" />
+<<<<<<< HEAD
         <activity
             android:name=".View.Activity.JobDeltailActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+=======
+>>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
         <activity
             android:name=".View.Activity.AddJobActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

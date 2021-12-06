@@ -20,7 +20,11 @@ import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+<<<<<<< HEAD
 import com.ctk43.doancoso.View.Activity.JobDeltailActivity;
+=======
+import com.ctk43.doancoso.View.Activity.JobDetailActivity;
+>>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.Calendar;
@@ -100,7 +104,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         holder.itemJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 Intent intent = new Intent(context, JobDeltailActivity.class);
+=======
+                Intent intent = new Intent(context, JobDetailActivity.class);
+>>>>>>> 92793a4312b9bd423a942bf644bcf3abf4f19813
                 intent.putExtra("JobID", item.getId());
                 context.startActivity(intent);
             }
