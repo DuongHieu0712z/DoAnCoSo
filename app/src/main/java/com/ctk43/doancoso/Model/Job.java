@@ -43,7 +43,7 @@ public class Job {
     private String description;
 
     @ColumnInfo(name = "Priority")
-    private boolean priority = false;
+    private int priority;
 
     @ColumnInfo(name = "Progress")
     private double progress = 0.0;
@@ -60,7 +60,7 @@ public class Job {
     }
 
     @Ignore
-    public Job(int id, int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, Boolean priority, Double progress, int status) {
+    public Job(int id, int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, int priority, Double progress, int status) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
@@ -73,7 +73,7 @@ public class Job {
     }
 
     @Ignore
-    public Job(@NonNull String name, String description, @NonNull Date start, @NonNull Date end, Boolean priority, Double progress) {
+    public Job(@NonNull String name, String description, @NonNull Date start, @NonNull Date end, int priority, Double progress) {
         this.name = name;
         this.description = description;
         startDate = start;
@@ -84,7 +84,7 @@ public class Job {
     }
 
     @Ignore
-    public Job(int categoryId, @NonNull String name, String description, @NonNull Date start, @NonNull Date end, Boolean priority, Double progress) {
+    public Job(int categoryId, @NonNull String name, String description, @NonNull Date start, @NonNull Date end, int priority, Double progress) {
         this.name = name;
         this.categoryId = categoryId;
         this.description = description;
@@ -165,11 +165,11 @@ public class Job {
         this.description = description;
     }
 
-    public boolean isPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(boolean priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
