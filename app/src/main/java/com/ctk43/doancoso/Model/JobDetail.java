@@ -35,11 +35,8 @@ public class JobDetail {
     @ColumnInfo(name = "Priority")
     private boolean priority = false;
 
-    @ColumnInfo(name = "Progress")
-    private double progress = 0.0;
-
     @ColumnInfo(name = "Status")
-    private int status = 0; // 0 - on going; -1 - drop; 1 - complete; 2- over
+    private boolean status = false; // 0 - on going; -1 - drop; 1 - complete; 2- over
 
     @ColumnInfo(name = "IDParent")
     private int idParent;
@@ -52,15 +49,13 @@ public class JobDetail {
     }
 
     @Ignore
-    public JobDetail(int id, int jobId, @NonNull String name, int estimatedCompletedTime, int actualCompletedTime, String description, boolean priority, double progress, int status, int idParent) {
+    public JobDetail(int id, int jobId, @NonNull String name, int estimatedCompletedTime, int actualCompletedTime, String description, boolean priority, double progress, boolean status, int idParent) {
         this.id = id;
         this.jobId = jobId;
         this.name = name;
         this.estimatedCompletedTime = estimatedCompletedTime;
         this.actualCompletedTime = actualCompletedTime;
         this.description = description;
-        this.priority = priority;
-        this.progress = progress;
         this.status = status;
         this.idParent = idParent;
     }
@@ -117,24 +112,14 @@ public class JobDetail {
     public boolean isPriority() {
         return priority;
     }
-
     public void setPriority(boolean priority) {
         this.priority = priority;
     }
-
-    public double getProgress() {
-        return progress;
-    }
-
-    public void setProgress(double progress) {
-        this.progress = progress;
-    }
-
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

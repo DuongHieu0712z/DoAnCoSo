@@ -1,26 +1,36 @@
 package com.ctk43.doancoso.View.Adapter;
 
+import static android.provider.Settings.System.getString;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
+import com.ctk43.doancoso.View.Activity.MainActivity;
+import com.ctk43.doancoso.View.JobFragment;
+import com.ctk43.doancoso.ViewModel.CategoryViewModel;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.Calendar;
@@ -70,7 +80,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         this.position = position;
         Job item = listJob.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(position));
-        holder.layout_funcion.setOnClickListener(new View.OnClickListener() {
+        holder.layout_funcion.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Dialog dialogYesNo = new Dialog(context);
@@ -79,7 +89,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
                 Button buttn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
                 Button buttn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
                 dialogYesNo.setCancelable(true);
-                buttn_yes.setOnClickListener(new View.OnClickListener() {
+                buttn_yes.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         jobViewModel.delete(item);
@@ -88,7 +98,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
                         dialogYesNo.dismiss();
                     }
                 });
-                buttn_no.setOnClickListener(new View.OnClickListener() {
+                buttn_no.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialogYesNo.dismiss();
@@ -97,7 +107,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
                 dialogYesNo.show();
             }
         });
-        holder.itemJob.setOnClickListener(new View.OnClickListener() {
+        holder.itemJob.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
@@ -105,24 +115,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
                 context.startActivity(intent);
             }
         });
-   /*     holder.swipeRevealLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                new AlertDialog.Builder(mContext)
-                        .setIcon(R.drawable.ic_delete)
-                        .setTitle("Mày chắc chưa")
-                        .setMessage("mày muốn xóa công việc này")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                listJob.remove(item);
 
-                            }
-                        }).setNegativeButton("No",null)
-                        .show();
-                return true;
-            }
-        });*/
 
         currentJob = item;
         holder.tv_job_name.setText(item.getName());
@@ -151,11 +144,67 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
                 status = "Over";
                 break;
         }
+        holder.checkBox.setChecked(item.getStatus()==1?true: false  );
+        holder.checkBox.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.checkBox.isChecked()){
+                    final Dialog dialogYesNo = new Dialog(context);
+                    Extension.dialogYesNo(dialogYesNo, null, "Xác nhận ", "Công việc sẽ hoàn thành tất cả chi tiết công việc");
+                    //dialogYesNo.setContentView(R.layout.floating_dialog_add_new_job);
+                    Button buttn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+                    Button buttn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+                    dialogYesNo.setCancelable(true);
+                    buttn_yes.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            jobViewModel.checkOrUncheck(item,true);
+                            dialogYesNo.dismiss();
+                            new JobFragment();
+                        }
+                    });
+                    buttn_no.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialogYesNo.dismiss();
+                        }
+                    });
+                    dialogYesNo.show();
+                }else{
+                    final Dialog dialogYesNo = new Dialog(context);
+                    Extension.dialogYesNo(dialogYesNo, null, "Xác nhận ", "Sẽ hủy tiến độ các chi tiết chi tiết công việc đã hoàn thành");
+                    Button buttn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+                    Button buttn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+                    dialogYesNo.setCancelable(true);
+                    buttn_yes.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            jobViewModel.checkOrUncheck(item,false);
+                            dialogYesNo.dismiss();
+                            new JobFragment();
+                        }
+                    });
+                    buttn_no.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialogYesNo.dismiss();
+                        }
+                    });
+                    dialogYesNo.show();
+                }
+            }
+        });
         holder.tv_job_status.setText(status);
+        if(Extension.Remaning_minute(Calendar.getInstance().getTime(),item.getEndDate())>0){
+            holder.tv_time.setText(R.string.time_remaining);
+        }else{
+            holder.tv_time.setText(R.string.time_over);
+        }
 
         // holder.tvName.setTag(item);
         //holder.tvName.setText(item.getName());
     }
+
 
     @Override
     public int getItemCount() {
@@ -168,19 +217,22 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         SwipeRevealLayout swipeRevealLayout;
         LinearLayout layout_funcion;
         LinearLayout itemJob;
-        ImageView img_level;
         TextView tv_job_name;
+        TextView tv_time;
         TextView tv_job_des;
         TextView tv_job_prg;
         TextView tv_job_end;
         TextView tv_job_status;
         ProgressBar progressBar;
+        CheckBox checkBox;
 
         public JobHolder(View view) {
             super(view);
             swipeRevealLayout = view.findViewById(R.id.item_topic);
             layout_funcion = view.findViewById(R.id.job_funcion);
+            tv_time = view.findViewById(R.id.tv_time);
             itemJob = view.findViewById(R.id.item_job);
+            checkBox = view.findViewById(R.id.chk_finish_job);
             //      img_level = view.findViewById(R.id.img_level);
             tv_job_name = view.findViewById(R.id.tv_job_name);
             tv_job_des = view.findViewById(R.id.tv_job_description);

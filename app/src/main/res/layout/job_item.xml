@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_toEndOf="@id/chk_finish"
+                    android:layout_toEndOf="@id/chk_finish_job"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="10">
@@ -65,13 +65,13 @@
                 </LinearLayout>
 
                 <CheckBox
-                    android:id="@+id/chk_finish"
+                    android:id="@+id/chk_finish_job"
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="2dp"
+                    android:buttonTint="@color/green_02"
                     android:scaleX="1.5"
-                    android:scaleY="1.5"
-                    android:buttonTint="@color/green_02"/>
+                    android:scaleY="1.5" />
 
                 <TextView
                     android:id="@+id/tv_job_description"
@@ -81,7 +81,7 @@
                     android:layout_below="@id/ln_job"
                    android:layout_marginLeft="7dp"
                     android:padding="1dp"
-                    android:layout_toRightOf="@id/chk_finish"
+                    android:layout_toRightOf="@id/chk_finish_job"
                     android:text="Mô tả công việc"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
@@ -90,8 +90,8 @@
                     android:id="@+id/time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/chk_finish"
-                    android:layout_toEndOf="@id/chk_finish"
+                    android:layout_alignBottom="@id/chk_finish_job"
+                    android:layout_toEndOf="@id/chk_finish_job"
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/tv_time"

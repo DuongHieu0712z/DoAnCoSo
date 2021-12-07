@@ -36,7 +36,7 @@
                 android:src="@drawable/ic_baseline_star_24" />
             <CheckBox
                 android:layout_marginLeft="3dp"
-                android:id="@+id/chk_status"
+                android:id="@+id/chk_finish_job_detail"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:gravity="center"

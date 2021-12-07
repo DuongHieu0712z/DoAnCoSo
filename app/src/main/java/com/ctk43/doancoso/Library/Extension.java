@@ -2,6 +2,7 @@ package com.ctk43.doancoso.Library;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -9,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ctk43.doancoso.R;
 
@@ -43,6 +45,13 @@ public class Extension {
      /*   Button btnyes = dialog.findViewById(R.id.btn_dialog_yes);
         Button btnno = dialog.findViewById(R.id.btn_dialog_no);*/
         return dialog;
+    }
+    public static boolean isEmty(Context context,String value,String name,boolean isdefaut){
+        if (value.isEmpty()|| value == null || isdefaut) {
+            Toast.makeText(context, "Không được để "+name+" trống, vui lòng nhập "+name+"!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 
     public static int Curr_Week() {
@@ -106,11 +115,20 @@ public class Extension {
         int minute = (int) time % (1000 * 60 * 60);
         return minute;
     }
-
-    public static String TimeRemaining(Date start, Date end) {
-        int day = Remaning_day(start, end);
-        int hour = Remaning_hour(start, end);
-        int minute = Remaning_minute(start, end);
+    public static String over_time(int minute) {
+        String timeRe = new String();
+        int day = minute%60%24;
+        int hour = minute/60 %24;
+        int _minute = minute /60 /24;
+        timeRe = getTime(day,hour,_minute,true);
+        return timeRe;
+    }
+    public static String getTime(int day, int hour, int minute,boolean negative){
+        if(negative){
+            day *=-1;
+            hour *=-1;
+            minute *=-1;
+        }
         String timeRe = new String();
         if (day > 0 && hour > 0) {
             timeRe = day + " ngày " + hour + " giờ";
@@ -123,6 +141,26 @@ public class Extension {
         } else {
             timeRe = minute + " phút ";
         }
+
         return timeRe;
+    }
+    public static String TimeRemaining(Date start, Date end) {
+        int day = Remaning_day(start, end);
+        int hour = Remaning_hour(start, end);
+        int minute = Remaning_minute(start, end);
+        String timeRe ;
+        if(minute > 0){
+            timeRe =getTime(day,hour,minute,false);
+        }else{
+            timeRe = over_time(minute);
+        }
+        return timeRe;
+    }
+    public static int CheckStatus(Date start, Date end) {
+        if(Remaning_minute(start,end) <0)
+            return 2;
+        else {
+            return 0;
+        }
     }
 }

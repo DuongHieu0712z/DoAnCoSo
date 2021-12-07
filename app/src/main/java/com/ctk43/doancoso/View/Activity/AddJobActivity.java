@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
@@ -48,6 +49,12 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     private int mode = 0;
     private JobViewModel jobViewModel;
     private CategoryViewModel categoryViewModel;
+    EditText edt_job_name;
+    EditText edt_job_des;
+    TextView tv_date_start;
+    TextView tv_time_start;
+    TextView tv_date_end;
+    TextView tv_time_end;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,12 +109,12 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-        EditText edt_job_name = findViewById(R.id.edt_dlg_job_name);
-        EditText edt_job_des = findViewById(R.id.edt_dlg_job_des);
-        TextView tv_date_start = findViewById(R.id.tv_dlg_date_start);
-        TextView tv_time_start = findViewById(R.id.tv_dlg_time_start);
-        TextView tv_date_end = findViewById(R.id.tv_dlg_date_end);
-        TextView tv_time_end = findViewById(R.id.tv_dlg_time_end);
+        edt_job_name = findViewById(R.id.edt_dlg_job_name);
+        edt_job_des = findViewById(R.id.edt_dlg_job_des);
+        tv_date_start = findViewById(R.id.tv_dlg_date_start);
+        tv_time_start = findViewById(R.id.tv_dlg_time_start);
+        tv_date_end = findViewById(R.id.tv_dlg_date_end);
+        tv_time_end = findViewById(R.id.tv_dlg_time_end);
 
         tv_date_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,24 +148,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    String name = edt_job_name.getText().toString();
-                    if (name.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Không được để tên công việc trống, vui lòng nhập tên công việc!", Toast.LENGTH_SHORT).show();
-                    }
-                    String description = edt_job_des.getText().toString();
-                    String startDate = tv_date_start.getText().toString();
-                    String startTime = tv_time_start.getText().toString();
-                    Date start = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(startDate + " " + startTime);
-                    String endDate = tv_date_start.getText().toString();
-                    String endTime = tv_time_start.getText().toString();
-                    Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(endDate + " " + endTime);
-                    Job job = new Job(1, name, start, end, description);
-                    jobViewModel.insert(job);
-                    finish();
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if(getInput()){
+                    Toast.makeText(AddJobActivity.this,getString(R.string.add_job_sucess),Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -202,6 +193,33 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             textView = findViewById(R.id.tv_dlg_time_end);
         }
         textView.setText(result);
+    }
+    public boolean getInput(){
+            String name = edt_job_name.getText().toString();
+            String description = edt_job_des.getText().toString();
+            String startDate = tv_date_start.getText().toString();
+            String startTime = tv_time_start.getText().toString();
+            String endDate = tv_date_end.getText().toString();
+            String endTime = tv_time_end.getText().toString();
+            if(Extension.isEmty(this,name ,getString(R.string.job_name),false))
+                return false;
+            if(Extension.isEmty(this,endDate, getString(R.string.date_end),endDate.equals( getString(R.string.day))) )
+                return false;
+            if(Extension.isEmty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
+                return false;
+        try {
+            Date start = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(startDate + " " + startTime);
+            Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(endDate + " " + endTime);
+            Job job = new Job(1, name, start, end, description);
+            jobViewModel.insert(job);
+            finish();
+            return  true;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(AddJobActivity.this,getString(R.string.add_job_not_sucess),Toast.LENGTH_LONG).show();
+            return false;
+        }
     }
 
     private void onOpenDialog() {

@@ -27,7 +27,7 @@
             android:layout_weight="1.99"
             android:fontFamily="@font/playfair_regular"
             android:paddingEnd="25dp"
-            android:text="@string/tv_add_new_job_detail"
+            android:text="@string/add_job_detail"
             android:textAlignment="center"
             android:textColor="@color/text_title_color"
             android:textSize="20sp"
@@ -138,7 +138,7 @@
         android:layout_marginTop="-5dp"
         android:background="@drawable/bg_btn_1"
         android:backgroundTint="@null"
-        android:text="@string/btn_submit"
+        android:text="@string/add"
         android:textColor="@color/text_title_color" />
 
     <ImageView

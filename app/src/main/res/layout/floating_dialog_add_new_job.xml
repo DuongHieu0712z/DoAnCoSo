@@ -30,7 +30,7 @@
             android:layout_weight="1.99"
             android:fontFamily="@font/playfair_regular"
             android:paddingEnd="25dp"
-            android:text="@string/tv_add_new_job"
+            android:text="@string/add_job"
             android:textAlignment="center"
             android:textColor="@color/text_title_color"
             android:textSize="20sp"
@@ -134,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Thời gian bắt đầu"
+            android:text="@string/time_start"
             android:textColor="@color/LightSlateGray"
             android:textSize="16dp" />
 
@@ -188,7 +188,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Thời gian kết thúc"
+            android:text="@string/time_end"
             android:textColor="@color/LightSlateGray"
             android:textSize="16dp" />
 
@@ -241,7 +241,7 @@
         android:layout_marginTop="-5dp"
         android:background="@drawable/bg_btn_1"
         android:backgroundTint="@null"
-        android:text="@string/btn_submit"
+        android:text="@string/add"
         android:textColor="@color/text_title_color" />
 
     <ImageView

@@ -19,6 +19,7 @@ public class JobDetailRepository {
         AppDatabase data = AppDatabase.getInstance(context);
         jobDetailDAO = data.getJobDetailDAO();
         jobDetails = jobDetailDAO.getByJobId(jobId);
+
     }
 
     public LiveData<List<JobDetail>> getJobDetails() {

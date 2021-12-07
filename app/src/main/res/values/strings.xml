@@ -1,29 +1,46 @@
 <resources>
     <string name="app_name">Quản lý nhắc việc</string>
-    <string name="edt_name_job">Tên công việc</string>
-    <string name="edt_description_job">Mô tả</string>
-    <string name="tv_add_new_job">Thêm công việc</string>
-    <string name="tv_add_new_job_detail">Thêm chi tiết công việc</string>
-    <string name="btn_submit">Thêm</string>
+
+    <!--Hint-->
     <string name="hint_job_name">Nhập tên công việc</string>
     <string name="hint_job_detail_name">Nhập tên chi tiết công việc</string>
     <string name="hint_job_description">Nhập mô tả công việc</string>
     <string name="hint_job_detail_description">Nhập mô tả chi tiết công việc</string>
-    <string name="tv_date_start">Ngày bắt đầu</string>
-    <string name="tv_date_end">Ngày kết thúc</string>
-    <string name="tv_time_start">Giờ bắt đầu</string>
-    <string name="tv_time_end">Giờ kết thúc</string>
-    <string name="testdate">1 ngày 12 giờ</string>
+
+    <!--Function-->
     <string name="title_search">Tìm kiếm</string>
-    <string name="tv_add_job_type">Thêm loại công việc</string>
-    <string name="hint_add_job_type">Nhập tên loại công việc</string>
-    <string name="tv_estimal_time">Thời gian hoàn thành dự kiến</string>
     <string name="tv_value">Giá trị</string>
-    <string name="hint_estimate_time">Nhập thời gian hoàn thành dự kiến</string>
-    <string name="job">Công việc</string>
-    <string name="month">Tháng</string>
     <string name="setting">Cài đặt</string>
     <string name="account">Cá nhân</string>
+    <string name="add">Thêm</string>
+    <string name="add_job">Thêm công việc</string>
+    <string name="add_job_sucess">Thêm công việc thành công</string>
+    <string name="add_job_not_sucess">Không thể thêm công việc</string>
+    <string name="add_job_detail">Thêm chi tiết công việc</string>
+
+    <!--Job-->
+    <string name="job">Công việc</string>
+    <string name="job_name">Tên công việc</string>
+    <string name="tv_add_job_type">Thêm loại công việc</string>
+    <string name="hint_add_job_type">Nhập tên loại công việc</string>
+    <string name="description">Mô tả</string>
+
+    <!-- Time-->
+    <string name="month">Tháng</string>
+    <string name="day">Ngày</string>
+    <string name="hour">Giờ</string>
+    <string name="date_start">Ngày bắt đầu</string>
+    <string name="date_end">Ngày kết thúc</string>
+    <string name="hour_start">Giờ bắt đầu</string>
+    <string name="time_start">Thời gian bắt đầu</string>
+    <string name="time_end">Thời gian Kết thúc</string>
+    <string name="hour_end">Giờ kết thúc</string>
+    <string name="testdate">365 ngày 12 giờ</string>
+    <string name="hint_estimate_time">Nhập thời gian hoàn thành dự kiến</string>
+    <string name="estimal_time">Thời gian dự kiến</string>
+    <string name="time_remaining">Còn lại: </string>
+    <string name="time_over">Đã kết thúc:</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->
@@ -46,5 +63,4 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
 
-    <string name="time_remaining">Còn lại: </string>
 </resources>

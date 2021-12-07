@@ -71,6 +71,7 @@ public class JobDetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<JobDetail> jobDetails) {
                 adapter.setData(jobDetails);
+                jobDetailViewModel.syncJob();
                 recyclerView.setAdapter(adapter);
                 tv_job_name.setText(job.getName());
                 tv_job_des.setText(job.getDescription());

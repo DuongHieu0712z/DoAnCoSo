@@ -53,7 +53,7 @@
         android:layout_marginTop="-5dp"
         android:background="@drawable/bg_btn_1"
         android:backgroundTint="@null"
-        android:text="@string/btn_submit"
+        android:text="@string/add"
         android:textColor="@color/text_title_color" />
     <ImageView
         android:layout_width="match_parent"

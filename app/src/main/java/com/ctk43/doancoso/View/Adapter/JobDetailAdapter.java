@@ -48,14 +48,11 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         holder.tvJdDes.setText(item.getDescription());
         holder.tvEstimatedTime.setText(String.valueOf(item.getEstimatedCompletedTime()));
         holder.tvActualTime.setText(String.valueOf(item.getActualCompletedTime()));
-
         if (item.isPriority() == true)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
         else if (item.isPriority() == false)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
-
-        if (item.getStatus() == 1) holder.cb_status.setChecked(true);
-        else if (item.getStatus() != 1) holder.cb_status.setChecked(false);
+        holder.checkBox.setChecked(item.getStatus());
     }
 
     @Override
@@ -69,9 +66,8 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         TextView tvJdDes;
         TextView tvEstimatedTime;
         TextView tvActualTime;
-        //SeekBar sb_Progress = vJobDetail.findViewById(R.id.sb_jd_progress);
         ImageView img_Priority;
-        CheckBox cb_status;
+        CheckBox checkBox;
 
         public JobDetailHolder(View itemView) {
             super(itemView);
@@ -82,7 +78,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             tvActualTime = itemView.findViewById(R.id.tv_jd_actual_time);
             //SeekBar sb_Progress = vJobDetail.findViewById(R.id.sb_jd_progress);
             img_Priority = itemView.findViewById(R.id.img_jd_level);
-            cb_status = itemView.findViewById(R.id.chk_status);
+            checkBox = itemView.findViewById(R.id.chk_finish_job_detail);
         }
     }
 }

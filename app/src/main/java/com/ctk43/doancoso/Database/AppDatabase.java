@@ -36,7 +36,6 @@ public abstract class AppDatabase extends RoomDatabase {
             super.onCreate(db);
             new SampledData(instance).execute();
         }
-
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
