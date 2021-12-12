@@ -35,7 +35,7 @@ public class GeneralData {
     }
 
     public static int getColorStatus(int status){
-            return (getInstance().statusColor[status]);
+            return getInstance().statusColor[status];
 
     }
 

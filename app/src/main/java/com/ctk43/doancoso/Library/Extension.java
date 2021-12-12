@@ -21,8 +21,6 @@ import java.util.Date;
 public class Extension {
 
     public static Dialog dialogYesNo(Dialog dialog, String title, String content) {
-        boolean bool;
-        int theme = R.attr.dialogTheme;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_yes_no);
         Window window = dialog.getWindow();
@@ -44,9 +42,10 @@ public class Extension {
         tv_des.setText(content);
         return dialog;
     }
-    public static boolean isEmty(Context context,String value,String name,boolean isdefaut){
-        if (value.isEmpty()|| value == null || isdefaut) {
-            Toast.makeText(context, "Không được để "+name+" trống, vui lòng nhập "+name+"!", Toast.LENGTH_SHORT).show();
+
+    public static boolean isEmty(Context context, String value, String name, boolean isdefaut) {
+        if (value.isEmpty() || isdefaut) {
+            Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
@@ -100,8 +99,7 @@ public class Extension {
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
         double time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        int hour = (int) time / (1000 * 60 * 60);
-        return hour;
+        return (int) time / (1000 * 60 * 60);
     }
 
     public static int Remaning_minute(Date start, Date end) {
@@ -110,24 +108,23 @@ public class Extension {
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
         double time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        int minute = (int) time % (1000 * 60 * 60);
-        return minute;
+        return (int) time % (1000 * 60 * 60);
     }
+
     public static String over_time(int minute) {
-        String timeRe = new String();
-        int day = minute%60%24;
-        int hour = minute/60 %24;
-        int _minute = minute /60 /24;
-        timeRe = getTime(day,hour,_minute,true);
-        return timeRe;
+        int day = minute % 60 % 24;
+        int hour = minute / 60 % 24;
+        int _minute = minute / 60 / 24;
+        return getTime(day, hour, _minute, true);
     }
-    public static String getTime(int day, int hour, int minute,boolean negative){
-        if(negative){
-            day *=-1;
-            hour *=-1;
-            minute *=-1;
+
+    public static String getTime(int day, int hour, int minute, boolean negative) {
+        if (negative) {
+            day *= -1;
+            hour *= -1;
+            minute *= -1;
         }
-        String timeRe = new String();
+        String timeRe;
         if (day > 0 && hour > 0) {
             timeRe = day + " ngày " + hour + " giờ";
         } else if (day > 0) {
@@ -142,23 +139,24 @@ public class Extension {
 
         return timeRe;
     }
+
     public static String TimeRemaining(Date start, Date end) {
         int day = Remaning_day(start, end);
         int hour = Remaning_hour(start, end);
         int minute = Remaning_minute(start, end);
-        String timeRe ;
-        if(minute > 0){
-            timeRe =getTime(day,hour,minute,false);
-        }else{
+        String timeRe;
+        if (minute > 0) {
+            timeRe = getTime(day, hour, minute, false);
+        } else {
             timeRe = over_time(minute);
         }
         return timeRe;
     }
+
     public static int CheckStatus(Date start, Date end) {
-        if(Remaning_minute(Calendar.getInstance().getTime(), start)>0){
+        if (Remaning_minute(Calendar.getInstance().getTime(), start) > 0) {
             return 0;
-        }
-        else if(Remaning_minute(Calendar.getInstance().getTime(),end) <0)
+        } else if (Remaning_minute(Calendar.getInstance().getTime(), end) < 0)
             return 3;
         else {
             return 1;

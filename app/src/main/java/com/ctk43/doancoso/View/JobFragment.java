@@ -10,19 +10,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
 
 public class JobFragment extends Fragment  {
     FloatingActionButton btn_Add_New_Job;
@@ -34,12 +30,11 @@ public class JobFragment extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_jobs, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.activity_jobs, container, false);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach( @NonNull Context context) {
         super.onAttach(context);
         mContext = context;
     }
@@ -56,21 +51,15 @@ public class JobFragment extends Fragment  {
         jobViewModel.setData(mContext);
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
         jobListAdapter = new JobAdapter(mContext, jobViewModel);
-        jobViewModel.getJobs().observe(requireActivity(), new Observer<List<Job>>() {
-            @Override
-            public void onChanged(List<Job> jobs) {
-                jobListAdapter.setJob(jobs);
-                rcv.setLayoutManager(new LinearLayoutManager(mContext));
-                rcv.setAdapter(jobListAdapter);
-            }
+        jobViewModel.getJobs().observe(requireActivity(), jobs -> {
+            jobListAdapter.setJob(jobs);
+            rcv.setLayoutManager(new LinearLayoutManager(mContext));
+            rcv.setAdapter(jobListAdapter);
         });
-        btn_Add_New_Job = (FloatingActionButton) v.findViewById(R.id.add_new_job);
-        btn_Add_New_Job.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, AddJobActivity.class);
-                mContext.startActivity(intent);
-            }
+        btn_Add_New_Job = v.findViewById(R.id.add_new_job);
+        btn_Add_New_Job.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext, AddJobActivity.class);
+            mContext.startActivity(intent);
         });
         /*new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
@@ -86,13 +75,6 @@ public class JobFragment extends Fragment  {
             }
         }).attachToRecyclerView(rcv);*/
     }
-
-
-
-    private void setPopUpBottomLongClickListener() {
-
-    }
-
 
 
 }

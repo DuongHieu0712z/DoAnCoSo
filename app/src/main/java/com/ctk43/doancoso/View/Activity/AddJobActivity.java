@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
@@ -43,7 +42,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.Locale;
 
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -71,7 +70,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
     @SuppressLint("SimpleDateFormat")
     private void initView() {
-        Spinner spnCategory = (Spinner) findViewById(R.id.spiner_job_type);
+        Spinner spnCategory = findViewById(R.id.spiner_job_type);
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -84,31 +83,18 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-        categoryViewModel.getCategories().observe(this, new Observer<List<Category>>() {
-            @Override
-            public void onChanged(List<Category> categories) {
-                ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
-                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-                spnCategory.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
+        categoryViewModel.getCategories().observe(this, categories -> {
+            ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
+            adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+            spnCategory.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         });
 
         ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
-        img_add_job_type.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onOpenDialog();
-            }
-        });
+        img_add_job_type.setOnClickListener(v -> onOpenDialog());
 
         ImageView img_close = findViewById(R.id.img_close);
-        img_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        img_close.setOnClickListener(v -> onBackPressed());
 
         edt_job_name = findViewById(R.id.edt_dlg_job_name);
         edt_job_des = findViewById(R.id.edt_dlg_job_des);
@@ -116,42 +102,16 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         tv_time_start = findViewById(R.id.tv_dlg_time_start);
         tv_date_end = findViewById(R.id.tv_dlg_date_end);
         tv_time_end = findViewById(R.id.tv_dlg_time_end);
-
-        tv_date_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openDateDialog(0);
-            }
-        });
-
-        tv_date_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openDateDialog(1);
-            }
-        });
-
-        tv_time_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openTimeDialog(0);
-            }
-        });
-
-        tv_time_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openTimeDialog(1);
-            }
-        });
         Button btn_Add = findViewById(R.id.btn_dlg_add_new_job);
+
         btn_Add.setBackgroundTintMode(null);
-        btn_Add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(getInput()){
-                    Toast.makeText(AddJobActivity.this,getString(R.string.add_job_sucess),Toast.LENGTH_LONG).show();
-                }
+        tv_date_start.setOnClickListener(v -> openDateDialog(0));
+        tv_date_end.setOnClickListener(view -> openDateDialog(1));
+        tv_time_start.setOnClickListener(view -> openTimeDialog(0));
+        tv_time_end.setOnClickListener(view -> openTimeDialog(1));
+        btn_Add.setOnClickListener(view -> {
+            if(getInput()){
+                Toast.makeText(AddJobActivity.this,getString(R.string.add_job_sucess),Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -209,8 +169,11 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             if(Extension.isEmty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
                 return false;
         try {
-            Date start = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(startDate + " " + startTime);
-            Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(endDate + " " + endTime);
+            Date start = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);
+
+            Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm",Locale.getDefault()).parse(endDate + " " + endTime);
+            if (start ==null || end ==null)
+                return false;
             Job job = new Job(1, name, start, end, description);
             jobViewModel.insert(job);
             finish();
@@ -239,13 +202,10 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         EditText edt_job_type_name = dialog.findViewById(R.id.edt_dlg_job_type);
 
         Button btn_add_job_type = dialog.findViewById(R.id.btn_dlg_add_job_type);
-        btn_add_job_type.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //xu ly them loai cong viec
-                categoryViewModel.insert(new Category(edt_job_type_name.getText().toString(), DataLocalManager.getEmail()));
-                dialog.dismiss();
-            }
+        btn_add_job_type.setOnClickListener(view -> {
+            //xu ly them loai cong viec
+            categoryViewModel.insert(new Category(edt_job_type_name.getText().toString(), DataLocalManager.getEmail()));
+            dialog.dismiss();
         });
 
         dialog.show();

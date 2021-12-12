@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class SettingSharePrefence {
     private static final String SETTING = "SETTING_SHARE_PREFERENCE";
-    private Context mContext;
+    private final Context mContext;
     public  SettingSharePrefence(Context mContext){
         this.mContext = mContext;
     }

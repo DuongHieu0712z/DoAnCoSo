@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,13 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
-import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
@@ -33,17 +33,18 @@ import java.util.List;
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     private List<Job> listJob;
     private final Context context;
-    private JobViewModel jobViewModel;
-    private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    private final JobViewModel jobViewModel;
+    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobAdapter(Context context,JobViewModel jobViewModel) {
+    public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
-         this.jobViewModel = jobViewModel;
+        this.jobViewModel = jobViewModel;
         listJob = jobViewModel.getJobs().getValue();
     }
 
     @Override
-    public JobHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public JobHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.job_item, parent, false);
         return new JobHolder(view);
     }
@@ -61,43 +62,35 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         holder.tv_job_name.setText(item.getName());
         holder.tv_job_des.setText(item.getDescription());
         holder.img_priority.setImageResource(GeneralData.getImgPriority(item.getPriority()));
-        double prg = item.getProgress() * 100;
-        holder.tv_job_prg.setText((int) prg + "%");
-        holder.progressBar.setProgress((int) (prg));
-        holder.checkBox.setChecked(item.getStatus()==2?true: false);
-        setText(item, holder.tv_job_status, holder.tv_time_title, holder.tv_time);
+        holder.checkBox.setChecked(item.getStatus() == 2);
+        setProcess(holder.tv_job_prg, holder.progressBar, item);
+        setTextStatus(item, holder.tv_job_status, holder.tv_time_title, holder.tv_time);
 
-        holder.layout_funcion.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogDeleteJob(item);
-            }
-        });
-        holder.itemJob.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewJobDetail(item);
-            }
-        });
-        holder.checkBox.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CheckOrUncheck(holder.checkBox,item);
-            }
-        });
+        holder.layout_funcion.setOnClickListener(v -> DialogDeleteJob(item));
+        holder.itemJob.setOnClickListener(v -> ViewJobDetail(item));
+        holder.checkBox.setOnClickListener(v -> CheckOrUncheck(holder.checkBox, item));
     }
 
     @Override
     public int getItemCount() {
-        if (listJob == null )
+        if (listJob == null)
             return 0;
         return listJob.size();
     }
 
-    void setText(Job job,TextView status,TextView title_Time,TextView time){
+    void setProcess(TextView tv_progress, ProgressBar progressBar, Job job) {
+        int progress = (int) job.getProgress() * 100;
+        String prgString = progress + " %";
+
+        tv_progress.setText(prgString);
+        progressBar.setProgress(progress);
+    }
+
+    void setTextStatus(Job job, TextView status, TextView title_Time, TextView time) {
 
         int color = ContextCompat.getColor(context, (GeneralData.getColorStatus(job.getStatus())));
-        time.setText(Extension.TimeRemaining(job.getStartDate(),job.getEndDate()));
+
+        time.setText(Extension.TimeRemaining(job.getStartDate(), job.getEndDate()));
         time.setTextColor(color);
 
         status.setText(GeneralData.getStatus(job.getStatus()));
@@ -108,89 +101,71 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     }
 
-    void DialogDeleteJob(Job job){
-        final Dialog dialogYesNo = new Dialog(context);
-        Button buttn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
-        Button buttn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
-        dialogYesNo.setCancelable(true);
-        Extension.dialogYesNo(dialogYesNo,context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
-        buttn_yes.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteItem(job);
-                dialogYesNo.dismiss();
-            }
-        });
-        buttn_no.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogYesNo.dismiss();
-            }
-        });
-        dialogYesNo.show();
-    }
 
-    void deleteItem(Job job){
+    void deleteItem(Job job) {
         jobViewModel.delete(job);
         notifyItemRemoved(listJob.indexOf(job));
         listJob.remove(job);
     }
 
-    void ViewJobDetail(Job job){
+    void ViewJobDetail(Job job) {
         Intent intent = new Intent(context, JobDetailActivity.class);
         intent.putExtra("JobID", job.getId());
         context.startActivity(intent);
     }
-    void updateStatus(Job Job,boolean isFinish){
-        jobViewModel.checkOrUncheck(Job,isFinish);
+
+    void updateStatus(Job Job, boolean isFinish) {
+        jobViewModel.checkOrUncheck(Job, isFinish);
         new JobFragment();
     }
 
-    void CheckOrUncheck(CheckBox checkBox,Job job){
+    void DialogDeleteJob(Job job) {
+        final Dialog dialogYesNo = new Dialog(context);
+        Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+        Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+        dialogYesNo.setCancelable(true);
+        Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
+        btn_yes.setOnClickListener(v -> {
+            deleteItem(job);
+            dialogYesNo.dismiss();
+        });
+        btn_no.setOnClickListener(v -> dialogYesNo.dismiss());
+        dialogYesNo.show();
+    }
+
+    void CheckOrUncheck(CheckBox checkBox, Job job) {
         final Dialog dialogYesNo = new Dialog(context);
         String confirm = context.getString(R.string.confirm);
         dialogYesNo.setCancelable(true);
-        if(checkBox.isChecked()){
+        if (checkBox.isChecked()) {
             Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_finish_all_job_detail));
             Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
             Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
-            btn_yes.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialogYesNo.dismiss();
-                    updateStatus(job,true);
-                }
+            btn_yes.setOnClickListener(v -> {
+                dialogYesNo.dismiss();
+                updateStatus(job, true);
             });
-            btn_no.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    checkBox.setChecked(false);
-                    dialogYesNo.dismiss();
-                }
+            btn_no.setOnClickListener(v -> {
+                checkBox.setChecked(false);
+                dialogYesNo.dismiss();
             });
-        }else{
+        } else {
             Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_delete_progress));
             Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
             Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
-            btn_yes.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    updateStatus(job,false);
-                    dialogYesNo.dismiss();
-                }
+            btn_yes.setOnClickListener(v -> {
+                updateStatus(job, false);
+                dialogYesNo.dismiss();
             });
-            btn_no.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialogYesNo.dismiss();
-                    checkBox.setChecked(true);
-                }
+            btn_no.setOnClickListener(v -> {
+                checkBox.setChecked(true);
+                dialogYesNo.dismiss();
             });
         }
         dialogYesNo.show();
     }
 
-    public class JobHolder extends RecyclerView.ViewHolder {
+    public static class JobHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
         LinearLayout layout_funcion;
         LinearLayout itemJob;
@@ -203,6 +178,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         ProgressBar progressBar;
         CheckBox checkBox;
         ImageView img_priority;
+
         public JobHolder(View view) {
             super(view);
             swipeRevealLayout = view.findViewById(R.id.item_topic);
@@ -210,16 +186,13 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
             tv_time_title = view.findViewById(R.id.tv_time);
             itemJob = view.findViewById(R.id.item_job);
             checkBox = view.findViewById(R.id.chk_finish_job);
-           img_priority = view.findViewById(R.id.img_priority);
+            img_priority = view.findViewById(R.id.img_priority);
             tv_job_name = view.findViewById(R.id.tv_job_name);
             tv_job_des = view.findViewById(R.id.tv_job_description);
             tv_job_prg = view.findViewById(R.id.tv_progress);
             tv_time = view.findViewById(R.id.tv_remainning_time);
             tv_job_status = view.findViewById(R.id.tv_Status);
             progressBar = view.findViewById(R.id.prg_progress);
-           /*  itemView.setOnClickListener(v -> {
-                ((MainActivity)mContext).gotoM003Screen(listJob, (StoryEntity)tvName.getTag());
-            });*/
         }
     }
 }
