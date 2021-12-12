@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
@@ -242,7 +243,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onClick(View view) {
                 //xu ly them loai cong viec
-                categoryViewModel.insert(new Category(edt_job_type_name.getText().toString()));
+                categoryViewModel.insert(new Category(edt_job_type_name.getText().toString(), DataLocalManager.getEmail()));
                 dialog.dismiss();
             }
         });

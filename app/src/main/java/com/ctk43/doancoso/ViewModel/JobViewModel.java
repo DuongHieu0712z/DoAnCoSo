@@ -48,7 +48,7 @@ public class JobViewModel extends ViewModel {
     public void checkOrUncheck(Job job,boolean check){
         if(check){
             job.setProgress(1);
-            job.setStatus(1);
+            job.setStatus(2);
         }else{
             job.setProgress(0);
             job.setStatus(Extension.CheckStatus(Calendar.getInstance().getTime(), job.getEndDate()));

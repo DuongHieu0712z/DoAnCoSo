@@ -49,7 +49,7 @@ public class Job {
     private double progress = 0.0;
 
     @ColumnInfo(name = "Status")
-    private int status = 0; // 0 - on going; -1 - drop; 1 - complete; 2- over
+    private int status = 0; // 0-in coming-1 - on going; 2 - complete; 3- over
 
     public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {
         this.categoryId = categoryId;

@@ -73,15 +73,14 @@ public class JobDetailViewModel extends ViewModel {
     }
 
     public void syncJob (){
-
         double curr = updateProgress();
-            if(job.getProgress() ==1 && job.getStatus() ==1 && curr != 1.0 ){
+            if(job.getProgress() ==1 && job.getStatus() ==2 && curr != 1.0 ){
             for (JobDetail jobDetail: jobDetails.getValue()
             ) {
                 jobDetail.setStatus(true);
                 jobDetailRepository.update(jobDetail);
             }
-        }else if(job.getProgress() ==0 && job.getProgress() != curr &&  job.getStatus() !=1 ){
+        }else if(job.getProgress() ==0 && job.getProgress() != curr &&  job.getStatus() !=2 ){
             for (JobDetail jobDetail: (jobDetails.getValue())
             ) {
                 jobDetail.setStatus(false);

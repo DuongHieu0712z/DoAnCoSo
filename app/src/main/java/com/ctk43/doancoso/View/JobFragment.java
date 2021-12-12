@@ -1,5 +1,6 @@
 package com.ctk43.doancoso.View;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,18 +23,17 @@ import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
+import com.ctk43.doancoso.View.Adapter.OnItemClickListener;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class JobFragment extends Fragment implements View.OnClickListener {
+public class JobFragment extends Fragment  {
     FloatingActionButton btn_Add_New_Job;
     private Context mContext;
     private JobAdapter jobListAdapter;
-    private int dlg_mode = 0;
-    private View.OnClickListener clickListener;
-    private View.OnLongClickListener longClickListener;
+    RecyclerView rcv;
     private JobViewModel jobViewModel;
 
     @Nullable
@@ -56,14 +57,13 @@ public class JobFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews(View v) {
-        RecyclerView rcv = v.findViewById(R.id.rcv_display_job);
+        rcv = v.findViewById(R.id.rcv_display_job);
         jobViewModel.setData(mContext);
-        Log.e("job", "đang trong job");
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
+        jobListAdapter = new JobAdapter(mContext, jobViewModel);
         jobViewModel.getJobs().observe(requireActivity(), new Observer<List<Job>>() {
             @Override
             public void onChanged(List<Job> jobs) {
-                jobListAdapter = new JobAdapter(mContext, jobViewModel);
                 jobListAdapter.setJob(jobs);
                 rcv.setLayoutManager(new LinearLayoutManager(mContext));
                 rcv.setAdapter(jobListAdapter);
@@ -92,13 +92,12 @@ public class JobFragment extends Fragment implements View.OnClickListener {
         }).attachToRecyclerView(rcv);*/
     }
 
-    @Override
-    public void onClick(View view) {
-        //  ((MainActivity) getActivity()).gotoAddNewJobScreen();
-    }
 
 
     private void setPopUpBottomLongClickListener() {
 
     }
+
+
+
 }

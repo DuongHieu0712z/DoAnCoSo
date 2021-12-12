@@ -66,11 +66,13 @@ public abstract class AppDatabase extends RoomDatabase {
         private final CategoryDAO categoryDAO;
         private final JobDAO jobDAO;
         private final JobDetailDAO jobDetailDAO;
+        private final UserDAO userDAO;
 
         private SampledData(AppDatabase db) {
             super();
             categoryDAO = db.getCategoryDAO();
             jobDAO = db.getJobDAO();
+            userDAO = db.getUserDAO();
             jobDetailDAO = db.getJobDetailDAO();
         }
 
@@ -92,8 +94,11 @@ public abstract class AppDatabase extends RoomDatabase {
             calendar.set(Calendar.SECOND, 0); // for 0 sec
             Date start = Calendar.getInstance().getTime();
             Date end = calendar.getTime();
+            userDAO.insert(new User("default@example.vn","Người dùng"));
 
-            categoryDAO.insert(new Category("Học tập"), new Category("Giải trí"));
+            categoryDAO.insert(new Category("Mặc định","default@example.vn"),
+                    new Category("Học tập","default@example.vn"),
+                    new Category("Giải trí","default@example.vn"));
 
             jobDAO.insert(new Job(1, "Làm đồ án", start, end, "Một môn học gây trầm cảm"));
             jobDAO.insert(new Job(1, "Làm lab 8", start, end, "Không hiểu j hết á"));

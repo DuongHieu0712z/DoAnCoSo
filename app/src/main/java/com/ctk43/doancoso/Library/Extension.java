@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class Extension {
 
-    public static Dialog dialogYesNo(Dialog dialog, String title, String content, String description) {
+    public static Dialog dialogYesNo(Dialog dialog, String title, String content) {
         boolean bool;
         int theme = R.attr.dialogTheme;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -35,15 +35,13 @@ public class Extension {
         windownAtrributes.gravity = Gravity.CENTER;
         window.setAttributes(windownAtrributes);
         TextView textView = dialog.findViewById(R.id.txt_dialog_string);
-        textView.setText(content);
+        textView.setText(title);
         Button btnYes = dialog.findViewById(R.id.btn_dialog_yes);
         btnYes.setBackgroundTintMode(null);
         Button btnNo = dialog.findViewById(R.id.btn_dialog_no);
         btnNo.setBackgroundTintMode(null);
         TextView tv_des = dialog.findViewById(R.id.tv_dialog_description);
-        tv_des.setText(description);
-     /*   Button btnyes = dialog.findViewById(R.id.btn_dialog_yes);
-        Button btnno = dialog.findViewById(R.id.btn_dialog_no);*/
+        tv_des.setText(content);
         return dialog;
     }
     public static boolean isEmty(Context context,String value,String name,boolean isdefaut){
@@ -157,10 +155,13 @@ public class Extension {
         return timeRe;
     }
     public static int CheckStatus(Date start, Date end) {
-        if(Remaning_minute(start,end) <0)
-            return 2;
-        else {
+        if(Remaning_minute(Calendar.getInstance().getTime(), start)>0){
             return 0;
+        }
+        else if(Remaning_minute(Calendar.getInstance().getTime(),end) <0)
+            return 3;
+        else {
+            return 1;
         }
     }
 }

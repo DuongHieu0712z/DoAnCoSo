@@ -21,6 +21,7 @@ import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.JobDetailAdapter;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
+import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class JobDetailActivity extends AppCompatActivity {
 
     FloatingActionButton btn_Add_New_Job_detail;
     private JobDetailViewModel jobDetailViewModel;
+    private JobViewModel jobViewModel;
     private Job job;
 
     @Override
@@ -51,8 +53,8 @@ public class JobDetailActivity extends AppCompatActivity {
         });
     }
     private void initViewModel(){
-        jobDetailViewModel = new ViewModelProvider(this).get(JobDetailViewModel.class);
         int jobID = getIntent().getIntExtra("JobID",0);
+        jobDetailViewModel = new ViewModelProvider(this).get(JobDetailViewModel.class);
         jobDetailViewModel.setContext(this,jobID);
         job = jobDetailViewModel.getJob();
         init();

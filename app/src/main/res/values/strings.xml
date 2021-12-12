@@ -25,6 +25,19 @@
     <string name="hint_add_job_type">Nhập tên loại công việc</string>
     <string name="description">Mô tả</string>
 
+    <!--Dialog-->
+    <string name="confirm">Xác nhận</string>
+    <string name="confirm_delete">Xác nhận xóa ?</string>
+    <string name="message_delete_progress">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
+    <string name="message_finish_all_job_detail">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
+    <string name="message_delete_all_job_detail">Sau khi xóa sẽ mất toàn bộ chi tiết công việc</string>
+
+    <!--Status-->
+    <string name="coming_soon">Sắp diễn ra</string><!--0-->
+    <string name="on_going">Đang diễn ra</string><!--1-->
+    <string name="complete">Đã hoàn thành</string><!--2-->
+    <string name="over">Đã quá hạn</string><!--3-->
+
     <!-- Time-->
     <string name="month">Tháng</string>
     <string name="day">Ngày</string>
@@ -40,6 +53,7 @@
     <string name="estimal_time">Thời gian dự kiến</string>
     <string name="time_remaining">Còn lại: </string>
     <string name="time_over">Đã kết thúc:</string>
+    <string name="time">Thời gian:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

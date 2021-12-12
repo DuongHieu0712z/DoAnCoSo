@@ -3,9 +3,13 @@ package com.ctk43.doancoso.Model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity = User.class,
+        parentColumns = "Email",
+        childColumns = "Email_user",
+        onDelete = ForeignKey.CASCADE))
 public class Category {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
@@ -14,9 +18,12 @@ public class Category {
     @ColumnInfo(name = "Name")
     @NonNull
     private String name;
+    @ColumnInfo(name = "Email_user")
+    private String email;
 
-    public Category(@NonNull String name) {
+    public Category(@NonNull String name, @NonNull String email) {
         this.name = name;
+        this.email = email;
     }
 
     public int getId() {
@@ -25,6 +32,14 @@ public class Category {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @NonNull

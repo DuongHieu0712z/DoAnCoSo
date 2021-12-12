@@ -112,9 +112,11 @@ public class JobDetail {
     public boolean isPriority() {
         return priority;
     }
+
     public void setPriority(boolean priority) {
         this.priority = priority;
     }
+
     public boolean getStatus() {
         return status;
     }
