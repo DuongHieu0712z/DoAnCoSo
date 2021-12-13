@@ -6,7 +6,10 @@ public class GeneralData {
     private static GeneralData instance;
     private static final int[] imgPriority = {
             R.drawable.ic_baseline_star_outline_24,
-            R.drawable.ic_baseline_star_24};
+            R.drawable.ic_baseline_star_priority_normal,
+            R.drawable.ic_baseline_star_priority_important,
+            R.drawable.ic_baseline_star_priority_very_important
+    };
 
     public static final int[] status = {
             R.string.coming_soon,

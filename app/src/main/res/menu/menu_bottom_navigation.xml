@@ -8,7 +8,11 @@
         android:id="@+id/menu_month"
         android:icon="@drawable/ic_baseline_calendar_month_24"
         android:title="@string/month" />
-
+    <item
+        android:id="@+id/menu_add_new_job"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="@string/add_job"
+        />
     <item
         android:id="@+id/menu_setting"
         android:icon="@drawable/ic_baseline_settings_24"
