@@ -59,11 +59,11 @@ public class JobFragment extends Fragment  {
             rcv.setLayoutManager(new LinearLayoutManager(mContext));
             rcv.setAdapter(apdapterJobs);
         });
-        btn_Add_New_Job = v.findViewById(R.id.add_new_job);
+        /*btn_Add_New_Job = v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, AddJobActivity.class);
             mContext.startActivity(intent);
-        });
+        });*/
         /*new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
             @Override

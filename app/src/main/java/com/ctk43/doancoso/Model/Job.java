@@ -43,7 +43,7 @@ public class Job {
     private String description;
 
     @ColumnInfo(name = "Priority")
-    private int priority = 0;
+    private int priority = 0; //0 - none important none urgent, 1 - none important urgent, 2 - important none urgent, 3 important urgent
 
     @ColumnInfo(name = "Progress")
     private double progress = 0.0;

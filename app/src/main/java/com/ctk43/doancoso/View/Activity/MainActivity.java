@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.View.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.menu_account:
                         viewPager.setCurrentItem(3);
+                        break;
+                    case R.id.menu_add_new_job:
+                        Intent intent = new Intent(MainActivity.this, AddJobActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 return true;
