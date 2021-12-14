@@ -12,13 +12,14 @@ public class GeneralData {
             R.string.coming_soon,
             R.string.on_going,
             R.string.complete,
-            R.string.over
+            R.string.over,
+            R.string.over_complete
     };
 
     public static final int[] statusTime = {
             R.string.time,
             R.string.time_remaining,
-            R.string.time_over,
+            R.string.time_over
     };
 
     private static final int[] statusColor = {
@@ -26,31 +27,26 @@ public class GeneralData {
             R.color.on_ongoing,
             R.color.complete,
             R.color.over,
+            R.color.over_complete,
     };
 
-    public static GeneralData getInstance() {
-        if (instance == null)
-            instance = new GeneralData();
-        return instance;
-    }
 
     public static int getColorStatus(int status){
-            return getInstance().statusColor[status];
-
+            return statusColor[status];
     }
 
     public static int getImgPriority(int priority) {
-        return getInstance().imgPriority[priority];
+        return imgPriority[priority];
     }
 
-    public static int getStatus(int status) {
-        return getInstance().status[status];
+    public static int getStatus(int sta) {
+        return status[sta];
     }
 
     public static int getTimeTitle(int status) {
         if(status>1)
-            return getInstance().statusTime[2];
+            return statusTime[2];
         else
-            return getInstance().statusTime[status];
+            return statusTime[status];
     }
 }

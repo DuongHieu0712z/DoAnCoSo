@@ -29,6 +29,9 @@ public class JobViewModel extends ViewModel {
         jobRepository = new JobRepository(context);
         jobs = jobRepository.getJobs();
     }
+    public Job getJobById(int Id){
+        return jobRepository.getById(Id);
+    }
 
     public LiveData<List<Job>> getJobs() {
         return jobs;
@@ -48,10 +51,10 @@ public class JobViewModel extends ViewModel {
     public void checkOrUncheck(Job job,boolean check){
         if(check){
             job.setProgress(1); // 1 is 100%
-            job.setStatus(2);//2 - Complete
+            job.setStatus(Extension.CheckStatus(job));
         }else{
             job.setProgress(0);
-            job.setStatus(Extension.CheckStatus(Calendar.getInstance().getTime(), job.getEndDate()));
+            job.setStatus(Extension.CheckStatus(job));
         }
         update(job);
     }

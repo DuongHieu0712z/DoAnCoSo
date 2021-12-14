@@ -31,12 +31,16 @@
     <string name="message_delete_progress">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
     <string name="message_finish_all_job_detail">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
     <string name="message_delete_all_job_detail">Sau khi xóa sẽ mất toàn bộ chi tiết công việc</string>
+    <string name="message_delete_job_detail">Sau khi sẽ mất chi tiết công việc</string>
+    <string name="message_uncheck_job_detail">Sẽ hủy hoàn thành chi tiết công việc</string>
+    <string name="message_check_job">Sẽ mọi chi tiết công việc sẽ đều hoàn thành</string>
 
     <!--Status-->
     <string name="coming_soon">Sắp diễn ra</string><!--0-->
     <string name="on_going">Đang diễn ra</string><!--1-->
     <string name="complete">Đã hoàn thành</string><!--2-->
     <string name="over">Đã quá hạn</string><!--3-->
+    <string name="over_complete">Hoàn thành trễ</string><!--4-->
 
     <!-- Time-->
     <string name="month">Tháng</string>
@@ -76,5 +80,10 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
+    <string name="title_activity_job_detail_count_up">JobDetail_CountUp</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

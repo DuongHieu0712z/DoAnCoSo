@@ -30,6 +30,7 @@
     <color name="on_ongoing">#A7E461</color>
     <color name="complete">#FFC107</color>
     <color name="over">#FF0000</color>
+    <color name="over_complete">#FF5722</color>
 
     <color name="splat_text_color_lighter">#eece83</color>
     <color name="Transparent">#00000000</color>

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
@@ -26,6 +27,7 @@ import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 import com.ctk43.doancoso.View.JobFragment;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.List;
@@ -34,11 +36,13 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     private List<Job> listJob;
     private final Context context;
     private final JobViewModel jobViewModel;
+    private final JobDetailViewModel jobDetailViewModel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobAdapter(Context context, JobViewModel jobViewModel) {
+    public JobAdapter(Context context, JobViewModel jobViewModel, JobDetailViewModel jobDetailViewModel) {
         this.context = context;
         this.jobViewModel = jobViewModel;
+        this.jobDetailViewModel = jobDetailViewModel;
         listJob = jobViewModel.getJobs().getValue();
     }
 
@@ -65,7 +69,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         holder.checkBox.setChecked(item.getStatus() == 2);
         setProcess(holder.tv_job_prg, holder.progressBar, item);
         setTextStatus(item, holder.tv_job_status, holder.tv_time_title, holder.tv_time);
-
         holder.layout_funcion.setOnClickListener(v -> DialogDeleteJob(item));
         holder.itemJob.setOnClickListener(v -> ViewJobDetail(item));
         holder.checkBox.setOnClickListener(v -> CheckOrUncheck(holder.checkBox, item));
@@ -81,13 +84,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     void setProcess(TextView tv_progress, ProgressBar progressBar, Job job) {
         int progress = (int) job.getProgress() * 100;
         String prgString = progress + " %";
-
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
     }
 
     void setTextStatus(Job job, TextView status, TextView title_Time, TextView time) {
-
         int color = ContextCompat.getColor(context, (GeneralData.getColorStatus(job.getStatus())));
 
         time.setText(Extension.TimeRemaining(job.getStartDate(), job.getEndDate()));
@@ -101,7 +102,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     }
 
-
     void deleteItem(Job job) {
         jobViewModel.delete(job);
         notifyItemRemoved(listJob.indexOf(job));
@@ -114,17 +114,18 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         context.startActivity(intent);
     }
 
-    void updateStatus(Job Job, boolean isFinish) {
-        jobViewModel.checkOrUncheck(Job, isFinish);
+    private void updateStatus(Job job, boolean isFinish) {
+        jobViewModel.checkOrUncheck(job, isFinish);
+        jobDetailViewModel.setContext(context, job.getId());
+        jobDetailViewModel.syncJob(job);
         new JobFragment();
     }
-
     void DialogDeleteJob(Job job) {
         final Dialog dialogYesNo = new Dialog(context);
+        Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
         Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
         dialogYesNo.setCancelable(true);
-        Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
         btn_yes.setOnClickListener(v -> {
             deleteItem(job);
             dialogYesNo.dismiss();
@@ -138,7 +139,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         String confirm = context.getString(R.string.confirm);
         dialogYesNo.setCancelable(true);
         if (checkBox.isChecked()) {
-            Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_finish_all_job_detail));
+            Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_check_job));
             Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
             Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
             btn_yes.setOnClickListener(v -> {
@@ -150,7 +151,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
                 dialogYesNo.dismiss();
             });
         } else {
-            Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_delete_progress));
+            Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_finish_all_job_detail));
             Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
             Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
             btn_yes.setOnClickListener(v -> {

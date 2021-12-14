@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DoAnCoSo">
         <activity
+            android:name=".View.Activity.JobDetail_CountUp"
+            android:exported="true"
+            android:label="@string/title_activity_job_detail_count_up"
+            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
+        <activity
             android:name=".View.Activity.JobDetailActivity"
             android:exported="true"
             android:label="@string/title_activity_job_deltail"
@@ -26,7 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Activity.MainActivity" />
-
         <activity
             android:name=".View.Activity.AddJobActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

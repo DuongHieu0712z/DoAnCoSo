@@ -17,14 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class JobFragment extends Fragment  {
     FloatingActionButton btn_Add_New_Job;
     private Context mContext;
-    private JobAdapter jobListAdapter;
+    private JobAdapter apdapterJobs;
     RecyclerView rcv;
+    JobDetailViewModel jobDetailViewModel;
     private JobViewModel jobViewModel;
 
     @Nullable
@@ -43,6 +45,7 @@ public class JobFragment extends Fragment  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         jobViewModel = new ViewModelProvider(requireActivity()).get(JobViewModel.class);
+        jobDetailViewModel = new ViewModelProvider(requireActivity()).get(JobDetailViewModel.class);
         initViews(view);
     }
 
@@ -50,11 +53,11 @@ public class JobFragment extends Fragment  {
         rcv = v.findViewById(R.id.rcv_display_job);
         jobViewModel.setData(mContext);
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
-        jobListAdapter = new JobAdapter(mContext, jobViewModel);
+        apdapterJobs = new JobAdapter(mContext, jobViewModel,jobDetailViewModel);
         jobViewModel.getJobs().observe(requireActivity(), jobs -> {
-            jobListAdapter.setJob(jobs);
+            apdapterJobs.setJob(jobs);
             rcv.setLayoutManager(new LinearLayoutManager(mContext));
-            rcv.setAdapter(jobListAdapter);
+            rcv.setAdapter(apdapterJobs);
         });
         btn_Add_New_Job = v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(view -> {

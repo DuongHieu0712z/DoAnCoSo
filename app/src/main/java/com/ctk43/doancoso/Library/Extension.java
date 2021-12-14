@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 
 import java.util.Calendar;
@@ -136,7 +137,6 @@ public class Extension {
         } else {
             timeRe = minute + " phút ";
         }
-
         return timeRe;
     }
 
@@ -153,13 +153,16 @@ public class Extension {
         return timeRe;
     }
 
-    public static int CheckStatus(Date start, Date end) {
-        if (Remaning_minute(Calendar.getInstance().getTime(), start) > 0) {
+    public static int CheckStatus(Job job) {
+        if (Remaning_minute(job.getStartDate(), Calendar.getInstance().getTime()) > 0) {
             return 0;
-        } else if (Remaning_minute(Calendar.getInstance().getTime(), end) < 0)
-            return 3;
-        else {
+        }else if(Remaning_minute(job.getEndDate(),Calendar.getInstance().getTime()) > 0 && job.getProgress() == 1)
             return 1;
+        else if (Remaning_minute(job.getEndDate(),Calendar.getInstance().getTime()) < 0 && job.getProgress() != 1)
+            return 3;
+        else if(Remaning_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() == 1){
+            return 4;
         }
+        return 2;
     }
 }

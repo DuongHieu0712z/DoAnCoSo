@@ -18,18 +18,13 @@ import java.util.List;
 public class JobDetailViewModel extends ViewModel {
     private JobDetailRepository jobDetailRepository;
     private LiveData<List<JobDetail>> jobDetails;
-    private Job job;
 
-    private JobRepository jobRepository;
     public JobDetailViewModel() {
     }
 
     public void setContext(Context context, int jobId) {
-        jobRepository = new JobRepository(context);
-        this.job = jobRepository.getById(jobId);
         jobDetailRepository = new JobDetailRepository(context, jobId);
         jobDetails = jobDetailRepository.getJobDetails();
-
     }
 
     public LiveData<List<JobDetail>> getJobDetails() {
@@ -38,25 +33,18 @@ public class JobDetailViewModel extends ViewModel {
 
     public void insert(JobDetail... jobDetails) {
         jobDetailRepository.insert(jobDetails);
-        UpdateJob();
     }
-
 
     public void update(JobDetail... jobDetails) {
         jobDetailRepository.update(jobDetails);
-        UpdateJob();
     }
 
     public void delete(JobDetail... jobDetails) {
         jobDetailRepository.delete(jobDetails);
-        UpdateJob();
-    }
-    public Job getJob(){
-        return job;
-
     }
 
-    private double updateProgress() {
+
+    public double updateProgress() {
         double before = 0;
         for (JobDetail jobDetail : jobDetails.getValue()) {
             if (jobDetail.getStatus()) {
@@ -66,22 +54,17 @@ public class JobDetailViewModel extends ViewModel {
         double after = jobDetails.getValue().size();
         return before / after;
     }
-    private void UpdateJob(){
-        updateProgress();
-        job.setProgress(updateProgress());
-        jobRepository.update(job);
-    }
 
-    public void syncJob (){
+    public void syncJob(Job job) {
         double curr = updateProgress();
-            if(job.getProgress() ==1 && job.getStatus() ==2 && curr != 1.0 ){
-            for (JobDetail jobDetail: jobDetails.getValue()
+        if (job.getProgress() == 1 && job.getStatus() == 2 && curr != 1.0) {
+            for (JobDetail jobDetail : jobDetails.getValue()
             ) {
                 jobDetail.setStatus(true);
                 jobDetailRepository.update(jobDetail);
             }
-        }else if(job.getProgress() ==0 && job.getProgress() != curr &&  job.getStatus() !=2 ){
-            for (JobDetail jobDetail: (jobDetails.getValue())
+        } else if (job.getProgress() == 0 && job.getProgress() != curr && job.getStatus() != 2) {
+            for (JobDetail jobDetail : (jobDetails.getValue())
             ) {
                 jobDetail.setStatus(false);
                 jobDetailRepository.update(jobDetail);
