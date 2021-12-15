@@ -26,7 +26,6 @@ public class JobFragment extends Fragment  {
     private Context mContext;
     private JobAdapter apdapterJobs;
     RecyclerView rcv;
-    JobDetailViewModel jobDetailViewModel;
     private JobViewModel jobViewModel;
 
     @Nullable
@@ -45,7 +44,6 @@ public class JobFragment extends Fragment  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         jobViewModel = new ViewModelProvider(requireActivity()).get(JobViewModel.class);
-        jobDetailViewModel = new ViewModelProvider(requireActivity()).get(JobDetailViewModel.class);
         initViews(view);
     }
 
@@ -53,7 +51,7 @@ public class JobFragment extends Fragment  {
         rcv = v.findViewById(R.id.rcv_display_job);
         jobViewModel.setData(mContext);
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
-        apdapterJobs = new JobAdapter(mContext, jobViewModel,jobDetailViewModel);
+        apdapterJobs = new JobAdapter(mContext, jobViewModel);
         jobViewModel.getJobs().observe(requireActivity(), jobs -> {
             apdapterJobs.setJob(jobs);
             rcv.setLayoutManager(new LinearLayoutManager(mContext));

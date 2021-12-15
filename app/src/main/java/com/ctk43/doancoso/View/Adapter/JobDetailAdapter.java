@@ -2,12 +2,14 @@ package com.ctk43.doancoso.View.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,8 @@ import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Activity.JobDetailActivity;
+import com.ctk43.doancoso.View.Activity.JobDetail_CountUp;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
@@ -61,9 +65,13 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         else if (item.isPriority() == false)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
         holder.checkBox.setChecked(item.getStatus());
+        holder.jobDetailItem.setOnClickListener(v -> {
+            JobClock(item.getId());
+        });
         holder.checkBox.setOnClickListener(v ->  {
             IsFinish(holder.checkBox,item);
         });
+
     }
     public void IsFinish(CheckBox checkBox, JobDetail jobDetail){
         if(checkBox.isChecked()){
@@ -73,6 +81,12 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         }else {
             DialogUnCheckJobDetail(jobDetail,checkBox);
         }
+    }
+    public void JobClock(int id){
+        Intent intent = new Intent(mContext, JobDetail_CountUp.class);
+        intent.putExtra("id",id);
+        mContext.startActivity(intent);
+
     }
 
     public Job getJob() {
@@ -119,6 +133,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
     public class JobDetailHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
+        LinearLayout jobDetailItem;
         TextView tvJdName;
         TextView tvJdDes;
         TextView tvEstimatedTime;
@@ -128,6 +143,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
         public JobDetailHolder(View itemView) {
             super(itemView);
+            jobDetailItem = itemView.findViewById(R.id.ln_item_job_detail);
             swipeRevealLayout = itemView.findViewById(R.id.item_job_detail);
             tvJdName = itemView.findViewById(R.id.tv_jd_name);
             tvJdDes = itemView.findViewById(R.id.tv_jd_description);
@@ -138,4 +154,5 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             checkBox = itemView.findViewById(R.id.chk_finish_job_detail);
         }
     }
+
 }

@@ -13,8 +13,10 @@ import java.util.List;
 public class CategoryViewModel extends ViewModel {
     private CategoryRepository categoryRepository;
     private LiveData<List<Category>> categories;
+    private List<Category> Listcategories;
 
     public CategoryViewModel() {
+
     }
 
     public void setContext(Context context) {

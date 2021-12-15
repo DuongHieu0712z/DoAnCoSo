@@ -154,15 +154,15 @@ public class Extension {
     }
 
     public static int CheckStatus(Job job) {
-        if (Remaning_minute(job.getStartDate(), Calendar.getInstance().getTime()) > 0) {
-            return 0;
-        }else if(Remaning_minute(job.getEndDate(),Calendar.getInstance().getTime()) > 0 && job.getProgress() == 1)
+        if (Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) >= 0 && job.getProgress() ==1) {
+            return 2;
+        }else if(Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) > 0 && job.getProgress() != 1)
             return 1;
-        else if (Remaning_minute(job.getEndDate(),Calendar.getInstance().getTime()) < 0 && job.getProgress() != 1)
+        else if (Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) < 0 && job.getProgress() != 1)
             return 3;
         else if(Remaning_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() == 1){
             return 4;
         }
-        return 2;
+        return 0;
     }
 }

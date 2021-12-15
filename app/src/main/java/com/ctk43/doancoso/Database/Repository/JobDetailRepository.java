@@ -14,15 +14,22 @@ import java.util.List;
 public class JobDetailRepository {
     private final JobDetailDAO jobDetailDAO;
     private final LiveData<List<JobDetail>> jobDetails;
+    private final List<JobDetail> listJobDetail;
 
     public JobDetailRepository(Context context, int jobId) {
         AppDatabase data = AppDatabase.getInstance(context);
         jobDetailDAO = data.getJobDetailDAO();
         jobDetails = jobDetailDAO.getByJobId(jobId);
+        listJobDetail = jobDetailDAO.getListByJobId(jobId);
+
     }
 
     public LiveData<List<JobDetail>> getJobDetails() {
         return jobDetails;
+    }
+
+    public List<JobDetail> getListJobDetail() {
+        return listJobDetail;
     }
 
     public void insert(JobDetail... jobDetails) {

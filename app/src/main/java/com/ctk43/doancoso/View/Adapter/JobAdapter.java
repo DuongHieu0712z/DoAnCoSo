@@ -36,13 +36,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     private List<Job> listJob;
     private final Context context;
     private final JobViewModel jobViewModel;
-    private final JobDetailViewModel jobDetailViewModel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobAdapter(Context context, JobViewModel jobViewModel, JobDetailViewModel jobDetailViewModel) {
+    public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
         this.jobViewModel = jobViewModel;
-        this.jobDetailViewModel = jobDetailViewModel;
+
         listJob = jobViewModel.getJobs().getValue();
     }
 
@@ -116,8 +115,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     private void updateStatus(Job job, boolean isFinish) {
         jobViewModel.checkOrUncheck(job, isFinish);
-        jobDetailViewModel.setContext(context, job.getId());
-        jobDetailViewModel.syncJob(job);
+       JobDetailViewModel jobDetailViewModel = new JobDetailViewModel();
+       jobDetailViewModel.setContext(context,job.getId());
+       jobDetailViewModel.syncJob(job);
         new JobFragment();
     }
     void DialogDeleteJob(Job job) {

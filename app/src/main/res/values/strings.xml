@@ -59,6 +59,14 @@
     <string name="time_over">Đã kết thúc:</string>
     <string name="time">Thời gian:</string>
 
+    <!--Count Up-->
+    <string name="start">Bắt đầu</string>
+    <string name="pause">Tạm dừng</string>
+    <string name="resume">Tạm dừng</string>
+    <string name="reset">Tính lại</string>
+    <string name="finish">hoàn thành</string>
+    <string name="cancel">hủy</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->

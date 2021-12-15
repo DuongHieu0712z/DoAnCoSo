@@ -19,6 +19,9 @@ public interface JobDetailDAO {
     @Query("SELECT * FROM JobDetail WHERE JobID = :jobId")
     LiveData<List<JobDetail>> getByJobId(int jobId);
 
+    @Query("SELECT * FROM JobDetail WHERE JobID = :jobId")
+    List<JobDetail> getListByJobId(int jobId);
+
     @Insert
     void insert(JobDetail... jobDetails);
 

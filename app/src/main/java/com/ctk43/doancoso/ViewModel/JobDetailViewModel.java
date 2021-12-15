@@ -18,13 +18,16 @@ import java.util.List;
 public class JobDetailViewModel extends ViewModel {
     private JobDetailRepository jobDetailRepository;
     private LiveData<List<JobDetail>> jobDetails;
+    private List<JobDetail> listJobDetail;
 
     public JobDetailViewModel() {
+
     }
 
     public void setContext(Context context, int jobId) {
         jobDetailRepository = new JobDetailRepository(context, jobId);
-        jobDetails = jobDetailRepository.getJobDetails();
+            listJobDetail = jobDetailRepository.getListJobDetail();
+            jobDetails = jobDetailRepository.getJobDetails();
     }
 
     public LiveData<List<JobDetail>> getJobDetails() {
@@ -43,28 +46,38 @@ public class JobDetailViewModel extends ViewModel {
         jobDetailRepository.delete(jobDetails);
     }
 
+    public List<JobDetail> checkList() {
+        if (jobDetails.getValue() != null) {
+            return jobDetails.getValue();
+        } else{
+            return listJobDetail;
+        }
+    }
 
     public double updateProgress() {
         double before = 0;
-        for (JobDetail jobDetail : jobDetails.getValue()) {
+        for (JobDetail jobDetail : checkList()) {
             if (jobDetail.getStatus()) {
                 ++before;
             }
         }
-        double after = jobDetails.getValue().size();
+        double after = checkList().size();
         return before / after;
+    }
+    public int count(){
+        return checkList().size();
     }
 
     public void syncJob(Job job) {
         double curr = updateProgress();
         if (job.getProgress() == 1 && job.getStatus() == 2 && curr != 1.0) {
-            for (JobDetail jobDetail : jobDetails.getValue()
+            for (JobDetail jobDetail : checkList()
             ) {
                 jobDetail.setStatus(true);
                 jobDetailRepository.update(jobDetail);
             }
         } else if (job.getProgress() == 0 && job.getProgress() != curr && job.getStatus() != 2) {
-            for (JobDetail jobDetail : (jobDetails.getValue())
+            for (JobDetail jobDetail : checkList()
             ) {
                 jobDetail.setStatus(false);
                 jobDetailRepository.update(jobDetail);

@@ -33,13 +33,12 @@ public class JobDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_detail);
         initViewModel();
-
     }
 
 
     private void initViewModel() {
         int jobID = getIntent().getIntExtra("JobID", 0);
-        jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
+        jobViewModel = new JobViewModel();
         jobViewModel.setData(this);
         job = jobViewModel.getJobById(jobID);
         jobDetailViewModel = new ViewModelProvider(this).get(JobDetailViewModel.class);
@@ -78,6 +77,8 @@ public class JobDetailActivity extends AppCompatActivity {
 
     }
     private void UpdateJob(){
+        if(job.getProgress() == 1 && jobDetailViewModel.count()==0)
+            return;
         if(job.getProgress() == jobDetailViewModel.updateProgress())
             return;
         job.setProgress(jobDetailViewModel.updateProgress());
@@ -93,7 +94,6 @@ public class JobDetailActivity extends AppCompatActivity {
     void setProgress(TextView tv_progress, ProgressBar progressBar, Job job) {
         int progress = (int) (job.getProgress() * 100.0);
         String prgString = progress + " %";
-
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
     }
