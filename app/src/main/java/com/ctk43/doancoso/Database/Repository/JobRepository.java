@@ -9,6 +9,7 @@ import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.DAO.JobDAO;
 import com.ctk43.doancoso.Model.Job;
 
+import java.util.Date;
 import java.util.List;
 
 public class JobRepository {
@@ -23,6 +24,18 @@ public class JobRepository {
 
     public LiveData<List<Job>> getJobs() {
         return jobs;
+    }
+
+    public LiveData<List<Job>> getJobs(Date endDate) {
+        return jobDAO.getJobs(endDate);
+    }
+
+    public LiveData<List<Job>> getJobs(Date startDate, Date endDate) {
+        return jobDAO.getJobs(startDate, endDate);
+    }
+
+    public LiveData<List<Job>> getByCategoryId(int categoryId) {
+        return jobDAO.getByCategoryId(categoryId);
     }
 
     public Job getById(int id) {

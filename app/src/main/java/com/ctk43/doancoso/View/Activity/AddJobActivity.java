@@ -9,10 +9,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -61,7 +59,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.floating_dialog_add_new_job);
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
-        jobViewModel.setData(this);
+        jobViewModel.setContext(this);
 
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.setContext(this);
@@ -71,24 +69,15 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     @SuppressLint("SimpleDateFormat")
     private void initView() {
         Spinner spnCategory = findViewById(R.id.spiner_job_type);
-        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(AddJobActivity.this, spnCategory.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
+        ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         categoryViewModel.getCategories().observe(this, categories -> {
-            ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
-            adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-            spnCategory.setAdapter(adapter);
+            adapter.clear();
+            adapter.addAll(categories);
             adapter.notifyDataSetChanged();
         });
+        spnCategory.setAdapter(adapter);
 
         ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
         img_add_job_type.setOnClickListener(v -> onOpenDialog());
@@ -162,11 +151,11 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             String startTime = tv_time_start.getText().toString();
             String endDate = tv_date_end.getText().toString();
             String endTime = tv_time_end.getText().toString();
-            if(Extension.isEmty(this,name ,getString(R.string.job_name),false))
+            if(Extension.isEmpty(this,name ,getString(R.string.job_name),false))
                 return false;
-            if(Extension.isEmty(this,endDate, getString(R.string.date_end),endDate.equals( getString(R.string.day))) )
+            if(Extension.isEmpty(this,endDate, getString(R.string.date_end),endDate.equals( getString(R.string.day))) )
                 return false;
-            if(Extension.isEmty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
+            if(Extension.isEmpty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
                 return false;
         try {
             Date start = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);

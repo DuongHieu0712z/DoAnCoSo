@@ -21,11 +21,10 @@ import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class JobDetailActivity extends AppCompatActivity {
-
-    FloatingActionButton btn_Add_New_Job_detail;
+    private FloatingActionButton btn_Add_New_Job_detail;
     private JobDetailViewModel jobDetailViewModel;
-    JobViewModel jobViewModel;
-    RecyclerView recyclerView;
+    private JobViewModel jobViewModel;
+    private RecyclerView recyclerView;
     private Job job;
 
     @Override
@@ -35,12 +34,11 @@ public class JobDetailActivity extends AppCompatActivity {
         initViewModel();
     }
 
-
     private void initViewModel() {
         int jobID = getIntent().getIntExtra("JobID", 0);
         jobViewModel = new JobViewModel();
-        jobViewModel.setData(this);
-        job = jobViewModel.getJobById(jobID);
+        jobViewModel.setContext(this);
+        job = jobViewModel.getById(jobID);
         jobDetailViewModel = new ViewModelProvider(this).get(JobDetailViewModel.class);
         jobDetailViewModel.setContext(this, jobID);
         init();
@@ -58,24 +56,26 @@ public class JobDetailActivity extends AppCompatActivity {
         JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,jobViewModel);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
             adapter.setData(jobDetails);
-            UpdateJob();
-            recyclerView.setAdapter(adapter);
-            tv_job_name.setText(job.getName());
-            tv_job_des.setText(job.getDescription());
-            tv_job_start.setText(job.getStartDate().toString());
-            tv_job_end.setText(job.getEndDate().toString());
-            setProgress(tv_job_progress,sb,job);
-            recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
+//            UpdateJob();
+            //            setProgress(tv_job_progress,sb,job);
         });
-        btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
 
+        recyclerView.setAdapter(adapter);
+        tv_job_name.setText(job.getName());
+        tv_job_des.setText(job.getDescription());
+        tv_job_start.setText(job.getStartDate().toString());
+        tv_job_end.setText(job.getEndDate().toString());
+        recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
+
+        btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
 
         ImageView img_back = findViewById(R.id.img_jt_back);
         img_back.setOnClickListener(view -> {
-            //   ((MainActivity) getActivity()).gotoM001Screen();
+//               ((MainActivity) getActivity()).gotoM001Screen();
+            finish();
         });
-
     }
+
     private void UpdateJob(){
         if(job.getProgress() == 1 && jobDetailViewModel.count()==0)
             return;
@@ -85,6 +85,7 @@ public class JobDetailActivity extends AppCompatActivity {
         job.setStatus(Extension.CheckStatus(job));
         jobViewModel.update(job);
     }
+
     private void AddJobDetail() {
         Intent intent = new Intent(getApplicationContext(), AddJobDetailActivity.class);
         intent.putExtra("jobId", job.getId());

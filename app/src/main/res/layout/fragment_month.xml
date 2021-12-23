@@ -3,105 +3,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.MonthFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".View.MonthFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3"
-        >
+        android:weightSum="3">
+
         <ImageView
-            android:layout_marginLeft="10dp"
             android:id="@+id/btn_prv_month"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/ic_baseline_navigate_before_24"
             android:tint="@color/black"
             tools:ignore="UseAppTint" />
+
         <TextView
             android:id="@+id/tv_current_month"
             android:layout_width="0dp"
-            android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:text="Tháng 12-2021"
+            android:layout_weight="3"
             android:gravity="center_horizontal"
+            android:text="Tháng 12-2021"
             android:textColor="@color/black"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
+
         <ImageView
-            android:layout_marginRight="10dp"
             android:id="@+id/btn_next_month"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/ic_baseline_navigate_next_24"
             android:tint="@color/black"
-            tools:ignore="UseAppTint"/>
+            tools:ignore="UseAppTint" />
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="7"
-    android:layout_marginHorizontal="5dp">
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CN"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/over"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="T.2"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="T.3"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="T.4"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="T.5"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="T.6"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="T.7"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"/>
-</LinearLayout>
+        android:layout_marginHorizontal="5dp"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="CN"
+            android:textColor="@color/over"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="T.2"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="T.3"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="T.4"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="T.5"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="T.6"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="T.7"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
 </LinearLayout>

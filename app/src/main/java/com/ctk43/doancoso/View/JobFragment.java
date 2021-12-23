@@ -1,9 +1,9 @@
 package com.ctk43.doancoso.View;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,9 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
-import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -49,7 +47,7 @@ public class JobFragment extends Fragment  {
 
     private void initViews(View v) {
         rcv = v.findViewById(R.id.rcv_display_job);
-        jobViewModel.setData(mContext);
+        jobViewModel.setContext(mContext);
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
         apdapterJobs = new JobAdapter(mContext, jobViewModel);
         jobViewModel.getJobs().observe(requireActivity(), jobs -> {
@@ -76,6 +74,4 @@ public class JobFragment extends Fragment  {
             }
         }).attachToRecyclerView(rcv);*/
     }
-
-
 }

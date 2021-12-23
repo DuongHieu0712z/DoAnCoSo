@@ -20,7 +20,6 @@ import java.util.Date;
 
 
 public class Extension {
-
     public static Dialog dialogYesNo(Dialog dialog, String title, String content) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_yes_no);
@@ -44,19 +43,22 @@ public class Extension {
         return dialog;
     }
 
-    public static boolean isEmty(Context context, String value, String name, boolean isdefaut) {
-        if (value.isEmpty() || isdefaut) {
+    public static boolean isEmpty(Context context, String value, String name, boolean isDefault) {
+        if (value.isEmpty() || isDefault) {
             Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
     }
 
-    public static int Curr_Week() {
-        Date date = Calendar.getInstance().getTime();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal.get(Calendar.DAY_OF_WEEK);
+    public static int getWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public static int getCurrentWeek() {
+        return getWeek(Calendar.getInstance().getTime());
     }
 
     public static int Last_Week(int week) {

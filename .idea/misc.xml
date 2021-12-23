@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Studio/DoAnCoSo/app/src/main/res/layout/activity_jobs.xml" value="0.1334853090172239" />
+        <entry key="..\:/Android Studio/DoAnCoSo/app/src/main/res/layout/calendar_cell.xml" value="0.2608695652173913" />
+        <entry key="..\:/Android Studio/DoAnCoSo/app/src/main/res/layout/fragment_month.xml" value="0.264" />
         <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable-nodpi/test.xml" value="0.15989583333333332" />
         <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.24259259259259258" />
         <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.15989583333333332" />

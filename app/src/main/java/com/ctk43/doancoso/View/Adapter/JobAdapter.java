@@ -9,13 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,12 +28,14 @@ import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 import com.ctk43.doancoso.View.JobFragment;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
@@ -70,7 +76,37 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         setTextStatus(item, holder.tv_job_status, holder.tv_time_title, holder.tv_time);
         holder.layout_funcion.setOnClickListener(v -> DialogDeleteJob(item));
         holder.itemJob.setOnClickListener(v -> ViewJobDetail(item));
-        holder.checkBox.setOnClickListener(v -> CheckOrUncheck(holder.checkBox, item));
+//        holder.checkBox.setOnClickListener(v -> CheckOrUncheck(holder.checkBox, item));
+
+        JobDetailViewModel jobDetailViewModel = new JobDetailViewModel();
+        jobDetailViewModel.setContext(context, item.getId());
+//        jobDetailViewModel.getJobDetails().observe((LifecycleOwner) context, new Observer<List<JobDetail>>() {
+//            @Override
+//            public void onChanged(List<JobDetail> jobDetails) {
+//                for (JobDetail jobDetail : jobDetails) {
+//                    jobDetail.setStatus(holder.checkBox.isChecked());
+//                    jobDetailViewModel.update(jobDetail);
+//                }
+////                jobDetailViewModel.update(jobDetails.toArray(new JobDetail[0]));
+//            }
+//        });
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(context, String.valueOf(b), Toast.LENGTH_SHORT).show();
+                jobDetailViewModel.getJobDetails().observe((LifecycleOwner) context, new Observer<List<JobDetail>>() {
+                    @Override
+                    public void onChanged(List<JobDetail> jobDetails) {
+                        for (JobDetail jobDetail : jobDetails) {
+                            jobDetail.setStatus(holder.checkBox.isChecked());
+                            jobDetailViewModel.update(jobDetail);
+                        }
+//                jobDetailViewModel.update(jobDetails.toArray(new JobDetail[0]));
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -120,6 +156,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
        jobDetailViewModel.syncJob(job);
         new JobFragment();
     }
+
     void DialogDeleteJob(Job job) {
         final Dialog dialogYesNo = new Dialog(context);
         Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));

@@ -71,8 +71,8 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         holder.checkBox.setOnClickListener(v ->  {
             IsFinish(holder.checkBox,item);
         });
-
     }
+
     public void IsFinish(CheckBox checkBox, JobDetail jobDetail){
         if(checkBox.isChecked()){
             jobDetail.setStatus(true);
@@ -82,6 +82,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             DialogUnCheckJobDetail(jobDetail,checkBox);
         }
     }
+
     public void JobClock(int id){
         Intent intent = new Intent(mContext, JobDetail_CountUp.class);
         intent.putExtra("id",id);
