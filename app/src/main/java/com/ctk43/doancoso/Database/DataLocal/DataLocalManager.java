@@ -5,11 +5,11 @@ import android.content.Context;
 public class DataLocalManager {
     private static final String PREF_EMAIL = "PREF_EMAIL";
     private static DataLocalManager instance;
-    private SettingSharePrefence settingSharePrefence;
+    private SettingSharePreference settingSharePreference;
   //  private static final String Email ;
     public static void init(Context context){
         instance = new DataLocalManager();
-        instance.settingSharePrefence = new SettingSharePrefence(context);
+        instance.settingSharePreference = new SettingSharePreference(context);
     }
 
     public static DataLocalManager getInstance(){
@@ -20,10 +20,10 @@ public class DataLocalManager {
     }
 
     public static void setEmail(String email){
-        DataLocalManager.getInstance().settingSharePrefence.putString(PREF_EMAIL,email);
+        DataLocalManager.getInstance().settingSharePreference.putString(PREF_EMAIL,email);
     }
 
     public static String getEmail(){
-        return DataLocalManager.getInstance().settingSharePrefence.getString(PREF_EMAIL);
+        return DataLocalManager.getInstance().settingSharePreference.getString(PREF_EMAIL);
     }
 }

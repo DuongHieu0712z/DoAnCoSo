@@ -80,32 +80,19 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
         JobDetailViewModel jobDetailViewModel = new JobDetailViewModel();
         jobDetailViewModel.setContext(context, item.getId());
-//        jobDetailViewModel.getJobDetails().observe((LifecycleOwner) context, new Observer<List<JobDetail>>() {
-//            @Override
-//            public void onChanged(List<JobDetail> jobDetails) {
-//                for (JobDetail jobDetail : jobDetails) {
-//                    jobDetail.setStatus(holder.checkBox.isChecked());
-//                    jobDetailViewModel.update(jobDetail);
-//                }
-////                jobDetailViewModel.update(jobDetails.toArray(new JobDetail[0]));
-//            }
-//        });
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(context, String.valueOf(b), Toast.LENGTH_SHORT).show();
-                jobDetailViewModel.getJobDetails().observe((LifecycleOwner) context, new Observer<List<JobDetail>>() {
-                    @Override
-                    public void onChanged(List<JobDetail> jobDetails) {
-                        for (JobDetail jobDetail : jobDetails) {
-                            jobDetail.setStatus(holder.checkBox.isChecked());
-                            jobDetailViewModel.update(jobDetail);
-                        }
-//                jobDetailViewModel.update(jobDetails.toArray(new JobDetail[0]));
+        holder.checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            Toast.makeText(context, String.valueOf(b), Toast.LENGTH_SHORT).show();
+            jobDetailViewModel.getJobDetails().observe((LifecycleOwner) context, new Observer<List<JobDetail>>() {
+                @Override
+                public void onChanged(List<JobDetail> jobDetails) {
+                    for (JobDetail jobDetail : jobDetails) {
+                        jobDetail.setStatus(holder.checkBox.isChecked());
+                        jobDetailViewModel.update(jobDetail);
                     }
-                });
-            }
+//                jobDetailViewModel.update(jobDetails.toArray(new JobDetail[0]));
+                }
+            });
         });
     }
 
