@@ -132,7 +132,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         return listJobDetail.size();
     }
 
-    public class JobDetailHolder extends RecyclerView.ViewHolder {
+    public static class JobDetailHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
         LinearLayout jobDetailItem;
         TextView tvJdName;
