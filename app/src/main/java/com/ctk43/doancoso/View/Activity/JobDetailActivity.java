@@ -56,16 +56,15 @@ public class JobDetailActivity extends AppCompatActivity {
         JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,jobViewModel);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
             adapter.setData(jobDetails);
-//            UpdateJob();
-            //            setProgress(tv_job_progress,sb,job);
+            UpdateJob();
+            recyclerView.setAdapter(adapter);
+            tv_job_name.setText(job.getName());
+            tv_job_des.setText(job.getDescription());
+            tv_job_start.setText(job.getStartDate().toString());
+            tv_job_end.setText(job.getEndDate().toString());
+            setProgress(tv_job_progress,sb,job);
+            recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
         });
-
-        recyclerView.setAdapter(adapter);
-        tv_job_name.setText(job.getName());
-        tv_job_des.setText(job.getDescription());
-        tv_job_start.setText(job.getStartDate().toString());
-        tv_job_end.setText(job.getEndDate().toString());
-        recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
 
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
 
