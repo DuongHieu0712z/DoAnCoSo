@@ -42,6 +42,12 @@
     <string name="over">Đã quá hạn</string><!--3-->
     <string name="over_complete">Hoàn thành trễ</string><!--4-->
 
+    <!--Priority-->
+    <string name="priority_0">Không quan trọng, không khẩn cấp</string><!--0-->
+    <string name="priority_1">Không quan trọng, khẩn cấp</string><!--1-->
+    <string name="priority_2">Quan trọng, không khẩn cấp</string><!--2-->
+    <string name="priority_3">Quan trọng, khẩn cấp</string><!--3-->
+
     <!-- Time-->
     <string name="month">Tháng</string>
     <string name="day">Ngày</string>

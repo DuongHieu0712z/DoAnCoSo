@@ -5,5 +5,5 @@
     android:title="@string/title_search"
     android:icon="@drawable/ic_baseline_search_24"
     app:showAsAction="always"
-    app:actionViewClass="android.widget.SearchView"/>
+    app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 </menu>

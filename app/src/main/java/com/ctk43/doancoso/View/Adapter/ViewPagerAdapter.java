@@ -8,6 +8,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.ctk43.doancoso.View.JobFragment;
 import com.ctk43.doancoso.View.ManagerJobFragment;
 import com.ctk43.doancoso.View.MonthFragment;
+import com.ctk43.doancoso.View.ProfleFragment;
+import com.ctk43.doancoso.View.SettingFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -24,9 +26,9 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                return new MonthFragment();
             case 2:
-         //       return new JobFragment();
+                return new SettingFragment();
             case 3:
-           //     return new JobFragment();
+                return new ProfleFragment();
             default:
                 return new ManagerJobFragment();
         }

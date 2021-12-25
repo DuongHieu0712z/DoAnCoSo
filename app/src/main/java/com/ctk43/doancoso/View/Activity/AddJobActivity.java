@@ -42,7 +42,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -56,6 +58,10 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     TextView tv_date_end;
     TextView tv_time_end;
 
+    Spinner spnCategory;
+
+    private Job jobToUpdate;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +69,22 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         jobViewModel.setData(this);
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+            jobToUpdate = (Job) bundle.get("JobToUpdate");
+
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.setContext(this);
-        initView();
+        try {
+            initView();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
-    private void initView() {
-        Spinner spnCategory = findViewById(R.id.spiner_job_type);
+    private void initView() throws ParseException {
+        spnCategory = findViewById(R.id.spiner_job_type);
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -114,6 +128,72 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                 Toast.makeText(AddJobActivity.this,getString(R.string.add_job_sucess),Toast.LENGTH_LONG).show();
             }
         });
+
+        SetDataForJob();
+
+
+    }
+
+    private void SetDataForJob() throws ParseException {
+        if(jobToUpdate != null){
+            edt_job_name.setText(jobToUpdate.getName());
+            edt_job_des.setText(jobToUpdate.getDescription());
+
+
+
+            tv_date_start.setText(ParseDate(jobToUpdate.getStartDate()));
+
+            tv_date_end.setText(ParseDate(jobToUpdate.getEndDate()));
+            tv_time_start.setText(ParseTime(jobToUpdate.getStartDate()));
+            tv_time_end.setText(ParseTime(jobToUpdate.getEndDate()));
+
+            //Bạn Hiếu fix xong cái getValue của Category rồi mở nó ra hé!
+            //spnCategory.setSelection(getSpinerIndex(spnCategory, jobToUpdate.getCategoryId()));
+
+
+        }
+    }
+
+    private int getSpinerIndex(Spinner spinner, int id){
+        Category category = null;
+
+        List<Category> categories = categoryViewModel.getCategories().getValue();
+        
+        for(Category cat:categories){
+            if(cat.getId() == id)
+                category = cat;
+        }
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(category)){
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    private String ParseDate(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return day+"/"+month+"/"+year;
+    }
+    private String ParseTime(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR);
+        int minutes = cal.get(Calendar.MINUTE);
+
+        String str = "";
+        if(minutes ==0)
+            str = hour+":0"+minutes;
+        else
+           str= hour+":"+minutes;
+        return str;
     }
 
     private void openDateDialog(int mode) {

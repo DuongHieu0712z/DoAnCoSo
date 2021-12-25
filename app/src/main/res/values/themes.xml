@@ -20,6 +20,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="Theme.DoAnCoSo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.DoAnCoSo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

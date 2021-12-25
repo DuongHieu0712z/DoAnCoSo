@@ -70,6 +70,7 @@ public class JobDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_detail);
         initViewModel();
+
     }
 
 
@@ -85,7 +86,7 @@ public class JobDetailActivity extends AppCompatActivity {
     }
 
     private void init() {
-        recyclerView = findViewById(R.id.rcv_job_detail);
+        RecyclerView recyclerView = findViewById(R.id.rcv_job_detail);
         TextView tv_job_name = findViewById(R.id.tv_jt_job_name);
         TextView tv_job_des = findViewById(R.id.tv_jt_description);
         TextView tv_job_start = findViewById(R.id.tv_jt_time_start);
@@ -98,25 +99,23 @@ public class JobDetailActivity extends AppCompatActivity {
         tv_desciption = findViewById(R.id.tv_notification_descripsion);
         tv_time = findViewById(R.id.tv_clock_notification);
         layout_count_up = findViewById(R.id.layout_count_up_bottom);
-        SeekBar sb = findViewById(R.id.sb_jt_progress);
+        ProgressBar sb = findViewById(R.id.sb_jt_progress);
         btn_Add_New_Job_detail = findViewById(R.id.add_new_job_detail);
-        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,jobViewModel);
+        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel, jobViewModel);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
             adapter.setData(jobDetails);
-             UpdateJob();
+            UpdateJob();
             recyclerView.setAdapter(adapter);
             tv_job_name.setText(job.getName());
             tv_job_des.setText(job.getDescription());
             tv_job_start.setText(job.getStartDate().toString());
             tv_job_end.setText(job.getEndDate().toString());
-            setProgress(tv_job_progress,sb,job);
+            setProgress(tv_job_progress, sb, job);
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
         });
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
-        ImageView img_back = findViewById(R.id.img_jt_back);
-        img_back.setOnClickListener(view -> {
-            //   ((MainActivity) getActivity()).gotoM001Screen();
-        });
+
+
     }
 
     private void registerReceiver(){
@@ -143,6 +142,7 @@ public class JobDetailActivity extends AppCompatActivity {
     void setProgress(TextView tv_progress, ProgressBar progressBar, Job job) {
         int progress = (int) (job.getProgress() * 100.0);
         String prgString = progress + " %";
+
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
     }

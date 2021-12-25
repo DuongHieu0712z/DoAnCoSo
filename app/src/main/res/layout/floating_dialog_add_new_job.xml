@@ -69,9 +69,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp"
             android:layout_weight="2"
-            android:textColor="@color/orange"
             android:outlineAmbientShadowColor="@color/orange"
-            android:outlineSpotShadowColor="@color/orange" />
+            android:outlineSpotShadowColor="@color/orange"
+            android:textColor="@color/orange" />
 
         <ImageView
             android:id="@+id/img_add_job_type"
