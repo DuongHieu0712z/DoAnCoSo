@@ -7,7 +7,6 @@
     android:weightSum="10"
     android:layout_marginHorizontal="10dp"
     android:layout_margin="5dp"
-    android:padding="5dp"
     app:mode="same_level"
     app:dragEdge="right"
     android:background="@color/bg_color"
@@ -20,27 +19,23 @@
         app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_gravity="top">
-            <ImageView
-                android:id="@+id/img_jd_level"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="top"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/ic_baseline_star_24" />
+            android:gravity="center_vertical">
+
             <CheckBox
-                android:layout_marginLeft="3dp"
                 android:id="@+id/chk_finish_job_detail"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:gravity="center"
-                android:buttonTint="@color/green_02"/>
+                android:buttonTint="@color/green_02"
+                android:scaleX="1.25"
+                android:scaleY="1.25"
+                android:layout_marginRight="7dp"/>
 
 
         </LinearLayout>
@@ -52,19 +47,34 @@
             android:orientation="vertical"
             android:layout_marginLeft="5dp"
             >
-            <TextView
-                android:id="@+id/tv_jd_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tên Chi Tiết Công Việc"
-                android:textColor="@color/text_title_color"
-                android:textSize="18sp"
-                android:fontFamily="@font/playfair_regular"
-                />
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/img_jd_level"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/ic_baseline_star_24" />
+                <TextView
+                    android:id="@+id/tv_jd_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tên Chi Tiết Công Việc"
+                    android:textColor="@color/text_title_color"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/playfair_regular"
+                    />
+            </LinearLayout>
+
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="wrap_content">
                 <TextView
+                    android:layout_marginTop="3dp"
                     android:id="@+id/tv_jd_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,6 +82,7 @@
                     android:textSize="14sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/playfair_regular"
+                    android:layout_marginBottom="3dp"
                     />
             </ScrollView>
             <LinearLayout
@@ -85,14 +96,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="20dp"
                     >
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.8"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Dự kiến :"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/white"
                         />
                     <TextView
@@ -101,7 +112,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="Value"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/orange"
                         android:gravity="right"
                         />
@@ -110,7 +121,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="phút"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/white"
                         android:layout_marginLeft="10dp"/>
                 </LinearLayout>
@@ -123,10 +134,10 @@
                     >
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.8"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Thực tế :"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/white"
                         />
                     <TextView
@@ -136,7 +147,7 @@
                         android:text="value"
                         android:textColor="@color/orange"
                         android:id="@+id/tv_jd_actual_time"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:gravity="right"
                         />
                     <TextView
@@ -144,19 +155,20 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="phút"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/white"
                         android:layout_marginLeft="10dp"/>
                 </LinearLayout>
             </LinearLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="7dp"
                 android:background="@color/sub_bg_color"
-                android:layout_marginRight="37dp"
-                />
+                android:layout_marginRight="10dp"/>
+
         </LinearLayout>
+
     </LinearLayout>
 
 

@@ -4,15 +4,20 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -22,16 +27,24 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
+import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
+import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.JobFragment;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
+import java.io.Serializable;
+import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
+public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> implements Filterable {
     private List<Job> listJob;
+    private List<Job> mlistJobOld;
     private final Context context;
     private final JobViewModel jobViewModel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
@@ -40,6 +53,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         this.context = context;
         this.jobViewModel = jobViewModel;
         listJob = jobViewModel.getJobs().getValue();
+        mlistJobOld = listJob;
+        //System.out.println(listJob.size()+"baka");
     }
 
     @Override
@@ -51,6 +66,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     public void setJob(List<Job> jobs) {
         listJob = jobs;
+        mlistJobOld = listJob;
+        System.out.println(listJob.size()+"baka");
     }
 
     @Override
@@ -66,7 +83,25 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         setProcess(holder.tv_job_prg, holder.progressBar, item);
         setTextStatus(item, holder.tv_job_status, holder.tv_time_title, holder.tv_time);
 
-        holder.layout_funcion.setOnClickListener(v -> DialogDeleteJob(item));
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogDeleteJob(item);
+            }
+        });
+
+        holder.update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AddJobActivity.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putSerializable("JobToUpdate", (Serializable) item);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
+
         holder.itemJob.setOnClickListener(v -> ViewJobDetail(item));
         holder.checkBox.setOnClickListener(v -> CheckOrUncheck(holder.checkBox, item));
     }
@@ -121,10 +156,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     void DialogDeleteJob(Job job) {
         final Dialog dialogYesNo = new Dialog(context);
+        Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
         Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
         dialogYesNo.setCancelable(true);
-        Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
         btn_yes.setOnClickListener(v -> {
             deleteItem(job);
             dialogYesNo.dismiss();
@@ -165,6 +200,60 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         dialogYesNo.show();
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strsearch = charSequence.toString();
+                if(strsearch.isEmpty()){
+                    listJob = mlistJobOld;
+                }else{
+                    List<Job> list = new ArrayList<>();
+                    for (Job j : mlistJobOld){
+                        if(j.getName().toLowerCase().contains(strsearch.toLowerCase())){
+                            list.add(j);
+                        }
+                    }
+                    listJob = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = listJob;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                listJob = (List<Job>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public void SortByPriority(int priority){
+        if(listJob==null) return;
+        List<Job> list = new ArrayList<>();
+        for(Job j:listJob){
+            if(j.getPriority() == priority)
+                list.add(j);
+        }
+        listJob = list;
+        notifyDataSetChanged();
+    }
+    public void SortByStatus(int status){
+        if(listJob==null) return;
+        List<Job> list = new ArrayList<>();
+        for(Job j:listJob){
+            if(j.getStatus() == status)
+                list.add(j);
+        }
+        listJob = list;
+        notifyDataSetChanged();
+    }
+    public void Revert(){
+        listJob = mlistJobOld;
+        notifyDataSetChanged();
+    }
     public static class JobHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
         LinearLayout layout_funcion;
@@ -178,6 +267,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         ProgressBar progressBar;
         CheckBox checkBox;
         ImageView img_priority;
+
+        FrameLayout delete;
+        FrameLayout update;
+
 
         public JobHolder(View view) {
             super(view);
@@ -193,6 +286,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
             tv_time = view.findViewById(R.id.tv_remainning_time);
             tv_job_status = view.findViewById(R.id.tv_Status);
             progressBar = view.findViewById(R.id.prg_progress);
+
+            delete = view.findViewById(R.id.frm_function_delete);
+            update = view.findViewById(R.id.frm_function_update);
+
         }
     }
 }

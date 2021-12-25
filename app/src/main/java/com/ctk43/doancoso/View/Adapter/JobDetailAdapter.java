@@ -1,22 +1,32 @@
 package com.ctk43.doancoso.View.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Activity.AddJobDetailActivity;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobDetailHolder> {
@@ -53,6 +63,39 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         else if (item.isPriority() == false)
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
         holder.checkBox.setChecked(item.getStatus());
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogDeleteJobDetail(item);
+
+            }
+        });
+        holder.update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, AddJobDetailActivity.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putSerializable("JobDetailToUpdate", (Serializable) item);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
+
+    }
+    void DialogDeleteJobDetail(JobDetail jobDetail) {
+        final Dialog dialogYesNo = new Dialog(mContext);
+        Extension.dialogYesNo(dialogYesNo, mContext.getString(R.string.confirm_delete), mContext.getString(R.string.message_delete_all_job_detail));
+        Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+        Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+        dialogYesNo.setCancelable(true);
+
+        btn_yes.setOnClickListener(v -> {
+            Toast.makeText(mContext, "Chua Xu Ly", Toast.LENGTH_LONG).show();
+        });
+        btn_no.setOnClickListener(v -> dialogYesNo.dismiss());
+        dialogYesNo.show();
     }
 
     @Override
@@ -69,6 +112,9 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         ImageView img_Priority;
         CheckBox checkBox;
 
+        FrameLayout delete;
+        FrameLayout update;
+
         public JobDetailHolder(View itemView) {
             super(itemView);
             swipeRevealLayout = itemView.findViewById(R.id.item_job_detail);
@@ -79,6 +125,10 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             //SeekBar sb_Progress = vJobDetail.findViewById(R.id.sb_jd_progress);
             img_Priority = itemView.findViewById(R.id.img_jd_level);
             checkBox = itemView.findViewById(R.id.chk_finish_job_detail);
+
+            delete = itemView.findViewById(R.id.frm_function_delete);
+            update = itemView.findViewById(R.id.frm_function_update);
+
         }
     }
 }

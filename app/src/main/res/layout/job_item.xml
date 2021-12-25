@@ -8,7 +8,7 @@
     android:background="@color/bg_color"
     app:mode="same_level"
     app:dragEdge="right"
-   >
+    >
     <include
         android:id="@+id/job_funcion"
         layout="@layout/funcion_item"
@@ -29,7 +29,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="7.5"
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
@@ -80,9 +80,9 @@
                     android:layout_height="match_parent"
                     android:layout_above="@+id/time"
                     android:layout_below="@id/ln_job"
-                   android:layout_marginLeft="7dp"
-                    android:padding="1dp"
+                    android:layout_marginLeft="14dp"
                     android:layout_toRightOf="@id/chk_finish_job"
+                    android:padding="1dp"
                     android:text="Mô tả công việc"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/time_remaining"
-                        android:paddingLeft="110dp"
+                        android:paddingLeft="14dp"
                         android:layout_margin="1dp"
                         android:textColor="@color/orange"
                         android:textSize="12sp" />
@@ -117,7 +117,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:orientation="vertical">
 
                 <FrameLayout

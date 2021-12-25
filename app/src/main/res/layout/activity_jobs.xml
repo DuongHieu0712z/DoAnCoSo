@@ -5,17 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_round"
-    android:orientation="vertical">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_display_job"
+    android:orientation="vertical"
+    android:id="@+id/job_fragment_abc">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp">
 
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_display_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    />
+        </LinearLayout>
 
 </RelativeLayout>

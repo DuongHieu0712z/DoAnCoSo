@@ -37,6 +37,13 @@
     <string name="on_going">Đang diễn ra</string><!--1-->
     <string name="complete">Đã hoàn thành</string><!--2-->
     <string name="over">Đã quá hạn</string><!--3-->
+    <string name="over_complete">Hoàn thành trễ</string><!--4-->
+
+    <!--Priority-->
+    <string name="priority_0">Không quan trọng, không khẩn cấp</string><!--0-->
+    <string name="priority_1">Không quan trọng, khẩn cấp</string><!--1-->
+    <string name="priority_2">Quan trọng, không khẩn cấp</string><!--2-->
+    <string name="priority_3">Quan trọng, khẩn cấp</string><!--3-->
 
     <!-- Time-->
     <string name="month">Tháng</string>
@@ -49,7 +56,7 @@
     <string name="time_end">Thời gian Kết thúc</string>
     <string name="hour_end">Giờ kết thúc</string>
     <string name="testdate">365 ngày 12 giờ</string>
-    <string name="hint_estimate_time">Nhập thời gian hoàn thành dự kiến</string>
+    <string name="hint_estimate_time">Thời gian hoàn thành dự kiến</string>
     <string name="estimal_time">Thời gian dự kiến</string>
     <string name="time_remaining">Còn lại: </string>
     <string name="time_over">Đã kết thúc:</string>

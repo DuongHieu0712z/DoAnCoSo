@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
+import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,14 +24,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class JobFragment extends Fragment  {
     FloatingActionButton btn_Add_New_Job;
     private Context mContext;
-    private JobAdapter jobListAdapter;
-    RecyclerView rcv;
+    public JobAdapter jobListAdapter;
+    public RecyclerView rcv;
     private JobViewModel jobViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_jobs, container, false);
+        View v = inflater.inflate(R.layout.activity_jobs, container, false);
+        return  v;
     }
 
     @Override
@@ -74,6 +76,10 @@ public class JobFragment extends Fragment  {
                 Toast.makeText(mContext,"Xóa xong",Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(rcv);*/
+    }
+    public void Filter(String str){
+
+        jobListAdapter.getFilter().filter(str);
     }
 
 

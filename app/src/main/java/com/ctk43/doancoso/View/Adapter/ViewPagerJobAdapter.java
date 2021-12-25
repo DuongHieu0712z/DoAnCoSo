@@ -9,7 +9,7 @@ import com.ctk43.doancoso.View.JobFragment;
 import com.ctk43.doancoso.View.MonthFragment;
 
 public class ViewPagerJobAdapter extends FragmentStateAdapter {
-
+    public JobFragment jobFragment = new JobFragment();
 
     public ViewPagerJobAdapter(@NonNull Fragment fragment) {
         super(fragment);
@@ -23,13 +23,14 @@ public class ViewPagerJobAdapter extends FragmentStateAdapter {
             case 0:
                //   return new JobFragment();
             case 1:
-               return new JobFragment();
+               return jobFragment = new JobFragment();
+
             case 2:
          //       return new JobFragment();
             case 3:
            //     return new JobFragment();
             default:
-                return new JobFragment();
+                return jobFragment =new JobFragment();
         }
 
     }

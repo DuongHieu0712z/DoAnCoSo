@@ -26,10 +26,11 @@
     <color name="green_03">#e9ecac</color>
 
     <!--status-->
-    <color name="in_coming">#00BCD4</color>
+    <color name="in_coming">#1f7ef2</color>
     <color name="on_ongoing">#A7E461</color>
-    <color name="complete">#FFC107</color>
+    <color name="complete">#ffcc00</color>
     <color name="over">#FF0000</color>
+    <color name="over_complete">#FF5722</color>
 
     <color name="splat_text_color_lighter">#eece83</color>
     <color name="Transparent">#00000000</color>
@@ -40,6 +41,18 @@
     <color name="sub_bg_color">#535968</color>
 
     <color name="text_title_color">#d3bc8e</color>
+    <color name="bg_color_2">#263240</color>
+
+
+    <color name="white_two">#f0ebe5</color>
+    <color name="brown">#1d150a</color>
+    <color name="crimsom">#770900</color>
+    <color name="yellow_two">#dcc098</color>
+
+    <color name="red_start">#cf493d</color>
+    <color name="red_end">#eb9358</color>
+
+
 
 
 </resources>

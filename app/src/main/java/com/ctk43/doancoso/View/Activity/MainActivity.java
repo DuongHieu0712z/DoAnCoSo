@@ -1,22 +1,36 @@
 package com.ctk43.doancoso.View.Activity;
 
+
+
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
+import com.ctk43.doancoso.View.JobFragment;
+import com.ctk43.doancoso.View.ManagerJobFragment;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private JobViewModel jobViewModel;
     private ViewPager2 viewPager;
     private int dlg_mode = 0;
+
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +68,48 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                JobViewModel jobViewModel = new JobViewModel();
+                jobViewModel.setData(MainActivity.this);
+                JobAdapter jobAdapter = new JobAdapter(MainActivity.this, jobViewModel);
+                jobViewModel.setData(MainActivity.this);
+                RecyclerView rcv = findViewById(R.id.rcv_display_job);
+
+
+                jobViewModel.getJobs().observe(MainActivity.this, jobs -> {
+                    jobAdapter.setJob(jobs);
+                    rcv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    rcv.setAdapter(jobAdapter);
+                    jobAdapter.getFilter().filter(query);
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                JobViewModel jobViewModel = new JobViewModel();
+                jobViewModel.setData(MainActivity.this);
+                JobAdapter jobAdapter = new JobAdapter(MainActivity.this, jobViewModel);
+                jobViewModel.setData(MainActivity.this);
+                RecyclerView rcv = findViewById(R.id.rcv_display_job);
+                rcv.setAdapter(jobAdapter);
+
+                jobViewModel.getJobs().observe(MainActivity.this, jobs -> {
+                    jobAdapter.setJob(jobs);
+                    rcv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    rcv.setAdapter(jobAdapter);
+                    jobAdapter.getFilter().filter(newText);
+                });
+                return false;
+            }
+        });
         return true;
     }
 

@@ -48,7 +48,7 @@ public class JobDetailActivity extends AppCompatActivity {
         TextView tv_job_start = findViewById(R.id.tv_jt_time_start);
         TextView tv_job_end = findViewById(R.id.tv_jt_time_end);
         TextView tv_job_progress = findViewById(R.id.tv_jt_prg);
-        SeekBar sb = findViewById(R.id.sb_jt_progress);
+        ProgressBar sb = findViewById(R.id.sb_jt_progress);
         btn_Add_New_Job_detail = findViewById(R.id.add_new_job_detail);
         JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
@@ -65,10 +65,10 @@ public class JobDetailActivity extends AppCompatActivity {
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
 
 
-        ImageView img_back = findViewById(R.id.img_jt_back);
+        /*ImageView img_back = findViewById(R.id.img_jt_back);
         img_back.setOnClickListener(view -> {
             //   ((MainActivity) getActivity()).gotoM001Screen();
-        });
+        });*/
 
     }
 

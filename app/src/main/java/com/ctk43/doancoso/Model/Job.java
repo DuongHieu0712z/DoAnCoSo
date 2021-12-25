@@ -10,6 +10,7 @@ import androidx.room.TypeConverters;
 
 import com.ctk43.doancoso.Database.DateTypeConvertor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(foreignKeys = @ForeignKey(
@@ -17,7 +18,7 @@ import java.util.Date;
         parentColumns = "ID",
         childColumns = "CategoryID",
         onDelete = ForeignKey.CASCADE))
-public class Job {
+public class Job implements Serializable {
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
     private int id;

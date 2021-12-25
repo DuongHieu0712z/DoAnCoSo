@@ -15,7 +15,8 @@ public class GeneralData {
             R.string.coming_soon,
             R.string.on_going,
             R.string.complete,
-            R.string.over
+            R.string.over,
+            R.string.over_complete
     };
 
     public static final int[] statusTime = {
@@ -29,6 +30,7 @@ public class GeneralData {
             R.color.on_ongoing,
             R.color.complete,
             R.color.over,
+            R.color.over_complete,
     };
 
     public static GeneralData getInstance() {

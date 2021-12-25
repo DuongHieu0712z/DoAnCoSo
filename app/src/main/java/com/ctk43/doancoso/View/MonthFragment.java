@@ -87,6 +87,8 @@ public class MonthFragment extends Fragment implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView()
     {
+        String str = "";
+
         tv_current_month.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
@@ -124,8 +126,11 @@ public class MonthFragment extends Fragment implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String monthYearFromDate(LocalDate date)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("L");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy");
+        String str = "Tháng "+date.format(formatter);
+        str+=" năm "+date.format(formatter2);
+        return str;
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousMonthAction(View view)
@@ -155,4 +160,5 @@ public class MonthFragment extends Fragment implements View.OnClickListener{
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
+
 }
