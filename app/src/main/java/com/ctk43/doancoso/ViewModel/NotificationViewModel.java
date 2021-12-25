@@ -3,13 +3,14 @@ package com.ctk43.doancoso.ViewModel;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.ctk43.doancoso.Database.Repository.NoticationRepository;
 import com.ctk43.doancoso.Model.NotificationModel;
 
 import java.util.List;
 
-public class NotificationViewModel {
+public class NotificationViewModel extends ViewModel {
     private NoticationRepository noticationRepository;
     private LiveData<List<NotificationModel>> notifications;
     private List<NotificationModel> notificationList;

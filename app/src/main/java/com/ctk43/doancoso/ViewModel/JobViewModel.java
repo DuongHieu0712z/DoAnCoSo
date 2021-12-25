@@ -38,6 +38,10 @@ public class JobViewModel extends ViewModel {
         return jobs;
     }
 
+    public List<Job> getJobsByCategory(int id){
+        return jobRepository.getJobByCategory(id);
+    }
+
     public int sumStatus(int status){
         return jobRepository.getSumRow(status);
     }
@@ -49,6 +53,7 @@ public class JobViewModel extends ViewModel {
     public void update(Job... jobs) {
         jobRepository.update(jobs);
     }
+
     public void getJobBy(Job... jobs) {
         jobRepository.update(jobs);
     }

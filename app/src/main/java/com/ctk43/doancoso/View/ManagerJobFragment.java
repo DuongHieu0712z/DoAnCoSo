@@ -35,6 +35,7 @@ import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerJobAdapter;
+import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
@@ -51,6 +52,8 @@ public class ManagerJobFragment extends Fragment {
     private View view;
     public JobFragment jobFragment;
 
+    CategoryViewModel categoryViewModel;
+    JobViewModel jobViewModel;
 
     RadioButton rd_priority_0;
     RadioButton rd_priority_1;
@@ -66,6 +69,7 @@ public class ManagerJobFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        initViewModel();
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_manager_job, container, false);
         tabLayout = view.findViewById(R.id.tab_layout_job);
@@ -93,29 +97,31 @@ public class ManagerJobFragment extends Fragment {
 
         return  view;
     }
-
+    private void initViewModel(){
+        categoryViewModel = new CategoryViewModel();
+        categoryViewModel.setContext(requireContext());
+        jobViewModel = new JobViewModel();
+        jobViewModel.setData(requireContext());
+    }
 
 
     private void InnitView(View view) {
+
         ImageButton img_btn_filter = view.findViewById(R.id.img_btn_filter);
         ImageButton img_btn_convert = view.findViewById(R.id.img_btn_convert);
         Spinner spn_filter = view.findViewById(R.id.spn_filter);
 
-        String[] categories = new String[2];
-        categories[0] = "Mặc định";
-        categories[1] = "Mặc định 2";
 
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categoryViewModel.getCategoryList());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_filter.setAdapter(adapter);
 
         spn_filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println(i+"position");
-                Toast.makeText(getContext(),"Abc"+i, Toast.LENGTH_LONG).show();
                 if(i==0)
                     img_btn_convert.performClick();
+                //jobViewModel.getJobsByCategory(id)
             }
 
             @Override
@@ -145,17 +151,9 @@ public class ManagerJobFragment extends Fragment {
                     rcv.setLayoutManager(new LinearLayoutManager(getContext()));
                     rcv.setAdapter(jobAdapter);
                     jobAdapter.Revert();
-
                 });
-
-
             }
         });
-
-
-
-
-
     }
     private void showDialogFilter(){
         final Dialog dialog = new Dialog(getContext());

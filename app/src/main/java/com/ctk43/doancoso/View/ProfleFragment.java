@@ -12,11 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.zip.Inflater;
 
 public class ProfleFragment extends Fragment {
     private Context mContext;
+    JobViewModel jobViewModel;
 
     @Nullable
     @Override
@@ -38,7 +40,9 @@ public class ProfleFragment extends Fragment {
     }
 
     private void InnitView(View view) {
-
+        JobViewModel jobViewModel = new JobViewModel();
+        jobViewModel.setData(mContext);
+        //jobViewModel.sumStatus(1);
     }
     @Override
     public void onResume() {
