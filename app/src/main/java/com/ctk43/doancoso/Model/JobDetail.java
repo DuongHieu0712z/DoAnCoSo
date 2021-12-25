@@ -7,11 +7,15 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
+
+import java.io.Serializable;
+
 @Entity(foreignKeys = @ForeignKey(entity = Job.class,
         parentColumns = "ID",
         childColumns = "JobID",
         onDelete = ForeignKey.CASCADE))
-public class JobDetail {
+public class JobDetail implements Serializable {
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
     private int id;

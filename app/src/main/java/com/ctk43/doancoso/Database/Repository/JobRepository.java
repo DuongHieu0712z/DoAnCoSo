@@ -25,6 +25,21 @@ public class JobRepository {
         return jobs;
     }
 
+    public List<Job> getJobByCategory(int categoryId) {
+        return jobDAO.getJobByCategory(categoryId);
+    }
+
+    public List<Job> getJobByPriority(int priority) {
+        return jobDAO.getJobByPriority(priority);
+    }
+    public List<Job> getJobByStatus(int status) {
+        return jobDAO.getJobByStatus(status);
+    }
+
+    public int getSumRow(int status) {
+        return jobDAO.getRowCountByStatus(status);
+    }
+
     public Job getById(int id) {
         return jobDAO.getById(id);
     }

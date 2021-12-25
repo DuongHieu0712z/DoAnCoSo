@@ -3,7 +3,10 @@ package com.ctk43.doancoso.Library;
 import com.ctk43.doancoso.R;
 
 public class GeneralData {
-    private static GeneralData instance;
+
+
+
+
     private static final int[] imgPriority = {
             R.drawable.ic_baseline_star_outline_24,
             R.drawable.ic_baseline_star_priority_normal,
@@ -32,7 +35,6 @@ public class GeneralData {
             R.color.over,
             R.color.over_complete,
     };
-
 
     public static int getColorStatus(int status){
             return statusColor[status];

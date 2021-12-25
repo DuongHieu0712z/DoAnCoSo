@@ -18,6 +18,7 @@ public class Category {
     @ColumnInfo(name = "Name")
     @NonNull
     private String name;
+
     @ColumnInfo(name = "Email_user")
     private String email;
 

@@ -29,6 +29,11 @@ public class JobDetailViewModel extends ViewModel {
             listJobDetail = jobDetailRepository.getListJobDetail();
             jobDetails = jobDetailRepository.getJobDetails();
     }
+/*    public void setContext(Context context) {
+        jobDetailRepository = new JobDetailRepository(context);
+        listJobDetail = jobDetailRepository.getListJobDetail();
+        jobDetails = jobDetailRepository.getJobDetails();
+    }*/
 
     public LiveData<List<JobDetail>> getJobDetails() {
         return jobDetails;

@@ -112,7 +112,7 @@
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_add_new_job.xml" value="0.21666666666666667" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_flat.xml" value="0.21666666666666667" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_job_deltail.xml" value="0.215625" />
-        <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_job_detail.xml" value="0.21666666666666667" />
+        <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_job_detail.xml" value="0.22" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_job_detail_count_up.xml" value="0.33" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_jobs.xml" value="0.2740036231884058" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_main.xml" value="0.21666666666666667" />
@@ -130,6 +130,7 @@
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/job_detail_item.xml" value="0.2740036231884058" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/job_item.xml" value="0.25" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/job_title.xml" value="0.5" />
+        <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/layout_notification_count_up.xml" value="0.5" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/menu_bar.xml" value="0.21666666666666667" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/type_of_job_item.xml" value="0.21666666666666667" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.21666666666666667" />

@@ -22,6 +22,18 @@ public interface JobDAO {
     @Query("SELECT * FROM Job WHERE CategoryID = :categoryId")
     LiveData<List<Job>> getByCategoryId(int categoryId);
 
+    @Query("SELECT * FROM JOB WHERE Status = :status")
+    List<Job> getJobByStatus(int status);
+
+    @Query("SELECT * FROM JOB WHERE priority = :priority")
+    List<Job> getJobByPriority(int priority);
+
+    @Query("SELECT * FROM JOB WHERE CategoryID = :categoryId")
+    List<Job> getJobByCategory(int categoryId);
+
+    @Query("SELECT * FROM JOB WHERE Status =:status")
+    int getRowCountByStatus(int status);
+
     @Insert
     void insert(Job... jobs);
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class CategoryViewModel extends ViewModel {
     private CategoryRepository categoryRepository;
     private LiveData<List<Category>> categories;
-    private List<Category> Listcategories;
+    private List<Category> categoryList;
 
     public CategoryViewModel() {
 
@@ -22,10 +22,15 @@ public class CategoryViewModel extends ViewModel {
     public void setContext(Context context) {
         categoryRepository = new CategoryRepository(context);
         categories = categoryRepository.getCategories();
+        categoryList = categoryRepository.getList();
     }
 
     public LiveData<List<Category>> getCategories() {
         return categories;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
     }
 
     public void insert(Category... categories) {

@@ -13,10 +13,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.ctk43.doancoso.Database.DAO.CategoryDAO;
 import com.ctk43.doancoso.Database.DAO.JobDAO;
 import com.ctk43.doancoso.Database.DAO.JobDetailDAO;
+import com.ctk43.doancoso.Database.DAO.NotificationModelDAO;
 import com.ctk43.doancoso.Database.DAO.UserDAO;
+import com.ctk43.doancoso.Database.Repository.NoticationRepository;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
+import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.Model.User;
 
 import java.text.ParseException;
@@ -24,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-@Database(entities = {Category.class, Job.class, JobDetail.class, User.class},
+@Database(entities = {Category.class, Job.class, JobDetail.class, User.class , NotificationModel.class},
         version = 1,
         exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -61,6 +64,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract JobDetailDAO getJobDetailDAO();
 
     public abstract UserDAO getUserDAO();
+
+    public abstract NotificationModelDAO getNotificationModelDAO();
 
     private static class SampledData extends AsyncTask<Void, Void, Void> {
         private final CategoryDAO categoryDAO;
@@ -99,7 +104,6 @@ public abstract class AppDatabase extends RoomDatabase {
             categoryDAO.insert(new Category("Mặc định","default@example.vn"),
                     new Category("Học tập","default@example.vn"),
                     new Category("Giải trí","default@example.vn"));
-
             jobDAO.insert(new Job(1, "Làm đồ án", start, end, "Một môn học gây trầm cảm"));
             jobDAO.insert(new Job(1, "Làm lab 8", start, end, "Không hiểu j hết á"));
             jobDAO.insert(new Job(1, "Làm lab 9", start, end, "Từ chối hiểu"));

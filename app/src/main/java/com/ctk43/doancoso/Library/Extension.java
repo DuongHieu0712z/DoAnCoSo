@@ -76,7 +76,6 @@ public class Extension {
         Cal.setTime(date);
         Cal.setFirstDayOfWeek(Calendar.SUNDAY);
         return Cal.getTime();
-
     }
 
     public static Date EndOfWeek(Date date) {
@@ -165,4 +164,16 @@ public class Extension {
         }
         return 0;
     }
+    public static String getTimeText(double time) {
+        int rounded= (int)Math.round(time);
+        int seconds = ((rounded %86400)%3600)%60;
+        int minutes = ((rounded %86400)%3600)/60;
+        int hour = (rounded %86400)/3600;
+        return formatTime(seconds,minutes,hour);
+    }
+
+    public static String formatTime(int seconds, int minutes, int hour) {
+        return String.format("%02d",hour) + " : " + String.format("%02d",minutes) + " : " +String.format("%02d",seconds);
+    }
+
 }

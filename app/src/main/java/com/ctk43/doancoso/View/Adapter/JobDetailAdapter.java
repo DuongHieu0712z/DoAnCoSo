@@ -3,6 +3,7 @@ package com.ctk43.doancoso.View.Adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Activity.JobDetailActivity;
-import com.ctk43.doancoso.View.Activity.JobDetail_CountUp;
+import com.ctk43.doancoso.Service.CountUpService;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
@@ -66,13 +68,33 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
         holder.checkBox.setChecked(item.getStatus());
         holder.jobDetailItem.setOnClickListener(v -> {
-            JobClock(item.getId());
+            JobClock(item);
         });
         holder.checkBox.setOnClickListener(v ->  {
             IsFinish(holder.checkBox,item);
         });
-
     }
+
+    public void JobClock(JobDetail jobDetail){
+     /*   Intent countIntent = new Intent(mContext, JobDetail_CountUp.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("job_detail", jobDetail);
+        countIntent.putExtras(bundle);
+        mContext.startActivity(countIntent);*/
+
+        Intent countIntent = new Intent(mContext, CountUpService.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY, jobDetail);
+        bundle.putInt(Key.SEND_ACTION, Action.ACTION_START);
+        countIntent.putExtras(bundle);
+        mContext.startService(countIntent);
+/*        Intent countIntent = new Intent(mContext, CountUpService.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("job_detail", jobDetail);
+        countIntent.putExtras(bundle);
+        mContext.startService(countIntent);*/
+    }
+
     public void IsFinish(CheckBox checkBox, JobDetail jobDetail){
         if(checkBox.isChecked()){
             jobDetail.setStatus(true);
@@ -82,12 +104,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             DialogUnCheckJobDetail(jobDetail,checkBox);
         }
     }
-    public void JobClock(int id){
-        Intent intent = new Intent(mContext, JobDetail_CountUp.class);
-        intent.putExtra("id",id);
-        mContext.startActivity(intent);
 
-    }
 
     public Job getJob() {
         return job;

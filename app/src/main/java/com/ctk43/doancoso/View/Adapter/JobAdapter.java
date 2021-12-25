@@ -41,7 +41,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
         this.jobViewModel = jobViewModel;
-
         listJob = jobViewModel.getJobs().getValue();
     }
 
@@ -81,7 +80,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     }
 
     void setProcess(TextView tv_progress, ProgressBar progressBar, Job job) {
-        int progress = (int) job.getProgress() * 100;
+        int progress = (int) (job.getProgress() * 100.0);
         String prgString = progress + " %";
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
