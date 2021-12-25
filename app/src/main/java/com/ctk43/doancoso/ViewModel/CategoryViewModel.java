@@ -28,6 +28,10 @@ public class CategoryViewModel extends ViewModel {
         return categories;
     }
 
+    public Category get(int id) {
+        return categoryRepository.get(id);
+    }
+
     public void insert(Category... categories) {
         categoryRepository.insert(categories);
     }

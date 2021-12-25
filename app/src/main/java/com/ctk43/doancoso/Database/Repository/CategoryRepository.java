@@ -25,6 +25,10 @@ public class CategoryRepository {
         return categories;
     }
 
+    public Category get(int id) {
+        return categoryDAO.get(id);
+    }
+
     public void insert(Category... categories) {
         new CategoryInsertAsyncTask(categoryDAO).execute(categories);
     }

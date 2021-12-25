@@ -12,6 +12,19 @@ public class CalendarExtension {
         calendar.setFirstDayOfWeek(value);
     }
 
+    public static Date getDate(int day, int month, int year) {
+        return getDate(day, month, year, 0, 0);
+    }
+
+    public static Date getDate(int day, int month, int year, int hour, int minute) {
+        return getDate(day, month, year, hour, minute, 0);
+    }
+
+    public static Date getDate(int day, int month, int year, int hour, int minute, int second) {
+        calendar.set(year, month, day, hour, minute, second);
+        return calendar.getTime();
+    }
+
     public static int getWeek(Date date) {
         calendar.setTime(date);
         return calendar.get(Calendar.WEEK_OF_YEAR);
