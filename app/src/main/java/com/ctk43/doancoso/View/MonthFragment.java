@@ -3,6 +3,11 @@ package com.ctk43.doancoso.View;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -109,14 +114,10 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
 
-        for(int i = 1; i <= 42; i++)
-        {
-            if(i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-            {
+        for (int i = 1; i <= 42; i++) {
+            if (i <= dayOfWeek || i > daysInMonth + dayOfWeek) {
                 daysInMonthArray.add("");
-            }
-            else
-            {
+            } else {
                 daysInMonthArray.add(String.valueOf(i - dayOfWeek));
             }
         }
@@ -126,22 +127,17 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String monthYearFromDate(LocalDate date)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("L");
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy");
-        String str = "Tháng "+date.format(formatter);
-        str+=" năm "+date.format(formatter2);
-        return str;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+        return date.format(formatter);
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void previousMonthAction(View view)
-    {
+    public void previousMonthAction(View view) {
         selectedDate = selectedDate.minusMonths(1);
         setMonthView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void nextMonthAction(View view)
-    {
+    public void nextMonthAction(View view) {
         selectedDate = selectedDate.plusMonths(1);
         setMonthView();
     }
@@ -160,5 +156,4 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
-
 }

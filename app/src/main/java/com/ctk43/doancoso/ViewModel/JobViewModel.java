@@ -33,6 +33,10 @@ public class JobViewModel extends ViewModel {
         jobs = jobRepository.getJobs();
     }
 
+    public Job getById(int id) {
+        return jobRepository.getById(id);
+    }
+
     public void insert(Job... jobs) {
         jobRepository.insert(jobs);
     }
@@ -44,6 +48,9 @@ public class JobViewModel extends ViewModel {
     public void delete(Job... jobs) {
         jobRepository.delete(jobs);
     }
+    public LiveData<List<Job>> getJobs(Date endDate) {
+        return jobRepository.getJobs(endDate);
+    }
 
     public Job getJobById(int Id){
         return jobRepository.getById(Id);
@@ -51,6 +58,14 @@ public class JobViewModel extends ViewModel {
 
     public LiveData<List<Job>> getJobs() {
         return jobs;
+    }
+
+    public LiveData<List<Job>> getJobs(Date startDate, Date endDate) {
+        return jobRepository.getJobs(startDate, endDate);
+    }
+
+    public LiveData<List<Job>> getByCategoryId(int categoryId) {
+        return jobRepository.getByCategoryId(categoryId);
     }
 
     public List<Job> getJobsInDay(Date date){

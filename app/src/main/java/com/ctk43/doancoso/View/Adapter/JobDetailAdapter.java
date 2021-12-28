@@ -138,7 +138,6 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         dialogYesNo.show();
     }
 
-
     void DialogUnCheckJobDetail(JobDetail jobDetail,CheckBox checkBox) {
         final Dialog dialogYesNo = new Dialog(mContext);
         Extension.dialogYesNo(dialogYesNo, mContext.getString(R.string.confirm_delete), mContext.getString(R.string.message_uncheck_job_detail));
@@ -165,8 +164,8 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
     public class JobDetailHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
-        TextView tvJdName;
         LinearLayout jobDetailItem;
+        TextView tvJdName;
         TextView tvJdDes;
         TextView tvEstimatedTime;
         TextView tvActualTime;
@@ -179,10 +178,12 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             super(itemView);
             swipeRevealLayout = itemView.findViewById(R.id.item_job_detail);
             jobDetailItem = itemView.findViewById(R.id.ln_item_job_detail);
+            swipeRevealLayout = itemView.findViewById(R.id.item_job_detail);
             tvJdName = itemView.findViewById(R.id.tv_jd_name);
             tvJdDes = itemView.findViewById(R.id.tv_jd_description);
             tvEstimatedTime = itemView.findViewById(R.id.tv_jd_estimated_time);
             tvActualTime = itemView.findViewById(R.id.tv_jd_actual_time);
+            //SeekBar sb_Progress = vJobDetail.findViewById(R.id.sb_jd_progress);
             img_Priority = itemView.findViewById(R.id.img_jd_level);
             checkBox = itemView.findViewById(R.id.chk_finish_job_detail);
             delete = itemView.findViewById(R.id.frm_function_delete);
@@ -190,4 +191,5 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
         }
     }
+
 }

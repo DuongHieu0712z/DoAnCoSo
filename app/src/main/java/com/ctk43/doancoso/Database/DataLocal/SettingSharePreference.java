@@ -3,10 +3,10 @@ package com.ctk43.doancoso.Database.DataLocal;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class SettingSharePrefence {
+public class SettingSharePreference {
     private static final String SETTING = "SETTING_SHARE_PREFERENCE";
     private final Context mContext;
-    public  SettingSharePrefence(Context mContext){
+    public SettingSharePreference(Context mContext){
         this.mContext = mContext;
     }
 

@@ -8,7 +8,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.ctk43.doancoso.Database.DateTypeConvertor;
+import com.ctk43.doancoso.Database.DateConvertor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,12 +31,12 @@ public class Job implements Serializable {
     private String name;
 
     @ColumnInfo(name = "StartDate")
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateConvertor.class})
     @NonNull
     private Date startDate;
 
     @ColumnInfo(name = "EndDate")
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateConvertor.class})
     @NonNull
     private Date endDate;
 

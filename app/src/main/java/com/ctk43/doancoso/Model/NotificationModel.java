@@ -6,8 +6,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
-
-import com.ctk43.doancoso.Database.DateTypeConvertor;
+import com.ctk43.doancoso.Database.DateConvertor;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +28,7 @@ public class NotificationModel {
     private int status;
 
     @ColumnInfo(name = "DateOfRecord")
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateConvertor.class})
     @NonNull
     private Date dateOfRecord;
 
