@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.security.keystore.StrongBoxUnavailableException;
 
 import androidx.lifecycle.LiveData;
@@ -11,6 +12,7 @@ import com.ctk43.doancoso.Database.Repository.JobRepository;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
+import com.ctk43.doancoso.Service.NotificationService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,5 +86,10 @@ public class JobViewModel extends ViewModel {
             job.setStatus(Extension.CheckStatus(job));
         }
         update(job);
+    }
+
+    private void startService(){
+        Intent intent = new Intent(context, NotificationService.class);
+        context.startService(intent);
     }
 }
