@@ -9,12 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -24,14 +22,10 @@ import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.Service.NotificationService;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
-import com.ctk43.doancoso.View.JobFragment;
-import com.ctk43.doancoso.View.ManagerJobFragment;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;

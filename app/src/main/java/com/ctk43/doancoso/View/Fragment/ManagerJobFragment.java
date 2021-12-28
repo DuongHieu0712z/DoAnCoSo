@@ -1,23 +1,18 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Fragment;
 
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -32,18 +27,14 @@ import android.widget.Toast;
 
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerJobAdapter;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.security.interfaces.RSAMultiPrimePrivateCrtKey;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ManagerJobFragment extends Fragment {

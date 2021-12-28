@@ -2,11 +2,9 @@ package com.ctk43.doancoso.View.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.ctk43.doancoso.View.JobFragment;
-import com.ctk43.doancoso.View.MonthFragment;
+import com.ctk43.doancoso.View.Fragment.JobFragment;
 
 public class ViewPagerJobAdapter extends FragmentStateAdapter {
     public JobFragment jobFragment = new JobFragment();

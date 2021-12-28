@@ -1,29 +1,38 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Model.Setting;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.ViewModel.JobViewModel;
+import com.ctk43.doancoso.View.Adapter.SettingAdapter;
 
-import java.util.zip.Inflater;
+import java.util.ArrayList;
 
-public class ProfleFragment extends Fragment {
+public class SettingFragment extends Fragment {
     private Context mContext;
-    JobViewModel jobViewModel;
+
+    private String[] Titles ={"Notification", "Theme", "About"};
+    private String[] Contents = {"Setting notification", "Setting theme", "All about you"};
+    private  int[] Images = {R.drawable.ic_baseline_settings_24, R.drawable.ic_baseline_settings_24, R.drawable.ic_baseline_settings_24};
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        View v= inflater.inflate(R.layout.setting_fragment, container, false);
         return v;
     }
 
@@ -40,9 +49,13 @@ public class ProfleFragment extends Fragment {
     }
 
     private void InnitView(View view) {
-        JobViewModel jobViewModel = new JobViewModel();
-        jobViewModel.setData(mContext);
-        //jobViewModel.sumStatus(1);
+        ArrayList<Setting> settings = new ArrayList<>();
+        for (int i =0 ; i< Titles.length; i++){
+            settings.add(new Setting(Titles[i], Contents[i], Images[i]));
+        }
+        SettingAdapter adapter = new SettingAdapter(settings);
+        ListView lv = view.findViewById(R.id.lv_settings);
+        lv.setAdapter(adapter);
     }
     @Override
     public void onResume() {

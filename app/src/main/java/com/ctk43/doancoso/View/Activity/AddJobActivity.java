@@ -32,8 +32,8 @@ import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.DatePickerFragment;
-import com.ctk43.doancoso.View.TimePickerFragment;
+import com.ctk43.doancoso.View.Fragment.DatePickerFragment;
+import com.ctk43.doancoso.View.Fragment.TimePickerFragment;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
@@ -44,7 +44,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {

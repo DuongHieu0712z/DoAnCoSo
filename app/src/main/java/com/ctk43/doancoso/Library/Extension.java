@@ -74,6 +74,12 @@ public class Extension {
             return 1;
         return week + 1;
     }
+    public static Date StartOfWeek(Date date) {
+        Calendar Cal = Calendar.getInstance();
+        Cal.setTime(date);
+        Cal.setFirstDayOfWeek(Calendar.SUNDAY);
+        return Cal.getTime();
+    }
 
     public static boolean isEmty(Context context, String value, String name, boolean isdefaut) {
         if (value.isEmpty() || isdefaut) {
@@ -83,95 +89,15 @@ public class Extension {
         return false;
     }
 
-    public static Date StartOfWeek(Date date) {
-        Calendar Cal = Calendar.getInstance();
-        Cal.setTime(date);
-        Cal.setFirstDayOfWeek(Calendar.SUNDAY);
-        return Cal.getTime();
-    }
-
-    public static Date EndOfWeek(Date date) {
-        Calendar Cal = Calendar.getInstance();
-        Cal.setTime(date);
-        Cal.setFirstDayOfWeek(Calendar.SATURDAY);
-        return Cal.getTime();
-    }
-
-    public static int Remaning_day(Date start, Date end) {
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(start);
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(end);
-        return (int) ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) / (1000 * 60 * 60 * 24));
-    }
-
-    public static int Remaning_hour(Date start, Date end) {
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(start);
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(end);
-        double time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        return (int) time / (1000 * 60 * 60);
-    }
-
-    public static int Remaning_minute(Date start, Date end) {
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(start);
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(end);
-        double time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        return (int) time % (1000 * 60 * 60);
-    }
-
-    public static String over_time(int minute) {
-        int day = minute % 60 % 24;
-        int hour = minute / 60 % 24;
-        int _minute = minute / 60 / 24;
-        return getTime(day, hour, _minute, true);
-    }
-
-    public static String getTime(int day, int hour, int minute, boolean negative) {
-        if (negative) {
-            day *= -1;
-            hour *= -1;
-            minute *= -1;
-        }
-        String timeRe;
-        if (day > 0 && hour > 0) {
-            timeRe = day + " ngày " + hour + " giờ";
-        } else if (day > 0) {
-            timeRe = day + " ngày ";
-        } else if (minute > 0 && hour > 0) {
-            timeRe = hour + " giờ " + minute + " phút";
-        } else if (hour > 0) {
-            timeRe = hour + " giờ ";
-        } else {
-            timeRe = minute + " phút ";
-        }
-        return timeRe;
-    }
-
-    public static String TimeRemaining(Date start, Date end) {
-        int day = Remaning_day(start, end);
-        int hour = Remaning_hour(start, end);
-        int minute = Remaning_minute(start, end);
-        String timeRe;
-        if (minute > 0) {
-            timeRe = getTime(day, hour, minute, false);
-        } else {
-            timeRe = over_time(minute);
-        }
-        return timeRe;
-    }
 
     public static int CheckStatus(Job job) {
-        if (Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) >= 0 && job.getProgress() ==1) {
+        if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getEndDate()) >= 0 && job.getProgress() ==1) {
             return 2;
-        }else if(Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) > 0 && job.getProgress() != 1)
+        }else if(CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getEndDate()) > 0 && job.getProgress() != 1)
             return 1;
-        else if (Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) < 0 && job.getProgress() != 1)
+        else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getEndDate()) < 0 && job.getProgress() != 1)
             return 3;
-        else if(Remaning_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() == 1){
+        else if(CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() == 1){
             return 4;
         }
         return 0;
@@ -206,34 +132,5 @@ public class Extension {
         }
         return jobs;
     }
-    public static Date getStartOfDate(Date date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND,0);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.HOUR,0);
-        return calendar.getTime();
-    }
-    public static Date getEndOfDate(Date date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND,0);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.HOUR,0);
-        calendar.add(Calendar.DATE,1);
-        return calendar.getTime();
-    }
-    public static Date getDateStartOfMonth(int month,int year){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year,month,1);
-        return getStartOfDate(calendar.getTime());
-    }
 
-    public static Date getDateEndOfMonth(int month,int year){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year,month,-1);
-        return EndOfWeek(calendar.getTime());
-    }
 }

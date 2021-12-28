@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -25,22 +24,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
-import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
-import com.ctk43.doancoso.View.Activity.MainActivity;
-import com.ctk43.doancoso.View.JobFragment;
+import com.ctk43.doancoso.View.Fragment.JobFragment;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.io.Serializable;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> implements Filterable {
     private List<Job> listJob;
@@ -120,7 +116,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     void setTextStatus(Job job, TextView status, TextView title_Time, TextView time) {
         int color = ContextCompat.getColor(context, (GeneralData.getColorStatus(job.getStatus())));
 
-        time.setText(Extension.TimeRemaining(job.getStartDate(), job.getEndDate()));
+        time.setText(CalendarExtension.TimeRemaining(job.getStartDate(), job.getEndDate()));
         time.setTextColor(color);
 
         status.setText(GeneralData.getStatus(job.getStatus()));

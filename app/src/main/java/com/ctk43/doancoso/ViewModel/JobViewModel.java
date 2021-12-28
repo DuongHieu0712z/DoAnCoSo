@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.ctk43.doancoso.Database.Repository.JobDetailRepository;
 import com.ctk43.doancoso.Database.Repository.JobRepository;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
@@ -69,11 +70,11 @@ public class JobViewModel extends ViewModel {
     }
 
     public List<Job> getJobsInDay(Date date){
-        return jobRepository.getJobAboutTime(Extension.getStartOfDate(date),Extension.getEndOfDate(date));
+        return jobRepository.getJobAboutTime(CalendarExtension.getStartOfDate(date),CalendarExtension.getEndOfDate(date));
     }
 
     public List<Job> getJobsMoth(int month,int year){
-        return jobRepository.getJobAboutTime(Extension.getDateStartOfMonth(month,year),Extension.getDateEndOfMonth(month,year));
+        return jobRepository.getJobAboutTime(CalendarExtension.getDateStartOfMonth(month,year),CalendarExtension.getDateEndOfMonth(month,year));
     }
 
     public List<Job> getJobsByCategory(int id){

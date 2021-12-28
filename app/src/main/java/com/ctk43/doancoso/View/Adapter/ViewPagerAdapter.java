@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.ctk43.doancoso.View.JobFragment;
-import com.ctk43.doancoso.View.ManagerJobFragment;
-import com.ctk43.doancoso.View.MonthFragment;
-import com.ctk43.doancoso.View.ProfleFragment;
-import com.ctk43.doancoso.View.SettingFragment;
+import com.ctk43.doancoso.View.Fragment.ManagerJobFragment;
+import com.ctk43.doancoso.View.Fragment.MonthFragment;
+import com.ctk43.doancoso.View.Fragment.ProfleFragment;
+import com.ctk43.doancoso.View.Fragment.SettingFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
