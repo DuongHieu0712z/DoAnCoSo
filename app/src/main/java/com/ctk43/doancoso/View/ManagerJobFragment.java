@@ -30,6 +30,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.MainActivity;
@@ -110,18 +111,36 @@ public class ManagerJobFragment extends Fragment {
         ImageButton img_btn_filter = view.findViewById(R.id.img_btn_filter);
         ImageButton img_btn_convert = view.findViewById(R.id.img_btn_convert);
         Spinner spn_filter = view.findViewById(R.id.spn_filter);
+        List<Category> categories = categoryViewModel.getCategoryList();
+        categories = categoryViewModel.getCategoryList();
+        categories.add(new Category("Tất cả",DataLocalManager.getEmail(), 0));
 
 
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categoryViewModel.getCategoryList());
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_filter.setAdapter(adapter);
 
         spn_filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i==0)
-                    img_btn_convert.performClick();
-                //jobViewModel.getJobsByCategory(id)
+                Category category = (Category) spn_filter.getSelectedItem();
+                int categoryId = category.getId();
+
+                System.out.println(categoryId+" category id");
+
+                JobViewModel jobViewModel = new JobViewModel();
+                jobViewModel.setData(getContext());
+                JobAdapter jobAdapter = new JobAdapter(getContext(), jobViewModel);
+                jobViewModel.setData(getContext());
+                RecyclerView rcv = getActivity().findViewById(R.id.rcv_display_job);
+                rcv.setAdapter(jobAdapter);
+                jobViewModel.getJobs().observe(getActivity(), jobs -> {
+                    jobAdapter.setJob(jobs);
+                    rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+                    rcv.setAdapter(jobAdapter);
+                    jobAdapter.GetByCategoryId(categoryId);
+                });
+
             }
 
             @Override
@@ -136,9 +155,7 @@ public class ManagerJobFragment extends Fragment {
                 showDialogFilter();
             }
         });
-
         img_btn_convert.setOnClickListener(new View.OnClickListener() {
-            final ArrayList<Category>[] categories = new ArrayList[]{new ArrayList<>()};
             @Override
             public void onClick(View view) {
                 JobViewModel jobViewModel = new JobViewModel();
@@ -146,15 +163,18 @@ public class ManagerJobFragment extends Fragment {
                 JobAdapter jobAdapter = new JobAdapter(getContext(), jobViewModel);
                 jobViewModel.setData(getContext());
                 RecyclerView rcv = getActivity().findViewById(R.id.rcv_display_job);
+                rcv.setAdapter(jobAdapter);
                 jobViewModel.getJobs().observe(getActivity(), jobs -> {
                     jobAdapter.setJob(jobs);
                     rcv.setLayoutManager(new LinearLayoutManager(getContext()));
                     rcv.setAdapter(jobAdapter);
-                    jobAdapter.Revert();
+
                 });
             }
         });
     }
+
+
     private void showDialogFilter(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -21,6 +21,7 @@
             android:src="@drawable/goback1" />
 
         <TextView
+            android:id="@+id/tv_title_add_new_job_detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

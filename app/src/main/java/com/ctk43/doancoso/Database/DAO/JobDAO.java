@@ -31,7 +31,7 @@ public interface JobDAO {
     @Query("SELECT * FROM JOB WHERE CategoryID = :categoryId")
     List<Job> getJobByCategory(int categoryId);
 
-    @Query("SELECT * FROM JOB WHERE Status =:status")
+    @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status")
     int getRowCountByStatus(int status);
 
     @Insert

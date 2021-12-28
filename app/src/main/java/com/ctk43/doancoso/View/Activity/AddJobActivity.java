@@ -58,6 +58,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     TextView tv_date_end;
     TextView tv_time_end;
 
+    TextView tv_title;
+
     Spinner spnCategory;
 
     private Job jobToUpdate;
@@ -116,6 +118,10 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         tv_time_start = findViewById(R.id.tv_dlg_time_start);
         tv_date_end = findViewById(R.id.tv_dlg_date_end);
         tv_time_end = findViewById(R.id.tv_dlg_time_end);
+
+        tv_title = findViewById(R.id.tv_title_add_new_job);
+        if(jobToUpdate!= null) tv_title.setText(R.string.update_job);
+
         Button btn_Add = findViewById(R.id.btn_dlg_add_new_job);
 
         btn_Add.setBackgroundTintMode(null);

@@ -20,13 +20,21 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.CalendarAdapter;
+import com.ctk43.doancoso.ViewModel.JobViewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 
 public class  MonthFragment extends Fragment implements View.OnClickListener{
@@ -54,11 +62,15 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        InnitView(view);
+        try {
+            InnitView(view);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void InnitView(View view){
+    private void InnitView(View view) throws ParseException {
         tv_current_month = view.findViewById(R.id.tv_current_month);
         rcv_calendar = view.findViewById(R.id.calendarRecyclerView);
 
@@ -72,27 +84,54 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         btn_next_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextMonthAction(view);
+                try {
+                    nextMonthAction(view);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         btn_prv_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                previousMonthAction(view);
+                try {
+                    previousMonthAction(view);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setMonthView()
-    {
+    private void setMonthView() throws ParseException {
         String str = "";
 
         tv_current_month.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth);
+        ArrayList<List<Job>> listJob = new ArrayList<>();
+        JobViewModel jobViewModel = new JobViewModel();
+        jobViewModel.setData(mContext);
+        listJob.add(jobViewModel.getJobsByCategory(1));
+        listJob.add(null);
+        listJob.add(null);
+        listJob.add(null);
+        listJob.add(jobViewModel.getJobsByCategory(1));
+
+        /*Calendar cal1 = new GregorianCalendar();
+        Calendar cal2 = new GregorianCalendar();
+        Date currentDay;
+
+        for (int i=0;i<daysInMonth.size(); i++){
+            str=daysInMonth.get(i)+"/"+month+"/"+year;
+            currentDay = new SimpleDateFormat("dd/MM/yyyy").parse(str);
+
+        }*/
+
+        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,listJob, mContext);
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(mContext, 7);
         rcv_calendar.setLayoutManager(layoutManager);
         rcv_calendar.setAdapter(calendarAdapter);
@@ -130,18 +169,18 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy");
         String str = "Tháng "+date.format(formatter);
         str+=" năm "+date.format(formatter2);
+        month = Integer.parseInt(date.format(formatter));
+        year = Integer.parseInt(date.format(formatter2));
         return str;
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void previousMonthAction(View view)
-    {
+    public void previousMonthAction(View view) throws ParseException {
         selectedDate = selectedDate.minusMonths(1);
         setMonthView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void nextMonthAction(View view)
-    {
+    public void nextMonthAction(View view) throws ParseException {
         selectedDate = selectedDate.plusMonths(1);
         setMonthView();
     }

@@ -148,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    public void SelectBottomMenuPosition(int position){
+        bottomMenu.getMenu().getItem(position).setChecked(true);
+        viewPager.setCurrentItem(0);
+    }
+
   /*  public static Job[] populateMovieData(){
 =======
 

@@ -66,6 +66,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
 
     public void setJob(List<Job> jobs) {
         listJob = jobs;
+        mlistJobOld = jobs;
     }
 
     @Override
@@ -112,7 +113,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     }
 
     void setProcess(TextView tv_progress, ProgressBar progressBar, Job job) {
-        int progress = (int) job.getProgress() * 100;
+        int progress = (int) (job.getProgress() * 100.0);
         String prgString = progress + " %";
 
         tv_progress.setText(prgString);
@@ -239,8 +240,26 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         listJob = list;
         notifyDataSetChanged();
     }
+    public void GetByCategoryId(int categoryId){
+        List<Job> list = new ArrayList<>();
+        if(categoryId != 0) {
+            for (Job j : listJob) {
+                if (j.getCategoryId() == categoryId)
+                    list.add(j);
+            }
+        }
+        else if(categoryId == 0) {
+            list = mlistJobOld;
+            System.out.println(mlistJobOld.size()+" mlist job size");
+        }
+        listJob = list;
+        notifyDataSetChanged();
+    }
     public void SortByStatus(int status){
-        if(listJob==null) return;
+        if(listJob==null){
+            System.out.println("List is null");
+            return;
+        }
         List<Job> list = new ArrayList<>();
         for(Job j:listJob){
             if(j.getStatus() == status)

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,9 +41,20 @@ public class ProfleFragment extends Fragment {
     }
 
     private void InnitView(View view) {
+        TextView tv_in_comming = view.findViewById(R.id.tv_profile_in_coming);
+        TextView tv_on_going = view.findViewById(R.id.tv_profile_on_going);
+        TextView tv_complete = view.findViewById(R.id.tv_profile_complete);
+        TextView tv_over = view.findViewById(R.id.tv_profile_over);
+        TextView tv_over_complete = view.findViewById(R.id.tv_profile_over_complete);
+
         JobViewModel jobViewModel = new JobViewModel();
         jobViewModel.setData(mContext);
-        //jobViewModel.sumStatus(1);
+
+        tv_in_comming.setText(String.valueOf( jobViewModel.sumStatus(0)));
+        tv_on_going.setText(String.valueOf( jobViewModel.sumStatus(1)));
+        tv_complete.setText(String.valueOf( jobViewModel.sumStatus(2)));
+        tv_over.setText(String.valueOf( jobViewModel.sumStatus(3)));
+        tv_over_complete.setText(String.valueOf( jobViewModel.sumStatus(4)));
     }
     @Override
     public void onResume() {
