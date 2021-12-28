@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity(foreignKeys = @ForeignKey(entity = Job.class,
         parentColumns = "ID",
         childColumns = "JobID",
-        onDelete = ForeignKey.CASCADE))
+        onDelete = ForeignKey.SET_NULL))
 public class NotificationModel {
 
     @ColumnInfo(name = "ID")
@@ -38,6 +38,7 @@ public class NotificationModel {
         this.status =status;
         dateOfRecord= Calendar.getInstance().getTime();
     }
+
 
     @NonNull
     public Date getDateOfRecord() {

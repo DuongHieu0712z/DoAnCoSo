@@ -14,6 +14,7 @@ import com.ctk43.doancoso.Model.JobDetail;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class JobViewModel extends ViewModel {
@@ -30,12 +31,32 @@ public class JobViewModel extends ViewModel {
         jobs = jobRepository.getJobs();
     }
 
+    public void insert(Job... jobs) {
+        jobRepository.insert(jobs);
+    }
+
+    public void update(Job... jobs) {
+        jobRepository.update(jobs);
+    }
+
+    public void delete(Job... jobs) {
+        jobRepository.delete(jobs);
+    }
+
     public Job getJobById(int Id){
         return jobRepository.getById(Id);
     }
 
     public LiveData<List<Job>> getJobs() {
         return jobs;
+    }
+
+    public List<Job> getJobsInDay(Date date){
+        return jobRepository.getJobAboutTime(Extension.getStartOfDate(date),Extension.getEndOfDate(date));
+    }
+
+    public List<Job> getJobsMoth(int month,int year){
+        return jobRepository.getJobAboutTime(Extension.getDateStartOfMonth(month,year),Extension.getDateEndOfMonth(month,year));
     }
 
     public List<Job> getJobsByCategory(int id){
@@ -46,21 +67,14 @@ public class JobViewModel extends ViewModel {
         return jobRepository.getSumRow(status);
     }
 
-    public void insert(Job... jobs) {
-        jobRepository.insert(jobs);
-    }
-
-    public void update(Job... jobs) {
-        jobRepository.update(jobs);
-    }
-
     public void getJobBy(Job... jobs) {
         jobRepository.update(jobs);
     }
 
-    public void delete(Job... jobs) {
-        jobRepository.delete(jobs);
+    public List<Job> getListByStatus(int status){
+        return jobRepository.getJobByStatus(status);
     }
+
     public void checkOrUncheck(Job job,boolean check){
         if(check){
             job.setProgress(1); // 1 is 100%

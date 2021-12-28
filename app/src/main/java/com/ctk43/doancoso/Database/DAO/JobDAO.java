@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.ctk43.doancoso.Model.Job;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -31,8 +32,11 @@ public interface JobDAO {
     @Query("SELECT * FROM JOB WHERE CategoryID = :categoryId")
     List<Job> getJobByCategory(int categoryId);
 
-    @Query("SELECT * FROM JOB WHERE Status =:status")
+    @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status")
     int getRowCountByStatus(int status);
+
+    @Query("SELECT * FROM JOB WHERE EndDate <:start AND EndDate>:end ORDER BY Priority ")
+    List<Job> getJobAboutTime(long start,long end);
 
     @Insert
     void insert(Job... jobs);

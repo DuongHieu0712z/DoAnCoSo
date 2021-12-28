@@ -21,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.Service.NotificationService;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
 import com.ctk43.doancoso.View.JobFragment;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StartService();
         init();
 
         // jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
@@ -147,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void StartService(){
+        Intent intent = new Intent(this, NotificationService.class);
+        this.startService(intent);
     }
   /*  public static Job[] populateMovieData(){
 =======

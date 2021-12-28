@@ -72,6 +72,9 @@
     <string name="reset">Tính lại</string>
     <string name="finish">hoàn thành</string>
     <string name="cancel">hủy</string>
+    <!--notification name-->
+    <string name="notification_count_up">Tính giờ</string>
+    <string name="notification_job">Thông báo công việc</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

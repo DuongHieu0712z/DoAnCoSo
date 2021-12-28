@@ -61,7 +61,6 @@ public class CountUpService extends Service {
     }
 
     private void handleActionTime(int action) {
-
         switch (action) {
             case Action.ACTION_START:
                 startCount();
@@ -167,7 +166,7 @@ public class CountUpService extends Service {
             sendActionToActivity(Action.ACTION_START);
         } else {
             isRuning = false;
-            stopSelf();
+            startCount();
         }
     }
 
