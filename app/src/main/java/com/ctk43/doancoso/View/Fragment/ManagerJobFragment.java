@@ -302,11 +302,11 @@ public class ManagerJobFragment extends Fragment {
         int previousMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),-1);
         int nextMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),1);
         adapter.setJobs(
-                jobViewModel.getJobsMoth(previousMonth,
+                jobViewModel.getJobsMonth(previousMonth,
                         CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)),
-                jobViewModel.getJobsMoth(currMonth,
+                jobViewModel.getJobsMonth(currMonth,
                         CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)),
-                jobViewModel.getJobsMoth(nextMonth,
+                jobViewModel.getJobsMonth(nextMonth,
                         CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)));
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);

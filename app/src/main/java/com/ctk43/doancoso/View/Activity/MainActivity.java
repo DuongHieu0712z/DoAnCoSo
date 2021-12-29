@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StartService();
         init();
 
         // jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
@@ -147,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NotificationService.class);
         this.startService(intent);
     }
+    public void SelectBottomMenuPosition(int position){
+        bottomMenu.getMenu().getItem(position).setChecked(true);
+        viewPager.setCurrentItem(0);
+    }
+
   /*  public static Job[] populateMovieData(){
 =======
 

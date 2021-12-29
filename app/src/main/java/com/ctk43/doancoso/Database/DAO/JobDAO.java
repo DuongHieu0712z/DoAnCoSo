@@ -49,6 +49,10 @@ public interface JobDAO {
     @TypeConverters(DateConvertor.class)
     LiveData<List<Job>> getJobAboutTimeEndDate(Date start,Date end);
 
+    @Query("SELECT * FROM JOB WHERE EndDate >:start AND EndDate<:end ORDER BY Status,Priority DESC ")
+    @TypeConverters(DateConvertor.class)
+    List<Job> getListJobAboutTimeEndDate(Date start,Date end);
+
     @Insert
     void insert(Job... jobs);
 

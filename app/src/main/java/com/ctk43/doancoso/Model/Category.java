@@ -23,9 +23,17 @@ public class Category {
     @ColumnInfo(name = "Email_user")
     private String email;
 
+
     public Category(@NonNull String name, @NonNull String email) {
         this.name = name;
         this.email = email;
+    }
+
+    @Ignore
+    public Category(@NonNull String name, @NonNull String email, int id) {
+        this.name = name;
+        this.email = email;
+        this.id = id;
     }
 
     @Ignore

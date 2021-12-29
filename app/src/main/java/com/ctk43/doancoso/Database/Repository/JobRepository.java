@@ -57,6 +57,9 @@ public class JobRepository {
     public LiveData<List<Job>> getByCategoryId(int categoryId) {
         return jobDAO.getByCategoryId(categoryId);
     }
+    public List<Job> getListAboutTime(Date start, Date end) {
+        return jobDAO.getListJobAboutTimeEndDate(start,end);
+    }
 
     public Job getById(int id) {
         return jobDAO.getById(id);

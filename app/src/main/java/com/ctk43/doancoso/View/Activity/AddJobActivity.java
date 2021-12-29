@@ -57,6 +57,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     TextView tv_date_end;
     TextView tv_time_end;
 
+    TextView tv_title;
+
     Spinner spnCategory;
 
     private Job jobToUpdate;
@@ -115,6 +117,10 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         tv_time_start = findViewById(R.id.tv_dlg_time_start);
         tv_date_end = findViewById(R.id.tv_dlg_date_end);
         tv_time_end = findViewById(R.id.tv_dlg_time_end);
+
+        tv_title = findViewById(R.id.tv_title_add_new_job);
+        if(jobToUpdate!= null) tv_title.setText(R.string.update_job);
+
         Button btn_Add = findViewById(R.id.btn_dlg_add_new_job);
 
         btn_Add.setBackgroundTintMode(null);
@@ -245,8 +251,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             if(Extension.isEmty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
                 return false;
         try {
-            Date start = new SimpleDateFormat("MM/dd/yy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);
-            Date end = new SimpleDateFormat("MM/dd/yy hh:mm",Locale.getDefault()).parse(endDate + " " + endTime);
+            Date start = new SimpleDateFormat("MM/dd/yyyy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);
+            Date end = new SimpleDateFormat("MM/dd/yyyy hh:mm",Locale.getDefault()).parse(endDate + " " + endTime);
             if (start ==null || end ==null)
                 return false;
             Job job = new Job(1, name, start, end, description);

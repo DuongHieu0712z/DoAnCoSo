@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,8 @@ public class AddJobDetailActivity extends AppCompatActivity {
     EditText edt_job_detail_des ;
     EditText edt_estimate_time ;
     EditText edt_actual_time ;
+
+    TextView tv_title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +54,10 @@ public class AddJobDetailActivity extends AppCompatActivity {
          edt_job_detail_des = findViewById(R.id.edt_dlg_job_detail_des);
          edt_estimate_time = findViewById(R.id.edt_dlg_job_detail_estimate_time);
          edt_actual_time = findViewById(R.id.edt_dlg_job_detail_actual_time);
+
+         tv_title = findViewById(R.id.tv_title_add_new_job_detail);
+         if(jobDetailToUpdate!=null) tv_title.setText(R.string.update_job_detail);
+
         Button btn_add_job_detail = findViewById(R.id.btn_dlg_add_new_job_detail);
         btn_add_job_detail.setOnClickListener(new View.OnClickListener() {
             @Override

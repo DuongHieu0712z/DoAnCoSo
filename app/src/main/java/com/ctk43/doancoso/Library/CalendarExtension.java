@@ -138,9 +138,11 @@ public class CalendarExtension {
     public static long Remaining_day(Date start, Date end) {
         Calendar calStart = Calendar.getInstance();
         calStart.setTime(start);
+        long starttest = calStart.getTimeInMillis();
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
-        return ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) / (1000 * 60 * 60 * 24));
+        long endtest = calEnd.getTimeInMillis();
+        return ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) /( 1000 * 60 * 60 * 24));
     }
 
     public static long Remaining_hour(Date start, Date end) {
@@ -161,12 +163,6 @@ public class CalendarExtension {
         return ((time / 1000) % 60 % 60);
     }
 
-    public static String over_time(double minute) {
-        int day = (int) (minute % 60 % 24);
-        int hour = (int) (minute / 60 % 24);
-        long _minute = (int) (minute / 60 / 24);
-        return getTime(day, hour, _minute, true);
-    }
 
     public static String getTime(long day, long hour, long minute, boolean negative) {
         if (negative) {
@@ -197,7 +193,7 @@ public class CalendarExtension {
         if (minute > 0) {
             timeRe = getTime(day, hour, minute, false);
         } else {
-            timeRe = over_time(minute);
+            timeRe = getTime(day, hour, minute, true);
         }
         return timeRe;
     }
@@ -213,16 +209,11 @@ public class CalendarExtension {
     public static String dateToString(Date date) {
         calendar.setTime(date);
         int minute = calendar.get(Calendar.MINUTE);
-        int hour = calendar.get(Calendar.HOUR);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String temp;
-        if(calendar.get(Calendar.HOUR_OF_DAY) >12)
-            temp = " AM";
-        else
-            temp = " PM";
-        return "Ngày " + day + "/" + month + "/" + year + " Giờ " + hour + ":" + minute +temp;
+        return "Ngày " + day + "/" + month + "/" + year + " Giờ " +String.format("%02d", hour) + ":" + String.format("%02d", minute);
     }
 
     public static String formatTime(int seconds, int minutes, int hour) {

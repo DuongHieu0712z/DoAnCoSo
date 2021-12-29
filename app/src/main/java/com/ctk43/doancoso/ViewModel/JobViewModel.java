@@ -71,8 +71,12 @@ public class JobViewModel extends ViewModel {
         return jobRepository.getJobAboutTime(date,date);
     }
 
-    public LiveData<List<Job>> getJobsMoth(int month,int year){
+    public LiveData<List<Job>> getJobsMonth(int month,int year){
         return jobRepository.getJobAboutTime(CalendarExtension.getStartTimeOfMonth(month,year),CalendarExtension.getEndTimeOfMonth(month,year));
+    }
+
+    public List<Job> getListJobMonth(int month,int year){
+        return jobRepository.getListAboutTime(CalendarExtension.getStartTimeOfMonth(month,year),CalendarExtension.getEndTimeOfMonth(month,year));
     }
 
     public LiveData<List<Job>> getJobsWeek(Date date){

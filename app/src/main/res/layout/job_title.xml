@@ -1,102 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="180dp"
     android:orientation="vertical"
-    android:background="@color/bg_color">
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    android:background="@drawable/bg_job_titlte">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_title_color"
-            android:textSize="18sp"
-            android:text="Tên Công Việc"
-            android:textAlignment="center"
-            android:fontFamily="@font/playfair_regular"
-            android:id="@+id/tv_jt_job_name"
-            android:layout_marginHorizontal="7dp"/>
-    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Job Description"
-            android:textSize="14sp"
-            android:fontFamily="@font/playfair_regular"
-            android:id="@+id/tv_jt_description"
-            android:textColor="@color/white"
-            />
-    </ScrollView>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="4"
-    >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginHorizontal="15dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="4"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_jt_job_name">
+
         <TextView
+            android:id="@+id/tv_jt_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="Start time"
-            android:textColor="@color/orange"
             android:fontFamily="@font/playfair_regular"
-            android:id="@+id/tv_jt_time_start"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="End time"
-            android:fontFamily="@font/playfair_regular"
-            android:textColor="@color/orange"
-            android:id="@+id/tv_jt_time_end"
-            />
-    </LinearLayout>
-    <FrameLayout
-        android:layout_width="wrap_content"
+            android:text="Job Description"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginRight="10dp"
-        >
-        <ProgressBar
-            android:id="@+id/sb_jt_progress"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:indeterminateOnly="false"
-            android:indeterminateTint="@color/green"
-            android:max="100"
-            android:min="0"
-            android:progress="60"
-            android:progressDrawable="@drawable/prg_circle" />
-        <TextView
-            android:id="@+id/tv_jt_prg"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="25dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="15dp"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_jt_time_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/playfair_regular"
+                android:text="Start time"
+                android:textColor="@color/orange"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_jt_time_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/playfair_regular"
+                android:text="End time"
+                android:textColor="@color/orange"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="100%"
-            android:textColor="@color/green_03"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-    </FrameLayout>
-</LinearLayout>
+            android:layout_marginRight="20dp">
+
+            <ProgressBar
+                android:id="@+id/sb_jt_progress"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:indeterminateOnly="false"
+                android:indeterminateTint="@color/green"
+                android:max="100"
+                android:min="0"
+                android:progress="60"
+                android:progressDrawable="@drawable/prg_circle" />
+
+            <TextView
+                android:id="@+id/tv_jt_prg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="100%"
+                android:textColor="@color/green_03"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:id="@+id/tv_jt_job_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="7dp"
+        android:fontFamily="@font/playfair_regular"
+        android:text="Tên Công Việc"
+        android:textAlignment="center"
+        android:textColor="@color/text_title_color"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
