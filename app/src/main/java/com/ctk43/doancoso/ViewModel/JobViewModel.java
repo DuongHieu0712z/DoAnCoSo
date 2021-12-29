@@ -22,7 +22,6 @@ import java.util.List;
 
 public class JobViewModel extends ViewModel {
     private JobRepository jobRepository;
-    private LiveData<List<Job>> jobs;
     Context context;
 
     public JobViewModel() {
@@ -31,7 +30,6 @@ public class JobViewModel extends ViewModel {
     public void setData(Context context) {
         this.context = context;
         jobRepository = new JobRepository(context);
-        jobs = jobRepository.getJobs();
     }
 
     public Job getById(int id) {
@@ -58,7 +56,7 @@ public class JobViewModel extends ViewModel {
     }
 
     public LiveData<List<Job>> getJobs() {
-        return jobs;
+        return jobRepository.getJobs();
     }
 
     public LiveData<List<Job>> getJobs(Date startDate, Date endDate) {
@@ -69,12 +67,16 @@ public class JobViewModel extends ViewModel {
         return jobRepository.getByCategoryId(categoryId);
     }
 
-    public List<Job> getJobsInDay(Date date){
-        return jobRepository.getJobAboutTime(CalendarExtension.getStartOfDate(date),CalendarExtension.getEndOfDate(date));
+    public LiveData<List<Job>> getJobsInDay(Date date){
+        return jobRepository.getJobAboutTime(date,date);
     }
 
-    public List<Job> getJobsMoth(int month,int year){
-        return jobRepository.getJobAboutTime(CalendarExtension.getDateStartOfMonth(month,year),CalendarExtension.getDateEndOfMonth(month,year));
+    public LiveData<List<Job>> getJobsMoth(int month,int year){
+        return jobRepository.getJobAboutTime(CalendarExtension.getStartTimeOfMonth(month,year),CalendarExtension.getEndTimeOfMonth(month,year));
+    }
+
+    public LiveData<List<Job>> getJobsWeek(Date date){
+        return jobRepository.getJobAboutTime(CalendarExtension.getStartTimeOfWeek(date),CalendarExtension.getEndTimeOfWeek(date));
     }
 
     public List<Job> getJobsByCategory(int id){

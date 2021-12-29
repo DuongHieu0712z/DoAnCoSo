@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.MainActivity;
@@ -22,12 +24,15 @@ import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class JobFragment extends Fragment  {
+import java.util.List;
+
+public class JobFragment extends Fragment {
     FloatingActionButton btn_Add_New_Job;
     private Context mContext;
     public JobAdapter jobListAdapter;
     public RecyclerView rcv;
     private JobViewModel jobViewModel;
+    private LiveData<List<Job>> jobs;
 
     @Nullable
     @Override
@@ -48,16 +53,23 @@ public class JobFragment extends Fragment  {
         initViews(view);
     }
 
+
+
     private void initViews(View v) {
         rcv = v.findViewById(R.id.rcv_display_job);
         jobViewModel.setData(mContext);
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
         jobListAdapter = new JobAdapter(mContext, jobViewModel);
-        jobViewModel.getJobs().observe(requireActivity(), jobs -> {
-            jobListAdapter.setJob(jobs);
-            rcv.setLayoutManager(new LinearLayoutManager(mContext));
-            rcv.setAdapter(jobListAdapter);
-        });
+        try{
+            jobs.observe(requireActivity(), jobs -> {
+                jobListAdapter.setJob(jobs);
+                rcv.setLayoutManager(new LinearLayoutManager(mContext));
+                rcv.setAdapter(jobListAdapter);
+            });
+        }catch (Exception e){
+
+        }
+
         /*btn_Add_New_Job = v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, AddJobActivity.class);
@@ -83,4 +95,11 @@ public class JobFragment extends Fragment  {
     }
 
 
+    public LiveData<List<Job>> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(LiveData<List<Job>> jobs) {
+        this.jobs = jobs;
+    }
 }

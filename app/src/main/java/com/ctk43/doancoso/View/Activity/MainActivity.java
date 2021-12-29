@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private JobViewModel jobViewModel;
     private ViewPager2 viewPager;
     private int dlg_mode = 0;
-
     private SearchView searchView;
 
     @Override

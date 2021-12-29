@@ -45,10 +45,9 @@ public interface JobDAO {
     @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status")
     int getRowCountByStatus(int status);
 
-
-    @Query("SELECT * FROM JOB WHERE EndDate <:start AND EndDate>:end ORDER BY Priority ")
+    @Query("SELECT * FROM JOB WHERE EndDate >:start AND EndDate<:end ORDER BY Status,Priority DESC ")
     @TypeConverters(DateConvertor.class)
-    List<Job> getJobAboutTime(Date start,Date end);
+    LiveData<List<Job>> getJobAboutTimeEndDate(Date start,Date end);
 
     @Insert
     void insert(Job... jobs);

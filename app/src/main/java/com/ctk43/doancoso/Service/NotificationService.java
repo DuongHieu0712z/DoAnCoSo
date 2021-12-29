@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.ctk43.doancoso.Library.Action;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
@@ -98,7 +99,7 @@ public class NotificationService extends Service {
         NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);
         remoteViews.setTextViewText(R.id.tv_notification_title, job.getName());
-        remoteViews.setTextViewText(R.id.tv_clock_notification, Extension.getTimeText(0));
+        remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(0));
         remoteViews.setTextViewText(R.id.tv_notification_descripsion, job.getDescription());
         remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_pause);
         mBuilder = new NotificationCompat.Builder(this, Key.CHANNEL_COUNT_UP)

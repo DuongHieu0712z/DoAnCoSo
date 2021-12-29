@@ -29,7 +29,7 @@
     <string name="confirm">Xác nhận</string>
     <string name="confirm_delete">Xác nhận xóa ?</string>
     <string name="message_delete_progress">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
-    <string name="message_finish_all_job_detail">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
+    <string name="message_finish_all_job_detail">Sẽ hoàn thành tất cả các chi tiết chi tiết công việc</string>
     <string name="message_delete_all_job_detail">Sau khi xóa sẽ mất toàn bộ chi tiết công việc</string>
     <string name="message_delete_job_detail">Sau khi sẽ mất chi tiết công việc</string>
     <string name="message_uncheck_job_detail">Sẽ hủy hoàn thành chi tiết công việc</string>
@@ -76,6 +76,15 @@
     <string name="notification_count_up">Tính giờ</string>
     <string name="notification_job">Thông báo công việc</string>
 
+    <!--Category name-->
+    <string name="category_all">Tất cả</string>
+    <string name="category_day">Ngày</string>
+    <string name="category_week">Tuần</string>
+    <string name="category_month">Tháng</string>
+    <string name="week_current">Tuần này</string>
+    <string name="week_ago">Tuần trước</string>
+    <string name="next_week">Tuần sau</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->
@@ -102,5 +111,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
 
 </resources>

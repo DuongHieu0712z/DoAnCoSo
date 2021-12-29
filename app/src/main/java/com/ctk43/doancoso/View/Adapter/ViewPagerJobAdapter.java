@@ -2,13 +2,20 @@ package com.ctk43.doancoso.View.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
+
+import java.util.List;
 
 public class ViewPagerJobAdapter extends FragmentStateAdapter {
     public JobFragment jobFragment = new JobFragment();
 
+    LiveData<List<Job>> jobsCurr;
+    LiveData<List<Job>> jobsAgo;
+    LiveData<List<Job>> jobsNext;
     public ViewPagerJobAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
@@ -19,16 +26,19 @@ public class ViewPagerJobAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 0:
-               //   return new JobFragment();
+                jobFragment = new JobFragment();
+                jobFragment.setJobs(jobsAgo);
+                return jobFragment;
             case 1:
-               return jobFragment = new JobFragment();
-
+                jobFragment = new JobFragment();
+                jobFragment.setJobs(jobsCurr);
+               return jobFragment;
             case 2:
-         //       return new JobFragment();
-            case 3:
-           //     return new JobFragment();
+                jobFragment = new JobFragment();
+                jobFragment.setJobs(jobsNext);
+                return jobFragment;
             default:
-                return jobFragment =new JobFragment();
+                return jobFragment = new JobFragment();
         }
 
     }
@@ -36,6 +46,15 @@ public class ViewPagerJobAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         return 3;
+    }
+
+    public void setJobs(LiveData<List<Job>>jobsAgo, LiveData<List<Job>>jobsCurr, LiveData<List<Job>>jobsNext){
+        this.jobsAgo = jobsAgo;
+        this.jobsCurr = jobsCurr;
+        this.jobsNext = jobsNext;
+    }
+    public void setJobs(LiveData<List<Job>> jobs){
+        this.jobsAgo = jobs;
     }
 
     /*public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {

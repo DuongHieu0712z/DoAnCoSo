@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -25,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
@@ -35,16 +37,20 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 public class ManagerJobFragment extends Fragment {
     private TabLayout tabLayout;
-    private ViewPager2  viewPager;
+    private ViewPager2 viewPager;
     private View view;
     public JobFragment jobFragment;
 
     CategoryViewModel categoryViewModel;
     JobViewModel jobViewModel;
+    List<Category> categories;
 
     RadioButton rd_priority_0;
     RadioButton rd_priority_1;
@@ -61,58 +67,49 @@ public class ManagerJobFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         initViewModel();
+
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_manager_job, container, false);
+        view = inflater.inflate(R.layout.fragment_manager_job, container, false);
+        InnitView(view);
         tabLayout = view.findViewById(R.id.tab_layout_job);
         viewPager = view.findViewById(R.id.job_view_pager);
-        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
-        jobFragment = adapter.jobFragment;
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
-        viewPager.setUserInputEnabled(false);
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            switch (position){
-                case 0:
-                    tab.setText("Tuần trước");
-                    break;
-                case 1:
-                    tab.setText("Tuần này");
-                    break;
-                case 2:
-                    tab.setText("Tuần sau");
-                    break;
-            }
-        }).attach();
-
-        InnitView(view);
-
-        return  view;
+        return view;
     }
-    private void initViewModel(){
+
+    private void initViewModel() {
         categoryViewModel = new CategoryViewModel();
         categoryViewModel.setContext(requireContext());
-        jobViewModel = new JobViewModel();
+        jobViewModel = new ViewModelProvider(this.getActivity()).get(JobViewModel.class);
         jobViewModel.setData(requireContext());
     }
-
 
     private void InnitView(View view) {
 
         ImageButton img_btn_filter = view.findViewById(R.id.img_btn_filter);
         ImageButton img_btn_convert = view.findViewById(R.id.img_btn_convert);
-        Spinner spn_filter = view.findViewById(R.id.spn_filter);
-
-
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categoryViewModel.getCategoryList());
+        Spinner spn_category = view.findViewById(R.id.spn_category);
+        categories = categoryViewModel.getCategoryView();
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,categories) ;
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_filter.setAdapter(adapter);
-
-        spn_filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spn_category.setAdapter(adapter);
+        spn_category.setSelection(1);
+        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i==0)
-                    img_btn_convert.performClick();
-                //jobViewModel.getJobsByCategory(id)
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                switch (position) {
+                    case 0:
+                        showAll();
+                        break;
+                    case 1:
+                        showWeek();
+                        break;
+                    case 2:
+                        showMonth();
+                        break;
+                    default:
+                        showCategory(categories.get(position).getId());
+                        break;
+                }
             }
 
             @Override
@@ -130,6 +127,7 @@ public class ManagerJobFragment extends Fragment {
 
         img_btn_convert.setOnClickListener(new View.OnClickListener() {
             final ArrayList<Category>[] categories = new ArrayList[]{new ArrayList<>()};
+
             @Override
             public void onClick(View view) {
                 JobViewModel jobViewModel = new JobViewModel();
@@ -146,16 +144,17 @@ public class ManagerJobFragment extends Fragment {
             }
         });
     }
-    private void showDialogFilter(){
+
+    private void showDialogFilter() {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.filter_dialog);
         Window window = dialog.getWindow();
-        if(window==null)return;
+        if (window == null) return;
         window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams windowAttribute = window.getAttributes();
-        windowAttribute.gravity= Gravity.LEFT;
+        windowAttribute.gravity = Gravity.LEFT;
         window.setAttributes(windowAttribute);
         dialog.setCancelable(true);
 
@@ -180,12 +179,10 @@ public class ManagerJobFragment extends Fragment {
         rcv.setAdapter(jobAdapter);
 
 
-
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(rd_priority_0.isChecked())
-                {
+                if (rd_priority_0.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -193,9 +190,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByPriority(0);
                         dialog.dismiss();
                     });
-                }
-                else if(rd_priority_1.isChecked())
-                {
+                } else if (rd_priority_1.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -203,9 +198,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByPriority(1);
                         dialog.dismiss();
                     });
-                }
-                else if(rd_priority_2.isChecked())
-                {
+                } else if (rd_priority_2.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -213,9 +206,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByPriority(2);
                         dialog.dismiss();
                     });
-                }
-                else if(rd_priority_3.isChecked())
-                {
+                } else if (rd_priority_3.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -223,9 +214,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByPriority(3);
                         dialog.dismiss();
                     });
-                }
-                else if(rd_status_0.isChecked())
-                {
+                } else if (rd_status_0.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -233,8 +222,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByStatus(0);
                         dialog.dismiss();
                     });
-                }else if(rd_status_1.isChecked())
-                {
+                } else if (rd_status_1.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -242,8 +230,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByStatus(1);
                         dialog.dismiss();
                     });
-                }else if(rd_status_2.isChecked())
-                {
+                } else if (rd_status_2.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -251,8 +238,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByStatus(2);
                         dialog.dismiss();
                     });
-                }else if(rd_status_3.isChecked())
-                {
+                } else if (rd_status_3.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -260,8 +246,7 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByStatus(3);
                         dialog.dismiss();
                     });
-                }else if(rd_status_4.isChecked())
-                {
+                } else if (rd_status_4.isChecked()) {
                     jobViewModel.getJobs().observe(getActivity(), jobs -> {
                         jobAdapter.setJob(jobs);
                         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -269,9 +254,8 @@ public class ManagerJobFragment extends Fragment {
                         jobAdapter.SortByStatus(4);
                         dialog.dismiss();
                     });
-                }
-                else{
-                    Toast.makeText(getContext(),"Vui lòng chọn lọc", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng chọn lọc", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -279,15 +263,101 @@ public class ManagerJobFragment extends Fragment {
 
         dialog.show();
     }
+
+    private void showWeek() {
+        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
+        tabLayout.setVisibility(View.VISIBLE);
+        Date date1 =CalendarExtension.getStartTimePreviousWeek();
+        Date date2 =Calendar.getInstance().getTime();
+        Date date3 =CalendarExtension.getStartTimeNextWeek();
+
+        adapter.setJobs(
+                jobViewModel.getJobsWeek(CalendarExtension.getStartTimePreviousWeek()),
+                jobViewModel.getJobsWeek(Calendar.getInstance().getTime()),
+                jobViewModel.getJobsWeek(CalendarExtension.getStartTimeNextWeek()));
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
+        jobFragment = adapter.jobFragment;
+        viewPager.setUserInputEnabled(false);
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText(R.string.week_ago);
+                    break;
+                case 1:
+                    tab.setText(R.string.week_current);
+                    break;
+                case 2:
+                    tab.setText(R.string.next_week);
+                    break;
+            }
+        }).attach();
+    }
+
+    private void showMonth() {
+        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
+        tabLayout.setVisibility(View.VISIBLE);
+
+        int currMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),0);
+        int previousMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),-1);
+        int nextMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),1);
+        adapter.setJobs(
+                jobViewModel.getJobsMoth(previousMonth,
+                        CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)),
+                jobViewModel.getJobsMoth(currMonth,
+                        CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)),
+                jobViewModel.getJobsMoth(nextMonth,
+                        CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)));
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
+        jobFragment = adapter.jobFragment;
+        viewPager.setUserInputEnabled(false);
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText(getContext().getString(R.string.month)+" "+(previousMonth+1));
+                    break;
+                case 1:
+                    tab.setText(getContext().getString(R.string.month)+" "+(currMonth+1));
+                    break;
+                case 2:
+                    tab.setText(getContext().getString(R.string.month)+" "+(nextMonth+1));
+                    break;
+
+            }
+        }).attach();
+    }
+
+    private void showAll() {
+        tabLayout.setVisibility(View.GONE);
+        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
+        adapter.setJobs(jobViewModel.getJobs());
+        jobFragment = adapter.jobFragment;
+        adapter.createFragment(0);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
+        viewPager.setUserInputEnabled(false);
+    }
+    private void showCategory(int idCategory){
+        tabLayout.setVisibility(View.GONE);
+        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
+        adapter.setJobs(jobViewModel.getByCategoryId(idCategory));
+        adapter.createFragment(0);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
+        viewPager.setUserInputEnabled(false);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
+
     @Override
     public void onStop() {
         super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
 }

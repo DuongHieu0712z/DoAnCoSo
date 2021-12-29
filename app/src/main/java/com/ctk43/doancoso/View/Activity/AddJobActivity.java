@@ -137,9 +137,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         if(jobToUpdate != null){
             edt_job_name.setText(jobToUpdate.getName());
             edt_job_des.setText(jobToUpdate.getDescription());
-
-
-
             tv_date_start.setText(ParseDate(jobToUpdate.getStartDate()));
 
             tv_date_end.setText(ParseDate(jobToUpdate.getEndDate()));
@@ -248,12 +245,12 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             if(Extension.isEmty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
                 return false;
         try {
-            Date start = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);
-
-            Date end = new SimpleDateFormat("dd/MM/yyyy hh:mm",Locale.getDefault()).parse(endDate + " " + endTime);
+            Date start = new SimpleDateFormat("MM/dd/yy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);
+            Date end = new SimpleDateFormat("MM/dd/yy hh:mm",Locale.getDefault()).parse(endDate + " " + endTime);
             if (start ==null || end ==null)
                 return false;
             Job job = new Job(1, name, start, end, description);
+            job.setStatus(Extension.CheckStatus(job));
             jobViewModel.insert(job);
             finish();
             return  true;

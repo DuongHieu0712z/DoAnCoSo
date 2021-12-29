@@ -18,6 +18,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Library.Action;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.CountUpTimer;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.Key;
@@ -82,7 +83,7 @@ public class CountUpService extends Service {
 
     private void updateNotification(int second) {
         sendSecondToActivity(second);
-        remoteViews.setTextViewText(R.id.tv_clock_notification, Extension.getTimeText(second));
+        remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(second));
         mNotificationManager.notify(Key.COUNT_UP_ID, mBuilder.build());
     }
 
@@ -123,7 +124,7 @@ public class CountUpService extends Service {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);
         remoteViews.setTextViewText(R.id.tv_notification_title, jobDetail.getName());
-        remoteViews.setTextViewText(R.id.tv_clock_notification, Extension.getTimeText(0));
+        remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(0));
         remoteViews.setTextViewText(R.id.tv_notification_descripsion, jobDetail.getDescription());
         remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_pause);
         if (isRuning) {

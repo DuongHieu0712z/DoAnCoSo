@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
+import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 
@@ -74,6 +76,7 @@ public class Extension {
             return 1;
         return week + 1;
     }
+
     public static Date StartOfWeek(Date date) {
         Calendar Cal = Calendar.getInstance();
         Cal.setTime(date);
@@ -89,48 +92,39 @@ public class Extension {
         return false;
     }
 
-
     public static int CheckStatus(Job job) {
-        if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getEndDate()) >= 0 && job.getProgress() ==1) {
-            return 2;
-        }else if(CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getEndDate()) > 0 && job.getProgress() != 1)
+        if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getStartDate() ) > 0) {
             return 1;
-        else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getEndDate()) < 0 && job.getProgress() != 1)
+        } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() != 1) {
+            return 0;
+        } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() != 1) {
+            return 2;
+        } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() == 1) {
             return 3;
-        else if(CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() == 1){
+        } else {
             return 4;
         }
-        return 0;
     }
 
-    public static boolean statusIsChange(Job job){
+    public static boolean statusIsChange(Job job) {
         int status = job.getStatus();
         job.setStatus(CheckStatus(job));
-        if(status != job.getStatus())
+        if (status != job.getStatus())
             return true;
         return false;
     }
 
-    public static String getTimeText(double time) {
-        int rounded= (int)Math.round(time);
-        int seconds = ((rounded %86400)%3600)%60;
-        int minutes = ((rounded %86400)%3600)/60;
-        int hour = (rounded %86400)/3600;
-        return formatTime(seconds,minutes,hour);
-    }
 
-    public static String formatTime(int seconds, int minutes, int hour) {
-        return String.format("%02d",hour) + " : " + String.format("%02d",minutes) + " : " +String.format("%02d",seconds);
-    }
 
-    public static List<Job> getJobsChange(List<Job> jobList){
+    public static List<Job> getJobsChange(List<Job> jobList) {
         List<Job> jobs = new ArrayList<Job>();
-        for (Job job: jobList) {
-            if(statusIsChange(job)){
+        for (Job job : jobList) {
+            if (statusIsChange(job)) {
                 jobs.add(job);
             }
         }
         return jobs;
     }
+
 
 }

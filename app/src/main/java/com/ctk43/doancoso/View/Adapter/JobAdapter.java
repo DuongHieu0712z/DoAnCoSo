@@ -36,6 +36,7 @@ import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> implements Filterable {
@@ -72,7 +73,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         holder.tv_job_name.setText(item.getName());
         holder.tv_job_des.setText(item.getDescription());
         holder.img_priority.setImageResource(GeneralData.getImgPriority(item.getPriority()));
-        holder.checkBox.setChecked(item.getStatus() == 2);
+        holder.checkBox.setChecked(item.getStatus() == 3||item.getStatus() ==4);
         setProcess(holder.tv_job_prg, holder.progressBar, item);
         setTextStatus(item, holder.tv_job_status, holder.tv_time_title, holder.tv_time);
 
@@ -116,7 +117,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     void setTextStatus(Job job, TextView status, TextView title_Time, TextView time) {
         int color = ContextCompat.getColor(context, (GeneralData.getColorStatus(job.getStatus())));
 
-        time.setText(CalendarExtension.TimeRemaining(job.getStartDate(), job.getEndDate()));
+        time.setText(CalendarExtension.TimeRemaining(Calendar.getInstance().getTime(), job.getEndDate()));
         time.setTextColor(color);
 
         status.setText(GeneralData.getStatus(job.getStatus()));

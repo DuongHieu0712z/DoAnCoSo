@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = User.class,
@@ -25,6 +26,12 @@ public class Category {
     public Category(@NonNull String name, @NonNull String email) {
         this.name = name;
         this.email = email;
+    }
+
+    @Ignore
+    public Category(@NonNull int id,@NonNull String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {

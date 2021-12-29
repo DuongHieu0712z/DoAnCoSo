@@ -43,8 +43,8 @@ public class JobRepository {
         return jobDAO.getRowCountByStatus(status);
     }
 
-    public List<Job> getJobAboutTime(Date start, Date end) {
-        return jobDAO.getJobAboutTime(start,end);
+    public LiveData<List<Job>> getJobAboutTime(Date start, Date end) {
+        return jobDAO.getJobAboutTimeEndDate(start,end);
     }
     public LiveData<List<Job>> getJobs(Date endDate) {
         return jobDAO.getJobs(endDate);

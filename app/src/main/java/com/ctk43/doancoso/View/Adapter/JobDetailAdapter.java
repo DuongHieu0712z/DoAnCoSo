@@ -97,7 +97,6 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, AddJobDetailActivity.class);
                 Bundle bundle = new Bundle();
-
                 bundle.putSerializable("JobDetailToUpdate", (Serializable) item);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);

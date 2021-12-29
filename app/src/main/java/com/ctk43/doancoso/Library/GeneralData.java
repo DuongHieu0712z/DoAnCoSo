@@ -10,6 +10,10 @@ public class GeneralData {
     public static final int  STATUS_OVER = 3;
     public static final int  STATUS_FINISH_LATE = 4;
 
+    public static final int ID_CATEGORY_ALL = 0;
+    public static final int ID_CATEGORY_WEEK = -1;
+    public static final int ID_CATEGORY_MONTH = -2;
+
     private static final int[] imgPriority = {
             R.drawable.ic_baseline_star_outline_24,
             R.drawable.ic_baseline_star_priority_normal,
@@ -18,10 +22,10 @@ public class GeneralData {
     };
 
     public static final int[] status = {
-            R.string.coming_soon,
             R.string.on_going,
-            R.string.complete,
+            R.string.coming_soon,
             R.string.over,
+            R.string.complete,
             R.string.over_complete
     };
 
@@ -32,10 +36,10 @@ public class GeneralData {
     };
 
     private static final int[] statusColor = {
-            R.color.in_coming,
             R.color.on_ongoing,
-            R.color.complete,
+            R.color.in_coming,
             R.color.over,
+            R.color.complete,
             R.color.over_complete,
     };
 

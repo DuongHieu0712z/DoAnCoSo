@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Library.Action;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
@@ -109,8 +110,8 @@ public class JobDetailActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
             tv_job_name.setText(job.getName());
             tv_job_des.setText(job.getDescription());
-            tv_job_start.setText(job.getStartDate().toString());
-            tv_job_end.setText(job.getEndDate().toString());
+            tv_job_start.setText(CalendarExtension.dateToString(job.getStartDate()));
+            tv_job_end.setText(CalendarExtension.dateToString(job.getEndDate()));
             setProgress(tv_job_progress,sb,job);
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
         });
@@ -241,6 +242,6 @@ public class JobDetailActivity extends AppCompatActivity {
     }
     private void getSecond(int second){
         this.second = second;
-        tv_time.setText(Extension.getTimeText(second) );
+        tv_time.setText(CalendarExtension.getTimeText(second) );
     }
 }
