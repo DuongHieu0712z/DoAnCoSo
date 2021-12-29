@@ -114,21 +114,54 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         ArrayList<List<Job>> listJob = new ArrayList<>();
         JobViewModel jobViewModel = new JobViewModel();
         jobViewModel.setData(mContext);
-        listJob.add(jobViewModel.getJobsByCategory(1));
-        listJob.add(null);
-        listJob.add(null);
-        listJob.add(null);
-        listJob.add(jobViewModel.getJobsByCategory(1));
 
-        /*Calendar cal1 = new GregorianCalendar();
+        List<Job> jobsInMonthYear = jobViewModel.getJobsMoth(month, year);
+        Date st = new SimpleDateFormat("dd/MM/yyyy").parse("11/12/2021");
+        Date et = new SimpleDateFormat("dd/MM/yyyy").parse("20/12/2021");
+
+        jobsInMonthYear.add(new Job(10, 2, "Yêm Check", st, et,"Here is description", 1, 5.0, 1));
+
+        /*listJob.add(jobViewModel.getJobsByCategory(1));
+        listJob.add(null);
+        listJob.add(null);
+        listJob.add(null);
+        listJob.add(jobViewModel.getJobsByCategory(1));*/
+
+        Calendar cal1 = new GregorianCalendar();
         Calendar cal2 = new GregorianCalendar();
         Date currentDay;
 
-        for (int i=0;i<daysInMonth.size(); i++){
-            str=daysInMonth.get(i)+"/"+month+"/"+year;
-            currentDay = new SimpleDateFormat("dd/MM/yyyy").parse(str);
+        List<Job> jobsInDate = new ArrayList<>();
 
-        }*/
+        for (int i=0;i<daysInMonth.size(); i++){
+            jobsInDate.clear();
+            if(daysInMonth.get(i)=="")listJob.add(null);
+            if(daysInMonth.get(i)!=""){
+                if(month==2 && Integer.parseInt(daysInMonth.get(i))>29)
+                    listJob.add(null);
+                else if((month == 4 || month == 9||month == 6||month == 11) && Integer.parseInt(daysInMonth.get(i))>30)
+                    listJob.add(null);
+                else{
+                    str=daysInMonth.get(i)+"/"+month+"/"+year;
+                    currentDay = new SimpleDateFormat("dd/MM/yyyy").parse(str);
+                    cal1.setTime(currentDay);
+                    for(Job j : jobsInMonthYear){
+                        cal2.setTime(j.getEndDate());
+                        if(cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) &&
+                                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR))
+                        {
+                            listJob.add(new ArrayList<>());
+                            listJob.get(i).add(j);
+                            jobsInDate.add(j);
+                        }
+                    }
+                    if(jobsInDate.size()==0)
+                        listJob.add(null);
+                }
+            }
+        }
+
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,listJob, mContext);
 

@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Studio/DoAnCoSo/app/src/main/res/layout/activity_jobs.xml" value="0.1334853090172239" />
+        <entry key="..\:/Android Studio/DoAnCoSo/app/src/main/res/layout/calendar_cell.xml" value="0.2608695652173913" />
+        <entry key="..\:/Android Studio/DoAnCoSo/app/src/main/res/layout/fragment_month.xml" value="0.264" />
+        <entry key="..\:/Android Studio/DoAnCoSo/app/src/main/res/layout/job_item.xml" value="0.264" />
         <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable-nodpi/test.xml" value="0.15989583333333332" />
         <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.24259259259259258" />
         <entry key="..\:/Android/DoAnCoSo/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.15989583333333332" />
@@ -99,7 +103,7 @@
         <entry key="..\:/DACS/current/app/src/main/res/layout/floating_dialog_add_new_job.xml" value="0.23097826086956522" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/fragment_manager_job.xml" value="0.13020833333333334" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/fragment_month.xml" value="0.264" />
-        <entry key="..\:/DACS/current/app/src/main/res/layout/fragment_profile.xml" value="0.2259963768115942" />
+        <entry key="..\:/DACS/current/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/funcion_item.xml" value="0.25416666666666665" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/item_setting.xml" value="0.2259963768115942" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/job_detail_item.xml" value="0.264" />
@@ -150,12 +154,14 @@
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/activity_tab_layout_main.xml" value="0.2838541666666667" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/calendar_cell.xml" value="0.21927083333333333" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/dialog_yes_no.xml" value="0.15579710144927536" />
+        <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/filter_dialog.xml" value="0.22135416666666666" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/floating_dialog_add_job_type.xml" value="0.2833333333333333" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/floating_dialog_add_new_job.xml" value="0.2838541666666667" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/fragment_first.xml" value="0.2828125" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/fragment_job_manager.xml" value="0.2828125" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/fragment_manager_job.xml" value="0.1" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/fragment_month.xml" value="0.2828125" />
+        <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/fragment_profile.xml" value="0.22135416666666666" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/fragment_second.xml" value="0.2828125" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/funcion_item.xml" value="0.27760416666666665" />
         <entry key="..\:/DoAnCoSo/project/DoAnCoSo/app/src/main/res/layout/job_detail_item.xml" value="0.2740036231884058" />

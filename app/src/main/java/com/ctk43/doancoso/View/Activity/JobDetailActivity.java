@@ -37,14 +37,15 @@ public class JobDetailActivity extends AppCompatActivity {
     private JobDetailViewModel jobDetailViewModel;
     JobViewModel jobViewModel;
     RecyclerView recyclerView;
-    JobDetail jobDetail;
-    private boolean isRunning;
-    private int action;
     private Job job;
     private int second;
     private  ImageView img_finish, img_resumOrPause, img_cancel;
     private TextView tv_title, tv_desciption, tv_time;
     private RelativeLayout layout_count_up;
+    private JobDetail jobDetail;
+    private boolean isRunning;
+    private int action;
+
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -101,7 +102,7 @@ public class JobDetailActivity extends AppCompatActivity {
         layout_count_up = findViewById(R.id.layout_count_up_bottom);
         ProgressBar sb = findViewById(R.id.sb_jt_progress);
         btn_Add_New_Job_detail = findViewById(R.id.add_new_job_detail);
-        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel, jobViewModel);
+        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,jobViewModel);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
             adapter.setData(jobDetails);
             UpdateJob();
@@ -110,18 +111,11 @@ public class JobDetailActivity extends AppCompatActivity {
             tv_job_des.setText(job.getDescription());
             tv_job_start.setText(job.getStartDate().toString());
             tv_job_end.setText(job.getEndDate().toString());
-            setProgress(tv_job_progress, sb, job);
+            setProgress(tv_job_progress,sb,job);
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
         });
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
 
-
-    }
-
-    private void registerReceiver(){
-        IntentFilter filter = new IntentFilter(Key.SEND_ACTION_TO_ACTIVITY);
-        filter.addAction(Key.SEND_SECOND_BY_SERVICE);
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
     }
 
     private void UpdateJob(){
@@ -142,7 +136,6 @@ public class JobDetailActivity extends AppCompatActivity {
     void setProgress(TextView tv_progress, ProgressBar progressBar, Job job) {
         int progress = (int) (job.getProgress() * 100.0);
         String prgString = progress + " %";
-
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
     }
@@ -166,6 +159,11 @@ public class JobDetailActivity extends AppCompatActivity {
             }
     }
 
+    private void registerReceiver(){
+        IntentFilter filter = new IntentFilter(Key.SEND_ACTION_TO_ACTIVITY);
+        filter.addAction(Key.SEND_SECOND_BY_SERVICE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
+    }
     private void start(){
         layout_count_up.setVisibility(View.VISIBLE);
         showInforCountUp();

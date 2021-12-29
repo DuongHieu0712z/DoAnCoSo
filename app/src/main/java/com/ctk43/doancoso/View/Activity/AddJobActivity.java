@@ -164,7 +164,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         Category category = null;
 
         List<Category> categories = categoryViewModel.getCategories().getValue();
-        
+
         for(Category cat:categories){
             if(cat.getId() == id)
                 category = cat;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,12 @@ import java.util.zip.Inflater;
 public class ProfleFragment extends Fragment {
     private Context mContext;
     JobViewModel jobViewModel;
+
+    TextView tv_in_comming;
+    TextView tv_on_going;
+    TextView tv_complete ;
+    TextView tv_over ;
+    TextView tv_over_complete ;
 
     @Nullable
     @Override
@@ -41,15 +48,23 @@ public class ProfleFragment extends Fragment {
     }
 
     private void InnitView(View view) {
-        TextView tv_in_comming = view.findViewById(R.id.tv_profile_in_coming);
-        TextView tv_on_going = view.findViewById(R.id.tv_profile_on_going);
-        TextView tv_complete = view.findViewById(R.id.tv_profile_complete);
-        TextView tv_over = view.findViewById(R.id.tv_profile_over);
-        TextView tv_over_complete = view.findViewById(R.id.tv_profile_over_complete);
+        tv_in_comming = view.findViewById(R.id.tv_profile_in_coming);
+        tv_on_going = view.findViewById(R.id.tv_profile_on_going);
+        tv_complete = view.findViewById(R.id.tv_profile_complete);
+        tv_over = view.findViewById(R.id.tv_profile_over);
+        tv_over_complete = view.findViewById(R.id.tv_profile_over_complete);
+
+        ImageView btn_prv_month = view.findViewById(R.id.btn_profile_prv_month);
+        ImageView btn_next_month = view.findViewById(R.id.btn_profile_next_month);
+
 
         JobViewModel jobViewModel = new JobViewModel();
         jobViewModel.setData(mContext);
 
+        Statistical(jobViewModel);
+
+    }
+    private void Statistical(JobViewModel jobViewModel){
         tv_in_comming.setText(String.valueOf( jobViewModel.sumStatus(0)));
         tv_on_going.setText(String.valueOf( jobViewModel.sumStatus(1)));
         tv_complete.setText(String.valueOf( jobViewModel.sumStatus(2)));

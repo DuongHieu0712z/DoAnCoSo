@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,6 +43,41 @@
             android:textSize="22sp"
             android:text="Thống kê"
             android:textColor="@color/black"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:background="@color/bg_color_2"
+            >
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/btn_profile_prv_month"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_navigate_before_24"
+                android:tint="@color/white_two"
+                tools:ignore="UseAppTint" />
+            <TextView
+                android:layout_marginTop="0dp"
+                android:id="@+id/tv_profile_month"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text="Tháng 12-2021"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_title_color"
+                android:textSize="22sp"/>
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:id="@+id/btn_profile_next_month"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_navigate_next_24"
+                android:tint="@color/white_two"
+                tools:ignore="UseAppTint"/>
+        </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

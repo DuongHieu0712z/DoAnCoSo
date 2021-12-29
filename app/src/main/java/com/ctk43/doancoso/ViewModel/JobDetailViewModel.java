@@ -45,6 +45,7 @@ public class JobDetailViewModel extends ViewModel {
 
     public void update(JobDetail... jobDetails) {
         jobDetailRepository.update(jobDetails);
+
     }
 
     public void delete(JobDetail... jobDetails) {
@@ -89,4 +90,5 @@ public class JobDetailViewModel extends ViewModel {
             }
         }
     }
+
 }

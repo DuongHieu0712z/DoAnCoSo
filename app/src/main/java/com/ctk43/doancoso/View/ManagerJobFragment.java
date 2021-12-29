@@ -133,6 +133,7 @@ public class ManagerJobFragment extends Fragment {
                 JobAdapter jobAdapter = new JobAdapter(getContext(), jobViewModel);
                 jobViewModel.setData(getContext());
                 RecyclerView rcv = getActivity().findViewById(R.id.rcv_display_job);
+                try{
                 rcv.setAdapter(jobAdapter);
                 jobViewModel.getJobs().observe(getActivity(), jobs -> {
                     jobAdapter.setJob(jobs);
@@ -140,6 +141,7 @@ public class ManagerJobFragment extends Fragment {
                     rcv.setAdapter(jobAdapter);
                     jobAdapter.GetByCategoryId(categoryId);
                 });
+                }catch (Exception exception){}
 
             }
 

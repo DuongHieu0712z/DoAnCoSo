@@ -6,8 +6,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
-
-import com.ctk43.doancoso.Database.DateTypeConvertor;
+import com.ctk43.doancoso.Database.DateConvertor;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,7 +14,7 @@ import java.util.Date;
 @Entity(foreignKeys = @ForeignKey(entity = Job.class,
         parentColumns = "ID",
         childColumns = "JobID",
-        onDelete = ForeignKey.CASCADE))
+        onDelete = ForeignKey.SET_NULL))
 public class NotificationModel {
 
     @ColumnInfo(name = "ID")
@@ -29,7 +28,7 @@ public class NotificationModel {
     private int status;
 
     @ColumnInfo(name = "DateOfRecord")
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateConvertor.class})
     @NonNull
     private Date dateOfRecord;
 
@@ -38,6 +37,7 @@ public class NotificationModel {
         this.status =status;
         dateOfRecord= Calendar.getInstance().getTime();
     }
+
 
     @NonNull
     public Date getDateOfRecord() {

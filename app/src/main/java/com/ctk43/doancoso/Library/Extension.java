@@ -15,12 +15,13 @@ import android.widget.Toast;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class Extension {
-
     public static Dialog dialogYesNo(Dialog dialog, String title, String content) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_yes_no);
@@ -44,19 +45,22 @@ public class Extension {
         return dialog;
     }
 
-    public static boolean isEmty(Context context, String value, String name, boolean isdefaut) {
-        if (value.isEmpty() || isdefaut) {
+    public static boolean isEmpty(Context context, String value, String name, boolean isDefault) {
+        if (value.isEmpty() || isDefault) {
             Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
     }
 
-    public static int Curr_Week() {
-        Date date = Calendar.getInstance().getTime();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal.get(Calendar.DAY_OF_WEEK);
+    public static int getWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public static int getCurrentWeek() {
+        return getWeek(Calendar.getInstance().getTime());
     }
 
     public static int Last_Week(int week) {
@@ -69,6 +73,14 @@ public class Extension {
         if (week == 52)
             return 1;
         return week + 1;
+    }
+
+    public static boolean isEmty(Context context, String value, String name, boolean isdefaut) {
+        if (value.isEmpty() || isdefaut) {
+            Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 
     public static Date StartOfWeek(Date date) {
@@ -164,6 +176,15 @@ public class Extension {
         }
         return 0;
     }
+
+    public static boolean statusIsChange(Job job){
+        int status = job.getStatus();
+        job.setStatus(CheckStatus(job));
+        if(status != job.getStatus())
+            return true;
+        return false;
+    }
+
     public static String getTimeText(double time) {
         int rounded= (int)Math.round(time);
         int seconds = ((rounded %86400)%3600)%60;
@@ -176,4 +197,43 @@ public class Extension {
         return String.format("%02d",hour) + " : " + String.format("%02d",minutes) + " : " +String.format("%02d",seconds);
     }
 
+    public static List<Job> getJobsChange(List<Job> jobList){
+        List<Job> jobs = new ArrayList<Job>();
+        for (Job job: jobList) {
+            if(statusIsChange(job)){
+                jobs.add(job);
+            }
+        }
+        return jobs;
+    }
+    public static Date getStartOfDate(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.HOUR,0);
+        return calendar.getTime();
+    }
+    public static Date getEndOfDate(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.HOUR,0);
+        calendar.add(Calendar.DATE,1);
+        return calendar.getTime();
+    }
+    public static Date getDateStartOfMonth(int month,int year){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,1);
+        return getStartOfDate(calendar.getTime());
+    }
+
+    public static Date getDateEndOfMonth(int month,int year){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,-1);
+        return EndOfWeek(calendar.getTime());
+    }
 }

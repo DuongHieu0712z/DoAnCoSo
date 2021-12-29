@@ -75,14 +75,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         holder.dayOfMonth.setText(daysOfMonth.get(position));
         if(position>=listJob.size()) return;
-        if(listJob.get(position)!=null)
-            holder.IsHaveJobsDay();
-        holder.cl_cell_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)mContext).SelectBottomMenuPosition(0);
+        if(listJob.get(position)!=null){
+            if(listJob.get(position).size()>0){
+                holder.IsHaveJobsDay();
+                holder.cl_cell_calendar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((MainActivity)mContext).SelectBottomMenuPosition(0);
+                    }
+                });
             }
-        });
+        }
     }
 
     @Override

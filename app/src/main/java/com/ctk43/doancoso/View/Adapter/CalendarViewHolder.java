@@ -21,7 +21,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         dayOfMonth = itemView.findViewById(R.id.cellDayText);
         cl_cell_calendar = itemView.findViewById(R.id.cell_calendar);
-
+        cl_cell_calendar.setBackgroundColor(Color.parseColor("#f0ebe5"));
     }
     @SuppressLint("ResourceAsColor")
     public void IsHaveJobsDay(){

@@ -7,8 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.DAO.JobDAO;
+import com.ctk43.doancoso.Database.DateConvertor;
 import com.ctk43.doancoso.Model.Job;
 
+import java.util.Date;
 import java.util.List;
 
 public class JobRepository {
@@ -32,12 +34,28 @@ public class JobRepository {
     public List<Job> getJobByPriority(int priority) {
         return jobDAO.getJobByPriority(priority);
     }
+
     public List<Job> getJobByStatus(int status) {
         return jobDAO.getJobByStatus(status);
     }
 
     public int getSumRow(int status) {
         return jobDAO.getRowCountByStatus(status);
+    }
+
+    public List<Job> getJobAboutTime(Date start, Date end) {
+        return jobDAO.getJobAboutTime(start,end);
+    }
+    public LiveData<List<Job>> getJobs(Date endDate) {
+        return jobDAO.getJobs(endDate);
+    }
+
+    public LiveData<List<Job>> getJobs(Date startDate, Date endDate) {
+        return jobDAO.getJobs(startDate, endDate);
+    }
+
+    public LiveData<List<Job>> getByCategoryId(int categoryId) {
+        return jobDAO.getByCategoryId(categoryId);
     }
 
     public Job getById(int id) {

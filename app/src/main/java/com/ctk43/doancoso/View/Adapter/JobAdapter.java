@@ -52,9 +52,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
         this.jobViewModel = jobViewModel;
+
         listJob = jobViewModel.getJobs().getValue();
-        mlistJobOld = listJob;
-        //System.out.println(listJob.size()+"baka");
     }
 
     @Override
@@ -115,13 +114,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     void setProcess(TextView tv_progress, ProgressBar progressBar, Job job) {
         int progress = (int) (job.getProgress() * 100.0);
         String prgString = progress + " %";
-
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
     }
 
     void setTextStatus(Job job, TextView status, TextView title_Time, TextView time) {
-
         int color = ContextCompat.getColor(context, (GeneralData.getColorStatus(job.getStatus())));
 
         time.setText(Extension.TimeRemaining(job.getStartDate(), job.getEndDate()));
@@ -134,7 +131,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         title_Time.setTextColor(color);
 
     }
-
 
     void deleteItem(Job job) {
         jobViewModel.delete(job);
@@ -152,14 +148,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         jobViewModel.checkOrUncheck(Job, isFinish);
         new JobFragment();
     }
-
     void DialogDeleteJob(Job job) {
         final Dialog dialogYesNo = new Dialog(context);
         Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
         Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
         dialogYesNo.setCancelable(true);
-        Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
         btn_yes.setOnClickListener(v -> {
             deleteItem(job);
             dialogYesNo.dismiss();
@@ -274,7 +268,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     }
     public static class JobHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
-        LinearLayout layout_funcion;
         LinearLayout itemJob;
         TextView tv_job_name;
         TextView tv_time_title;
@@ -293,7 +286,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         public JobHolder(View view) {
             super(view);
             swipeRevealLayout = view.findViewById(R.id.item_topic);
-            layout_funcion = view.findViewById(R.id.job_funcion);
             tv_time_title = view.findViewById(R.id.tv_time);
             itemJob = view.findViewById(R.id.item_job);
             checkBox = view.findViewById(R.id.chk_finish_job);
@@ -304,7 +296,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
             tv_time = view.findViewById(R.id.tv_remainning_time);
             tv_job_status = view.findViewById(R.id.tv_Status);
             progressBar = view.findViewById(R.id.prg_progress);
-
             delete = view.findViewById(R.id.frm_function_delete);
             update = view.findViewById(R.id.frm_function_update);
 

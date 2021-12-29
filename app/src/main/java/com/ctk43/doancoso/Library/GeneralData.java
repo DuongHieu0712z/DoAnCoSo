@@ -4,8 +4,11 @@ import com.ctk43.doancoso.R;
 
 public class GeneralData {
 
-
-
+    public static final int  STATUS_COMING = 0;
+    public static final int  STATUS_ON_GOING = 1;
+    public static final int  STATUS_FINISH = 2;
+    public static final int  STATUS_OVER = 3;
+    public static final int  STATUS_FINISH_LATE = 4;
 
     private static final int[] imgPriority = {
             R.drawable.ic_baseline_star_outline_24,
