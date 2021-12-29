@@ -20,6 +20,12 @@ public class GeneralData {
             R.drawable.ic_baseline_star_priority_important,
             R.drawable.ic_baseline_star_priority_very_important
     };
+    public static final String[] priorities={
+        "Không quan trọng, không khẩn cấp",
+            "Không quan trọng, khẩn cấp",
+            "Quan trọng, không khẩn cấp",
+            "Quan trọng, khẩn cấp"
+    };
 
     public static final int[] status = {
             R.string.on_going,

@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
@@ -60,6 +62,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
     TextView tv_title;
 
     Spinner spnCategory;
+    Spinner spnPriority;
 
     private Job jobToUpdate;
 
@@ -89,7 +92,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(AddJobActivity.this, spnCategory.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AddJobActivity.this, spnCategory.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -117,6 +120,12 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         tv_time_start = findViewById(R.id.tv_dlg_time_start);
         tv_date_end = findViewById(R.id.tv_dlg_date_end);
         tv_time_end = findViewById(R.id.tv_dlg_time_end);
+
+        spnPriority = findViewById(R.id.spiner_job_priority);
+        String[] priorities = GeneralData.priorities;
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, priorities);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        spnPriority.setAdapter(adapter);
 
         tv_title = findViewById(R.id.tv_title_add_new_job);
         if(jobToUpdate!= null) tv_title.setText(R.string.update_job);
@@ -244,6 +253,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             String startTime = tv_time_start.getText().toString();
             String endDate = tv_date_end.getText().toString();
             String endTime = tv_time_end.getText().toString();
+            int priority = spnPriority.getSelectedItemPosition();
+            int category = spnCategory.getSelectedItemPosition()+1;
             if(Extension.isEmty(this,name ,getString(R.string.job_name),false))
                 return false;
             if(Extension.isEmty(this,endDate, getString(R.string.date_end),endDate.equals( getString(R.string.day))) )
@@ -255,7 +266,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             Date end = new SimpleDateFormat("MM/dd/yyyy hh:mm",Locale.getDefault()).parse(endDate + " " + endTime);
             if (start ==null || end ==null)
                 return false;
-            Job job = new Job(1, name, start, end, description);
+            Job job = new Job(category,priority, name, start, end, description);
             job.setStatus(Extension.CheckStatus(job));
             jobViewModel.insert(job);
             finish();

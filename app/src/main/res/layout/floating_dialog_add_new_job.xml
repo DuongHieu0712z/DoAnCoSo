@@ -89,6 +89,35 @@
         android:layout_marginHorizontal="7dp"
         android:layout_marginTop="-10dp"
         android:background="@drawable/bg_tab_layout">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:text="Độ ưu tiên:"
+            android:textColor="@color/sub_bg_color"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spiner_job_priority"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
+            android:layout_marginRight="30dp"
+            android:outlineAmbientShadowColor="@color/orange"
+            android:outlineSpotShadowColor="@color/orange"
+            android:textColor="@color/orange" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/bg_tab_layout">
 
         <EditText
             android:id="@+id/edt_dlg_job_name"
