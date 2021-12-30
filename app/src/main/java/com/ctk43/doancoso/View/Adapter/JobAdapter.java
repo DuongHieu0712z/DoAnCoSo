@@ -24,9 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
+import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
@@ -69,7 +71,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     public void onBindViewHolder(JobHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Job item = listJob.get(position);
-        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(position));
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
 
         holder.tv_job_name.setText(item.getName());
         holder.tv_job_des.setText(item.getDescription());
@@ -130,14 +132,14 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     }
 
     void deleteItem(Job job) {
-        jobViewModel.delete(job);
-        notifyItemRemoved(listJob.indexOf(job));
         listJob.remove(job);
+        notifyItemRemoved(listJob.indexOf(job));
+        jobViewModel.delete(job);
     }
 
     void ViewJobDetail(Job job) {
         Intent intent = new Intent(context, JobDetailActivity.class);
-        intent.putExtra("JobID", job.getId());
+        intent.putExtra(Key.JOB_ID, job.getId());
         context.startActivity(intent);
     }
 

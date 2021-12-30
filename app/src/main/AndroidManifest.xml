@@ -10,11 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoAnCoSo">
-        <activity
-            android:name=".View.Activity.JobDetailActivity"
-            android:exported="true"
-            android:label="@string/title_activity_job_deltail"
-            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
+
         <activity
             android:name=".View.Activity.SplashScreen"
             android:exported="true"
@@ -32,6 +28,13 @@
         <activity
             android:name=".View.Activity.AddJobDetailActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <activity
+            android:name=".View.Activity.JobDetailActivity"
+            android:parentActivityName=".View.Activity.MainActivity"
+            android:exported="true"
+            android:label="@string/title_activity_job_deltail"
+            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
         <service android:name=".Service.CountUpService"/>
         <service android:name=".Service.NotificationService"/>
         <receiver android:name=".Service.CountUpReceiver"/>

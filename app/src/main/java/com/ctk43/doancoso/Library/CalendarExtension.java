@@ -190,7 +190,7 @@ public class CalendarExtension {
         long hour = Remaining_hour(start, end);
         long minute = Remaining_minute(start, end);
         String timeRe;
-        if (minute > 0) {
+        if (minute > 0 || hour >0 || day >0) {
             timeRe = getTime(day, hour, minute, false);
         } else {
             timeRe = getTime(day, hour, minute, true);

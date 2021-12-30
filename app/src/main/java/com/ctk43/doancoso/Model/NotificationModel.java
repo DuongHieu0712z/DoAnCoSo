@@ -38,7 +38,6 @@ public class NotificationModel {
         dateOfRecord= Calendar.getInstance().getTime();
     }
 
-
     @NonNull
     public Date getDateOfRecord() {
         return dateOfRecord;

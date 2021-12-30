@@ -66,7 +66,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
     @Override
     public void onBindViewHolder(@NonNull JobDetailHolder holder, int position) {
         JobDetail item = listJobDetail.get(position);
-        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(position));
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
         holder.tvJdName.setText(item.getName());
         holder.tvJdDes.setText(item.getDescription());
         holder.tvEstimatedTime.setText(String.valueOf(item.getEstimatedCompletedTime()));
@@ -89,7 +89,6 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             @Override
             public void onClick(View view) {
                 DialogDeleteJobDetail(item);
-
             }
         });
         holder.update.setOnClickListener(new View.OnClickListener() {
@@ -129,9 +128,9 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
         Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
         dialogYesNo.setCancelable(true);
-
         btn_yes.setOnClickListener(v -> {
-            Toast.makeText(mContext, "Chua Xu Ly", Toast.LENGTH_LONG).show();
+            jobDetailViewModel.delete(jobDetail);
+            dialogYesNo.dismiss();
         });
         btn_no.setOnClickListener(v -> dialogYesNo.dismiss());
         dialogYesNo.show();
@@ -146,7 +145,6 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         btn_yes.setOnClickListener(v -> {
             jobDetail.setStatus(false);
             jobDetailViewModel.update(jobDetail);
-            notifyDataSetChanged();
             dialogYesNo.dismiss();
         });
         btn_no.setOnClickListener(v -> {

@@ -60,6 +60,8 @@
     <string name="time_start">Thời gian bắt đầu</string>
     <string name="time_end">Thời gian Kết thúc</string>
     <string name="hour_end">Giờ kết thúc</string>
+    <string name="start">Bắt đầu</string>
+    <string name="end">Kết thúc</string>
     <string name="testdate">365 ngày 12 giờ</string>
     <string name="hint_estimate_time">Nhập thời gian hoàn thành dự kiến</string>
     <string name="estimal_time">Thời gian dự kiến</string>
@@ -68,7 +70,6 @@
     <string name="time">Thời gian:</string>
 
     <!--Count Up-->
-    <string name="start">Bắt đầu</string>
     <string name="pause">Tạm dừng</string>
     <string name="resume">Tạm dừng</string>
     <string name="reset">Tính lại</string>

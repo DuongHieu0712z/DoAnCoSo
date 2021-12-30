@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.CountUpTimer;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
@@ -56,7 +58,6 @@ public class CountUpService extends Service {
             actionTime = (int) bundle.get(Key.SEND_ACTION);
             handleActionTime(actionTime);
             sendNotification(this.jobDetail);
-            Log.e("ALO", "onStartCommand: " );
         }
         return START_REDELIVER_INTENT;
     }
@@ -120,7 +121,9 @@ public class CountUpService extends Service {
 
     private void sendNotification(JobDetail jobDetail) {
         Intent intent = new Intent(this, JobDetailActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(intent);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, Key.COUNT_UP_ID, callBackActivity(), PendingIntent.FLAG_CANCEL_CURRENT);
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);
         remoteViews.setTextViewText(R.id.tv_notification_title, jobDetail.getName());
@@ -198,6 +201,14 @@ public class CountUpService extends Service {
         intent.putExtras(bundle);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+    private Intent callBackActivity() {
+        Intent intent = new Intent(this, JobDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Key.JOB_ID, jobDetail.getId());
+        intent.putExtras(bundle);
+        return intent;
+    }
+
 
     @Override
     public void onDestroy() {

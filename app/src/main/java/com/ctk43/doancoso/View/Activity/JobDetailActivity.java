@@ -77,9 +77,11 @@ public class JobDetailActivity extends AppCompatActivity {
 
     }
 
-
     private void initViewModel() {
-        int jobID = getIntent().getIntExtra("JobID", 0);
+        int jobID = getIntent().getIntExtra(Key.JOB_ID, 0);
+        Intent intent = getIntent();
+        if(jobID ==0 && jobDetail !=null)
+            jobID = jobDetail.getJobId();
         jobViewModel = new JobViewModel();
         jobViewModel.setData(this);
         job = jobViewModel.getJobById(jobID);

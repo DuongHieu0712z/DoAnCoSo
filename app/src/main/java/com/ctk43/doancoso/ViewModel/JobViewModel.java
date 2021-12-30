@@ -87,6 +87,10 @@ public class JobViewModel extends ViewModel {
         return jobRepository.getJobByCategory(id);
     }
 
+    public int countStatusMonth(int status,int month,int year){
+        return jobRepository.getSumJobByStatusMonth(status,CalendarExtension.getStartTimeOfMonth(month,year),CalendarExtension.getEndTimeOfMonth(month,year));
+    }
+
     public int sumStatus(int status){
         return jobRepository.getSumRow(status);
     }

@@ -95,6 +95,7 @@ public class NotificationService extends Service {
 
     private void sendNotification(Job job) {
         Intent intent = new Intent(this, JobDetailActivity.class);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);

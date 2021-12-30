@@ -13,4 +13,5 @@ public class Key {
     public static final String CHANNEL_NOTIFICATION_JOB = "CHANNEL_NOTIFICATION_JOB";
     public static final int COUNT_UP_ID = 1;
     public static final int NOTIFICATION_JOB_ID = 2;
+    public static final String JOB_ID = "JOB_ID";
 }

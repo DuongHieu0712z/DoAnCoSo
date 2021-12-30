@@ -4,6 +4,7 @@ import com.ctk43.doancoso.R;
 
 public class GeneralData {
 
+
     public static final int  STATUS_COMING = 0;
     public static final int  STATUS_ON_GOING = 1;
     public static final int  STATUS_FINISH = 2;
@@ -21,7 +22,7 @@ public class GeneralData {
             R.drawable.ic_baseline_star_priority_very_important
     };
     public static final String[] priorities={
-        "Không quan trọng, không khẩn cấp",
+            "Không quan trọng, không khẩn cấp",
             "Không quan trọng, khẩn cấp",
             "Quan trọng, không khẩn cấp",
             "Quan trọng, khẩn cấp"
