@@ -95,6 +95,15 @@ public class AddJobDetailActivity extends AppCompatActivity {
             edt_job_detail_des.setText(jobDetailToUpdate.getDescription());
             edt_estimate_time.setText(String.valueOf(jobDetailToUpdate.getEstimatedCompletedTime()));
             edt_actual_time.setText(String.valueOf(jobDetailToUpdate.getActualCompletedTime()));
+
+            if(jobDetailToUpdate.isPriority() == false){
+                spn_priority.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        spn_priority.setSelection(1, true);
+                    }
+                });
+            }
         }
     }
 }

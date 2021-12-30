@@ -108,6 +108,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             adapter.notifyDataSetChanged();
         });
 
+
         ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
         img_add_job_type.setOnClickListener(v -> onOpenDialog());
 
@@ -142,6 +143,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                 Toast.makeText(AddJobActivity.this,getString(R.string.add_job_sucess),Toast.LENGTH_LONG).show();
             }
         });
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        categoryViewModel.setContext(this);
 
         SetDataForJob();
 
@@ -159,26 +162,52 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             tv_time_end.setText(ParseTime(jobToUpdate.getEndDate()));
 
             //Bạn Hiếu fix xong cái getValue của Category rồi mở nó ra hé!
-            //spnCategory.setSelection(getSpinerIndex(spnCategory, jobToUpdate.getCategoryId()));
+            categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+            categoryViewModel.setContext(this);
+
+            categoryViewModel.getCategories().observe(this, categories -> {
+                ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                spnCategory.setAdapter(adapter);
+                spnCategory.post(new Runnable() {
+                    public void run() {
+                        spnCategory.setSelection(getSpinerIndex(spnCategory,jobToUpdate.getCategoryId()), true);
+                    }
+                });
+                adapter.notifyDataSetChanged();
+            });
+            spnPriority.post(new Runnable() {
+                @Override
+                public void run() {
+                    spnPriority.setSelection(jobToUpdate.getPriority(), true);
+                }
+            });
+
+
+
+
+
 
 
         }
     }
 
+
     private int getSpinerIndex(Spinner spinner, int id){
-        Category category = null;
+        //Category category = new Category();
 
-        List<Category> categories = categoryViewModel.getCategories().getValue();
+        List<Category> categories = categoryViewModel.getCategoryList();
 
-        for(Category cat:categories){
+        /*for(Category cat:categories){
             if(cat.getId() == id)
                 category = cat;
-        }
+        }*/
 
         int index = 0;
 
         for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).equals(category)){
+            Category category1 = (Category) spinner.getItemAtPosition(i);
+            if (category1.getId() == id){
                 index = i;
             }
         }
