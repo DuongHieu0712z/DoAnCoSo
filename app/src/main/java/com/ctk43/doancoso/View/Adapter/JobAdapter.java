@@ -31,6 +31,7 @@ import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.Service.CountUpService;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
@@ -86,13 +87,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
                 DialogDeleteJob(item);
             }
         });
-
         holder.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AddJobActivity.class);
                 Bundle bundle = new Bundle();
-
                 bundle.putSerializable("JobToUpdate", (Serializable) item);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
@@ -138,6 +137,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     }
 
     void ViewJobDetail(Job job) {
+
         Intent intent = new Intent(context, JobDetailActivity.class);
         intent.putExtra(Key.JOB_ID, job.getId());
         context.startActivity(intent);

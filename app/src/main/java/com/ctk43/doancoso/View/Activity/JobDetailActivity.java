@@ -46,7 +46,7 @@ public class JobDetailActivity extends AppCompatActivity {
     private TextView tv_title, tv_desciption, tv_time;
     private RelativeLayout layout_count_up;
     private JobDetail jobDetail;
-    private boolean isRunning;
+    public boolean isRunning;
     private int action;
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -78,10 +78,15 @@ public class JobDetailActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        int jobID = getIntent().getIntExtra(Key.JOB_ID, 0);
-        Intent intent = getIntent();
-        if(jobID ==0 && jobDetail !=null)
-            jobID = jobDetail.getJobId();
+        int jobID = -1;
+        jobID  = getIntent().getIntExtra(Key.JOB_ID,-1);
+        if(jobID == -1){
+            Bundle bundle = getIntent().getExtras();
+            jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL);
+            isRunning = (boolean) bundle.get(Key.IS_RUNNING);
+            jobID =  jobDetail.getJobId();
+        }
+
         jobViewModel = new JobViewModel();
         jobViewModel.setData(this);
         job = jobViewModel.getJobById(jobID);
@@ -120,7 +125,9 @@ public class JobDetailActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
         });
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
-
+        if(isRunning){
+            start();
+        }
     }
 
     private void UpdateJob(){
@@ -176,7 +183,6 @@ public class JobDetailActivity extends AppCompatActivity {
     }
     private void cancel(){
         layout_count_up.setVisibility(View.GONE);
-
     }
 
     private void resume() {
@@ -191,8 +197,9 @@ public class JobDetailActivity extends AppCompatActivity {
         UpdateJobDetail(false);
     }
 
-    private void complete() {
+    public void complete() {
         layout_count_up.setVisibility(View.GONE);
+        SendActionToService(Action.ACTION_CANCEL);
         UpdateJobDetail(true);
     }
 
@@ -247,5 +254,11 @@ public class JobDetailActivity extends AppCompatActivity {
     private void getSecond(int second){
         this.second = second;
         tv_time.setText(CalendarExtension.getTimeText(second) );
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

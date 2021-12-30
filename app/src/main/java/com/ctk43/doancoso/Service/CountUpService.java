@@ -33,7 +33,7 @@ public class CountUpService extends Service {
 
     private NotificationCompat.Builder mBuilder;
     private NotificationManager mNotificationManager;
-    boolean isRuning = false;
+    public boolean isRuning = false;
     private JobDetail jobDetail;
     CountUpTimer timer;
     RemoteViews remoteViews;
@@ -97,7 +97,7 @@ public class CountUpService extends Service {
         }
     }
 
-    private void complete() {
+    public void complete() {
         sendActionToActivity(Action.ACTION_COMPLETE);
         isRuning = false;
         timer = null;
@@ -114,16 +114,16 @@ public class CountUpService extends Service {
 
     private void cancel() {
         sendActionToActivity(Action.ACTION_CANCEL);
+        timer = null;
         isRuning = false;
         stopSelf();
-        timer = null;
     }
 
     private void sendNotification(JobDetail jobDetail) {
         Intent intent = new Intent(this, JobDetailActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, Key.COUNT_UP_ID, callBackActivity(), PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, Key.COUNT_UP_ID, callBackActivity(), PendingIntent.FLAG_UPDATE_CURRENT);
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);
         remoteViews.setTextViewText(R.id.tv_notification_title, jobDetail.getName());
@@ -204,7 +204,8 @@ public class CountUpService extends Service {
     private Intent callBackActivity() {
         Intent intent = new Intent(this, JobDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(Key.JOB_ID, jobDetail.getId());
+        bundle.putSerializable(Key.SEND_JOB_DETAIL,jobDetail);
+        bundle.putBoolean(Key.IS_RUNNING,isRuning);
         intent.putExtras(bundle);
         return intent;
     }
@@ -213,6 +214,5 @@ public class CountUpService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        isRuning = false;
     }
 }

@@ -151,7 +151,12 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0);
     }
 
-  /*  public static Job[] populateMovieData(){
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+    /*  public static Job[] populateMovieData(){
 =======
 
     public static Job[] populateMovieData() {

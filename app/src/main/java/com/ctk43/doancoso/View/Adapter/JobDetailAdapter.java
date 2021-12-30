@@ -33,6 +33,7 @@ import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.Service.CountUpService;
 import com.ctk43.doancoso.View.Activity.AddJobDetailActivity;
+import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
@@ -77,12 +78,17 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
         holder.checkBox.setChecked(item.getStatus());
         holder.jobDetailItem.setOnClickListener(v -> {
-            JobClock(item);
+            if (holder.checkBox.isChecked()) {
+                DialogUnCheckJobDetail(item, holder.checkBox);
+            }
+            if (!holder.checkBox.isChecked())
+                JobClock(item);
+
         });
-        holder.checkBox.setOnClickListener(v ->  {
-            IsFinish(holder.checkBox,item);
+        holder.checkBox.setOnClickListener(v -> {
+            IsFinish(holder.checkBox, item);
         });
-        holder.swipeRevealLayout.setOnClickListener(v->{
+        holder.swipeRevealLayout.setOnClickListener(v -> {
             JobClock(item);
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -101,19 +107,23 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
                 mContext.startActivity(intent);
             }
         });
-
     }
 
-    public void IsFinish(CheckBox checkBox, JobDetail jobDetail){
-        if(checkBox.isChecked()){
-            jobDetail.setStatus(true);
-            jobDetailViewModel.update(jobDetail);
+    public void IsFinish(CheckBox checkBox, JobDetail jobDetail) {
+        if (checkBox.isChecked()) {
+            if (((JobDetailActivity) mContext).isRunning) {
+                ((JobDetailActivity) mContext).complete();
+            } else {
+                jobDetail.setStatus(true);
+                jobDetailViewModel.update(jobDetail);
+            }
             notifyDataSetChanged();
-        }else {
-            DialogUnCheckJobDetail(jobDetail,checkBox);
+        } else {
+            DialogUnCheckJobDetail(jobDetail, checkBox);
         }
     }
-    public void JobClock(JobDetail jobDetail){
+
+    public void JobClock(JobDetail jobDetail) {
         Intent countIntent = new Intent(mContext, CountUpService.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY, jobDetail);
@@ -136,7 +146,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         dialogYesNo.show();
     }
 
-    void DialogUnCheckJobDetail(JobDetail jobDetail,CheckBox checkBox) {
+    void DialogUnCheckJobDetail(JobDetail jobDetail, CheckBox checkBox) {
         final Dialog dialogYesNo = new Dialog(mContext);
         Extension.dialogYesNo(dialogYesNo, mContext.getString(R.string.confirm_delete), mContext.getString(R.string.message_uncheck_job_detail));
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
@@ -145,6 +155,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         btn_yes.setOnClickListener(v -> {
             jobDetail.setStatus(false);
             jobDetailViewModel.update(jobDetail);
+            jobDetail.setActualCompletedTime(0);
             dialogYesNo.dismiss();
         });
         btn_no.setOnClickListener(v -> {
