@@ -114,7 +114,7 @@ public class JobDetailActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
             tv_job_name.setText(job.getName());
             tv_job_des.setText(job.getDescription());
-            tv_job_start.setText( CalendarExtension.TimeRemaining(job.getEndDate(),Calendar.getInstance().getTime()));
+            tv_job_start.setText(CalendarExtension.dateToString(job.getStartDate()));
             tv_job_end.setText(CalendarExtension.dateToString(job.getEndDate()));
             setProgress(tv_job_progress,sb,job);
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
