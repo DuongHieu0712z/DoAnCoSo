@@ -3,12 +3,20 @@ package com.ctk43.doancoso.View.Activity;
 
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private int dlg_mode = 0;
     private SearchView searchView;
-    private MenuItem categoryManagement;
+    private MenuItem addition_menu;
     private MenuItem notificationManagement;
 
     @Override
@@ -105,12 +113,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //category management
-        categoryManagement = menu.findItem(R.id.category_management);
-        categoryManagement.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        addition_menu = menu.findItem(R.id.addition_menu);
+        addition_menu.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(MainActivity.this, CategoryManagementActivity.class);
-                startActivity(intent);
+                onOpenMenuDialog();
                 return true;
 
             }
@@ -179,106 +186,28 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-    /*  public static Job[] populateMovieData(){
-=======
+    private void onOpenMenuDialog(){
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_menu);
+        Window window = dialog.getWindow();
+        if (window == null) return;
+        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttribute = window.getAttributes();
+        windowAttribute.gravity = Gravity.RIGHT;
+        window.setAttributes(windowAttribute);
+        dialog.setCancelable(true);
 
-    public static Job[] populateMovieData() {
->>>>>>> c73e58aa893e6c809d4afaaba9c88be8f71da0b5
-        Calendar cal = Calendar.getInstance();
-        String Date = "31/12/2021";
-        Date date;
-        try {
-            date = new SimpleDateFormat("dd/MM/yyyy").parse(Date);
-            cal.setTime(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        cal.set(Calendar.HOUR_OF_DAY, 6);// for 6 hour
-        cal.set(Calendar.MINUTE, 0);// for 0 min
-        cal.set(Calendar.SECOND, 0);// for 0 sec
-        Date start = Calendar.getInstance().getTime();
-        Date end = cal.getTime();
-        return new Job[]{
-
-                new Job(1, "Tên Công Việc 2", "Đây là công việc 3 rat nhieu chu", start, end, true, 0.0),
-        };
-    }*/
-   /* private void initViewMobdel() {
-        jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
-        jobViewModel.getJobs().observe(this, new Observer<List<Job>>() {
+        LinearLayout ln_category_management = dialog.findViewById(R.id.dialog_menu_category);
+        ln_category_management.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(List<Job> jobs) {
-                listjob = jobs;
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CategoryManagementActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
             }
         });
-    }*/
-/*
-    private void showFrg(Fragment frg) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, frg,
-                null).commit();
+        dialog.show();
     }
-    public void gotoM001Screen() {
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new MainFragment(), null).commit();
-    }
-
-    public void gotoM002Screen(Job job) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.ln_main, new JobDetailFragment(job), null).commit();
-    }
-
-    public void gotoAddNewJobScreen() {
-
-    }
-
-    public void gotoShowDialogScreen(int mode) {
-        dlg_mode = mode;
-        DialogFragment dateDialog = new DatePickerFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        dateDialog.show(getFragmentManager(), "");
-    }
-
-    public void gotoShowTimeDialogScreen(int mode) {
-        dlg_mode = mode;
-        DialogFragment timePicker = new TimePickerFragment();
-        timePicker.show(getFragmentManager(), "time picker");
-    }
-    public String getDatabasePathstring() {
-        return getApplicationInfo().dataDir + DB_PATH_SUFFIX + DATABASE_NAME;
-    }
-
-    private void CoppyDataBaseFormAsset() {
-        try {
-            InputStream myInput;
-            myInput = getAssets().open(DATABASE_NAME);
-            String outputFileName = getDatabasePathstring();
-            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX + DATABASE_NAME);
-            if (!f.exists())
-                f.mkdir();
-            OutputStream myOutput = new FileOutputStream(outputFileName);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = myInput.read(buffer)) > 0) {
-                myOutput.write(buffer, 0, length);
-                myOutput.flush();
-                myOutput.close();
-                myInput.close();
-            }
-        } catch (IOException e) {
-            Log.e("error_coppy_database", e.toString());
-        }
-    }
-
-    public void progressCopyDataBase() {
-        File dbFile = getDatabasePath(DATABASE_NAME);
-        if (!dbFile.exists())
-            CoppyDataBaseFormAsset();
-        Toast.makeText(this, "ALOOOOOOOOO coppy_database", Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        return true;
-    }*/
 }
