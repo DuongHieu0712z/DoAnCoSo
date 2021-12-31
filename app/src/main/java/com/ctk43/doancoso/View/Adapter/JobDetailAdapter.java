@@ -68,7 +68,10 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
     public void onBindViewHolder(@NonNull JobDetailHolder holder, int position) {
         JobDetail item = listJobDetail.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
-        holder.tvJdName.setText(item.getName());
+        String jobDetailName = item.getName();
+        if(jobDetailName.length() > 30)
+            jobDetailName = jobDetailName.substring(0, 35) +"...";
+        holder.tvJdName.setText(jobDetailName);
         holder.tvJdDes.setText(item.getDescription());
         holder.tvEstimatedTime.setText(String.valueOf(item.getEstimatedCompletedTime()));
         holder.tvActualTime.setText(String.valueOf(item.getActualCompletedTime()));

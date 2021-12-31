@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
@@ -32,6 +34,7 @@ import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 public class JobDetailActivity extends AppCompatActivity {
@@ -103,6 +106,15 @@ public class JobDetailActivity extends AppCompatActivity {
         TextView tv_job_start = findViewById(R.id.tv_jt_time_start);
         TextView tv_job_end = findViewById(R.id.tv_jt_time_end);
         TextView tv_job_progress = findViewById(R.id.tv_jt_prg);
+
+        TextView tv_job_status = findViewById(R.id.job_title_status);
+        ImageView img_priority = findViewById(R.id.job_title_priority);
+
+        ImageView img_edit = findViewById(R.id.job_title_edit);
+
+        CheckBox chk_job_title_finish_job= findViewById(R.id.chk_job_title_finish_job);
+
+
         img_finish = findViewById(R.id.img_finish);
         img_resumOrPause = findViewById(R.id.img_pause_or_resume);
         img_cancel = findViewById(R.id.img_cancel_notification);
@@ -121,13 +133,38 @@ public class JobDetailActivity extends AppCompatActivity {
             tv_job_des.setText(job.getDescription());
             tv_job_start.setText(CalendarExtension.dateToString(job.getStartDate()));
             tv_job_end.setText(CalendarExtension.dateToString(job.getEndDate()));
+            tv_job_status.setText(GeneralData.getStatus(job.getStatus()));
+            img_priority.setImageResource(GeneralData.getImgPriority(job.getPriority()));
             setProgress(tv_job_progress,sb,job);
+
+            img_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onOpenUpdateJobActivity(job);
+                }
+            });
+
+            chk_job_title_finish_job.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //chua xu ly
+                }
+            });
+
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
         });
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
         if(isRunning){
             start();
         }
+    }
+
+    private void onOpenUpdateJobActivity(Job job){
+        Intent intent = new Intent(JobDetailActivity.this, AddJobActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("JobToUpdate", (Serializable) job);
+        intent.putExtras(bundle);
+        JobDetailActivity.this.startActivity(intent);
     }
 
     private void UpdateJob(){

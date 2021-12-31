@@ -11,8 +11,9 @@
         android:icon="@drawable/ic_baseline_notifications_24"
         app:showAsAction="always"
         />
-    <item android:id="@+id/category_management"
-        android:title="Quản lý danh mục"
-        app:showAsAction="never"
+    <item android:id="@+id/addition_menu"
+        android:title="Addition Menu"
+        android:icon="@drawable/ic_baseline_menu_24"
+        app:showAsAction="always"
         />
 </menu>

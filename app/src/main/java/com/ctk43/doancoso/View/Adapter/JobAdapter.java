@@ -73,8 +73,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
 
         Job item = listJob.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
-
-        holder.tv_job_name.setText(item.getName());
+        String jobName = item.getName();
+        if(jobName.length() > 20)
+            jobName = jobName.substring(0,15) + "...";
+        holder.tv_job_name.setText(jobName);
         holder.tv_job_des.setText(item.getDescription());
         holder.img_priority.setImageResource(GeneralData.getImgPriority(item.getPriority()));
         holder.checkBox.setChecked(item.getStatus() == 3||item.getStatus() ==4);
