@@ -163,7 +163,7 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         }
 
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,listJob, mContext);
+        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,listJob, mContext, month, year);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(mContext, 7);
         rcv_calendar.setLayoutManager(layoutManager);

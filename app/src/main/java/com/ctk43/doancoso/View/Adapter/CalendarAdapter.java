@@ -25,16 +25,20 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
     private final ArrayList<String> daysOfMonth;
     private ArrayList<List<Job>> listJob;
     private Context mContext;
+    int month;
+    int year;
 
 
     private List<Job> OldJobs;
     private List<Job> jobsInDay;
     public Date currentDate;
 
-    public CalendarAdapter(ArrayList<String> daysOfMonth,ArrayList<List<Job>> listJob, Context context) {
+    public CalendarAdapter(ArrayList<String> daysOfMonth,ArrayList<List<Job>> listJob, Context context, int month, int year) {
         this.listJob = listJob;
         this.daysOfMonth = daysOfMonth;
         this.mContext = context;
+        this.month = month;
+        this.year = year;
     }
     @NonNull
     @Override
@@ -74,7 +78,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         holder.dayOfMonth.setText(daysOfMonth.get(position));
-        holder.IsCurrentDay();
+        holder.IsCurrentDay(month, year);
         if(position>=listJob.size()) return;
         if(listJob.get(position)!=null){
             if(listJob.get(position).size()>0){

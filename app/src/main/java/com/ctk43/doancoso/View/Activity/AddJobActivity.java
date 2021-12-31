@@ -254,7 +254,9 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         c.set(Calendar.YEAR, i);
         c.set(Calendar.MONTH, i1);
         c.set(Calendar.DAY_OF_MONTH, i2);
-        String result = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        //String result = DateFormat.getDateInstance().format(c.getTime());
+        String result = dateFormat.format(c.getTime());
         TextView textView;
         if (mode == 0) {
             textView = findViewById(R.id.tv_dlg_date_start);
