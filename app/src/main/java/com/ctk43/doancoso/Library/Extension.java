@@ -6,16 +6,21 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Adapter.JobAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,28 +29,7 @@ import java.util.List;
 
 
 public class Extension {
-    public static Dialog dialogYesNo(Dialog dialog, String title, String content) {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_yes_no);
-        Window window = dialog.getWindow();
-        if (window == null) {
-            return null;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams windownAtrributes = window.getAttributes();
-        windownAtrributes.gravity = Gravity.CENTER;
-        window.setAttributes(windownAtrributes);
-        TextView textView = dialog.findViewById(R.id.txt_dialog_string);
-        textView.setText(title);
-        Button btnYes = dialog.findViewById(R.id.btn_dialog_yes);
-        btnYes.setBackgroundTintMode(null);
-        Button btnNo = dialog.findViewById(R.id.btn_dialog_no);
-        btnNo.setBackgroundTintMode(null);
-        TextView tv_des = dialog.findViewById(R.id.tv_dialog_description);
-        tv_des.setText(content);
-        return dialog;
-    }
+
 
     public static boolean isEmpty(Context context, String value, String name, boolean isDefault) {
         if (value.isEmpty() || isDefault) {

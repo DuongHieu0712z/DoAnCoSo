@@ -24,14 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
-import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
-import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.Service.CountUpService;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
@@ -40,11 +38,12 @@ import com.ctk43.doancoso.ViewModel.JobViewModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> implements Filterable {
-    private List<Job> listJob;
-    private List<Job> mlistJobOld;
+    private List<Job> jobsShow;
+    private List<Job> jobs;
     private final Context context;
     private final JobViewModel jobViewModel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
@@ -52,8 +51,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
         this.jobViewModel = jobViewModel;
-
-        listJob = jobViewModel.getJobs().getValue();
     }
 
     @Override
@@ -64,23 +61,20 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     }
 
     public void setJob(List<Job> jobs) {
-        listJob = jobs;
-        mlistJobOld = jobs;
+        jobsShow = jobs;
+        this.jobs = jobs;
     }
 
     @Override
     public void onBindViewHolder(JobHolder holder, @SuppressLint("RecyclerView") int position) {
-
-        Job item = listJob.get(position);
+        Job item = jobsShow.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
-
         holder.tv_job_name.setText(item.getName());
         holder.tv_job_des.setText(item.getDescription());
         holder.img_priority.setImageResource(GeneralData.getImgPriority(item.getPriority()));
-        holder.checkBox.setChecked(item.getStatus() == 3||item.getStatus() ==4);
+        holder.checkBox.setChecked(item.getStatus() == 3 || item.getStatus() == 4);
         setProcess(holder.tv_job_prg, holder.progressBar, item);
         setTextStatus(item, holder.tv_job_status, holder.tv_time_title, holder.tv_time);
-
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,9 +97,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
 
     @Override
     public int getItemCount() {
-        if (listJob == null)
+        if (jobsShow == null)
             return 0;
-        return listJob.size();
+        return jobsShow.size();
     }
 
     void setProcess(TextView tv_progress, ProgressBar progressBar, Job job) {
@@ -130,8 +124,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     }
 
     void deleteItem(Job job) {
-        listJob.remove(job);
-        notifyItemRemoved(listJob.indexOf(job));
+        jobs.remove(job);
+        notifyItemRemoved(jobs.indexOf(job));
         jobViewModel.delete(job);
     }
 
@@ -146,9 +140,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         jobViewModel.checkOrUncheck(Job, isFinish);
         new JobFragment();
     }
+
     void DialogDeleteJob(Job job) {
         final Dialog dialogYesNo = new Dialog(context);
-        Extension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
+        DialogExtension.dialogYesNo(dialogYesNo, context.getString(R.string.confirm_delete), context.getString(R.string.message_delete_all_job_detail));
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
         Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
         dialogYesNo.setCancelable(true);
@@ -165,7 +160,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         String confirm = context.getString(R.string.confirm);
         dialogYesNo.setCancelable(true);
         if (checkBox.isChecked()) {
-            Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_finish_all_job_detail));
+            DialogExtension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_finish_all_job_detail));
             Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
             Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
             btn_yes.setOnClickListener(v -> {
@@ -177,7 +172,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
                 dialogYesNo.dismiss();
             });
         } else {
-            Extension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_delete_progress));
+            DialogExtension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_delete_progress));
             Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
             Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
             btn_yes.setOnClickListener(v -> {
@@ -198,72 +193,94 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String strsearch = charSequence.toString();
-                if(strsearch.isEmpty()){
-                    listJob = mlistJobOld;
-                }else{
+                if (strsearch.isEmpty()) {
+                    jobsShow = jobs;
+                } else {
                     List<Job> list = new ArrayList<>();
-                    for (Job j : mlistJobOld){
-                        if(j.getName().toLowerCase().contains(strsearch.toLowerCase())){
+                    for (Job j : jobs) {
+                        if (j.getName().toLowerCase().contains(strsearch.toLowerCase())) {
                             list.add(j);
                         }
                     }
-                    listJob = list;
+                    jobsShow = list;
                 }
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = listJob;
+                filterResults.values = jobsShow;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                listJob = (List<Job>) filterResults.values;
+                jobsShow = (List<Job>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
     }
 
-    public void SortByPriority(int priority){
-        if(listJob==null) return;
+    public void FilterByPriority(int priority) {
+        if (jobsShow == null) return;
+        else if (priority == -1)
+            return;
         List<Job> list = new ArrayList<>();
-        for(Job j:listJob){
-            if(j.getPriority() == priority)
+        for (Job j : jobsShow) {
+            if (j.getPriority() == priority)
                 list.add(j);
         }
-        listJob = list;
-        notifyDataSetChanged();
+        jobsShow = list;
+       notifyDataSetChanged();
     }
-    public void GetByCategoryId(int categoryId){
+
+    public void GetByCategoryId(int categoryId) {
         List<Job> list = new ArrayList<>();
-        if(categoryId != 0) {
-            for (Job j : listJob) {
+        if (categoryId != 0) {
+            for (Job j : jobsShow) {
                 if (j.getCategoryId() == categoryId)
                     list.add(j);
             }
+        } else if (categoryId == 0) {
+            list = jobsShow;
+            System.out.println(jobsShow.size() + " mlist job size");
         }
-        else if(categoryId == 0) {
-            list = mlistJobOld;
-            System.out.println(mlistJobOld.size()+" mlist job size");
-        }
-        listJob = list;
+        jobsShow = list;
         notifyDataSetChanged();
     }
-    public void SortByStatus(int status){
-        if(listJob==null){
-            System.out.println("List is null");
+
+    public void FilterByStatus(int status) {
+        if (jobsShow == null)
             return;
-        }
+        else if (status == -1)
+            return;
         List<Job> list = new ArrayList<>();
-        for(Job j:listJob){
-            if(j.getStatus() == status)
+        for (Job j : jobsShow) {
+            if (j.getStatus() == status)
                 list.add(j);
         }
-        listJob = list;
+        jobsShow = list;
         notifyDataSetChanged();
     }
-    public void Revert(){
-        listJob = mlistJobOld;
+
+    public void FilterByDateToDate(Date start,Date end ) {
+        if (jobsShow == null)
+            return;
+        List<Job> list = new ArrayList<>();
+        for (Job job : jobsShow) {
+            if (CalendarExtension.Remaining_minute(start,job.getEndDate()) >=0 && CalendarExtension.Remaining_minute(end,job.getEndDate()) >=0 )
+                list.add(job);
+        }
+        jobsShow = list;
         notifyDataSetChanged();
     }
+
+    public void Revert() {
+        jobsShow = jobs;
+       /* List<Job> list = new ArrayList<>();
+        for (Job job : jobs) {
+                list.add(job);
+        }
+        jobsShow = list;*/
+        notifyDataSetChanged();
+    }
+
     public static class JobHolder extends RecyclerView.ViewHolder {
         SwipeRevealLayout swipeRevealLayout;
         LinearLayout itemJob;

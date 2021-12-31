@@ -123,7 +123,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         tv_time_end = findViewById(R.id.tv_dlg_time_end);
 
         spnPriority = findViewById(R.id.spiner_job_priority);
-        String[] priorities = GeneralData.priorities;
+        String[] priorities = GeneralData.getListPriority(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, priorities);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnPriority.setAdapter(adapter);
@@ -247,7 +247,9 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         c.set(Calendar.YEAR, i);
         c.set(Calendar.MONTH, i1);
         c.set(Calendar.DAY_OF_MONTH, i2);
-        String result = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        //String result = DateFormat.getDateInstance().format(c.getTime());
+        String result = dateFormat.format(c.getTime());
         TextView textView;
         if (mode == 0) {
             textView = findViewById(R.id.tv_dlg_date_start);

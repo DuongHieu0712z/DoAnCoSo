@@ -3,6 +3,7 @@ package com.ctk43.doancoso.View.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.MainActivity;
@@ -29,7 +31,7 @@ import java.util.List;
 public class JobFragment extends Fragment {
     FloatingActionButton btn_Add_New_Job;
     private Context mContext;
-    public JobAdapter jobListAdapter;
+    private JobAdapter jobAdapter;
     public RecyclerView rcv;
     private JobViewModel jobViewModel;
     private LiveData<List<Job>> jobs;
@@ -57,12 +59,12 @@ public class JobFragment extends Fragment {
         rcv = v.findViewById(R.id.rcv_display_job);
         jobViewModel.setData(mContext);
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
-        jobListAdapter = new JobAdapter(mContext, jobViewModel);
+        jobAdapter = new JobAdapter(mContext, jobViewModel);
         try{
             jobs.observe(requireActivity(), jobs -> {
-                jobListAdapter.setJob(jobs);
+                jobAdapter.setJob(jobs);
                 rcv.setLayoutManager(new LinearLayoutManager(mContext));
-                rcv.setAdapter(jobListAdapter);
+                rcv.setAdapter(jobAdapter);
             });
         }catch (Exception e){
 
@@ -87,9 +89,21 @@ public class JobFragment extends Fragment {
             }
         }).attachToRecyclerView(rcv);*/
     }
-    public void Filter(String str){
+    public JobAdapter getAdapter(){
+        if(jobAdapter == null){
+            Log.e("JobAdapter", "getAdapter: Bị null" );
+            return null;
+        }
+        Log.e("JobAdapter", "getAdapter: Không null" );
+        return jobAdapter;
+    }
 
-        jobListAdapter.getFilter().filter(str);
+    public RecyclerView getRecycleView(){
+        return rcv;
+    }
+
+    public void Filter(String str){
+        jobAdapter.getFilter().filter(str);
     }
 
     public LiveData<List<Job>> getJobs() {

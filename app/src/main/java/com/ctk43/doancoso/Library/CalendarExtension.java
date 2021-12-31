@@ -78,8 +78,7 @@ public class CalendarExtension {
     @NonNull
     public static Date getDateEndOfMonth(int month, int year) {
         calendar.set(year, month, 1);
-        calendar.add(Calendar.MONTH, 1);
-        calendar.set(Calendar.DATE, calendar.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         return calendar.getTime();
     }
 
@@ -160,7 +159,7 @@ public class CalendarExtension {
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
         long time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        return ((time / 1000) % 60 % 60);
+        return (time / 1000 /60 / 60 /24);
     }
 
 
@@ -221,4 +220,14 @@ public class CalendarExtension {
         return String.format("%02d", hour) + " : " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds);
     }
 
+    public static boolean isJanuary(int month){
+        if(month == calendar.getActualMinimum(Calendar.MONTH))
+            return true;
+        return false;
+    }
+    public static boolean isDeccember(int month){
+        if(month == calendar.getActualMinimum(Calendar.MONTH))
+            return true;
+        return false;
+    }
 }

@@ -1,8 +1,5 @@
 package com.ctk43.doancoso.View.Fragment;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,21 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.ctk43.doancoso.Library.CalendarExtension;
+import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
@@ -46,23 +39,12 @@ public class ManagerJobFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private View view;
-    public JobFragment jobFragment;
+    private JobFragment jobFragment;
     public boolean isAll;
-
     CategoryViewModel categoryViewModel;
     JobViewModel jobViewModel;
+    ViewPagerJobAdapter adapterManager;
     List<Category> categories;
-
-    RadioButton rd_priority_0;
-    RadioButton rd_priority_1;
-    RadioButton rd_priority_2;
-    RadioButton rd_priority_3;
-
-    RadioButton rd_status_0;
-    RadioButton rd_status_1;
-    RadioButton rd_status_2;
-    RadioButton rd_status_3;
-    RadioButton rd_status_4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,11 +79,10 @@ public class ManagerJobFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,categories) ;
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_category.setAdapter(adapter);
-        spn_category.setSelection(1);
+
         spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if(isAll){
                     switch (position) {
                         case 0:
                             showAll();
@@ -115,178 +96,42 @@ public class ManagerJobFragment extends Fragment {
                         default:
                             showCategory(categories.get(position).getId());
                             break;
-                    }
-                }else {
-
                 }
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
-
+        spn_category.setSelection(1);
         img_btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogFilter();
+                jobFragment = (JobFragment) adapterManager.getHashMap().get(viewPager.getCurrentItem());
+                DialogExtension.showDialogFilterJob(getContext(),false,jobFragment.getAdapter());
             }
         });
 
         img_btn_convert.setOnClickListener(new View.OnClickListener() {
             final ArrayList<Category>[] categories = new ArrayList[]{new ArrayList<>()};
-
             @Override
             public void onClick(View view) {
-                JobViewModel jobViewModel = new JobViewModel();
-                jobViewModel.setData(getContext());
-                JobAdapter jobAdapter = new JobAdapter(getContext(), jobViewModel);
-                jobViewModel.setData(getContext());
-                RecyclerView rcv = getActivity().findViewById(R.id.rcv_display_job);
-                jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                    jobAdapter.setJob(jobs);
-                    rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                    rcv.setAdapter(jobAdapter);
-                    jobAdapter.Revert();
-                });
+                jobFragment.getAdapter().Revert();
             }
         });
     }
 
-    private void showDialogFilter() {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.filter_dialog);
-        Window window = dialog.getWindow();
-        if (window == null) return;
-        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams windowAttribute = window.getAttributes();
-        windowAttribute.gravity = Gravity.LEFT;
-        window.setAttributes(windowAttribute);
-        dialog.setCancelable(true);
 
-        rd_priority_0 = dialog.findViewById(R.id.rb_priority_0);
-        rd_priority_1 = dialog.findViewById(R.id.rb_priority_1);
-        rd_priority_2 = dialog.findViewById(R.id.rb_priority_2);
-        rd_priority_3 = dialog.findViewById(R.id.rb_priority_3);
-
-        rd_status_0 = dialog.findViewById(R.id.rb_status_0);
-        rd_status_1 = dialog.findViewById(R.id.rb_status_1);
-        rd_status_2 = dialog.findViewById(R.id.rb_status_2);
-        rd_status_3 = dialog.findViewById(R.id.rb_status_3);
-        rd_status_4 = dialog.findViewById(R.id.rb_status_4);
-
-        Button btn_filter = dialog.findViewById(R.id.btn_filter);
-
-        JobViewModel jobViewModel = new JobViewModel();
-        jobViewModel.setData(getContext());
-        JobAdapter jobAdapter = new JobAdapter(getContext(), jobViewModel);
-        jobViewModel.setData(getContext());
-        RecyclerView rcv = getActivity().findViewById(R.id.rcv_display_job);
-        rcv.setAdapter(jobAdapter);
-
-        btn_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (rd_priority_0.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByPriority(0);
-                        dialog.dismiss();
-                    });
-                } else if (rd_priority_1.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByPriority(1);
-                        dialog.dismiss();
-                    });
-                } else if (rd_priority_2.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByPriority(2);
-                        dialog.dismiss();
-                    });
-                } else if (rd_priority_3.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByPriority(3);
-                        dialog.dismiss();
-                    });
-                } else if (rd_status_0.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByStatus(0);
-                        dialog.dismiss();
-                    });
-                } else if (rd_status_1.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByStatus(1);
-                        dialog.dismiss();
-                    });
-                } else if (rd_status_2.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByStatus(2);
-                        dialog.dismiss();
-                    });
-                } else if (rd_status_3.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByStatus(3);
-                        dialog.dismiss();
-                    });
-                } else if (rd_status_4.isChecked()) {
-                    jobViewModel.getJobs().observe(getActivity(), jobs -> {
-                        jobAdapter.setJob(jobs);
-                        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-                        rcv.setAdapter(jobAdapter);
-                        jobAdapter.SortByStatus(4);
-                        dialog.dismiss();
-                    });
-                } else {
-                    Toast.makeText(getContext(), "Vui lòng chọn lọc", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-
-        dialog.show();
-    }
 
     private void showWeek() {
-        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
+        adapterManager = new ViewPagerJobAdapter(this);
         tabLayout.setVisibility(View.VISIBLE);
-        Date date1 =CalendarExtension.getStartTimePreviousWeek();
-        Date date2 =Calendar.getInstance().getTime();
-        Date date3 =CalendarExtension.getStartTimeNextWeek();
-
-        adapter.setJobs(
+        adapterManager.setJobs(
                 jobViewModel.getJobsWeek(CalendarExtension.getStartTimePreviousWeek()),
                 jobViewModel.getJobsWeek(Calendar.getInstance().getTime()),
                 jobViewModel.getJobsWeek(CalendarExtension.getStartTimeNextWeek()));
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapterManager);
         viewPager.setCurrentItem(1);
-        jobFragment = adapter.jobFragment;
         viewPager.setUserInputEnabled(false);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
@@ -304,21 +149,28 @@ public class ManagerJobFragment extends Fragment {
     }
 
     private void showMonth() {
-        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
+        adapterManager = new ViewPagerJobAdapter(this);
         tabLayout.setVisibility(View.VISIBLE);
         int currMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),0);
         int previousMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),-1);
         int nextMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),1);
-        adapter.setJobs(
+        int curr = 0;
+        int previous =0;
+        int next =0;
+        if(CalendarExtension.isJanuary(currMonth))
+            previous = -1;
+        else if(CalendarExtension.isDeccember(currMonth)){
+            next =1;
+        }
+        adapterManager.setJobs(
                 jobViewModel.getJobsMonth(previousMonth,
-                        CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)),
+                        CalendarExtension.getYear(Calendar.getInstance().getTime(), previous)),
                 jobViewModel.getJobsMonth(currMonth,
-                        CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)),
+                        CalendarExtension.getYear(Calendar.getInstance().getTime(), curr)),
                 jobViewModel.getJobsMonth(nextMonth,
-                        CalendarExtension.getYear(Calendar.getInstance().getTime(), 0)));
-        viewPager.setAdapter(adapter);
+                        CalendarExtension.getYear(Calendar.getInstance().getTime(), next)));
+        viewPager.setAdapter(adapterManager);
         viewPager.setCurrentItem(1);
-        jobFragment = adapter.jobFragment;
         viewPager.setUserInputEnabled(false);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
@@ -339,31 +191,29 @@ public class ManagerJobFragment extends Fragment {
 
     private void showDate() {
         tabLayout.setVisibility(View.GONE);
-        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
-        adapter.setJobs(jobViewModel.getJobs());
-        jobFragment = adapter.jobFragment;
-        adapter.createFragment(0);
-        viewPager.setAdapter(adapter);
+        adapterManager = new ViewPagerJobAdapter(this);
+        adapterManager.setJobs(jobViewModel.getJobs());
+        adapterManager.createFragment(0);
+        viewPager.setAdapter(adapterManager);
         viewPager.setCurrentItem(0);
         viewPager.setUserInputEnabled(false);
     }
 
     private void showAll() {
         tabLayout.setVisibility(View.GONE);
-        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
-        adapter.setJobs(jobViewModel.getJobs());
-        jobFragment = adapter.jobFragment;
-        adapter.createFragment(0);
-        viewPager.setAdapter(adapter);
+        adapterManager = new ViewPagerJobAdapter(this);
+        adapterManager.setJobs(jobViewModel.getJobs());
+        adapterManager.createFragment(0);
+        viewPager.setAdapter(adapterManager);
         viewPager.setCurrentItem(0);
         viewPager.setUserInputEnabled(false);
     }
     private void showCategory(int idCategory){
         tabLayout.setVisibility(View.GONE);
-        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
-        adapter.setJobs(jobViewModel.getByCategoryId(idCategory));
-        adapter.createFragment(0);
-        viewPager.setAdapter(adapter);
+        adapterManager = new ViewPagerJobAdapter(this);
+        adapterManager.setJobs(jobViewModel.getByCategoryId(idCategory));
+        adapterManager.createFragment(0);
+        viewPager.setAdapter(adapterManager);
         viewPager.setCurrentItem(0);
         viewPager.setUserInputEnabled(false);
     }
