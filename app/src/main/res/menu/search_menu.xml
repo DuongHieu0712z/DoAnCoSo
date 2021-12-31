@@ -6,6 +6,11 @@
     android:icon="@drawable/ic_baseline_search_24"
     app:showAsAction="always"
     app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+    <item android:id="@+id/menu_item_notification"
+        android:title="Thông báo"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        app:showAsAction="always"
+        />
     <item android:id="@+id/category_management"
         android:title="Quản lý danh mục"
         app:showAsAction="never"

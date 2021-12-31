@@ -49,6 +49,7 @@ public class SettingFragment extends Fragment {
     }
 
     private void InnitView(View view) {
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Cài đặt");
         ArrayList<Setting> settings = new ArrayList<>();
         for (int i =0 ; i< Titles.length; i++){
             settings.add(new Setting(Titles[i], Contents[i], Images[i]));

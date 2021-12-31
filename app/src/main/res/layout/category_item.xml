@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_category_topic"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:background="@color/bg_color"
+    app:mode="same_level"
+    app:dragEdge="right"
+    >
+    <include
+        android:id="@+id/category_function"
+        layout="@layout/funcion_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ln_category_item"
+    android:background="@color/bg_color"
+    android:layout_marginHorizontal="10dp">
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Category name"
+        android:textSize="18sp"
+        android:textColor="@color/text_title_color"
+        android:id="@+id/tv_category_name"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="@string/number_of_job"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textColor="@color/text_title_color"
+            android:textSize="16sp"
+            android:id="@+id/tv_category_number_job"
+            android:gravity="right"
+            android:textAlignment="gravity"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/sub_bg_color"/>
+
+
+
+
+</LinearLayout>
+</com.chauthai.swipereveallayout.SwipeRevealLayout>
