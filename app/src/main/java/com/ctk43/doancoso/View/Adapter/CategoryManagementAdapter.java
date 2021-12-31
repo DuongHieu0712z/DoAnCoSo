@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,19 +31,22 @@ import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryManagementAdapter.CategoryHolder> {
+public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryManagementAdapter.CategoryHolder> implements Filterable {
     private Context mContext;
     private List<Category> categories;
+    private List<Category> mlistCategoryOld;
     private CategoryViewModel categoryViewModel;
 
 
     public CategoryManagementAdapter(Context mContext, List<Category> categories) {
         this.mContext = mContext;
-        this.categoryViewModel = categoryViewModel;
+        //this.categoryViewModel = categoryViewModel;
         this.categories = categories;
-        System.out.println(this.categories.size());
+        this.mlistCategoryOld = categories;
+
     }
 
     @NonNull
@@ -122,6 +127,36 @@ public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryMana
         });
 
         dialog.show();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strsearch = charSequence.toString();
+                if(strsearch.isEmpty()){
+                    categories = mlistCategoryOld;
+                }else{
+                    List<Category> list = new ArrayList<>();
+                    for (Category j : mlistCategoryOld){
+                        if(j.getName().toLowerCase().contains(strsearch.toLowerCase())){
+                            list.add(j);
+                        }
+                    }
+                    categories = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = categories;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                categories = (List<Category>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class CategoryHolder extends RecyclerView.ViewHolder {
