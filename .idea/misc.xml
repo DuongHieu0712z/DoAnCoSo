@@ -90,6 +90,7 @@
         <entry key="..\:/DACS/current/app/src/main/res/drawable/prg_circle.xml" value="0.2703125" />
         <entry key="..\:/DACS/current/app/src/main/res/drawable/round_image_button.xml" value="0.24351851851851852" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/activity_add_job_detail.xml" value="0.264" />
+        <entry key="..\:/DACS/current/app/src/main/res/layout/activity_category_management.xml" value="0.264" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/activity_flat.xml" value="0.13020833333333334" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/activity_job_detail.xml" value="0.264" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/activity_jobs.xml" value="0.264" />
@@ -97,7 +98,9 @@
         <entry key="..\:/DACS/current/app/src/main/res/layout/activity_tab_layout_main.xml" value="0.23097826086956522" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/calendar_cell.xml" value="0.264" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/calendar_day_item.xml" value="0.4" />
+        <entry key="..\:/DACS/current/app/src/main/res/layout/category_item.xml" value="0.264" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/filter_dialog.xml" value="0.23097826086956522" />
+        <entry key="..\:/DACS/current/app/src/main/res/layout/floating_dialog_add_job_type.xml" value="0.1716485507246377" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/floating_dialog_add_new_job.xml" value="0.23097826086956522" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/fragment_manager_job.xml" value="0.13020833333333334" />
         <entry key="..\:/DACS/current/app/src/main/res/layout/fragment_month.xml" value="0.264" />

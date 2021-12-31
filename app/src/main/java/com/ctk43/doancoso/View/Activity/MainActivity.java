@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private int dlg_mode = 0;
     private SearchView searchView;
+    private MenuItem categoryManagement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,18 @@ public class MainActivity extends AppCompatActivity {
                     jobAdapter.getFilter().filter(newText);
                 });
                 return false;
+            }
+        });
+
+        //category management
+        categoryManagement = menu.findItem(R.id.category_management);
+        categoryManagement.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, CategoryManagementActivity.class);
+                startActivity(intent);
+                return true;
+
             }
         });
         return true;
