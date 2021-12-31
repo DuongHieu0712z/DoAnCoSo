@@ -183,12 +183,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                 }
             });
 
-
-
-
-
-
-
         }
     }
 
@@ -220,14 +214,13 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        return day+"/"+month+"/"+year;
+        return month+"/"+day+"/"+year;
     }
     private String ParseTime(Date date){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int hour = cal.get(Calendar.HOUR);
         int minutes = cal.get(Calendar.MINUTE);
-
         String str = "";
         if(minutes ==0)
             str = hour+":0"+minutes;
@@ -320,7 +313,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         windowAttribute.gravity = Gravity.CENTER;
         window.setAttributes(windowAttribute);
         dialog.setCancelable(true);
-
         EditText edt_job_type_name = dialog.findViewById(R.id.edt_dlg_job_type);
 
         Button btn_add_job_type = dialog.findViewById(R.id.btn_dlg_add_job_type);

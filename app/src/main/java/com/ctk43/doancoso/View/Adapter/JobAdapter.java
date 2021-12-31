@@ -97,7 +97,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
                 context.startActivity(intent);
             }
         });
-
         holder.itemJob.setOnClickListener(v -> ViewJobDetail(item));
         holder.checkBox.setOnClickListener(v -> CheckOrUncheck(holder.checkBox, item));
     }

@@ -74,7 +74,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         holder.dayOfMonth.setText(daysOfMonth.get(position));
-        holder.IsCurrentDay();
+       // holder.IsCurrentDay();
         if(position>=listJob.size()) return;
         if(listJob.get(position)!=null){
             if(listJob.get(position).size()>0){
@@ -83,6 +83,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
                     @Override
                     public void onClick(View view) {
                         ((MainActivity)mContext).SelectBottomMenuPosition(0);
+                        
                     }
                 });
             }

@@ -75,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 JobAdapter jobAdapter = new JobAdapter(MainActivity.this, jobViewModel);
                 jobViewModel.setData(MainActivity.this);
                 RecyclerView rcv = findViewById(R.id.rcv_display_job);
-
-
                 jobViewModel.getJobs().observe(MainActivity.this, jobs -> {
                     jobAdapter.setJob(jobs);
                     rcv.setLayoutManager(new LinearLayoutManager(MainActivity.this));

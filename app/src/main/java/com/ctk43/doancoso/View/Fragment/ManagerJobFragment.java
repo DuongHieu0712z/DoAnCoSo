@@ -47,6 +47,7 @@ public class ManagerJobFragment extends Fragment {
     private ViewPager2 viewPager;
     private View view;
     public JobFragment jobFragment;
+    public boolean isAll;
 
     CategoryViewModel categoryViewModel;
     JobViewModel jobViewModel;
@@ -83,6 +84,10 @@ public class ManagerJobFragment extends Fragment {
         jobViewModel.setData(requireContext());
     }
 
+    public void getCategories(List<Category> categories){
+        this.categories = categories;
+    }
+
     private void InnitView(View view) {
 
         ImageButton img_btn_filter = view.findViewById(R.id.img_btn_filter);
@@ -96,20 +101,25 @@ public class ManagerJobFragment extends Fragment {
         spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                switch (position) {
-                    case 0:
-                        showAll();
-                        break;
-                    case 1:
-                        showWeek();
-                        break;
-                    case 2:
-                        showMonth();
-                        break;
-                    default:
-                        showCategory(categories.get(position).getId());
-                        break;
+                if(isAll){
+                    switch (position) {
+                        case 0:
+                            showAll();
+                            break;
+                        case 1:
+                            showWeek();
+                            break;
+                        case 2:
+                            showMonth();
+                            break;
+                        default:
+                            showCategory(categories.get(position).getId());
+                            break;
+                    }
+                }else {
+
                 }
+
             }
 
             @Override
@@ -177,7 +187,6 @@ public class ManagerJobFragment extends Fragment {
         jobViewModel.setData(getContext());
         RecyclerView rcv = getActivity().findViewById(R.id.rcv_display_job);
         rcv.setAdapter(jobAdapter);
-
 
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,7 +306,6 @@ public class ManagerJobFragment extends Fragment {
     private void showMonth() {
         ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
         tabLayout.setVisibility(View.VISIBLE);
-
         int currMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),0);
         int previousMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),-1);
         int nextMonth = CalendarExtension.getMonth(Calendar.getInstance().getTime(),1);
@@ -326,6 +334,18 @@ public class ManagerJobFragment extends Fragment {
 
             }
         }).attach();
+    }
+
+
+    private void showDate() {
+        tabLayout.setVisibility(View.GONE);
+        ViewPagerJobAdapter adapter = new ViewPagerJobAdapter(this);
+        adapter.setJobs(jobViewModel.getJobs());
+        jobFragment = adapter.jobFragment;
+        adapter.createFragment(0);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
+        viewPager.setUserInputEnabled(false);
     }
 
     private void showAll() {

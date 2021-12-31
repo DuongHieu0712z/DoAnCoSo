@@ -213,6 +213,7 @@ public class CalendarExtension {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+        month+=1;
         return "Ngày " + day + "/" + month + "/" + year + " Giờ " +String.format("%02d", hour) + ":" + String.format("%02d", minute);
     }
 
