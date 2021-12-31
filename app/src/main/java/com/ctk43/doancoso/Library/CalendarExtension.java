@@ -7,9 +7,17 @@ import java.util.Date;
 
 public class CalendarExtension {
     private static final Calendar calendar = Calendar.getInstance();
+    // to milisecon
+    public static final int ONE_DAY = 24*60 * 60 *1000 ;
+    public static final int ONE_HOUR = 60 * 60 *1000;
+    public static final int ONE_MINUTE = 60*1000;
 
     public static int getCurrentWeek() {
         return getWeek(Calendar.getInstance().getTime());
+    }
+
+    public static Date currDate(){
+        return Calendar.getInstance().getTime();
     }
 
     public static int getMonth(Date date, int position) {
@@ -18,6 +26,13 @@ public class CalendarExtension {
         calendar.add(Calendar.MONTH, position);
         Date date1 = calendar.getTime();
         return calendar.get(Calendar.MONTH);
+    }
+
+    public static Date getMonthByPosition(Date date, int position) {
+        calendar.setTime(date);
+        calendar.set(Calendar.DATE, 1);
+        calendar.add(Calendar.MONTH, position);
+        return calendar.getTime();
     }
 
     public static int getYear(Date date, int position) {
@@ -30,21 +45,32 @@ public class CalendarExtension {
         calendar.setFirstDayOfWeek(value);
     }
 
+    public static int getDaysInMonth(Date date) {
+        calendar.setTime(date);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
     public static int getWeek(Date date) {
         calendar.setTime(date);
         return calendar.get(Calendar.WEEK_OF_YEAR);
     }
+    public static int getDateOfWeek(Date date) {
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_WEEK)-1;
+    }
 
     @NonNull
-    public static Date getStartDateOfWeek(Date date) {
+    public static Date getStartDateOfWeek(Date date, int position) {
         calendar.setTime(date);
+        calendar.add(Calendar.WEEK_OF_YEAR, position);
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
         return calendar.getTime();
     }
 
     @NonNull
-    public static Date getEndDateOfWeek(Date date) {
+    public static Date getEndDateOfWeek(Date date, int position) {
         calendar.setTime(date);
+        calendar.add(Calendar.WEEK_OF_YEAR, position);
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek() + 6);
         return calendar.getTime();
     }
@@ -82,46 +108,15 @@ public class CalendarExtension {
         return calendar.getTime();
     }
 
-    public static Date getStartTimePreviousWeek() {
-        calendar.setTime(Calendar.getInstance().getTime());
-        calendar.add(Calendar.WEEK_OF_YEAR, -1);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        calendar.setTime(getStartTimeOfWeek(calendar.getTime()));
-        return calendar.getTime();
-    }
 
-    public static Date getEndTimePreviousNextWeek() {
-        calendar.setTime(Calendar.getInstance().getTime());
-        calendar.add(Calendar.WEEK_OF_YEAR, -1);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-        calendar.setTime(getEndTimeOfWeek(calendar.getTime()));
-        return calendar.getTime();
-    }
-
-    public static Date getStartTimeNextWeek() {
-        calendar.setTime(Calendar.getInstance().getTime());
-        calendar.add(Calendar.WEEK_OF_YEAR, 1);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        calendar.setTime(getStartTimeOfWeek(calendar.getTime()));
-        return calendar.getTime();
-    }
-
-    public static Date getEndTimeNextWeek() {
-        calendar.setTime(Calendar.getInstance().getTime());
-        calendar.add(Calendar.WEEK_OF_YEAR, 1);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-        calendar.setTime(getEndTimeOfWeek(calendar.getTime()));
-        return calendar.getTime();
+    @NonNull
+    public static Date getStartTimeOfWeek(Date date, int position) {
+        return getStartTimeOfDate(getStartDateOfWeek(date,position));
     }
 
     @NonNull
-    public static Date getStartTimeOfWeek(Date date) {
-        return getStartTimeOfDate(getStartDateOfWeek(date));
-    }
-
-    @NonNull
-    public static Date getEndTimeOfWeek(Date date) {
-        return getEndDateOfWeek(getStartDateOfWeek(date));
+    public static Date getEndTimeOfWeek(Date date, int position) {
+        return getEndTimeOfDate(getEndDateOfWeek(date,position));
     }
 
     @NonNull
@@ -141,7 +136,7 @@ public class CalendarExtension {
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
         long endtest = calEnd.getTimeInMillis();
-        return ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) /( 1000 * 60 * 60 * 24));
+        return ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) /CalendarExtension.ONE_DAY);
     }
 
     public static long Remaining_hour(Date start, Date end) {
@@ -149,8 +144,8 @@ public class CalendarExtension {
         calStart.setTime(start);
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
-        long time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        return (time / (1000 * 60 * 60));
+        long time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % CalendarExtension.ONE_DAY);
+        return (time / CalendarExtension.ONE_HOUR);
     }
 
     public static long Remaining_minute(Date start, Date end) {
@@ -158,8 +153,8 @@ public class CalendarExtension {
         calStart.setTime(start);
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
-        long time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        return (time / 1000 /60 / 60 /24);
+        long time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % CalendarExtension.ONE_DAY % CalendarExtension.ONE_HOUR);
+        return  time / (1000 *60);
     }
 
 

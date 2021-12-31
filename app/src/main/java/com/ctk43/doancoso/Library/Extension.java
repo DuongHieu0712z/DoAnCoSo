@@ -5,11 +5,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,15 +80,17 @@ public class Extension {
 
     public static int CheckStatus(Job job) {
         if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getStartDate() ) > 0) {
-            return 1;
+            return GeneralData.STATUS_COMING;
         } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() != 1) {
-            return 0;
+            long test= CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate());
+            Log.e("Test", "CheckStatus: "+test);
+            return GeneralData.STATUS_ON_GOING;
         } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() != 1) {
-            return 2;
+            return GeneralData.STATUS_OVER;
         } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() == 1) {
-            return 3;
+            return GeneralData.STATUS_FINISH;
         } else {
-            return 4;
+            return GeneralData.STATUS_FINISH_LATE;
         }
     }
 
@@ -98,16 +102,23 @@ public class Extension {
         return false;
     }
 
-
-
     public static List<Job> getJobsChange(List<Job> jobList) {
-        List<Job> jobs = new ArrayList<Job>();
+        List<Job> jobs = new ArrayList<>();
         for (Job job : jobList) {
             if (statusIsChange(job)) {
                 jobs.add(job);
             }
         }
         return jobs;
+    }
+    public static boolean canCheck(Context context,CheckBox checkBox, Job job){
+        if(job.getStatus() == GeneralData.STATUS_COMING){
+            Toast.makeText(context,R.string.toast_can_not_do_that,Toast.LENGTH_SHORT).show();
+            checkBox.setChecked(false);
+            return false;
+        }
+        return true;
+
     }
 
 

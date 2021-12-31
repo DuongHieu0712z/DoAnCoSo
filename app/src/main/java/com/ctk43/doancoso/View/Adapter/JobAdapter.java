@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
@@ -26,6 +27,7 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.DialogExtension;
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
@@ -33,6 +35,7 @@ import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.io.Serializable;
@@ -92,7 +95,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
             }
         });
         holder.itemJob.setOnClickListener(v -> ViewJobDetail(item));
-        holder.checkBox.setOnClickListener(v -> CheckOrUncheck(holder.checkBox, item));
+        holder.checkBox.setOnClickListener(v->{
+            if (Extension.canCheck(context, holder.checkBox, item))
+                CheckOrUncheck(holder.checkBox, item);
+        });
+
     }
 
     @Override
@@ -136,9 +143,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         context.startActivity(intent);
     }
 
-    void updateStatus(Job Job, boolean isFinish) {
-        jobViewModel.checkOrUncheck(Job, isFinish);
-        new JobFragment();
+    void updateStatus(Job job, boolean isFinish) {
+        jobViewModel.checkOrUncheck(job, isFinish);
+        JobDetailViewModel jobDetailViewModel = new JobDetailViewModel();
+        jobDetailViewModel.setContext(context,job.getId());
+        jobDetailViewModel.syncJob(job);
+        notifyDataSetChanged();
     }
 
     void DialogDeleteJob(Job job) {
@@ -166,6 +176,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
             btn_yes.setOnClickListener(v -> {
                 dialogYesNo.dismiss();
                 updateStatus(job, true);
+                dialogYesNo.dismiss();
             });
             btn_no.setOnClickListener(v -> {
                 checkBox.setChecked(false);
@@ -177,10 +188,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
             Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
             btn_yes.setOnClickListener(v -> {
                 updateStatus(job, false);
+                checkBox.setChecked(false);
                 dialogYesNo.dismiss();
             });
             btn_no.setOnClickListener(v -> {
                 checkBox.setChecked(true);
+                dialogYesNo.cancel();
                 dialogYesNo.dismiss();
             });
         }

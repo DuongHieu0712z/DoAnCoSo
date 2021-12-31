@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.ctk43.doancoso.Database.Repository.JobDetailRepository;
 import com.ctk43.doancoso.Database.Repository.JobRepository;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 
@@ -76,19 +77,18 @@ public class JobDetailViewModel extends ViewModel {
 
     public void syncJob(Job job) {
         double curr = updateProgress();
-        if (job.getProgress() == 1 && job.getStatus() == 2 && curr != 1.0) {
+        if (job.getProgress() == 1 && curr != 1.0) {
             for (JobDetail jobDetail : checkList()
             ) {
                 jobDetail.setStatus(true);
-                jobDetailRepository.update(jobDetail);
             }
-        } else if (job.getProgress() == 0 && job.getProgress() != curr && job.getStatus() != 2) {
+        } else if (job.getProgress() == 0 && job.getProgress() != curr) {
             for (JobDetail jobDetail : checkList()
             ) {
                 jobDetail.setStatus(false);
-                jobDetailRepository.update(jobDetail);
             }
         }
+        update(checkList().toArray(new JobDetail[0]));
     }
 
 }

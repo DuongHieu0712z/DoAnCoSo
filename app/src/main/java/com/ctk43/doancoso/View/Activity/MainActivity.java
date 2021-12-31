@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -131,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        StartService();
         viewPager = findViewById(R.id.view_pager_main);
         bottomMenu = findViewById(R.id.bottom_Menu);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);

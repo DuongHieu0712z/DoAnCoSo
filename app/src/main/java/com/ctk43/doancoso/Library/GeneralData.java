@@ -7,11 +7,13 @@ import com.ctk43.doancoso.R;
 public class GeneralData {
 
 
-    public static final int  STATUS_COMING = 0;
-    public static final int  STATUS_ON_GOING = 1;
-    public static final int  STATUS_FINISH = 2;
-    public static final int  STATUS_OVER = 3;
+    public static final int  STATUS_COMING = 1;
+    public static final int  STATUS_ON_GOING = 0;
+    public static final int  STATUS_FINISH = 3;
+    public static final int  STATUS_OVER = 2;
     public static final int  STATUS_FINISH_LATE = 4;
+
+
 
     public static final int ID_CATEGORY_ALL = 0;
     public static final int ID_CATEGORY_WEEK = -1;

@@ -127,9 +127,9 @@ public class ManagerJobFragment extends Fragment {
         adapterManager = new ViewPagerJobAdapter(this);
         tabLayout.setVisibility(View.VISIBLE);
         adapterManager.setJobs(
-                jobViewModel.getJobsWeek(CalendarExtension.getStartTimePreviousWeek()),
-                jobViewModel.getJobsWeek(Calendar.getInstance().getTime()),
-                jobViewModel.getJobsWeek(CalendarExtension.getStartTimeNextWeek()));
+                jobViewModel.getJobsWeek(CalendarExtension.currDate(),-1),
+                jobViewModel.getJobsWeek(CalendarExtension.currDate(),0),
+                jobViewModel.getJobsWeek(CalendarExtension.currDate(),1));
         viewPager.setAdapter(adapterManager);
         viewPager.setCurrentItem(1);
         viewPager.setUserInputEnabled(false);
