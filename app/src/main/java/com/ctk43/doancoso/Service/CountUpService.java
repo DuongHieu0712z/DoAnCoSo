@@ -29,8 +29,6 @@ import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 
 public class CountUpService extends Service {
-
-
     private NotificationCompat.Builder mBuilder;
     private NotificationManager mNotificationManager;
     public boolean isRuning = false;
@@ -140,7 +138,7 @@ public class CountUpService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.img_finish, getPendingIntent(this, Action.ACTION_COMPLETE));
         remoteViews.setOnClickPendingIntent(R.id.img_cancel_notification, getPendingIntent(this, Action.ACTION_CANCEL));
         mBuilder = new NotificationCompat.Builder(this, Key.CHANNEL_COUNT_UP)
-                .setSmallIcon(R.drawable.ic_delete)
+                .setSmallIcon(R.drawable.ic_notifications)
                 .setContentIntent(pendingIntent)
                 .setSilent(true)
                 .setAutoCancel(true)

@@ -219,7 +219,7 @@ public class CalendarExtension {
 
     @SuppressLint("DefaultLocale")
     public static String formatTime(int seconds, int minutes, int hour) {
-        return String.format("%02d", hour) + " : " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds);
+        return String.format("%02d:%02d:%02d", hour, minutes, seconds);
     }
 
     public static Date getDate(String date) throws ParseException {
