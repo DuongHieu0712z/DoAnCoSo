@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_add_new_job:
                         Intent intent = new Intent(MainActivity.this, AddJobActivity.class);
                         startActivity(intent);
+                        SelectBottomMenuPosition(0);
                         break;
                 }
                 return true;

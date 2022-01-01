@@ -121,6 +121,12 @@
     <string name="category_management">Quản lý danh mục</string>
     <string name="category_title">Cập nhật danh mục</string>
 
+    <!-- notification-->
+    <string name="notification_new">Mới</string>
+    <string name="notification_old">Trước đó</string>
+    <string name="notification_btn_remove">Gỡ thông báo này</string>
+
+
 
 
 </resources>
