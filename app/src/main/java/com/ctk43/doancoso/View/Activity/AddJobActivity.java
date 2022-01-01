@@ -12,7 +12,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Model.Category;
@@ -49,21 +49,18 @@ import java.util.Locale;
 
 
 public class AddJobActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    private int mode = 0;
-    private JobViewModel jobViewModel;
-    private CategoryViewModel categoryViewModel;
     EditText edt_job_name;
     EditText edt_job_des;
     TextView tv_date_start;
     TextView tv_time_start;
     TextView tv_date_end;
     TextView tv_time_end;
-
     TextView tv_title;
-
     Spinner spnCategory;
     Spinner spnPriority;
-
+    private int mode = 0;
+    private JobViewModel jobViewModel;
+    private CategoryViewModel categoryViewModel;
     private Job jobToUpdate;
 
     @Override
@@ -74,32 +71,18 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         jobViewModel.setData(this);
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
+        if (bundle != null) {
             jobToUpdate = (Job) bundle.get("JobToUpdate");
+        }
 
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.setContext(this);
-        try {
-            initView();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        initView();
     }
 
     @SuppressLint("SimpleDateFormat")
-    private void initView() throws ParseException {
+    private void initView() {
         spnCategory = findViewById(R.id.spiner_job_type);
-        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(AddJobActivity.this, spnCategory.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         categoryViewModel.getCategories().observe(this, categories -> {
             ArrayAdapter<Category> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
@@ -107,7 +90,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             spnCategory.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         });
-
 
         ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
         img_add_job_type.setOnClickListener(v -> onOpenDialog());
@@ -129,30 +111,26 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         spnPriority.setAdapter(adapter);
 
         tv_title = findViewById(R.id.tv_title_add_new_job);
-        if(jobToUpdate!= null) tv_title.setText(R.string.update_job);
+        if (jobToUpdate != null) tv_title.setText(R.string.update_job);
 
         Button btn_Add = findViewById(R.id.btn_dlg_add_new_job);
 
         btn_Add.setBackgroundTintMode(null);
-        tv_date_start.setOnClickListener(v -> openDateDialog(0));
+        tv_date_start.setOnClickListener(view -> openDateDialog(0));
         tv_date_end.setOnClickListener(view -> openDateDialog(1));
         tv_time_start.setOnClickListener(view -> openTimeDialog(0));
         tv_time_end.setOnClickListener(view -> openTimeDialog(1));
         btn_Add.setOnClickListener(view -> {
-            if(getInput()){
-                Toast.makeText(AddJobActivity.this,getString(R.string.add_job_sucess),Toast.LENGTH_LONG).show();
+            if (getInput()) {
+                Toast.makeText(AddJobActivity.this, getString(R.string.add_job_sucess), Toast.LENGTH_LONG).show();
             }
         });
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.setContext(this);
-
-        SetDataForJob();
-
-
     }
 
     private void SetDataForJob() throws ParseException {
-        if(jobToUpdate != null){
+        if (jobToUpdate != null) {
             edt_job_name.setText(jobToUpdate.getName());
             edt_job_des.setText(jobToUpdate.getDescription());
             tv_date_start.setText(ParseDate(jobToUpdate.getStartDate()));
@@ -171,7 +149,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                 spnCategory.setAdapter(adapter);
                 spnCategory.post(new Runnable() {
                     public void run() {
-                        spnCategory.setSelection(getSpinerIndex(spnCategory,jobToUpdate.getCategoryId()), true);
+                        spnCategory.setSelection(getSpinerIndex(spnCategory, jobToUpdate.getCategoryId()), true);
                     }
                 });
                 adapter.notifyDataSetChanged();
@@ -182,18 +160,11 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                     spnPriority.setSelection(jobToUpdate.getPriority(), true);
                 }
             });
-
-
-
-
-
-
-
         }
     }
 
 
-    private int getSpinerIndex(Spinner spinner, int id){
+    private int getSpinerIndex(Spinner spinner, int id) {
         //Category category = new Category();
 
         List<Category> categories = categoryViewModel.getCategoryList();
@@ -205,34 +176,35 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
         int index = 0;
 
-        for (int i=0;i<spinner.getCount();i++){
+        for (int i = 0; i < spinner.getCount(); i++) {
             Category category1 = (Category) spinner.getItemAtPosition(i);
-            if (category1.getId() == id){
+            if (category1.getId() == id) {
                 index = i;
             }
         }
         return index;
     }
 
-    private String ParseDate(Date date){
+    private String ParseDate(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        return day+"/"+month+"/"+year;
+        return day + "/" + month + "/" + year;
     }
-    private String ParseTime(Date date){
+
+    private String ParseTime(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int hour = cal.get(Calendar.HOUR);
         int minutes = cal.get(Calendar.MINUTE);
 
         String str = "";
-        if(minutes ==0)
-            str = hour+":0"+minutes;
+        if (minutes == 0)
+            str = hour + ":0" + minutes;
         else
-           str= hour+":"+minutes;
+            str = hour + ":" + minutes;
         return str;
     }
 
@@ -250,11 +222,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, i);
-        c.set(Calendar.MONTH, i1);
-        c.set(Calendar.DAY_OF_MONTH, i2);
-        String result = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
+        Date date = CalendarExtension.getDate(i, i1, i2);
+        String result = CalendarExtension.formatDate(date);
         TextView textView;
         if (mode == 0) {
             textView = findViewById(R.id.tv_dlg_date_start);
@@ -266,7 +235,8 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-        String result = i + ":" + i1;
+        Date time = CalendarExtension.getTime(i, i1);
+        String result = CalendarExtension.formatTime(time);
         TextView textView;
         if (mode == 0) {
             textView = findViewById(R.id.tv_dlg_time_start);
@@ -275,35 +245,36 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         }
         textView.setText(result);
     }
-    public boolean getInput(){
-            String name = edt_job_name.getText().toString();
-            String description = edt_job_des.getText().toString();
-            String startDate = tv_date_start.getText().toString();
-            String startTime = tv_time_start.getText().toString();
-            String endDate = tv_date_end.getText().toString();
-            String endTime = tv_time_end.getText().toString();
-            int priority = spnPriority.getSelectedItemPosition();
-            int category = spnCategory.getSelectedItemPosition()+1;
-            if(Extension.isEmty(this,name ,getString(R.string.job_name),false))
-                return false;
-            if(Extension.isEmty(this,endDate, getString(R.string.date_end),endDate.equals( getString(R.string.day))) )
-                return false;
-            if(Extension.isEmty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
-                return false;
+
+    public boolean getInput() {
+        String name = edt_job_name.getText().toString();
+        String description = edt_job_des.getText().toString();
+        String startDate = tv_date_start.getText().toString();
+        String startTime = tv_time_start.getText().toString();
+        String endDate = tv_date_end.getText().toString();
+        String endTime = tv_time_end.getText().toString();
+        int priority = spnPriority.getSelectedItemPosition();
+        int category = spnCategory.getSelectedItemPosition() + 1;
+        if (Extension.isEmty(this, name, getString(R.string.job_name), false))
+            return false;
+        if (Extension.isEmty(this, endDate, getString(R.string.date_end), endDate.equals(getString(R.string.day))))
+            return false;
+        if (Extension.isEmty(this, endTime, getString(R.string.hour_end), endTime.equals(getString(R.string.hour))))
+            return false;
         try {
-            Date start = new SimpleDateFormat("MM/dd/yyyy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);
-            Date end = new SimpleDateFormat("MM/dd/yyyy hh:mm",Locale.getDefault()).parse(endDate + " " + endTime);
-            if (start ==null || end ==null)
+            Date start = CalendarExtension.getDate(startDate, startTime);
+            Date end = CalendarExtension.getDate(endDate, endTime);
+            if (start == null || end == null)
                 return false;
-            Job job = new Job(category,priority, name, start, end, description);
+            Job job = new Job(category, priority, name, start, end, description);
             job.setStatus(Extension.CheckStatus(job));
+
             jobViewModel.insert(job);
             finish();
-            return  true;
-
+            return true;
         } catch (ParseException e) {
             e.printStackTrace();
-            Toast.makeText(AddJobActivity.this,getString(R.string.add_job_not_sucess),Toast.LENGTH_LONG).show();
+            Toast.makeText(AddJobActivity.this, getString(R.string.add_job_not_sucess), Toast.LENGTH_LONG).show();
             return false;
         }
     }

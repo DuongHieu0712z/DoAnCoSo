@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,44 +24,38 @@ import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.Service.CountUpReceiver;
 import com.ctk43.doancoso.Service.CountUpService;
 import com.ctk43.doancoso.View.Adapter.JobDetailAdapter;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Calendar;
-
 public class JobDetailActivity extends AppCompatActivity {
-
+    public boolean isRunning;
     FloatingActionButton btn_Add_New_Job_detail;
-    private JobDetailViewModel jobDetailViewModel;
     JobViewModel jobViewModel;
     RecyclerView recyclerView;
+    private JobDetailViewModel jobDetailViewModel;
     private Job job;
     private int second;
-    private  ImageView img_finish, img_resumOrPause, img_cancel;
+    private ImageView img_finish, img_resumOrPause, img_cancel;
     private TextView tv_title, tv_desciption, tv_time;
     private RelativeLayout layout_count_up;
     private JobDetail jobDetail;
-    public boolean isRunning;
     private int action;
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
-            if(bundle == null)
+            if (bundle == null)
                 return;
-            else if(Key.SEND_ACTION_TO_ACTIVITY.equals(intent.getAction()))
-            {
+            else if (Key.SEND_ACTION_TO_ACTIVITY.equals(intent.getAction())) {
                 jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL_BY_SERVICE);
                 isRunning = (boolean) bundle.get(Key.SEND_STATUS_OF_COUNT_UP);
                 action = (int) bundle.get(Key.SEND_ACTION);
                 handleLayoutCoutUp(action);
-            }
-            else{
+            } else {
                 int second = (int) bundle.get(Key.SEND_SECOND);
                 getSecond(second);
             }
@@ -74,17 +67,16 @@ public class JobDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_detail);
         initViewModel();
-
     }
 
     private void initViewModel() {
         int jobID = -1;
-        jobID  = getIntent().getIntExtra(Key.JOB_ID,-1);
-        if(jobID == -1){
+        jobID = getIntent().getIntExtra(Key.JOB_ID, -1);
+        if (jobID == -1) {
             Bundle bundle = getIntent().getExtras();
             jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL);
             isRunning = (boolean) bundle.get(Key.IS_RUNNING);
-            jobID =  jobDetail.getJobId();
+            jobID = jobDetail.getJobId();
         }
 
         jobViewModel = new JobViewModel();
@@ -112,7 +104,7 @@ public class JobDetailActivity extends AppCompatActivity {
         layout_count_up = findViewById(R.id.layout_count_up_bottom);
         ProgressBar sb = findViewById(R.id.sb_jt_progress);
         btn_Add_New_Job_detail = findViewById(R.id.add_new_job_detail);
-        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,jobViewModel);
+        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel, jobViewModel);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
             adapter.setData(jobDetails);
             UpdateJob();
@@ -121,24 +113,25 @@ public class JobDetailActivity extends AppCompatActivity {
             tv_job_des.setText(job.getDescription());
             tv_job_start.setText(CalendarExtension.dateToString(job.getStartDate()));
             tv_job_end.setText(CalendarExtension.dateToString(job.getEndDate()));
-            setProgress(tv_job_progress,sb,job);
+            setProgress(tv_job_progress, sb, job);
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
         });
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
-        if(isRunning){
+        if (isRunning) {
             start();
         }
     }
 
-    private void UpdateJob(){
-        if(job.getProgress() == jobDetailViewModel.updateProgress())
+    private void UpdateJob() {
+        if (job.getProgress() == jobDetailViewModel.updateProgress())
             return;
-        if(jobDetailViewModel.count()==0)
+        if (jobDetailViewModel.count() == 0)
             return;
         job.setProgress(jobDetailViewModel.updateProgress());
         job.setStatus(Extension.CheckStatus(job));
         jobViewModel.update(job);
     }
+
     private void AddJobDetail() {
         Intent intent = new Intent(getApplicationContext(), AddJobDetailActivity.class);
         intent.putExtra("jobId", job.getId());
@@ -151,37 +144,40 @@ public class JobDetailActivity extends AppCompatActivity {
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
     }
+
     private void handleLayoutCoutUp(int action) {
-            switch (action) {
-                case Action.ACTION_COMPLETE:
-                    complete();
-                    break;
-                case Action.ACTION_PAUSE:
-                    pause();
-                    break;
-                case Action.ACTION_RESUME:
-                    resume();
-                    break;
-                case Action.ACTION_CANCEL:
-                    cancel();
-                    break;
-                case Action.ACTION_START:
-                    start();
-                    break;
-            }
+        switch (action) {
+            case Action.ACTION_COMPLETE:
+                complete();
+                break;
+            case Action.ACTION_PAUSE:
+                pause();
+                break;
+            case Action.ACTION_RESUME:
+                resume();
+                break;
+            case Action.ACTION_CANCEL:
+                cancel();
+                break;
+            case Action.ACTION_START:
+                start();
+                break;
+        }
     }
 
-    private void registerReceiver(){
+    private void registerReceiver() {
         IntentFilter filter = new IntentFilter(Key.SEND_ACTION_TO_ACTIVITY);
         filter.addAction(Key.SEND_SECOND_BY_SERVICE);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
     }
-    private void start(){
+
+    private void start() {
         layout_count_up.setVisibility(View.VISIBLE);
         showInforCountUp();
         setStatusButtonPlayORPause();
     }
-    private void cancel(){
+
+    private void cancel() {
         layout_count_up.setVisibility(View.GONE);
     }
 
@@ -203,45 +199,47 @@ public class JobDetailActivity extends AppCompatActivity {
         UpdateJobDetail(true);
     }
 
-    private void UpdateJobDetail(boolean isFinish){
-            jobDetail.setStatus(isFinish);
-            jobDetail.setActualCompletedTime(second);
-            jobDetailViewModel.update(jobDetail);
+    private void UpdateJobDetail(boolean isFinish) {
+        jobDetail.setStatus(isFinish);
+        jobDetail.setActualCompletedTime(second);
+        jobDetailViewModel.update(jobDetail);
     }
 
-    private void showInforCountUp(){
-        if(jobDetail == null)
+    private void showInforCountUp() {
+        if (jobDetail == null)
             return;
         tv_title.setText(jobDetail.getName());
         tv_desciption.setText(jobDetail.getDescription());
         img_resumOrPause.setOnClickListener(v -> {
-            if(isRunning){
+            if (isRunning) {
                 SendActionToService(Action.ACTION_PAUSE);
                 pause();
-            }else{
+            } else {
                 SendActionToService(Action.ACTION_RESUME);
                 resume();
             }
         });
-        img_cancel.setOnClickListener(v->{
+        img_cancel.setOnClickListener(v -> {
             SendActionToService(Action.ACTION_CANCEL);
         });
-        img_finish.setOnClickListener(v->{
+        img_finish.setOnClickListener(v -> {
             SendActionToService(Action.ACTION_COMPLETE);
             complete();
         });
     }
-    private void setStatusButtonPlayORPause(){
-        if(isRunning)
+
+    private void setStatusButtonPlayORPause() {
+        if (isRunning)
             img_resumOrPause.setImageResource(R.drawable.ic_pause);
         else
             img_resumOrPause.setImageResource(R.drawable.ic_continue);
     }
-    private void SendActionToService(int action){
-        Intent intent = new Intent(this,CountUpService.class);
+
+    private void SendActionToService(int action) {
+        Intent intent = new Intent(this, CountUpService.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY,jobDetail);
-        bundle.putInt(Key.SEND_ACTION,action);
+        bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY, jobDetail);
+        bundle.putInt(Key.SEND_ACTION, action);
         intent.putExtras(bundle);
         startService(intent);
     }
@@ -251,9 +249,10 @@ public class JobDetailActivity extends AppCompatActivity {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
     }
-    private void getSecond(int second){
+
+    private void getSecond(int second) {
         this.second = second;
-        tv_time.setText(CalendarExtension.getTimeText(second) );
+        tv_time.setText(CalendarExtension.getTimeText(second));
     }
 
     @Override

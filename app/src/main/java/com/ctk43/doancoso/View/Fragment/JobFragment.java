@@ -53,8 +53,6 @@ public class JobFragment extends Fragment {
         initViews(view);
     }
 
-
-
     private void initViews(View v) {
         rcv = v.findViewById(R.id.rcv_display_job);
         jobViewModel.setData(mContext);
