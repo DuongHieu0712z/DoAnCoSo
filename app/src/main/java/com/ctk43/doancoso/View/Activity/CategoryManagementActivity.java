@@ -73,6 +73,5 @@ public class CategoryManagementActivity extends AppCompatActivity {
 
         rcv_categories.setAdapter(adapter);
 
-
     }
 }

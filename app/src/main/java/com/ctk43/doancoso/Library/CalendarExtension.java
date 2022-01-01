@@ -132,10 +132,8 @@ public class CalendarExtension {
     public static long Remaining_day(Date start, Date end) {
         Calendar calStart = Calendar.getInstance();
         calStart.setTime(start);
-        long starttest = calStart.getTimeInMillis();
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
-        long endtest = calEnd.getTimeInMillis();
         return ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) /CalendarExtension.ONE_DAY);
     }
 
@@ -157,6 +155,13 @@ public class CalendarExtension {
         return  time / (1000 *60);
     }
 
+    public static long timeRemaining(Date start, Date end){
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(start);
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(end);
+        return (calEnd.getTimeInMillis() - calStart.getTimeInMillis()) /1000;
+    }
 
     public static String getTime(long day, long hour, long minute, boolean negative) {
         if (negative) {

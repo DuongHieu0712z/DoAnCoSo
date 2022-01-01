@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
@@ -107,10 +108,6 @@ public class ProfleFragment extends Fragment {
             }
         });
 
-
-
-
-
         //Statistical(jobViewModel);
 
     }
@@ -119,20 +116,18 @@ public class ProfleFragment extends Fragment {
         tv_month_year.setText(str);
     }
     private void Statistical(JobViewModel jobViewModel, int month, int year){
-        tv_in_comming.setText(String.valueOf( jobViewModel.countStatusMonth(0, month-1, year)));
-        tv_on_going.setText(String.valueOf( jobViewModel.countStatusMonth(1, month-1, year)));
-        tv_complete.setText(String.valueOf( jobViewModel.countStatusMonth(2, month-1, year)));
-        tv_over.setText(String.valueOf( jobViewModel.countStatusMonth(3, month-1, year)));
-        tv_over_complete.setText(String.valueOf( jobViewModel.countStatusMonth(4, month-1, year)));
+        tv_in_comming.setText(String.valueOf( jobViewModel.countStatusMonth(GeneralData.STATUS_COMING, month-1, year)));
+        tv_on_going.setText(String.valueOf( jobViewModel.countStatusMonth(GeneralData.STATUS_ON_GOING, month-1, year)));
+        tv_complete.setText(String.valueOf( jobViewModel.countStatusMonth(GeneralData.STATUS_FINISH, month-1, year)));
+        tv_over.setText(String.valueOf( jobViewModel.countStatusMonth(GeneralData.STATUS_OVER, month-1, year)));
+        tv_over_complete.setText(String.valueOf( jobViewModel.countStatusMonth(GeneralData.STATUS_FINISH_LATE, month-1, year)));
     }
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
     @Override
     public void onStop() {
         super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 }

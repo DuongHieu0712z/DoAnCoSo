@@ -18,12 +18,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
+import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
+import com.ctk43.doancoso.View.Fragment.ManagerJobFragment;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
@@ -141,6 +144,13 @@ public class Extension {
         String prgString = progress + " %";
         tv_progress.setText(prgString);
         progressBar.setProgress(progress);
+    }
+    public static void filterSearch(ViewPager2 viewPager, ViewPagerAdapter viewPagerAdapter , String text){
+        if(viewPager.getCurrentItem() == 0){
+            ManagerJobFragment managerJobFragment = (ManagerJobFragment) viewPagerAdapter.getHashMap().get(0);
+            JobAdapter jobAdapter = managerJobFragment.getJobFragment().getAdapter();
+            jobAdapter.getFilter().filter(text);
+        }
     }
 
 }

@@ -1,13 +1,18 @@
 package com.ctk43.doancoso.View.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.R;
@@ -18,7 +23,7 @@ import java.util.Calendar;
 public class CalendarViewHolder extends RecyclerView.ViewHolder{
 
     public final TextView dayOfMonth;
-    public final ConstraintLayout cl_cell_calendar;
+    public final LinearLayout cl_cell_calendar;
     public int _month;
     public int _year;
     public int _day;
@@ -28,11 +33,9 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder{
         cl_cell_calendar = itemView.findViewById(R.id.cell_calendar);
         cl_cell_calendar.setBackgroundColor(Color.parseColor("#f0ebe5"));
     }
-    @SuppressLint("ResourceAsColor")
-    public void IsHaveJobsDay(){
-        cl_cell_calendar.setBackgroundColor(Color.parseColor("#FF5722"));
-    }
-    public void IsCurrentDay(int month, int year){
+
+
+    public void IsCurrentDay(int month, int year, Context context){
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_MONTH);
         int m = cal.get(Calendar.MONTH);
@@ -47,6 +50,8 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder{
             {
                 dayOfMonth.setTextColor(Color.BLUE);
                 cl_cell_calendar.setBackgroundResource(R.drawable.bg_cell_calendar);
+                TextView textView = itemView.findViewById(R.id.cellDayText);
+                textView.setTextSize(25);
             }
         }
     }

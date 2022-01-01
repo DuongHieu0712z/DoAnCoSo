@@ -20,6 +20,7 @@ import android.widget.Spinner;
 
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.DialogExtension;
+import com.ctk43.doancoso.Library.KeyFragment;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
@@ -50,8 +51,6 @@ public class ManagerJobFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         initViewModel();
-
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_manager_job, container, false);
         InnitView(view);
         tabLayout = view.findViewById(R.id.tab_layout_job);
@@ -79,7 +78,6 @@ public class ManagerJobFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,categories) ;
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_category.setAdapter(adapter);
-
         spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -107,7 +105,7 @@ public class ManagerJobFragment extends Fragment {
         img_btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jobFragment = (JobFragment) adapterManager.getHashMap().get(viewPager.getCurrentItem());
+                getJobFragment();
                 DialogExtension.showDialogFilterJob(getContext(),false,jobFragment.getAdapter());
             }
         });
@@ -120,7 +118,9 @@ public class ManagerJobFragment extends Fragment {
             }
         });
     }
-
+    public JobFragment getJobFragment(){
+        return jobFragment = (JobFragment) adapterManager.getHashMap().get(viewPager.getCurrentItem());
+    }
 
 
     private void showWeek() {
@@ -135,13 +135,13 @@ public class ManagerJobFragment extends Fragment {
         viewPager.setUserInputEnabled(false);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
-                case 0:
+                case KeyFragment.MANAGE_JOBS_PREVIOUS:
                     tab.setText(R.string.week_ago);
                     break;
-                case 1:
+                case KeyFragment.MANAGE_JOBS_CURR:
                     tab.setText(R.string.week_current);
                     break;
-                case 2:
+                case KeyFragment.MANAGE_JOBS_NEXT:
                     tab.setText(R.string.next_week);
                     break;
             }
@@ -174,13 +174,13 @@ public class ManagerJobFragment extends Fragment {
         viewPager.setUserInputEnabled(false);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
-                case 0:
+                case KeyFragment.MANAGE_JOBS_PREVIOUS:
                     tab.setText(getContext().getString(R.string.month)+" "+(previousMonth+1));
                     break;
-                case 1:
+                case KeyFragment.MANAGE_JOBS_CURR:
                     tab.setText(getContext().getString(R.string.month)+" "+(currMonth+1));
                     break;
-                case 2:
+                case KeyFragment.MANAGE_JOBS_NEXT:
                     tab.setText(getContext().getString(R.string.month)+" "+(nextMonth+1));
                     break;
 
@@ -221,13 +221,11 @@ public class ManagerJobFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
 }

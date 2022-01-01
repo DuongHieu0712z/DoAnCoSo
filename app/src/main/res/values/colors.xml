@@ -32,6 +32,11 @@
     <color name="over">#FF0000</color>
     <color name="over_complete">#FF5722</color>
 
+    <!--HaveJob-->
+    <color name="Have_job">#DF5B31</color>
+    <color name="Have_job_pass">#707070</color>
+
+
     <color name="splat_text_color_lighter">#eece83</color>
     <color name="Transparent">#00000000</color>
     <color name="Black_Transparent">#99000000</color>
