@@ -170,6 +170,14 @@ public class CalendarExtension {
         return time / (1000 * 60);
     }
 
+    public static long timeRemaining(Date start, Date end) {
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(start);
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(end);
+        return((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) /1000);
+    }
+
 
     public static String getTime(long day, long hour, long minute, boolean negative) {
         if (negative) {
