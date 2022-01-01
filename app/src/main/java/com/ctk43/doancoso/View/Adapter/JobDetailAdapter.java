@@ -4,14 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.content.Intent;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,10 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Action;
+import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
-import com.ctk43.doancoso.Model.Job;
-import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
@@ -48,10 +46,10 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
     private Job job;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobDetailAdapter(Context mContext, JobDetailViewModel jobDetailViewModel, JobViewModel jobViewModel) {
+    public JobDetailAdapter(Context mContext, JobDetailViewModel jobDetailViewModel,Job job) {
         this.jobDetailViewModel = jobDetailViewModel;
-        this.jobViewModel = jobViewModel;
         this.mContext = mContext;
+        this.job = job;
     }
 
     public void setData(List<JobDetail> jobDetails) {
@@ -68,10 +66,8 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
     public void onBindViewHolder(@NonNull JobDetailHolder holder, int position) {
         JobDetail item = listJobDetail.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
-        String jobDetailName = item.getName();
-        if(jobDetailName.length() > 30)
-            jobDetailName = jobDetailName.substring(0, 35) +"...";
-        holder.tvJdName.setText(jobDetailName);
+
+        holder.tvJdName.setText(item.getName());
         holder.tvJdDes.setText(item.getDescription());
         holder.tvEstimatedTime.setText(String.valueOf(item.getEstimatedCompletedTime()));
         holder.tvActualTime.setText(String.valueOf(item.getActualCompletedTime()));
@@ -81,15 +77,18 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
         holder.checkBox.setChecked(item.getStatus());
         holder.jobDetailItem.setOnClickListener(v -> {
-            if (holder.checkBox.isChecked()) {
-                DialogUnCheckJobDetail(item, holder.checkBox);
+            if (Extension.canCheck(mContext, holder.checkBox, job)) {
+                if (holder.checkBox.isChecked()) {
+                    DialogUnCheckJobDetail(item, holder.checkBox);
+                }
+                if (!holder.checkBox.isChecked())
+                    JobClock(item);
             }
-            if (!holder.checkBox.isChecked())
-                JobClock(item);
-
         });
+
         holder.checkBox.setOnClickListener(v -> {
-            IsFinish(holder.checkBox, item);
+            if (Extension.canCheck(mContext, holder.checkBox, job))
+                 IsFinish(holder.checkBox, item);
         });
         holder.swipeRevealLayout.setOnClickListener(v -> {
             JobClock(item);
@@ -137,7 +136,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
     void DialogDeleteJobDetail(JobDetail jobDetail) {
         final Dialog dialogYesNo = new Dialog(mContext);
-        Extension.dialogYesNo(dialogYesNo, mContext.getString(R.string.confirm_delete), mContext.getString(R.string.message_delete_all_job_detail));
+        DialogExtension.dialogYesNo(dialogYesNo, mContext.getString(R.string.confirm_delete), mContext.getString(R.string.message_delete_all_job_detail));
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
         Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
         dialogYesNo.setCancelable(true);
@@ -151,7 +150,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
     void DialogUnCheckJobDetail(JobDetail jobDetail, CheckBox checkBox) {
         final Dialog dialogYesNo = new Dialog(mContext);
-        Extension.dialogYesNo(dialogYesNo, mContext.getString(R.string.confirm_delete), mContext.getString(R.string.message_uncheck_job_detail));
+        DialogExtension.dialogYesNo(dialogYesNo, mContext.getString(R.string.confirm_delete), mContext.getString(R.string.message_uncheck_job_detail));
         Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
         Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
         dialogYesNo.setCancelable(true);
@@ -159,6 +158,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             jobDetail.setStatus(false);
             jobDetailViewModel.update(jobDetail);
             jobDetail.setActualCompletedTime(0);
+            notifyDataSetChanged();
             dialogYesNo.dismiss();
         });
         btn_no.setOnClickListener(v -> {

@@ -3,6 +3,7 @@ package com.ctk43.doancoso.ViewModel;
 import android.content.Context;
 import android.content.Intent;
 import android.security.keystore.StrongBoxUnavailableException;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -79,8 +80,10 @@ public class JobViewModel extends ViewModel {
         return jobRepository.getListAboutTime(CalendarExtension.getStartTimeOfMonth(month,year),CalendarExtension.getEndTimeOfMonth(month,year));
     }
 
-    public LiveData<List<Job>> getJobsWeek(Date date){
-        return jobRepository.getJobAboutTime(CalendarExtension.getStartTimeOfWeek(date),CalendarExtension.getEndTimeOfWeek(date));
+    public LiveData<List<Job>> getJobsWeek(Date date,int position){
+        Date start = CalendarExtension.getStartTimeOfWeek(date,position);
+        Date end = CalendarExtension.getEndTimeOfWeek(date,position);
+        return jobRepository.getJobAboutTime(CalendarExtension.getStartTimeOfWeek(date,position),CalendarExtension.getEndTimeOfWeek(date,position));
     }
 
     public List<Job> getJobsByCategory(int id){
@@ -114,7 +117,7 @@ public class JobViewModel extends ViewModel {
         update(job);
     }
 
-    private void startService(){
+    public void startService(){
         Intent intent = new Intent(context, NotificationService.class);
         context.startService(intent);
     }

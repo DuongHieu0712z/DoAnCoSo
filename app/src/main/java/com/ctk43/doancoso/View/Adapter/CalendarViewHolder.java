@@ -43,7 +43,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder{
 
         if(dayOfMonth.getText() !="")
         {
-            if(Integer.parseInt(dayOfMonth.getText().toString()) == day && (m+1)==month && y==year)
+            if(Integer.parseInt(dayOfMonth.getText().toString()) == day && (m)==month && y==year)
             {
                 dayOfMonth.setTextColor(Color.BLUE);
                 cl_cell_calendar.setBackgroundResource(R.drawable.bg_cell_calendar);

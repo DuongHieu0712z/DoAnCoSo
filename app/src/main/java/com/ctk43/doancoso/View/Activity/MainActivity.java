@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -85,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 JobAdapter jobAdapter = new JobAdapter(MainActivity.this, jobViewModel);
                 jobViewModel.setData(MainActivity.this);
                 RecyclerView rcv = findViewById(R.id.rcv_display_job);
-
-
                 jobViewModel.getJobs().observe(MainActivity.this, jobs -> {
                     jobAdapter.setJob(jobs);
                     rcv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -140,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        StartService();
         viewPager = findViewById(R.id.view_pager_main);
         bottomMenu = findViewById(R.id.bottom_Menu);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);

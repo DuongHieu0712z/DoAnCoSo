@@ -13,11 +13,14 @@
     <string name="setting">Cài đặt</string>
     <string name="account">Cá nhân</string>
     <string name="add">Thêm</string>
+    <string name="save">Lưu</string>
     <string name="add_job">Thêm công việc</string>
     <string name="update_job">Cập nhật công việc</string>
     <string name="update_job_detail">Cập nhật chi tiết công việc</string>
     <string name="add_job_sucess">Thêm công việc thành công</string>
     <string name="add_job_not_sucess">Không thể thêm công việc</string>
+    <string name="update_job_sucess">Cập nhật công việc thành công</string>
+    <string name="update_job_not_sucess">Không thể cập nhật công việc</string>
     <string name="add_job_detail">Thêm chi tiết công việc</string>
 
     <!--Job-->
@@ -88,6 +91,8 @@
     <string name="week_current">Tuần này</string>
     <string name="week_ago">Tuần trước</string>
     <string name="next_week">Tuần sau</string>
+    <!--Toast-->
+    <string name="toast_can_not_do_that">Không thể đánh dấu hoàn thành vì công việc chưa bắt đầu</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
