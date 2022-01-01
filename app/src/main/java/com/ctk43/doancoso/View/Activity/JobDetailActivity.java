@@ -169,8 +169,6 @@ public class JobDetailActivity extends AppCompatActivity {
         jobViewModel.update(job);
     }
 
-
-
     private void onOpenUpdateJobActivity(Job job){
         Intent intent = new Intent(JobDetailActivity.this, AddJobActivity.class);
         Bundle bundle = new Bundle();

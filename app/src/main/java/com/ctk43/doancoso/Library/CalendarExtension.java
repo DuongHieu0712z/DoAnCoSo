@@ -276,7 +276,7 @@ public class CalendarExtension {
         return month == calendar.getActualMinimum(Calendar.MONTH);
     }
 
-    public static boolean isDeccember(int month) {
+    public static boolean isDecember(int month) {
         return month == calendar.getActualMinimum(Calendar.MONTH);
     }
 }

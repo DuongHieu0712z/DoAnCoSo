@@ -5,11 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +19,6 @@ import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerJobAdapter;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
@@ -31,7 +27,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -159,7 +154,7 @@ public class ManagerJobFragment extends Fragment {
         int next =0;
         if(CalendarExtension.isJanuary(currMonth))
             previous = -1;
-        else if(CalendarExtension.isDeccember(currMonth)){
+        else if(CalendarExtension.isDecember(currMonth)){
             next =1;
         }
         adapterManager.setJobs(
