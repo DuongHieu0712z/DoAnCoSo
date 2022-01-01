@@ -8,12 +8,14 @@
     android:background="@drawable/bg_job_titlte">
 
     <ScrollView
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_jt_job_name">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
             android:id="@+id/tv_jt_description"
@@ -33,12 +35,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="25dp">
+        <CheckBox
+            android:id="@+id/chk_job_title_finish_job"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:buttonTint="@color/green_02"
+            android:scaleX="1.5"
+            android:scaleY="1.5" />
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="15dp"
-            android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="0.75"
             android:orientation="vertical">
 
             <TextView
@@ -62,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
@@ -83,52 +93,87 @@
                 android:textColor="@color/orange"
                 android:textSize="14sp" />
         </LinearLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp">
-
-            <ProgressBar
-                android:id="@+id/sb_jt_progress"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:indeterminateOnly="false"
-                android:indeterminateTint="@color/green"
-                android:max="100"
-                android:min="0"
-                android:progress="60"
-                android:progressDrawable="@drawable/prg_circle" />
-
-            <TextView
-                android:id="@+id/tv_jt_prg"
+            android:orientation="vertical"
+            >
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="100%"
-                android:textColor="@color/green_03"
+                >
+
+                <ProgressBar
+                    android:id="@+id/sb_jt_progress"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:indeterminateOnly="false"
+                    android:indeterminateTint="@color/green"
+                    android:max="100"
+                    android:min="0"
+                    android:progress="60"
+                    android:progressDrawable="@drawable/prg_circle" />
+
+                <TextView
+                    android:id="@+id/tv_jt_prg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="100%"
+                    android:textColor="@color/green_03"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/job_title_status"
+                android:text="Status"
+                android:gravity="center_horizontal"
                 android:textSize="12sp"
-                android:textStyle="bold" />
-        </FrameLayout>
+                android:textColor="@color/green_03"
+                android:layout_gravity="bottom"/>
+        </LinearLayout>
+
     </LinearLayout>
 
-    <TextView
-        android:layout_marginTop="15dp"
-        android:id="@+id/tv_jt_job_name"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="7dp"
-        android:fontFamily="@font/playfair_regular"
-        android:text="Tên Công Việc"
-        android:textAlignment="center"
-        android:textColor="@color/text_title_color"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="15dp"
+        android:weightSum="1">
+        <ImageView
+            android:id="@+id/job_title_priority"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_baseline_star_priority_important"/>
+        <TextView
+            android:id="@+id/tv_jt_job_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/playfair_regular"
+            android:text="Tên Công Việc"
+            android:textAlignment="center"
+            android:textColor="@color/text_title_color"
+            android:textSize="18sp"
+             />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:layout_marginRight="25dp"
+            android:id="@+id/job_title_edit"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

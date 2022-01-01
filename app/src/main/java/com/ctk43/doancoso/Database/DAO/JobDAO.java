@@ -51,11 +51,11 @@ public interface JobDAO {
     int getRowCountByStatusMonth(int status,Date start,Date end);
 
 
-    @Query("SELECT * FROM JOB WHERE EndDate >:start AND EndDate<:end ORDER BY Status,Priority DESC ")
+    @Query("SELECT * FROM JOB WHERE EndDate >=:start AND EndDate<=:end ORDER BY Status,Priority DESC ")
     @TypeConverters(DateConvertor.class)
     LiveData<List<Job>> getJobAboutTimeEndDate(Date start,Date end);
 
-    @Query("SELECT * FROM JOB WHERE EndDate >:start AND EndDate<:end ORDER BY Status,Priority DESC ")
+    @Query("SELECT * FROM JOB WHERE EndDate >=:start AND EndDate<=:end ORDER BY Status,Priority DESC ")
     @TypeConverters(DateConvertor.class)
     List<Job> getListJobAboutTimeEndDate(Date start,Date end);
 

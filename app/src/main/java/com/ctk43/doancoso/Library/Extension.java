@@ -5,17 +5,27 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Adapter.JobAdapter;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
+import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,67 +34,8 @@ import java.util.List;
 
 
 public class Extension {
-    public static Dialog dialogYesNo(Dialog dialog, String title, String content) {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_yes_no);
-        Window window = dialog.getWindow();
-        if (window == null) {
-            return null;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams windownAtrributes = window.getAttributes();
-        windownAtrributes.gravity = Gravity.CENTER;
-        window.setAttributes(windownAtrributes);
-        TextView textView = dialog.findViewById(R.id.txt_dialog_string);
-        textView.setText(title);
-        Button btnYes = dialog.findViewById(R.id.btn_dialog_yes);
-        btnYes.setBackgroundTintMode(null);
-        Button btnNo = dialog.findViewById(R.id.btn_dialog_no);
-        btnNo.setBackgroundTintMode(null);
-        TextView tv_des = dialog.findViewById(R.id.tv_dialog_description);
-        tv_des.setText(content);
-        return dialog;
-    }
 
-    public static boolean isEmpty(Context context, String value, String name, boolean isDefault) {
-        if (value.isEmpty() || isDefault) {
-            Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return false;
-    }
-
-    public static int getWeek(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar.get(Calendar.WEEK_OF_YEAR);
-    }
-
-    public static int getCurrentWeek() {
-        return getWeek(Calendar.getInstance().getTime());
-    }
-
-    public static int Last_Week(int week) {
-        if (week == 1)
-            return 52;
-        return week - 1;
-    }
-
-    public static int Next_Week(int week) {
-        if (week == 52)
-            return 1;
-        return week + 1;
-    }
-
-    public static Date StartOfWeek(Date date) {
-        Calendar Cal = Calendar.getInstance();
-        Cal.setTime(date);
-        Cal.setFirstDayOfWeek(Calendar.SUNDAY);
-        return Cal.getTime();
-    }
-
-    public static boolean isEmty(Context context, String value, String name, boolean isdefaut) {
+    public static boolean isEmpty(Context context, String value, String name, boolean isdefaut) {
         if (value.isEmpty() || isdefaut) {
             Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
             return true;
@@ -94,15 +45,16 @@ public class Extension {
 
     public static int CheckStatus(Job job) {
         if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getStartDate() ) > 0) {
-            return 1;
+            return GeneralData.STATUS_COMING;
         } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() != 1) {
-            return 0;
+            long test= CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate());
+            return GeneralData.STATUS_ON_GOING;
         } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() != 1) {
-            return 2;
+            return GeneralData.STATUS_OVER;
         } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() == 1) {
-            return 3;
+            return GeneralData.STATUS_FINISH;
         } else {
-            return 4;
+            return GeneralData.STATUS_FINISH_LATE;
         }
     }
 
@@ -114,10 +66,8 @@ public class Extension {
         return false;
     }
 
-
-
     public static List<Job> getJobsChange(List<Job> jobList) {
-        List<Job> jobs = new ArrayList<Job>();
+        List<Job> jobs = new ArrayList<>();
         for (Job job : jobList) {
             if (statusIsChange(job)) {
                 jobs.add(job);
@@ -125,6 +75,72 @@ public class Extension {
         }
         return jobs;
     }
+    public static boolean canCheck(Context context,CheckBox checkBox, Job job){
+        if(job.getStatus() == GeneralData.STATUS_COMING){
+            Toast.makeText(context,R.string.toast_can_not_do_that,Toast.LENGTH_SHORT).show();
+            checkBox.setChecked(false);
+            return true;
+        }
+        return true;
+    }
 
+   public static void CheckOrUncheckJob(Context context,CheckBox checkBox,Job job,TextView tv_progress, ProgressBar progressBar) {
+        Dialog dialogYesNo = new Dialog(context);
+        String confirm = context.getString(R.string.confirm);
+        dialogYesNo.setCancelable(false);
+        if (checkBox.isChecked()) {
+            DialogExtension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_finish_all_job_detail));
+            Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+            Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+            btn_yes.setOnClickListener(v -> {
+                updateStatus(context,job, true);
+                checkBox.setChecked(Extension.isFinishJob(job));
+                if(tv_progress !=null && progressBar !=null)
+                    setProgress(tv_progress,progressBar,job);
+                dialogYesNo.dismiss();
+            });
+            btn_no.setOnClickListener(v -> {
+                checkBox.setChecked(Extension.isFinishJob(job));
+                dialogYesNo.dismiss();
+            });
+        } else {
+            DialogExtension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_delete_progress));
+            Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+            Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+            btn_yes.setOnClickListener(v -> {
+                updateStatus(context,job, false);
+                checkBox.setChecked(Extension.isFinishJob(job));
+                if(tv_progress !=null && progressBar !=null)
+                setProgress(tv_progress,progressBar,job);
+                dialogYesNo.dismiss();
+            });
+            btn_no.setOnClickListener(v -> {
+                checkBox.setChecked(Extension.isFinishJob(job));
+                dialogYesNo.cancel();
+                dialogYesNo.dismiss();
+            });
+        }
+        dialogYesNo.show();
+    }
+
+    public static void updateStatus(Context context, Job job, boolean isFinish) {
+        JobViewModel jobViewModel = new JobViewModel();
+        jobViewModel.setData(context);
+        jobViewModel.checkOrUncheck(job, isFinish);
+        JobDetailViewModel jobDetailViewModel = new JobDetailViewModel();
+        jobDetailViewModel.setContext(context,job.getId());
+        jobDetailViewModel.syncJob(job);
+    }
+    public static boolean isFinishJob(Job job){
+        if(job.getStatus() == GeneralData.STATUS_FINISH || job.getStatus() == GeneralData.STATUS_FINISH_LATE)
+            return true;
+        return false;
+    }
+    public static void setProgress(TextView tv_progress, ProgressBar progressBar, Job job) {
+        int progress = (int) (job.getProgress() * 100.0);
+        String prgString = progress + " %";
+        tv_progress.setText(prgString);
+        progressBar.setProgress(progress);
+    }
 
 }

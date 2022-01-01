@@ -19,6 +19,9 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder{
 
     public final TextView dayOfMonth;
     public final ConstraintLayout cl_cell_calendar;
+    public int _month;
+    public int _year;
+    public int _day;
     public CalendarViewHolder(@NonNull View itemView) {
         super(itemView);
         dayOfMonth = itemView.findViewById(R.id.cellDayText);
@@ -29,12 +32,18 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder{
     public void IsHaveJobsDay(){
         cl_cell_calendar.setBackgroundColor(Color.parseColor("#FF5722"));
     }
-    public void IsCurrentDay(){
+    public void IsCurrentDay(int month, int year){
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_MONTH);
+        int m = cal.get(Calendar.MONTH);
+        int y = cal.get(Calendar.YEAR);
+        _month = m;
+        _year =y;
+        _day =day;
+
         if(dayOfMonth.getText() !="")
         {
-            if(Integer.parseInt(dayOfMonth.getText().toString()) == day)
+            if(Integer.parseInt(dayOfMonth.getText().toString()) == day && (m)==month && y==year)
             {
                 dayOfMonth.setTextColor(Color.BLUE);
                 cl_cell_calendar.setBackgroundResource(R.drawable.bg_cell_calendar);

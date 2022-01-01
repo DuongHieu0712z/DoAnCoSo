@@ -35,6 +35,10 @@
             android:exported="true"
             android:label="@string/title_activity_job_deltail"
             android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
+        <activity android:name=".View.Activity.CategoryManagementActivity"
+            />
+        <activity android:name=".View.Activity.NotificationManagementActivity" />
+
         <service android:name=".Service.CountUpService"/>
         <service android:name=".Service.NotificationService"/>
         <receiver android:name=".Service.CountUpReceiver"/>

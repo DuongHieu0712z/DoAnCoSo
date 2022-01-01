@@ -22,6 +22,10 @@ public class CategoryRepository {
         categories = categoryDAO.getAll();
     }
 
+    public Category get(int id) {
+        return categoryDAO.get(id);
+    }
+
     public LiveData<List<Category>> getCategories() {
         return categories;
     }
