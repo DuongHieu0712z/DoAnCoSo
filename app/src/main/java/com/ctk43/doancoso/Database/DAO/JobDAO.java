@@ -33,6 +33,32 @@ public interface JobDAO {
     @Query("SELECT * FROM Job WHERE CategoryID = :categoryId")
     LiveData<List<Job>> getByCategoryId(int categoryId);
 
+    @Query("SELECT * FROM JOB WHERE Status = :status")
+    List<Job> getJobByStatus(int status);
+
+    @Query("SELECT * FROM JOB WHERE priority = :priority")
+    List<Job> getJobByPriority(int priority);
+
+    @Query("SELECT * FROM JOB WHERE CategoryID = :categoryId")
+    List<Job> getJobByCategory(int categoryId);
+
+    @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status")
+    int getRowCountByStatus(int status);
+
+
+    @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status AND EndDate >:start AND EndDate<:end")
+    @TypeConverters(DateConvertor.class)
+    int getRowCountByStatusMonth(int status,Date start,Date end);
+
+
+    @Query("SELECT * FROM JOB WHERE EndDate >=:start AND EndDate<=:end ORDER BY Status,Priority DESC ")
+    @TypeConverters(DateConvertor.class)
+    LiveData<List<Job>> getJobAboutTimeEndDate(Date start,Date end);
+
+    @Query("SELECT * FROM JOB WHERE EndDate >=:start AND EndDate<=:end ORDER BY Status,Priority DESC ")
+    @TypeConverters(DateConvertor.class)
+    List<Job> getListJobAboutTimeEndDate(Date start,Date end);
+
     @Insert
     void insert(Job... jobs);
 

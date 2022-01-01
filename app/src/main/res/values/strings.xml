@@ -13,15 +13,20 @@
     <string name="setting">Cài đặt</string>
     <string name="account">Cá nhân</string>
     <string name="add">Thêm</string>
+    <string name="save">Lưu</string>
     <string name="add_job">Thêm công việc</string>
+    <string name="update_job">Cập nhật công việc</string>
+    <string name="update_job_detail">Cập nhật chi tiết công việc</string>
     <string name="add_job_sucess">Thêm công việc thành công</string>
     <string name="add_job_not_sucess">Không thể thêm công việc</string>
+    <string name="update_job_sucess">Cập nhật công việc thành công</string>
+    <string name="update_job_not_sucess">Không thể cập nhật công việc</string>
     <string name="add_job_detail">Thêm chi tiết công việc</string>
 
     <!--Job-->
     <string name="job">Công việc</string>
     <string name="job_name">Tên công việc</string>
-    <string name="tv_add_job_type">Thêm loại công việc</string>
+    <string name="tv_add_job_type">Thêm danh mục</string>
     <string name="hint_add_job_type">Nhập tên loại công việc</string>
     <string name="description">Mô tả</string>
 
@@ -29,11 +34,12 @@
     <string name="confirm">Xác nhận</string>
     <string name="confirm_delete">Xác nhận xóa ?</string>
     <string name="message_delete_progress">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
-    <string name="message_finish_all_job_detail">Sẽ hủy tiến độ các chi tiết chi tiết công việc</string>
+    <string name="message_finish_all_job_detail">Sẽ hoàn thành tất cả các chi tiết chi tiết công việc</string>
     <string name="message_delete_all_job_detail">Sau khi xóa sẽ mất toàn bộ chi tiết công việc</string>
     <string name="message_delete_job_detail">Sau khi sẽ mất chi tiết công việc</string>
     <string name="message_uncheck_job_detail">Sẽ hủy hoàn thành chi tiết công việc</string>
     <string name="message_check_job">Sẽ mọi chi tiết công việc sẽ đều hoàn thành</string>
+    <string name="message_delete_category">Sau khi xóa danh mục sẽ xóa tất cả công việc thuộc danh mục</string>
 
     <!--Status-->
     <string name="coming_soon">Sắp diễn ra</string><!--0-->
@@ -41,6 +47,12 @@
     <string name="complete">Đã hoàn thành</string><!--2-->
     <string name="over">Đã quá hạn</string><!--3-->
     <string name="over_complete">Hoàn thành trễ</string><!--4-->
+
+    <!--Priority-->
+    <string name="priority_0">Không quan trọng, không khẩn cấp</string><!--0-->
+    <string name="priority_1">Không quan trọng, khẩn cấp</string><!--1-->
+    <string name="priority_2">Quan trọng, không khẩn cấp</string><!--2-->
+    <string name="priority_3">Quan trọng, khẩn cấp</string><!--3-->
 
     <!-- Time-->
     <string name="month">Tháng</string>
@@ -52,6 +64,8 @@
     <string name="time_start">Thời gian bắt đầu</string>
     <string name="time_end">Thời gian Kết thúc</string>
     <string name="hour_end">Giờ kết thúc</string>
+    <string name="start">Bắt đầu</string>
+    <string name="end">Kết thúc</string>
     <string name="testdate">365 ngày 12 giờ</string>
     <string name="hint_estimate_time">Nhập thời gian hoàn thành dự kiến</string>
     <string name="estimal_time">Thời gian dự kiến</string>
@@ -60,12 +74,25 @@
     <string name="time">Thời gian:</string>
 
     <!--Count Up-->
-    <string name="start">Bắt đầu</string>
     <string name="pause">Tạm dừng</string>
     <string name="resume">Tạm dừng</string>
     <string name="reset">Tính lại</string>
     <string name="finish">hoàn thành</string>
     <string name="cancel">hủy</string>
+    <!--notification name-->
+    <string name="notification_count_up">Tính giờ</string>
+    <string name="notification_job">Thông báo công việc</string>
+
+    <!--Category name-->
+    <string name="category_all">Tất cả</string>
+    <string name="category_day">Ngày</string>
+    <string name="category_week">Tuần</string>
+    <string name="category_month">Tháng</string>
+    <string name="week_current">Tuần này</string>
+    <string name="week_ago">Tuần trước</string>
+    <string name="next_week">Tuần sau</string>
+    <!--Toast-->
+    <string name="toast_can_not_do_that">Không thể đánh dấu hoàn thành vì công việc chưa bắt đầu</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -93,5 +120,18 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Category-->
+    <string name="number_of_job">Số công việc :</string>
+    <string name="category_management">Quản lý danh mục</string>
+    <string name="category_title">Cập nhật danh mục</string>
+
+    <!-- notification-->
+    <string name="notification_new">Mới</string>
+    <string name="notification_old">Trước đó</string>
+    <string name="notification_btn_remove">Gỡ thông báo này</string>
+
+
+
 
 </resources>

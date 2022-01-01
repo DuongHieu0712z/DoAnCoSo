@@ -10,16 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoAnCoSo">
-        <activity
-            android:name=".View.Activity.JobDetail_CountUp"
-            android:exported="true"
-            android:label="@string/title_activity_job_detail_count_up"
-            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
-        <activity
-            android:name=".View.Activity.JobDetailActivity"
-            android:exported="true"
-            android:label="@string/title_activity_job_deltail"
-            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
+
         <activity
             android:name=".View.Activity.SplashScreen"
             android:exported="true"
@@ -30,14 +21,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.Activity.MainActivity" />
+        <activity android:name=".View.Activity.MainActivity"
+            />
         <activity
             android:name=".View.Activity.AddJobActivity"
+            android:parentActivityName=".View.Activity.MainActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".View.Activity.AddJobDetailActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".View.Activity.JobDetailActivity"
+            android:exported="true"
+            android:label="@string/title_activity_job_deltail"
+            android:theme="@style/Theme.DoAnCoSo.NoActionBar" />
+        <activity android:name=".View.Activity.CategoryManagementActivity"
+            />
+        <activity android:name=".View.Activity.NotificationManagementActivity" />
+
         <service android:name=".Service.CountUpService"/>
+        <service android:name=".Service.NotificationService"/>
+        <receiver android:name=".Service.CountUpReceiver"/>
     </application>
 
 </manifest>

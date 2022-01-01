@@ -13,10 +13,15 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.ctk43.doancoso.Database.DAO.CategoryDAO;
 import com.ctk43.doancoso.Database.DAO.JobDAO;
 import com.ctk43.doancoso.Database.DAO.JobDetailDAO;
+import com.ctk43.doancoso.Database.DAO.NotificationModelDAO;
 import com.ctk43.doancoso.Database.DAO.UserDAO;
+import com.ctk43.doancoso.Database.Repository.NoticationRepository;
+import com.ctk43.doancoso.Library.CalendarExtension;
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
+import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.Model.User;
 
 import java.text.ParseException;
@@ -24,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-@Database(entities = {Category.class, Job.class, JobDetail.class, User.class},
+@Database(entities = {Category.class, Job.class, JobDetail.class, User.class , NotificationModel.class},
         version = 1,
         exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -61,6 +66,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract JobDetailDAO getJobDetailDAO();
 
     public abstract UserDAO getUserDAO();
+
+    public abstract NotificationModelDAO getNotificationModelDAO();
 
     private static class SampledData extends AsyncTask<Void, Void, Void> {
         private final CategoryDAO categoryDAO;
@@ -99,16 +106,25 @@ public abstract class AppDatabase extends RoomDatabase {
             categoryDAO.insert(new Category("Mặc định","default@example.vn"),
                     new Category("Học tập","default@example.vn"),
                     new Category("Giải trí","default@example.vn"));
+            jobDAO.insert(new Job(1, "Làm đồ án", CalendarExtension.getDateStartOfMonth(1,2022), CalendarExtension.getDateEndOfMonth(3,2022), "Một môn học gây trầm cảm"));
+            jobDAO.insert(new Job(1, "Làm lab 8", CalendarExtension.getDateStartOfMonth(2,2022),CalendarExtension.getDateEndOfMonth(5,2022) , "Không hiểu j hết á"));
+            jobDAO.insert(new Job(1, "Làm lab 9", CalendarExtension.getDateStartOfMonth(3,2022), CalendarExtension.getDateEndOfMonth(3,2022), "Từ chối hiểu"));
+            jobDAO.insert(new Job(1, "Làm web", CalendarExtension.getDateStartOfMonth(4,2022), CalendarExtension.getDateEndOfMonth(4,2022), "Làm kiểu j á"));
 
-            jobDAO.insert(new Job(1, "Làm đồ án", start, end, "Một môn học gây trầm cảm"));
-            jobDAO.insert(new Job(1, "Làm lab 8", start, end, "Không hiểu j hết á"));
-            jobDAO.insert(new Job(1, "Làm lab 9", start, end, "Từ chối hiểu"));
-            jobDAO.insert(new Job(1, "Làm web", start, end, "Làm kiểu j á"));
-
-            jobDAO.insert(new Job(2, "Khóc", start, end, "Vì trầm cảm do làm đồ án"));
-            jobDAO.insert(new Job(2, "Chơi game", start, end, "Không biết nói j cả"));
-            jobDAO.insert(new Job(2, "Ghi cho có", start, end, "Ghi cho có"));
-            jobDAO.insert(new Job(2, "Đây là một ví dụ", start, end, "Chỉ là một ví dụ"));
+            jobDAO.insert(new Job(1, "Genshin +1", CalendarExtension.getEndDateOfWeek(start,0), CalendarExtension.getStartTimeOfWeek(start,1), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Đồ án", CalendarExtension.getEndDateOfWeek(start,-1), CalendarExtension.getStartTimeOfWeek(start,1), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(1, "Nấu cum",CalendarExtension.getEndDateOfWeek(start,1), CalendarExtension.getStartTimeOfWeek(start,1), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Cơm thừa canh cạn", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(1, "Không như mơ ước", CalendarExtension.getStartTimeOfWeek(start,-1), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(1, "Kho cá", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Kho mém", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Nếu không yêu đừng gây thương nhớ, Vì con tim không nghe theo lý trí chẳng thể phía sauuuuuuuu", CalendarExtension.getStartTimeOfWeek(start,-3), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Anh thuộc về ai mất rồi", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,-1), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Tan vỡ rồi", CalendarExtension.getStartTimeOfWeek(start,-3), CalendarExtension.getEndTimeOfWeek(start,-1), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Con tim chẳng thể theo lý trí", CalendarExtension.getStartTimeOfWeek(start,-2), CalendarExtension.getEndTimeOfWeek(start,-1), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Chơi game", CalendarExtension.getStartTimeOfWeek(start,-4),CalendarExtension.getEndTimeOfWeek(start,1) , "Không biết nói j cả"));
+            jobDAO.insert(new Job(2, "Ghi cho có", CalendarExtension.getStartTimeOfWeek(start,-2), CalendarExtension.getEndTimeOfWeek(start,0), "Ghi cho có"));
+            jobDAO.insert(new Job(2, "Đây là một ví dụ",  CalendarExtension.getStartTimeOfWeek(start,-3), CalendarExtension.getEndTimeOfWeek(start,1), "Chỉ là một ví dụ"));
 
             jobDetailDAO.insert(new JobDetail(1, "Tìm hiểu android", 300, "Tìm hiểu thôi"));
             jobDetailDAO.insert(new JobDetail(1, "Tìm hiểu SQLite", 300, "Tìm hiểu thôi"));

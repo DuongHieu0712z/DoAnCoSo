@@ -1,16 +1,24 @@
 package com.ctk43.doancoso.View.Adapter;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.ctk43.doancoso.View.JobFragment;
-import com.ctk43.doancoso.View.MonthFragment;
+import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.View.Fragment.JobFragment;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class ViewPagerJobAdapter extends FragmentStateAdapter {
-
-
+    private JobFragment jobFragment;
+    private HashMap<Integer, Fragment> hashMap = new HashMap<>();
+    LiveData<List<Job>> jobsCurr;
+    LiveData<List<Job>> jobsAgo;
+    LiveData<List<Job>> jobsNext;
     public ViewPagerJobAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
@@ -21,15 +29,22 @@ public class ViewPagerJobAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 0:
-               //   return new JobFragment();
+                jobFragment = new JobFragment();
+                jobFragment.setJobs(jobsAgo);
+                hashMap.put(position, jobFragment);
+                return jobFragment;
             case 1:
-               return new JobFragment();
+                jobFragment = new JobFragment();
+                jobFragment.setJobs(jobsCurr);
+                hashMap.put(position, jobFragment);
+               return jobFragment;
             case 2:
-         //       return new JobFragment();
-            case 3:
-           //     return new JobFragment();
+                jobFragment = new JobFragment();
+                jobFragment.setJobs(jobsNext);
+                hashMap.put(position, jobFragment);
+                return jobFragment;
             default:
-                return new JobFragment();
+                return jobFragment;
         }
 
     }
@@ -39,6 +54,18 @@ public class ViewPagerJobAdapter extends FragmentStateAdapter {
         return 3;
     }
 
+    public void setJobs(LiveData<List<Job>>jobsAgo, LiveData<List<Job>>jobsCurr, LiveData<List<Job>>jobsNext){
+        this.jobsAgo = jobsAgo;
+        this.jobsCurr = jobsCurr;
+        this.jobsNext = jobsNext;
+    }
+    public void setJobs(LiveData<List<Job>> jobs){
+        jobsAgo = jobs;
+    }
+
+    public HashMap<Integer, Fragment> getHashMap() {
+        return hashMap;
+    }
     /*public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }

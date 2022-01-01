@@ -10,6 +10,7 @@ import androidx.room.TypeConverters;
 
 import com.ctk43.doancoso.Database.DateConvertor;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ import java.util.Objects;
         parentColumns = "ID",
         childColumns = "CategoryID",
         onDelete = ForeignKey.CASCADE))
-public class Job {
+public class Job implements Serializable {
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -50,14 +51,24 @@ public class Job {
     private double progress = 0.0;
 
     @ColumnInfo(name = "Status")
-    private int status = 0; // 0-in coming-1 - on going; 2 - complete; 3- over
+    private int status = 0;
 
+    @Ignore
     public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {
         this.categoryId = categoryId;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+    }
+
+    public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, int priority) {
+        this.categoryId = categoryId;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.priority = priority;
     }
 
     @Ignore

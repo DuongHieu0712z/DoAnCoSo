@@ -7,11 +7,13 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(foreignKeys = @ForeignKey(entity = Job.class,
         parentColumns = "ID",
         childColumns = "JobID",
         onDelete = ForeignKey.CASCADE))
-public class JobDetail {
+public class JobDetail implements Serializable {
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -40,12 +42,19 @@ public class JobDetail {
 
     @ColumnInfo(name = "IDParent")
     private int idParent;
-
+    @Ignore
     public JobDetail(int jobId, @NonNull String name, int estimatedCompletedTime, String description) {
         this.jobId = jobId;
         this.name = name;
         this.estimatedCompletedTime = estimatedCompletedTime;
         this.description = description;
+    }
+    public JobDetail(int jobId, boolean priority, @NonNull String name, int estimatedCompletedTime, String description) {
+        this.jobId = jobId;
+        this.name = name;
+        this.estimatedCompletedTime = estimatedCompletedTime;
+        this.description = description;
+        this.priority = priority;
     }
 
     @Ignore

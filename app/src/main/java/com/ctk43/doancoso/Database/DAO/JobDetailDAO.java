@@ -22,6 +22,9 @@ public interface JobDetailDAO {
     @Query("SELECT * FROM JobDetail WHERE JobID = :jobId")
     List<JobDetail> getListByJobId(int jobId);
 
+    @Query("SELECT * FROM JobDetail WHERE ID = :Id")
+    JobDetail getById(int Id);
+
     @Insert
     void insert(JobDetail... jobDetails);
 

@@ -1,30 +1,40 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Activity.AddJobActivity;
+import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class JobFragment extends Fragment  {
+import java.util.List;
+
+public class JobFragment extends Fragment {
     FloatingActionButton btn_Add_New_Job;
     private Context mContext;
-    private JobAdapter apdapterJobs;
-    RecyclerView rcv;
+    private JobAdapter jobAdapter;
+    public RecyclerView rcv;
     private JobViewModel jobViewModel;
+    private LiveData<List<Job>> jobs;
 
     @Nullable
     @Override
@@ -47,14 +57,19 @@ public class JobFragment extends Fragment  {
 
     private void initViews(View v) {
         rcv = v.findViewById(R.id.rcv_display_job);
-        jobViewModel.setContext(mContext);
+        jobViewModel.setData(mContext);
         //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
-        apdapterJobs = new JobAdapter(mContext, jobViewModel);
-        jobViewModel.getJobs().observe(requireActivity(), jobs -> {
-            apdapterJobs.setJob(jobs);
-            rcv.setLayoutManager(new LinearLayoutManager(mContext));
-            rcv.setAdapter(apdapterJobs);
-        });
+        jobAdapter = new JobAdapter(mContext, jobViewModel);
+        try{
+            jobs.observe(requireActivity(), jobs -> {
+                jobAdapter.setJob(jobs);
+                rcv.setLayoutManager(new LinearLayoutManager(mContext));
+                rcv.setAdapter(jobAdapter);
+            });
+        }catch (Exception e){
+
+        }
+
         /*btn_Add_New_Job = v.findViewById(R.id.add_new_job);
         btn_Add_New_Job.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, AddJobActivity.class);
@@ -73,5 +88,29 @@ public class JobFragment extends Fragment  {
                 Toast.makeText(mContext,"Xóa xong",Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(rcv);*/
+    }
+    public JobAdapter getAdapter(){
+        if(jobAdapter == null){
+            Log.e("JobAdapter", "getAdapter: Bị null" );
+            return null;
+        }
+        Log.e("JobAdapter", "getAdapter: Không null" );
+        return jobAdapter;
+    }
+
+    public RecyclerView getRecycleView(){
+        return rcv;
+    }
+
+    public void Filter(String str){
+        jobAdapter.getFilter().filter(str);
+    }
+
+    public LiveData<List<Job>> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(LiveData<List<Job>> jobs) {
+        this.jobs = jobs;
     }
 }
