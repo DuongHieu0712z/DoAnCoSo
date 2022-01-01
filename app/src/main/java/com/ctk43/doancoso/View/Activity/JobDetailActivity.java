@@ -1,6 +1,5 @@
 package com.ctk43.doancoso.View.Activity;
 
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +7,10 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,14 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
-import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.Service.CountUpReceiver;
 import com.ctk43.doancoso.Service.CountUpService;
 import com.ctk43.doancoso.View.Adapter.JobDetailAdapter;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
@@ -39,10 +34,8 @@ import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 public class JobDetailActivity extends AppCompatActivity {
-
     private FloatingActionButton btn_Add_New_Job_detail;
     CheckBox chk_job_title_finish_job;
     ProgressBar sb;
@@ -52,7 +45,7 @@ public class JobDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Job job;
     private int second;
-    private  ImageView img_finish, img_resumOrPause, img_cancel;
+    private ImageView img_finish, img_resumOrPause, img_cancel;
     private TextView tv_title, tv_desciption, tv_time;
     private RelativeLayout layout_count_up;
     private JobDetail jobDetail;
@@ -63,16 +56,14 @@ public class JobDetailActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
-            if(bundle == null)
+            if (bundle == null)
                 return;
-            else if(Key.SEND_ACTION_TO_ACTIVITY.equals(intent.getAction()))
-            {
+            else if (Key.SEND_ACTION_TO_ACTIVITY.equals(intent.getAction())) {
                 jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL_BY_SERVICE);
                 isRunning = (boolean) bundle.get(Key.SEND_STATUS_OF_COUNT_UP);
                 action = (int) bundle.get(Key.SEND_ACTION);
                 handleLayoutCoutUp(action);
-            }
-            else{
+            } else {
                 int second = (int) bundle.get(Key.SEND_SECOND);
                 getSecond(second);
             }
@@ -89,12 +80,12 @@ public class JobDetailActivity extends AppCompatActivity {
 
     private void initViewModel() {
         int jobID = -1;
-        jobID  = getIntent().getIntExtra(Key.JOB_ID,-1);
-        if(jobID == -1){
+        jobID = getIntent().getIntExtra(Key.JOB_ID, -1);
+        if (jobID == -1) {
             Bundle bundle = getIntent().getExtras();
             jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL);
             isRunning = (boolean) bundle.get(Key.IS_RUNNING);
-            jobID =  jobDetail.getJobId();
+            jobID = jobDetail.getJobId();
         }
 
         jobViewModel = new JobViewModel();
@@ -127,6 +118,7 @@ public class JobDetailActivity extends AppCompatActivity {
         tv_desciption = findViewById(R.id.tv_notification_descripsion);
         tv_time = findViewById(R.id.tv_clock_notification);
         layout_count_up = findViewById(R.id.layout_count_up_bottom);
+        ProgressBar sb = findViewById(R.id.sb_jt_progress);
         btn_Add_New_Job_detail = findViewById(R.id.add_new_job_detail);
         JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,job);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
@@ -135,8 +127,8 @@ public class JobDetailActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
             tv_job_name.setText(job.getName());
             tv_job_des.setText(job.getDescription());
-            tv_job_start.setText(CalendarExtension.dateToString(job.getStartDate()));
-            tv_job_end.setText(CalendarExtension.dateToString(job.getEndDate()));
+            tv_job_start.setText(CalendarExtension.formatDateTime(job.getStartDate()));
+            tv_job_end.setText(CalendarExtension.formatDateTime(job.getEndDate()));
             tv_job_status.setText(GeneralData.getStatus(job.getStatus()));
             img_priority.setImageResource(GeneralData.getImgPriority(job.getPriority()));
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
@@ -159,7 +151,7 @@ public class JobDetailActivity extends AppCompatActivity {
             }
         });
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
-        if(isRunning){
+        if (isRunning) {
             start();
         }
     }
@@ -176,8 +168,6 @@ public class JobDetailActivity extends AppCompatActivity {
         }
         jobViewModel.update(job);
     }
-
-
 
     private void onOpenUpdateJobActivity(Job job){
         Intent intent = new Intent(JobDetailActivity.this, AddJobActivity.class);
@@ -226,7 +216,6 @@ public class JobDetailActivity extends AppCompatActivity {
     }
     private void cancel(){
         layout_count_up.setVisibility(View.GONE);
-
     }
 
     private void resume() {
@@ -253,8 +242,8 @@ public class JobDetailActivity extends AppCompatActivity {
             jobDetailViewModel.update(jobDetail);
     }
 
-    private void showInforCountUp(){
-        if(jobDetail == null)
+    private void showInforCountUp() {
+        if (jobDetail == null)
             return;
         tv_title.setText(jobDetail.getName());
         tv_desciption.setText(jobDetail.getDescription());

@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.ctk43.doancoso.Database.DateConvertor;
-import com.ctk43.doancoso.Library.Extension;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -52,6 +51,7 @@ public class Job implements Serializable {
 
     @ColumnInfo(name = "Status")
     private int status = 0;
+
     @Ignore
     public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {
         this.categoryId = categoryId;
@@ -59,9 +59,9 @@ public class Job implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.status = status;
     }
-    public Job(int categoryId, int priority, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {
+
+    public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, int priority) {
         this.categoryId = categoryId;
         this.name = name;
         this.startDate = startDate;
@@ -69,6 +69,7 @@ public class Job implements Serializable {
         this.description = description;
         this.priority = priority;
     }
+
     @Ignore
     public Job(int id, int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, int priority, double progress, int status) {
         this.id = id;

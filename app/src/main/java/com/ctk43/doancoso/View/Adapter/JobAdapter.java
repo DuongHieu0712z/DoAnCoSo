@@ -132,7 +132,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     }
 
     void ViewJobDetail(Job job) {
-
         Intent intent = new Intent(context, JobDetailActivity.class);
         intent.putExtra(Key.JOB_ID, job.getId());
         context.startActivity(intent);

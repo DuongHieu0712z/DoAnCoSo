@@ -13,11 +13,14 @@
     <string name="setting">Cài đặt</string>
     <string name="account">Cá nhân</string>
     <string name="add">Thêm</string>
+    <string name="save">Lưu</string>
     <string name="add_job">Thêm công việc</string>
     <string name="update_job">Cập nhật công việc</string>
     <string name="update_job_detail">Cập nhật chi tiết công việc</string>
     <string name="add_job_sucess">Thêm công việc thành công</string>
     <string name="add_job_not_sucess">Không thể thêm công việc</string>
+    <string name="update_job_sucess">Cập nhật công việc thành công</string>
+    <string name="update_job_not_sucess">Không thể cập nhật công việc</string>
     <string name="add_job_detail">Thêm chi tiết công việc</string>
 
     <!--Job-->
@@ -122,6 +125,12 @@
     <string name="number_of_job">Số công việc :</string>
     <string name="category_management">Quản lý danh mục</string>
     <string name="category_title">Cập nhật danh mục</string>
+
+    <!-- notification-->
+    <string name="notification_new">Mới</string>
+    <string name="notification_old">Trước đó</string>
+    <string name="notification_btn_remove">Gỡ thông báo này</string>
+
 
 
 

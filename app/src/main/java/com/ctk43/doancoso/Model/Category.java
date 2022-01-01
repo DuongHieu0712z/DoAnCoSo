@@ -7,6 +7,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "Email",
         childColumns = "Email_user",
@@ -37,7 +39,7 @@ public class Category {
     }
 
     @Ignore
-    public Category(@NonNull int id,@NonNull String name) {
+    public Category(int id, @NonNull String name) {
         this.id = id;
         this.name = name;
     }
@@ -65,6 +67,19 @@ public class Category {
 
     public void setName(@NonNull String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+        Category category = (Category) o;
+        return getId() == category.getId() && getName().equals(category.getName()) && Objects.equals(getEmail(), category.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getEmail());
     }
 
     @NonNull

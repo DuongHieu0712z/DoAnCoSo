@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_color_2"
+    android:id="@+id/ln_item_notification"
+    android:weightSum="3"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="5dp">
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ico_mail"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"/>
+        <ImageView
+            android:id="@+id/img_notification_priority"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_baseline_star_priority_important"
+            android:layout_gravity="top"/>
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="2.25"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_notification_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xefiok have posted a new video: Nhân ngày đầu năm mới, mời mọi người cùng thử một quẻ bói vui vẻ xem điều..."
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/tv_notification_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/sub_bg_color"
+            android:text="12 giờ trước"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/img_btn_notification_more"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_weight="0.25"
+        android:src="@drawable/ic_baseline_more_horiz_24"
+        android:backgroundTint="@color/Transparent"/>
+</LinearLayout>

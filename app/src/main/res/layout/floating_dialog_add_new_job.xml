@@ -272,7 +272,7 @@
         android:layout_marginTop="-5dp"
         android:background="@drawable/bg_btn_1"
         android:backgroundTint="@null"
-        android:text="@string/add"
+        android:text="@string/save"
         android:textColor="@color/text_title_color" />
 
     <ImageView

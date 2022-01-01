@@ -31,6 +31,10 @@ public class CategoryViewModel extends ViewModel {
         this.mContext = context;
     }
 
+    public Category get(int id) {
+        return categoryRepository.get(id);
+    }
+
     public LiveData<List<Category>> getCategories() {
         return categories;
     }
