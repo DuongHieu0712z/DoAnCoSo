@@ -279,11 +279,11 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             String endTime = tv_time_end.getText().toString();
             int priority = spnPriority.getSelectedItemPosition();
             int category = spnCategory.getSelectedItemPosition()+1;
-            if(Extension.isEmty(this,name ,getString(R.string.job_name),false))
+            if(Extension.isEmpty(this,name ,getString(R.string.job_name),false))
                 return false;
-            if(Extension.isEmty(this,endDate, getString(R.string.date_end),endDate.equals( getString(R.string.day))) )
+            if(Extension.isEmpty(this,endDate, getString(R.string.date_end),endDate.equals( getString(R.string.day))) )
                 return false;
-            if(Extension.isEmty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
+            if(Extension.isEmpty(this,endTime, getString(R.string.hour_end),endTime.equals(getString(R.string.hour)) ) )
                 return false;
         try {
             Date start = new SimpleDateFormat("MM/dd/yyyy hh:mm", Locale.getDefault()).parse(startDate + " " + startTime);

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +46,10 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
     private Job job;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobDetailAdapter(Context mContext, JobDetailViewModel jobDetailViewModel, JobViewModel jobViewModel) {
+    public JobDetailAdapter(Context mContext, JobDetailViewModel jobDetailViewModel,Job job) {
         this.jobDetailViewModel = jobDetailViewModel;
-        this.jobViewModel = jobViewModel;
         this.mContext = mContext;
+        this.job = job;
     }
 
     public void setData(List<JobDetail> jobDetails) {
@@ -87,7 +88,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
         holder.checkBox.setOnClickListener(v -> {
             if (Extension.canCheck(mContext, holder.checkBox, job))
-            IsFinish(holder.checkBox, item);
+                 IsFinish(holder.checkBox, item);
         });
         holder.swipeRevealLayout.setOnClickListener(v -> {
             JobClock(item);
@@ -157,6 +158,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             jobDetail.setStatus(false);
             jobDetailViewModel.update(jobDetail);
             jobDetail.setActualCompletedTime(0);
+            notifyDataSetChanged();
             dialogYesNo.dismiss();
         });
         btn_no.setOnClickListener(v -> {

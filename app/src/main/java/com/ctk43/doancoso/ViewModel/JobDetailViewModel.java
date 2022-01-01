@@ -69,6 +69,8 @@ public class JobDetailViewModel extends ViewModel {
             }
         }
         double after = checkList().size();
+        if(after == 0)
+            return 0;
         return before / after;
     }
     public int count(){

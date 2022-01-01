@@ -1,11 +1,14 @@
 package com.ctk43.doancoso.View.Activity;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -21,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
+import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
@@ -39,10 +43,13 @@ import java.util.Calendar;
 
 public class JobDetailActivity extends AppCompatActivity {
 
-    FloatingActionButton btn_Add_New_Job_detail;
+    private FloatingActionButton btn_Add_New_Job_detail;
+    CheckBox chk_job_title_finish_job;
+    ProgressBar sb;
+    TextView tv_job_progress;
     private JobDetailViewModel jobDetailViewModel;
-    JobViewModel jobViewModel;
-    RecyclerView recyclerView;
+    private JobViewModel jobViewModel;
+    private RecyclerView recyclerView;
     private Job job;
     private int second;
     private  ImageView img_finish, img_resumOrPause, img_cancel;
@@ -105,15 +112,13 @@ public class JobDetailActivity extends AppCompatActivity {
         TextView tv_job_des = findViewById(R.id.tv_jt_description);
         TextView tv_job_start = findViewById(R.id.tv_jt_time_start);
         TextView tv_job_end = findViewById(R.id.tv_jt_time_end);
-        TextView tv_job_progress = findViewById(R.id.tv_jt_prg);
-
         TextView tv_job_status = findViewById(R.id.job_title_status);
         ImageView img_priority = findViewById(R.id.job_title_priority);
-
         ImageView img_edit = findViewById(R.id.job_title_edit);
 
-        CheckBox chk_job_title_finish_job= findViewById(R.id.chk_job_title_finish_job);
-
+        tv_job_progress = findViewById(R.id.tv_jt_prg);
+        chk_job_title_finish_job= findViewById(R.id.chk_job_title_finish_job);
+        sb = findViewById(R.id.sb_jt_progress);
 
         img_finish = findViewById(R.id.img_finish);
         img_resumOrPause = findViewById(R.id.img_pause_or_resume);
@@ -122,12 +127,11 @@ public class JobDetailActivity extends AppCompatActivity {
         tv_desciption = findViewById(R.id.tv_notification_descripsion);
         tv_time = findViewById(R.id.tv_clock_notification);
         layout_count_up = findViewById(R.id.layout_count_up_bottom);
-        ProgressBar sb = findViewById(R.id.sb_jt_progress);
         btn_Add_New_Job_detail = findViewById(R.id.add_new_job_detail);
-        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,jobViewModel);
+        JobDetailAdapter adapter = new JobDetailAdapter(this, jobDetailViewModel,job);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
+            syncJob();
             adapter.setData(jobDetails);
-            UpdateJob();
             recyclerView.setAdapter(adapter);
             tv_job_name.setText(job.getName());
             tv_job_des.setText(job.getDescription());
@@ -135,29 +139,45 @@ public class JobDetailActivity extends AppCompatActivity {
             tv_job_end.setText(CalendarExtension.dateToString(job.getEndDate()));
             tv_job_status.setText(GeneralData.getStatus(job.getStatus()));
             img_priority.setImageResource(GeneralData.getImgPriority(job.getPriority()));
-            setProgress(tv_job_progress,sb,job);
-
-            img_edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onOpenUpdateJobActivity(job);
-                }
-            });
-
-            chk_job_title_finish_job.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //chua xu ly
-                }
-            });
-
             recyclerView.setLayoutManager(new LinearLayoutManager(JobDetailActivity.this));
+            chk_job_title_finish_job.setChecked(Extension.isFinishJob(job));
+            Extension.setProgress(tv_job_progress,sb,job);
+            Log.e("lỗi", "init: Lopp");
+        });
+        img_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onOpenUpdateJobActivity(job);
+            }
+        });
+        chk_job_title_finish_job.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Extension.canCheck(getApplicationContext(),chk_job_title_finish_job,job)) {
+                    Extension.CheckOrUncheckJob(JobDetailActivity.this, chk_job_title_finish_job, job,tv_job_progress,sb);
+                }
+            }
         });
         btn_Add_New_Job_detail.setOnClickListener(view -> AddJobDetail());
         if(isRunning){
             start();
         }
     }
+    private void syncJob(){
+        if((job.getProgress() == jobDetailViewModel.updateProgress()) )
+            return;
+        if(jobDetailViewModel.checkList().size() ==0 && Extension.isFinishJob(job)){
+            job.setProgress(1);
+            job.setStatus(Extension.CheckStatus(job));
+        }
+        else{
+            job.setProgress(jobDetailViewModel.updateProgress());
+            job.setStatus(Extension.CheckStatus(job));
+        }
+        jobViewModel.update(job);
+    }
+
+
 
     private void onOpenUpdateJobActivity(Job job){
         Intent intent = new Intent(JobDetailActivity.this, AddJobActivity.class);
@@ -167,27 +187,13 @@ public class JobDetailActivity extends AppCompatActivity {
         JobDetailActivity.this.startActivity(intent);
     }
 
-    private void UpdateJob(){
-        if(job.getProgress() == jobDetailViewModel.updateProgress())
-            return;
-        if(jobDetailViewModel.count()==0)
-            return;
-        job.setProgress(jobDetailViewModel.updateProgress());
-        job.setStatus(Extension.CheckStatus(job));
-        jobViewModel.update(job);
-    }
     private void AddJobDetail() {
         Intent intent = new Intent(getApplicationContext(), AddJobDetailActivity.class);
         intent.putExtra("jobId", job.getId());
         startActivity(intent);
     }
 
-    void setProgress(TextView tv_progress, ProgressBar progressBar, Job job) {
-        int progress = (int) (job.getProgress() * 100.0);
-        String prgString = progress + " %";
-        tv_progress.setText(prgString);
-        progressBar.setProgress(progress);
-    }
+
     private void handleLayoutCoutUp(int action) {
             switch (action) {
                 case Action.ACTION_COMPLETE:
@@ -220,28 +226,29 @@ public class JobDetailActivity extends AppCompatActivity {
     }
     private void cancel(){
         layout_count_up.setVisibility(View.GONE);
+
     }
 
     private void resume() {
         setStatusButtonPlayORPause();
         SendActionToService(Action.ACTION_RESUME);
-        UpdateJobDetail(false);
     }
 
     private void pause() {
         setStatusButtonPlayORPause();
         SendActionToService(Action.ACTION_PAUSE);
-        UpdateJobDetail(false);
+        UpdateJobDetail(false,false);
     }
 
     public void complete() {
         layout_count_up.setVisibility(View.GONE);
         SendActionToService(Action.ACTION_CANCEL);
-        UpdateJobDetail(true);
+        UpdateJobDetail(true,false);
     }
 
-    private void UpdateJobDetail(boolean isFinish){
+    private void UpdateJobDetail(boolean isFinish,boolean isCancel){
             jobDetail.setStatus(isFinish);
+            if(!isCancel)
             jobDetail.setActualCompletedTime(second);
             jobDetailViewModel.update(jobDetail);
     }
