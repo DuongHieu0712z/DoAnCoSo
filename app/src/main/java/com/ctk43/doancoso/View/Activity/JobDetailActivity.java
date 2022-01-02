@@ -62,7 +62,7 @@ public class JobDetailActivity extends AppCompatActivity {
                 jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL_BY_SERVICE);
                 isRunning = (boolean) bundle.get(Key.SEND_STATUS_OF_COUNT_UP);
                 action = (int) bundle.get(Key.SEND_ACTION);
-                handleLayoutCoutUp(action);
+                handleLayoutCountUp(action);
             } else {
                 int second = (int) bundle.get(Key.SEND_SECOND);
                 getSecond(second);
@@ -183,8 +183,7 @@ public class JobDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    private void handleLayoutCoutUp(int action) {
+    private void handleLayoutCountUp(int action) {
             switch (action) {
                 case Action.ACTION_COMPLETE:
                     complete();

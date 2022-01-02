@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
@@ -34,8 +33,6 @@ import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.AddJobActivity;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
-import com.ctk43.doancoso.View.Fragment.JobFragment;
-import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.io.Serializable;
@@ -45,11 +42,11 @@ import java.util.Date;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> implements Filterable {
-    private List<Job> jobsShow;
-    private List<Job> jobs;
     private final Context context;
     private final JobViewModel jobViewModel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    private List<Job> jobsShow;
+    private List<Job> jobs;
 
     public JobAdapter(Context context, JobViewModel jobViewModel) {
         this.context = context;
@@ -95,9 +92,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
             }
         });
         holder.itemJob.setOnClickListener(v -> ViewJobDetail(item));
-        holder.checkBox.setOnClickListener(v->{
+        holder.checkBox.setOnClickListener(v -> {
             if (Extension.canCheck(context, holder.checkBox, item))
-                Extension.CheckOrUncheckJob(context,holder.checkBox, item,null,null);
+                Extension.CheckOrUncheckJob(context, holder.checkBox, item, null, null);
         });
 
     }
@@ -108,8 +105,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
             return 0;
         return jobsShow.size();
     }
-
-
 
     void setTextStatus(Job job, TextView status, TextView title_Time, TextView time) {
         int color = ContextCompat.getColor(context, (GeneralData.getColorStatus(job.getStatus())));
@@ -193,7 +188,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
                 list.add(j);
         }
         jobsShow = list;
-       notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public void GetByCategoryId(int categoryId) {
@@ -225,12 +220,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         notifyDataSetChanged();
     }
 
-    public void FilterByDateToDate(Date start,Date end ) {
+    public void FilterByDateToDate(Date start, Date end) {
         if (jobsShow == null)
             return;
         List<Job> list = new ArrayList<>();
         for (Job job : jobsShow) {
-            if (CalendarExtension.Remaining_minute(start,job.getEndDate()) >=0 && CalendarExtension.Remaining_minute(end,job.getEndDate()) >=0 )
+            if (CalendarExtension.Remaining_minute(start, job.getEndDate()) >= 0 && CalendarExtension.Remaining_minute(end, job.getEndDate()) >= 0)
                 list.add(job);
         }
         jobsShow = list;
