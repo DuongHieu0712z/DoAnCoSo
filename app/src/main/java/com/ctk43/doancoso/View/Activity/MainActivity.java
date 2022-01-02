@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
@@ -43,13 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    //    public LiveData<List<Job>> listjob ;
-    private static final String DATABASE_NAME = "databases/JobManagement.db";
-    private static final String DB_PATH_SUFFIX = "/databases/";
-    public String currentDate;
-    public List<Job> listjob = new ArrayList<>();
-    public String result = "";
-    private TabLayout tabLayout;
     private BottomNavigationView bottomMenu;
     private JobViewModel jobViewModel;
     private ViewPager2 viewPager;
@@ -94,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         addition_menu.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                onOpenMenuDialog();
+                DialogExtension.onOpenMenuDialog(MainActivity.this);
                 return true;
             }
         });
@@ -160,27 +154,5 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-    private void onOpenMenuDialog(){
-        final Dialog dialog = new Dialog(MainActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_menu);
-        Window window = dialog.getWindow();
-        if (window == null) return;
-        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams windowAttribute = window.getAttributes();
-        windowAttribute.gravity = Gravity.RIGHT;
-        window.setAttributes(windowAttribute);
-        dialog.setCancelable(true);
-        LinearLayout ln_category_management = dialog.findViewById(R.id.dialog_menu_category);
-        ln_category_management.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CategoryManagementActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
+
 }

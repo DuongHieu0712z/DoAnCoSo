@@ -19,6 +19,7 @@ import com.ctk43.doancoso.View.Adapter.CategoryManagementAdapter;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class CategoryManagementActivity extends AppCompatActivity {
     CategoryViewModel categoryViewModel;
     SearchView searchView;
     CategoryManagementAdapter adapter;
+    FloatingActionButton fab_add_cate;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,6 @@ public class CategoryManagementActivity extends AppCompatActivity {
         searchView = (SearchView) menu.findItem(R.id.action_category_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
-
         innitView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -62,16 +63,16 @@ public class CategoryManagementActivity extends AppCompatActivity {
     }
 
     private void innitView() {
-        getSupportActionBar().setTitle("Quản lý danh mục");
         rcv_categories = findViewById(R.id.rcv_categories);
         categoryViewModel = new CategoryViewModel();
         categoryViewModel.setContext(CategoryManagementActivity.this);
         List<Category> categories = categoryViewModel.getCategoryList();
-
+        fab_add_cate = findViewById(R.id.fab_add_category);
         adapter = new CategoryManagementAdapter(CategoryManagementActivity.this, categories);
         rcv_categories.setLayoutManager(new LinearLayoutManager(CategoryManagementActivity.this));
-
         rcv_categories.setAdapter(adapter);
-
+        fab_add_cate.setOnClickListener(v->{
+            
+        });
     }
 }

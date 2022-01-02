@@ -83,7 +83,7 @@ public class CountUpService extends Service {
     private void updateNotification(int second) {
         sendSecondToActivity(second);
         remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(second));
-        mNotificationManager.notify(Key.COUNT_UP_ID, mBuilder.build());
+        mNotificationManager.notify(Key.CHANNEL_COUNT_UP_ID, mBuilder.build());
     }
 
     private void pause() {
@@ -121,7 +121,7 @@ public class CountUpService extends Service {
         Intent intent = new Intent(this, JobDetailActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, Key.COUNT_UP_ID, callBackActivity(), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, Key.CHANNEL_COUNT_UP_ID, callBackActivity(), PendingIntent.FLAG_UPDATE_CURRENT);
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);
         remoteViews.setTextViewText(R.id.tv_notification_title, jobDetail.getName());
@@ -143,7 +143,7 @@ public class CountUpService extends Service {
                 .setSilent(true)
                 .setAutoCancel(true)
                 .setCustomContentView(remoteViews);
-        startForeground(Key.COUNT_UP_ID,mBuilder.build());
+        startForeground(Key.CHANNEL_COUNT_UP_ID,mBuilder.build());
       //  mNotificationManager.notify(Key.COUNT_UP_ID, mBuilder.build());
     }
 

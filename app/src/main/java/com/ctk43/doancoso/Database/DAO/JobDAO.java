@@ -30,6 +30,9 @@ public interface JobDAO {
     @Query("SELECT * FROM Job WHERE ID = :id")
     Job getById(int id);
 
+    @Query("SELECT Name FROM Job WHERE ID = :id")
+    String getNameJob(int id);
+
     @Query("SELECT * FROM Job WHERE CategoryID = :categoryId")
     LiveData<List<Job>> getByCategoryId(int categoryId);
 
@@ -48,6 +51,10 @@ public interface JobDAO {
     @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status AND EndDate >=:start AND EndDate<=:end")
     @TypeConverters(DateConvertor.class)
     int getRowCountByStatusMonth(int status,Date start,Date end);
+
+    @Query("SELECT * FROM JOB WHERE Status =:status AND EndDate >=:start AND EndDate<=:end")
+    @TypeConverters(DateConvertor.class)
+    LiveData<List<Job>> getJobByStatusTime(int status,Date start,Date end);
 
     @Query("SELECT COUNT(1) FROM JOB WHERE EndDate >=:start AND EndDate<=:end")
     @TypeConverters(DateConvertor.class)

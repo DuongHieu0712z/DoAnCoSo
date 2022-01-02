@@ -18,25 +18,11 @@ public class myApplication extends Application {
     }
 
     private void createChanelNotification() {
-        notificationCountUp();
-        notificationJob();
-
-    }
-
-    private void notificationJob() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channelCountUp = new NotificationChannel(
+            NotificationChannel notificationChannel = new NotificationChannel(
                     Key.CHANNEL_NOTIFICATION_JOB,
                     this.getString(R.string.notification_job),
                     NotificationManager.IMPORTANCE_HIGH);
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            if(manager !=null)
-                manager.createNotificationChannel(channelCountUp);
-        }
-    }
-
-    private void notificationCountUp() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channelCountUp = new NotificationChannel(
                     Key.CHANNEL_COUNT_UP,
                     this.getString(R.string.notification_count_up),
@@ -44,6 +30,9 @@ public class myApplication extends Application {
             NotificationManager manager = getSystemService(NotificationManager.class);
             if(manager !=null)
                 manager.createNotificationChannel(channelCountUp);
+            manager.createNotificationChannel(notificationChannel);
         }
     }
+
+
 }

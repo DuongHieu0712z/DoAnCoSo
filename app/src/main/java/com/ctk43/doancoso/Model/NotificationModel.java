@@ -24,17 +24,20 @@ public class NotificationModel {
     @ColumnInfo(name = "JobID", index = true)
     private int jobId;
 
-    @ColumnInfo(name = "Status")
-    private int status;
+    @ColumnInfo(name = "statusJob")
+    private int statusJob;
+
+    @ColumnInfo(name = "status")
+    private String status;
 
     @ColumnInfo(name = "DateOfRecord")
     @TypeConverters({DateConvertor.class})
     @NonNull
     private Date dateOfRecord;
 
-    public NotificationModel(int jobId,int status) {
+    public NotificationModel(int jobId,int statusJob) {
         this.jobId = jobId;
-        this.status =status;
+        this.statusJob =statusJob;
         dateOfRecord= Calendar.getInstance().getTime();
     }
 
@@ -63,11 +66,19 @@ public class NotificationModel {
         this.jobId = jobId;
     }
 
-    public int getStatus() {
-        return status;
+    public int getStatusJob() {
+        return statusJob;
     }
 
-    public void setStatus(int status) {
+    public void setStatusJob(int statusJob) {
+        this.statusJob = statusJob;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

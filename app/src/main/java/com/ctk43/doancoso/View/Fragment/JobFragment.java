@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,8 +59,10 @@ public class JobFragment extends Fragment {
     private void initViews(View v) {
         rcv = v.findViewById(R.id.rcv_display_job);
         jobViewModel.setData(mContext);
-        //    jobListAdapter.setJob((jobViewModel.getJobs().getValue()));
+
         jobAdapter = new JobAdapter(mContext, jobViewModel);
+        if(jobs == null )
+            Toast.makeText(mContext,"Đã xảy ra lỗi vui lòng kiểm tra lại",Toast.LENGTH_LONG).show();
         try{
             jobs.observe(requireActivity(), jobs -> {
                 jobAdapter.setJob(jobs);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,14 +8,15 @@
     android:background="@drawable/bg_job_titlte">
 
     <ScrollView
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.241"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        android:layout_height="0dp"
+        android:layout_above="@+id/ln_time_job"
+        android:layout_below="@+id/ln_title_job"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toStartOf="@+id/ln_function_job_title">
+
 
         <TextView
             android:id="@+id/tv_jt_description"
@@ -28,27 +29,37 @@
     </ScrollView>
 
     <LinearLayout
+
+        android:id="@+id/ln_time_job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="25dp">
+        android:layout_marginBottom="20dp"
+        android:layout_toStartOf="@id/ln_function_job_title"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        app:layout_constraintStart_toStartOf="parent">
+
         <CheckBox
             android:id="@+id/chk_job_title_finish_job"
             android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:buttonTint="@color/green_02"
             android:scaleX="1.5"
             android:scaleY="1.5" />
+
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:layout_weight="0.75"
+
+            android:layout_weight="1.5"
             android:orientation="vertical">
 
             <TextView
@@ -66,13 +77,14 @@
                 android:text="@string/end"
                 android:textColor="@color/orange"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:orientation="vertical">
 
             <TextView
@@ -92,18 +104,73 @@
                 android:text="End time"
                 android:textColor="@color/orange"
                 android:textSize="14sp" />
+
+
         </LinearLayout>
-        <LinearLayout
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln_title_job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toStartOf="@+id/ln_function_job_title"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="15dp"
+        android:weightSum="1">
+        <ImageView
+            android:id="@+id/job_title_priority"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_baseline_star_priority_important"/>
+        <TextView
+            android:id="@+id/tv_jt_job_name"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:fontFamily="@font/arial_bold"
+            android:text="Tên Công Việc"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/text_title_color"
+            android:textSize="20sp"
+             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln_function_job_title"
+        android:layout_width="85dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="4">
+
+        <ImageView
+            android:id="@+id/job_title_edit"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1.5"
+            android:src="@drawable/ic_baseline_edit_24" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="2.5"
+            android:orientation="vertical">
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
+                android:layout_gravity="center">
 
                 <ProgressBar
                     android:id="@+id/sb_jt_progress"
@@ -128,52 +195,18 @@
                     android:textStyle="bold" />
 
             </FrameLayout>
+
             <TextView
-                android:layout_marginTop="5dp"
+                android:id="@+id/job_title_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/job_title_status"
-                android:text="Status"
+                android:layout_gravity="bottom"
                 android:gravity="center_horizontal"
-                android:textSize="12sp"
+                android:text="Status"
                 android:textColor="@color/green_03"
-                android:layout_gravity="bottom"/>
+                android:textSize="12sp" />
+
         </LinearLayout>
-
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="15dp"
-        android:weightSum="1">
-        <ImageView
-            android:id="@+id/job_title_priority"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_baseline_star_priority_important"/>
-        <TextView
-            android:id="@+id/tv_jt_job_name"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/playfair_regular"
-            android:text="Tên Công Việc"
-            android:textAlignment="center"
-            android:textColor="@color/text_title_color"
-            android:textSize="18sp"
-             />
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_baseline_edit_24"
-            android:layout_marginRight="25dp"
-            android:id="@+id/job_title_edit"/>
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

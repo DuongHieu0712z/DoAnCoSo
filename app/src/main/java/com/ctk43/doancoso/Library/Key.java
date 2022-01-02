@@ -11,13 +11,12 @@ public class Key {
     public static final String SEND_SECOND = "SEND_SECOND";
     public static final String CHANNEL_COUNT_UP = "CHANNEL_COUNT_UP";
     public static final String CHANNEL_NOTIFICATION_JOB = "CHANNEL_NOTIFICATION_JOB";
-    public static final int COUNT_UP_ID = 1;
-    public static final int NOTIFICATION_JOB_ID = 2;
+    public static final int CHANNEL_COUNT_UP_ID = 1;
+    public static final int CHANNEL_NOTIFICATION_JOB_ID = 2;
     public static final String SEND_JOB_DETAIL = "SEND_JOB_DETAIL";
     public static final String JOB_ID = "JOB_ID";
     public static final String IS_RUNNING = "IS_RUNNING";
-
-
-
+    public static final String SEND_JOB = "SEND_JOB";
+    public static final String DATE_TO_DATE = "DATE_TO_DATE";
 
 }

@@ -83,6 +83,16 @@ public class Job implements Serializable {
         this.status = status;
     }
 
+    @Ignore
+    public Job(int categoryId,String name ,@NonNull Date startDate, @NonNull Date endDate,int status) {
+        this.id = 0;
+        this.categoryId = categoryId;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

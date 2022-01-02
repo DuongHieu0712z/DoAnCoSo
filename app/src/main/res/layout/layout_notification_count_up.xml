@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/bg_color"
-    android:padding="5dp"
+    android:background="@drawable/bg_job_titlte"
+    android:padding="10dp"
     android:layout_height="60dp">
 
     <TextView
@@ -14,33 +14,34 @@
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold" />
+
     <LinearLayout
         android:id="@+id/ln_count_up"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_toEndOf="@+id/tv_clock_notification"
-        android:layout_toStartOf="@+id/img_finish"
         android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/img_finish"
+        android:layout_toEndOf="@+id/tv_clock_notification"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_notification_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textStyle="bold"
             android:layout_marginStart="8dp"
-            android:textSize="12sp"
+            android:text="@string/app_name"
             android:textColor="@color/text_title_color"
-            />
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tv_notification_descripsion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
             android:layout_marginStart="8dp"
-            android:textSize="10sp"
+            android:text="@string/app_name"
             android:textColor="@color/text_title_color"
-            />
+            android:textSize="10sp" />
     </LinearLayout>
 
     <ImageView

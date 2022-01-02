@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.View.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Library.CalendarExtension;
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.MainActivity;
@@ -64,7 +66,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
                 holder.cl_cell_calendar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ((MainActivity)mContext).SelectBottomMenuPosition(0);
+                        String day = (String) holder.dayOfMonth.getText();
+                        int index = daysOfMonth.indexOf(day);
+                        if(day !="" && listDate.get(index) !=null){
+                            Job job = new Job(0,
+                                    CalendarExtension.getString(listDate.get(index)),
+                                    CalendarExtension.getStartTimeOfDate(listDate.get(index)),
+                                    CalendarExtension.getEndTimeOfDate(listDate.get(index)),
+                                    -1);
+                            Extension.callJobActivity(mContext,job,true);
+                        }
                     }
                 });
             }

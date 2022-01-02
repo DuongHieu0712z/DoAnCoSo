@@ -22,6 +22,7 @@ import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
+import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.ctk43.doancoso.ViewModel.NotificationViewModel;
 
@@ -40,6 +41,7 @@ public class NotificationService extends Service {
     private boolean isNew = false;
     RemoteViews remoteViews;
     private NotificationCompat.Builder mBuilder;
+    NotificationManager mNotificationManager;
 
     @Override
     public void onCreate() {
@@ -94,23 +96,20 @@ public class NotificationService extends Service {
     }
 
     private void sendNotification(Job job) {
-        Intent intent = new Intent(this, JobDetailActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);
-        remoteViews.setTextViewText(R.id.tv_notification_title, job.getName());
-        remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(0));
-        remoteViews.setTextViewText(R.id.tv_notification_descripsion, job.getDescription());
-        remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_pause);
+        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        remoteViews = new RemoteViews(getPackageName(), R.layout.notification_for_job);
+        remoteViews.setTextViewText(R.id.tv_app_name,getApplicationContext().getString(R.string.app_name));
+        remoteViews.setTextViewText(R.id.tv_notification_content, CalendarExtension.getTimeText(0));
         mBuilder = new NotificationCompat.Builder(this, Key.CHANNEL_COUNT_UP)
                 .setSmallIcon(R.drawable.ic_delete)
                 .setContentIntent(pendingIntent)
                 .setSilent(true)
                 .setAutoCancel(true)
                 .setCustomContentView(remoteViews);
-        startForeground(Key.COUNT_UP_ID,mBuilder.build());
-        //  mNotificationManager.notify(Key.COUNT_UP_ID, mBuilder.build());
+        startForeground(Key.CHANNEL_NOTIFICATION_JOB_ID,mBuilder.build());
     }
 
 

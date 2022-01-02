@@ -1,7 +1,9 @@
 package com.ctk43.doancoso.Library;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Activity.CategoryManagementActivity;
+import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
 
@@ -111,6 +116,32 @@ public class DialogExtension {
                     jobAdapter.FilterByStatus(status[0]);
                     dialog.dismiss();
                 }
+            }
+        });
+        dialog.show();
+    }
+
+    public static void onOpenMenuDialog(Context context){
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_menu);
+        Window window = dialog.getWindow();
+        if (window == null) return;
+        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttribute = window.getAttributes();
+        windowAttribute.gravity = Gravity.RIGHT;
+        window.setAttributes(windowAttribute);
+        dialog.setCancelable(true);
+        LinearLayout ln_category_management = dialog.findViewById(R.id.dialog_menu_category);
+        ln_category_management.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, CategoryManagementActivity.class);
+                context.startActivity(intent);
+                if(!(context instanceof MainActivity))
+                    ((Activity)context).finish();;
+                dialog.dismiss();
             }
         });
         dialog.show();

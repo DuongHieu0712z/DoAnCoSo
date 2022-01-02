@@ -3,8 +3,10 @@ package com.ctk43.doancoso.Library;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,6 +26,7 @@ import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Activity.JobActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
 import com.ctk43.doancoso.View.Fragment.ManagerJobFragment;
@@ -151,6 +154,14 @@ public class Extension {
             JobAdapter jobAdapter = managerJobFragment.getJobFragment().getAdapter();
             jobAdapter.getFilter().filter(text);
         }
+    }
+    public static void callJobActivity(Context context, Job job, Boolean dateToDate){
+        Intent intent = new Intent(context, JobActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Key.SEND_JOB,job);
+        bundle.putSerializable(Key.DATE_TO_DATE,dateToDate);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
 }

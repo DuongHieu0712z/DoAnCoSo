@@ -285,7 +285,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             categoryViewModel.insert(new Category(edt_job_type_name.getText().toString(), DataLocalManager.getEmail()));
             dialog.dismiss();
         });
-
         dialog.show();
     }
 }

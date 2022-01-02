@@ -65,7 +65,6 @@ public class ManagerJobFragment extends Fragment {
     }
 
     private void InnitView(View view) {
-
         ImageButton img_btn_filter = view.findViewById(R.id.img_btn_filter);
         ImageButton img_btn_convert = view.findViewById(R.id.img_btn_convert);
         Spinner spn_category = view.findViewById(R.id.spn_category);
@@ -106,9 +105,9 @@ public class ManagerJobFragment extends Fragment {
         });
 
         img_btn_convert.setOnClickListener(new View.OnClickListener() {
-            final ArrayList<Category>[] categories = new ArrayList[]{new ArrayList<>()};
             @Override
             public void onClick(View view) {
+                getJobFragment();
                 jobFragment.getAdapter().Revert();
             }
         });

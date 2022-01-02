@@ -224,6 +224,9 @@ public class CalendarExtension {
     public static String dateToString(Date date) {
         return "Ngày " + formatDate(date) + " Giờ " + formatTime(date);
     }
+    public static String getString(Date date) {
+        return "Ngày " + formatDate(date);
+    }
 
     @SuppressLint("DefaultLocale")
     public static String formatTime(int seconds, int minutes, int hour) {

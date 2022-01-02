@@ -84,6 +84,9 @@ public class JobViewModel extends ViewModel {
 
         return jobRepository.getJobAboutTime(CalendarExtension.getStartTimeOfWeek(date,position),CalendarExtension.getEndTimeOfWeek(date,position));
     }
+    public LiveData<List<Job>> getJobsStatus(int status,Date start,Date end){
+        return jobRepository.getJobByStatus(status,start,end);
+    }
 
     public List<Job> getJobsByCategory(int id){
         return jobRepository.getJobByCategory(id);

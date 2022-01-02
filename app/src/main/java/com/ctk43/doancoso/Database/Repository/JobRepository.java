@@ -39,6 +39,9 @@ public class JobRepository {
         return jobDAO.getJobByStatus(status);
     }
 
+    public LiveData<List<Job>> getJobByStatus(int status,Date start,Date end) {
+        return jobDAO.getJobByStatusTime(status,start,end);
+    }
     public int getSumJobByStatusMonth(int status, Date start,Date end) {
         return jobDAO.getRowCountByStatusMonth(status,start,end);
     }
