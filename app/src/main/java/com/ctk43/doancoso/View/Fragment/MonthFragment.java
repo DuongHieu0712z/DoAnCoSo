@@ -38,7 +38,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 
-public class  MonthFragment extends Fragment implements View.OnClickListener{
+public class MonthFragment extends Fragment implements View.OnClickListener {
 
     private View view;
     private Context mContext;
@@ -46,10 +46,11 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
     private RecyclerView rcv_calendar;
     private int month, year;
     private Date selectedDate;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_month,container,false);
+        view = inflater.inflate(R.layout.fragment_month, container, false);
         return view;
     }
 
@@ -70,14 +71,12 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
     private void InnitView(View view) throws ParseException {
         tv_current_month = view.findViewById(R.id.tv_current_month);
         rcv_calendar = view.findViewById(R.id.calendarRecyclerView);
-        selectedDate = CalendarExtension.currDate();
-        selectedDate = CalendarExtension.currDate();
+        monthYearFromDate(CalendarExtension.currDate());
+        selectedDate = CalendarExtension.getStartTimeOfMonth(month,year);
         setMonthView();
-
         ImageView btn_prv_month = view.findViewById(R.id.btn_prv_month);
         ImageView btn_next_month = view.findViewById(R.id.btn_next_month);
 
@@ -104,108 +103,76 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
         });
 
     }
- 
+
     private void setMonthView() throws ParseException {
         String str = "";
         tv_current_month.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-        ArrayList<List<Job>> listJob = new ArrayList<>();
         JobViewModel jobViewModel = new JobViewModel();
         jobViewModel.setData(mContext);
-        List<Job> jobsInMonthYear = jobViewModel.getListJobMonth(month,year);
-        Date st = new SimpleDateFormat("dd/MM/yyyy").parse("11/12/2021");
-        Date et = new SimpleDateFormat("dd/MM/yyyy").parse("20/12/2021");
-
-        jobsInMonthYear.add(new Job(10, 2, "Yêm Check", st, et,"Here is description", 1, 5.0, 1));
-
-        /*listJob.add(jobViewModel.getJobsByCategory(1));
-        listJob.add(null);
-        listJob.add(null);
-        listJob.add(null);
-        listJob.add(jobViewModel.getJobsByCategory(1));*/
-
-        Calendar cal1 = new GregorianCalendar();
-        Calendar cal2 = new GregorianCalendar();
         Date currentDay;
-
-        List<Job> jobsInDate = new ArrayList<>();
-
-        for (int i=0;i<daysInMonth.size(); i++){
-            jobsInDate.clear();
-            if(daysInMonth.get(i)=="")listJob.add(null);
-            if(daysInMonth.get(i)!=""){
-                if(month==1 && Integer.parseInt(daysInMonth.get(i))>29)
-                    listJob.add(null);
-                else if((month == 3 || month == 8||month == 5||month == 10) && Integer.parseInt(daysInMonth.get(i))>30)
-                    listJob.add(null);
-                else{
-                    str=daysInMonth.get(i)+"/"+(month+1)+"/"+year;
+        ArrayList<Date> datesHaveJob = new ArrayList<>();
+        datesHaveJob.clear();
+        for (int i = 0; i < daysInMonth.size(); i++) {
+            if (daysInMonth.get(i) == "")
+                datesHaveJob.add(null);
+            if (daysInMonth.get(i) != "") {
+                if (month == 1 && Integer.parseInt(daysInMonth.get(i)) > 29)
+                    datesHaveJob.add(null);
+                else if ((month == 3 || month == 8 || month == 5 || month == 10) && Integer.parseInt(daysInMonth.get(i)) > 30)
+                    datesHaveJob.add(null);
+                else {
+                    str = daysInMonth.get(i) + "/" + (month + 1) + "/" + year;
                     currentDay = new SimpleDateFormat("dd/MM/yyyy").parse(str);
-                    cal1.setTime(currentDay);
-                    for(Job j : jobsInMonthYear){
-                        cal2.setTime(j.getEndDate());
-                        if(cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) &&
-                                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
-                                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR))
+                    int j ;
+                        if (jobViewModel.getCountJobOneDate(currentDay) >0)
                         {
-                            listJob.add(new ArrayList<>());
-                            listJob.get(i).add(j);
-                            jobsInDate.add(j);
+                            j = jobViewModel.getCountJobOneDate(currentDay);
+                            datesHaveJob.add(currentDay);
+                            continue;
                         }
                     }
-                    if(jobsInDate.size()==0)
-                        listJob.add(null);
+                    datesHaveJob.add(null);
                 }
             }
-        }
 
-
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,listJob, mContext, month, year);
-
+        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,datesHaveJob , mContext, month, year);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(mContext, 7);
         rcv_calendar.setLayoutManager(layoutManager);
         rcv_calendar.setAdapter(calendarAdapter);
     }
 
 
-    private ArrayList<String> daysInMonthArray(Date date)
-    {
+    private ArrayList<String> daysInMonthArray(Date date) {
         ArrayList<String> daysInMonthArray = new ArrayList<>();
         int daysInMonth = CalendarExtension.getDaysInMonth(date);
         int dayOfWeek = CalendarExtension.getDateOfWeek(date);
-
-        for(int i = 1; i <= 42; i++)
-        {
-            if(i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-            {
+        for (int i = 1; i <= 42; i++) {
+            if (i <= dayOfWeek || i > daysInMonth + dayOfWeek) {
                 daysInMonthArray.add("");
-            }
-            else
-            {
+            } else {
                 daysInMonthArray.add(String.valueOf(i - dayOfWeek));
             }
         }
-        return  daysInMonthArray;
+        return daysInMonthArray;
     }
 
 
-    private String monthYearFromDate(Date date)
-    {
-        month = CalendarExtension.getMonth(date,0);
-        year = CalendarExtension.getYear(date,0);
-        String str = "Tháng "+(month+1);
-        str+=" năm "+year;
+    private String monthYearFromDate(Date date) {
+        month = CalendarExtension.getMonth(date, 0);
+        year = CalendarExtension.getYear(date, 0);
+        String str = "Tháng " + (month + 1);
+        str += " năm " + year;
         return str;
     }
 
     public void previousMonthAction(View view) throws ParseException {
-        selectedDate = CalendarExtension.getMonthByPosition(selectedDate,-1);
+        selectedDate = CalendarExtension.getMonthByPosition(selectedDate, -1);
         setMonthView();
     }
 
-
     public void nextMonthAction(View view) throws ParseException {
-        selectedDate = CalendarExtension.getMonthByPosition(selectedDate,1);
+        selectedDate = CalendarExtension.getMonthByPosition(selectedDate, 1);
         setMonthView();
     }
 
@@ -213,15 +180,62 @@ public class  MonthFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
+
     @Override
     public void onStop() {
         super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
+
+         /*    List<Job> jobsInMonthYear = jobViewModel.getListJobMonth(month,year);
+            Date st = new SimpleDateFormat("dd/MM/yyyy").parse("11/12/2021");
+            Date et = new SimpleDateFormat("dd/MM/yyyy").parse("20/12/2021");
+
+            jobsInMonthYear.add(new Job(10, 2, "Yêm Check", st, et,"Here is description", 1, 5.0, 1));
+
+        *//*listJob.add(jobViewModel.getJobsByCategory(1));
+        listJob.add(null);
+        listJob.add(null);
+        listJob.add(null);
+        listJob.add(jobViewModel.getJobsByCategory(1));*//*
+
+            Calendar cal1 = new GregorianCalendar();
+            Calendar cal2 = new GregorianCalendar();
+            Date currentDay;
+
+            List<Job> jobsInDate = new ArrayList<>();
+
+            for (int i=0;i<daysInMonth.size(); i++){
+                jobsInDate.clear();
+                if(daysInMonth.get(i)=="")listJob.add(null);
+                if(daysInMonth.get(i)!=""){
+                    if(month==1 && Integer.parseInt(daysInMonth.get(i))>29)
+                        listJob.add(null);
+                    else if((month == 3 || month == 8||month == 5||month == 10) && Integer.parseInt(daysInMonth.get(i))>30)
+                        listJob.add(null);
+                    else{
+                        str=daysInMonth.get(i)+"/"+(month+1)+"/"+year;
+                        currentDay = new SimpleDateFormat("dd/MM/yyyy").parse(str);
+                        cal1.setTime(currentDay);
+                        for(Job j : jobsInMonthYear){
+                            cal2.setTime(j.getEndDate());
+                            if(cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) &&
+                                    cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                                    cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR))
+                            {
+                                listJob.add(new ArrayList<>());
+                                listJob.get(i).add(j);
+                                jobsInDate.add(j);
+                            }
+                        }
+                        if(jobsInDate.size()==0)
+                            listJob.add(null);
+                    }
+                }*/
+
 
 }

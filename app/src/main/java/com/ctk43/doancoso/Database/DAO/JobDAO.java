@@ -45,11 +45,13 @@ public interface JobDAO {
     @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status")
     int getRowCountByStatus(int status);
 
-
-    @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status AND EndDate >:start AND EndDate<:end")
+    @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status AND EndDate >=:start AND EndDate<=:end")
     @TypeConverters(DateConvertor.class)
     int getRowCountByStatusMonth(int status,Date start,Date end);
 
+    @Query("SELECT COUNT(1) FROM JOB WHERE EndDate >=:start AND EndDate<=:end")
+    @TypeConverters(DateConvertor.class)
+    int getRowCountByTimeEndDate(Date start,Date end);
 
     @Query("SELECT * FROM JOB WHERE EndDate >=:start AND EndDate<=:end ORDER BY Status,Priority DESC ")
     @TypeConverters(DateConvertor.class)
