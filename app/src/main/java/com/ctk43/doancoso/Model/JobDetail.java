@@ -42,6 +42,7 @@ public class JobDetail implements Serializable {
 
     @ColumnInfo(name = "IDParent")
     private int idParent;
+
     @Ignore
     public JobDetail(int jobId, @NonNull String name, int estimatedCompletedTime, String description) {
         this.jobId = jobId;
@@ -49,6 +50,7 @@ public class JobDetail implements Serializable {
         this.estimatedCompletedTime = estimatedCompletedTime;
         this.description = description;
     }
+
     public JobDetail(int jobId, boolean priority, @NonNull String name, int estimatedCompletedTime, String description) {
         this.jobId = jobId;
         this.name = name;

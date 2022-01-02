@@ -35,8 +35,8 @@ import java.util.List;
 
 public class Extension {
 
-    public static boolean isEmpty(Context context, String value, String name, boolean isdefaut) {
-        if (value.isEmpty() || isdefaut) {
+    public static boolean isEmpty(Context context, String value, String name, boolean isDefault) {
+        if (value.isEmpty() || isDefault) {
             Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
             return true;
         }

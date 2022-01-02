@@ -69,8 +69,10 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             jobToUpdate = (Job) bundle.get("JobToUpdate");
-            loadJob();
-            tv_title.setText(R.string.update_job);
+            if (jobToUpdate != null) {
+                loadJob();
+                tv_title.setText(R.string.update_job);
+            }
         }
     }
 
@@ -121,7 +123,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         btn_Add.setOnClickListener(view -> {
             try {
                 saveJob();
-                finish();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -184,12 +185,13 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
             if (jobToUpdate == null) {
                 Job job = getJob();
                 jobViewModel.insert(job);
-                Toast.makeText(AddJobActivity.this, getString(R.string.add_job_sucess), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.add_job_sucess), Toast.LENGTH_SHORT).show();
             } else {
                 updateJob();
                 jobViewModel.update(jobToUpdate);
-                Toast.makeText(AddJobActivity.this, getString(R.string.update_job_sucess), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.update_job_sucess), Toast.LENGTH_SHORT).show();
             }
+            finish();
         }
     }
 
@@ -200,27 +202,11 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         String endDate = tv_date_end.getText().toString();
         String endTime = tv_time_end.getText().toString();
 
-        if (Extension.isEmpty(this, name, getString(R.string.job_name), false)) {
-            return false;
-        }
-
-        if (Extension.isEmpty(this, startDate, getString(R.string.date_start), startDate.equals(getString(R.string.day)))) {
-            return false;
-        }
-
-        if (Extension.isEmpty(this, startTime, getString(R.string.hour_start), startTime.equals(getString(R.string.hour)))) {
-            return false;
-        }
-
-        if (Extension.isEmpty(this, endDate, getString(R.string.date_end), endDate.equals(getString(R.string.day)))) {
-            return false;
-        }
-
-        if (Extension.isEmpty(this, endTime, getString(R.string.hour_end), endTime.equals(getString(R.string.hour)))) {
-            return false;
-        }
-
-        return true;
+        return !Extension.isEmpty(this, name, getString(R.string.job_name), false) &&
+                !Extension.isEmpty(this, startDate, getString(R.string.date_start), startDate.equals(getString(R.string.day))) &&
+                !Extension.isEmpty(this, startTime, getString(R.string.hour_start), startTime.equals(getString(R.string.hour))) &&
+                !Extension.isEmpty(this, endDate, getString(R.string.date_end), endDate.equals(getString(R.string.day))) &&
+                !Extension.isEmpty(this, endTime, getString(R.string.hour_end), endTime.equals(getString(R.string.hour)));
     }
 
     private Job getJob() throws ParseException {
