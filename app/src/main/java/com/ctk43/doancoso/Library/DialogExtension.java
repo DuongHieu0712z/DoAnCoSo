@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -19,11 +20,13 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
+import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.CategoryManagementActivity;
 import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
+import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 
 public class DialogExtension {
 
@@ -143,6 +146,30 @@ public class DialogExtension {
                     ((Activity)context).finish();;
                 dialog.dismiss();
             }
+        });
+        dialog.show();
+    }
+    public static void onOpenCategoryDiaLog(Category category, Context context, CategoryViewModel categoryViewModel) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.floating_dialog_add_job_type);
+        Window window = dialog.getWindow();
+        if (window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttribute = window.getAttributes();
+        windowAttribute.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttribute);
+        dialog.setCancelable(true);
+        TextView tv_title = dialog.findViewById(R.id.tv_add_category_title);
+        tv_title.setText(R.string.category_title);
+        EditText edt_job_type_name = dialog.findViewById(R.id.edt_dlg_job_type);
+        edt_job_type_name.setText(category.getName());
+        Button btn_add_job_type = dialog.findViewById(R.id.btn_dlg_add_job_type);
+        btn_add_job_type.setOnClickListener(view -> {
+            category.setName(edt_job_type_name.getText().toString());
+            categoryViewModel.update(category);
+            dialog.dismiss();
         });
         dialog.show();
     }

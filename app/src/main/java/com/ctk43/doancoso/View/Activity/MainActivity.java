@@ -70,16 +70,16 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(viewPager.getCurrentItem() == 0){
-                    Extension.filterSearch(viewPager,viewPagerAdapter,query);
+                if (viewPager.getCurrentItem() == 0) {
+                    Extension.filterSearch(viewPager, viewPagerAdapter, query);
                 }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String search) {
-                if(viewPager.getCurrentItem() == 0){
-                    Extension.filterSearch(viewPager,viewPagerAdapter,search);
+                if (viewPager.getCurrentItem() == 0) {
+                    Extension.filterSearch(viewPager, viewPagerAdapter, search);
                 }
                 return false;
             }

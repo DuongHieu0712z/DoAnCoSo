@@ -60,6 +60,10 @@ public class CategoryViewModel extends ViewModel {
         return  list;
     }
 
+    public int countJob(int id) {
+        return categoryRepository.countJob(id);
+    }
+
     public void insert(Category... categories) {
         categoryRepository.insert(categories);
     }

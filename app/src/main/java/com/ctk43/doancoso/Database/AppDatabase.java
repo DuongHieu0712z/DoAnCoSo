@@ -106,17 +106,18 @@ public abstract class AppDatabase extends RoomDatabase {
             categoryDAO.insert(new Category("Mặc định","default@example.vn"),
                     new Category("Học tập","default@example.vn"),
                     new Category("Giải trí","default@example.vn"));
+
             jobDAO.insert(new Job(1, "Làm đồ án", CalendarExtension.getDateStartOfMonth(1,2022), CalendarExtension.getDateEndOfMonth(3,2022), "Một môn học gây trầm cảm"));
             jobDAO.insert(new Job(1, "Làm lab 8", CalendarExtension.getDateStartOfMonth(2,2022),CalendarExtension.getDateEndOfMonth(5,2022) , "Không hiểu j hết á"));
             jobDAO.insert(new Job(1, "Làm lab 9", CalendarExtension.getDateStartOfMonth(3,2022), CalendarExtension.getDateEndOfMonth(3,2022), "Từ chối hiểu"));
             jobDAO.insert(new Job(1, "Làm web", CalendarExtension.getDateStartOfMonth(4,2022), CalendarExtension.getDateEndOfMonth(4,2022), "Làm kiểu j á"));
-
             jobDAO.insert(new Job(1, "Genshin +1", CalendarExtension.getEndDateOfWeek(start,0), CalendarExtension.getStartTimeOfWeek(start,1), "Vì trầm cảm do làm đồ án"));
-            jobDAO.insert(new Job(2, "Đồ án", CalendarExtension.getEndDateOfWeek(start,-1), CalendarExtension.getStartTimeOfWeek(start,1), "Vì trầm cảm do làm đồ án"));
             jobDAO.insert(new Job(1, "Nấu cum",CalendarExtension.getEndDateOfWeek(start,1), CalendarExtension.getStartTimeOfWeek(start,1), "Vì trầm cảm do làm đồ án"));
-            jobDAO.insert(new Job(2, "Cơm thừa canh cạn", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
             jobDAO.insert(new Job(1, "Không như mơ ước", CalendarExtension.getStartTimeOfWeek(start,-1), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
             jobDAO.insert(new Job(1, "Kho cá", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
+
+            jobDAO.insert(new Job(2, "Đồ án", CalendarExtension.getEndDateOfWeek(start,-1), CalendarExtension.getStartTimeOfWeek(start,1), "Vì trầm cảm do làm đồ án"));
+            jobDAO.insert(new Job(2, "Cơm thừa canh cạn", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
             jobDAO.insert(new Job(2, "Kho mém", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
             jobDAO.insert(new Job(2, "Nếu không yêu đừng gây thương nhớ, Vì con tim không nghe theo lý trí chẳng thể phía sauuuuuuuu", CalendarExtension.getStartTimeOfWeek(start,-3), CalendarExtension.getEndTimeOfWeek(start,0), "Vì trầm cảm do làm đồ án"));
             jobDAO.insert(new Job(2, "Anh thuộc về ai mất rồi", CalendarExtension.getStartTimeOfWeek(start,0), CalendarExtension.getEndTimeOfWeek(start,-1), "Vì trầm cảm do làm đồ án"));

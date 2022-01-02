@@ -23,7 +23,7 @@ public interface JobDAO {
     @TypeConverters(DateConvertor.class)
     LiveData<List<Job>> getJobs(Date endDate);
 
-    @Query("SELECT * FROM Job WHERE StartDate >= :startDate AND EndDate <= :endDate")
+    @Query("SELECT * FROM Job WHERE EndDate >= :startDate AND EndDate <= :endDate")
     @TypeConverters(DateConvertor.class)
     LiveData<List<Job>> getJobs(Date startDate, Date endDate);
 

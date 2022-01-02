@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity(foreignKeys = @ForeignKey(entity = Job.class,
         parentColumns = "ID",
         childColumns = "JobID",
-        onDelete = ForeignKey.SET_NULL))
+        onDelete = ForeignKey.CASCADE))
 public class NotificationModel {
 
     @ColumnInfo(name = "ID")

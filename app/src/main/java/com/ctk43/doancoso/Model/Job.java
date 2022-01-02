@@ -12,6 +12,7 @@ import com.ctk43.doancoso.Database.DateConvertor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(foreignKeys = @ForeignKey(
         entity = Category.class,

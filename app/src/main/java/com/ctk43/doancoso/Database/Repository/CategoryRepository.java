@@ -34,6 +34,10 @@ public class CategoryRepository {
         return categoryDAO.getList();
     }
 
+    public int countJob(int id) {
+        return categoryDAO.countJob(id);
+    }
+
     public void insert(Category... categories) {
         new CategoryInsertAsyncTask(categoryDAO).execute(categories);
     }

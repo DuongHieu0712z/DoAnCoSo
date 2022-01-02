@@ -228,6 +228,7 @@ public class CalendarExtension {
         return "Ngày " + formatDate(date);
     }
 
+    @NonNull
     @SuppressLint("DefaultLocale")
     public static String formatTime(int seconds, int minutes, int hour) {
         return String.format("%02d:%02d:%02d", hour, minutes, seconds);
@@ -241,14 +242,17 @@ public class CalendarExtension {
         return dateTimeFormat.parse(date + " " + time);
     }
 
+    @NonNull
     public static Date getDate(int year, int month, int day) {
         return getDate(year, month, day, 0, 0);
     }
 
+    @NonNull
     public static Date getDate(int year, int month, int day, int hour, int minute) {
         return getDate(year, month, day, hour, minute, 0);
     }
 
+    @NonNull
     public static Date getDate(int year, int month, int day, int hour, int minute, int second) {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
@@ -263,22 +267,27 @@ public class CalendarExtension {
         return timeFormat.parse(time);
     }
 
+    @NonNull
     public static Date getTime(int hour, int minute) {
         return getTime(hour, minute, 0);
     }
 
+    @NonNull
     public static Date getTime(int hour, int minute, int second) {
         return getDate(0, 0, 0, hour, minute, second);
     }
 
+    @NonNull
     public static String formatDate(Date date) {
         return dateFormat.format(date);
     }
 
+    @NonNull
     public static String formatTime(Date time) {
         return timeFormat.format(time);
     }
 
+    @NonNull
     public static String formatDateTime(Date date) {
         return dateTimeFormat.format(date);
     }

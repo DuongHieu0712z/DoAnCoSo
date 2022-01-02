@@ -16,12 +16,16 @@
     <string name="save">Lưu</string>
     <string name="add_job">Thêm công việc</string>
     <string name="update_job">Cập nhật công việc</string>
+    <string name="add_job_detail">Thêm chi tiết công việc</string>
     <string name="update_job_detail">Cập nhật chi tiết công việc</string>
     <string name="add_job_sucess">Thêm công việc thành công</string>
     <string name="add_job_not_sucess">Không thể thêm công việc</string>
     <string name="update_job_sucess">Cập nhật công việc thành công</string>
     <string name="update_job_not_sucess">Không thể cập nhật công việc</string>
-    <string name="add_job_detail">Thêm chi tiết công việc</string>
+    <string name="add_job_detail_sucess">Thêm chi tiết công việc thành công</string>
+    <string name="add_job_detail_not_sucess">Không thể thêm chi tiết công việc</string>
+    <string name="update_job_detail_sucess">Cập nhật chi tiết công việc thành công</string>
+    <string name="update_job_detail_not_sucess">Không thể cập nhật chi tiết công việc</string>
 
     <!--Job-->
     <string name="job">Công việc</string>
@@ -29,6 +33,9 @@
     <string name="tv_add_job_type">Thêm danh mục</string>
     <string name="hint_add_job_type">Nhập tên loại công việc</string>
     <string name="description">Mô tả</string>
+
+    <!--Job detail-->
+    <string name="job_detail_name">Tên loại công việc</string>
 
     <!--Dialog-->
     <string name="confirm">Xác nhận</string>

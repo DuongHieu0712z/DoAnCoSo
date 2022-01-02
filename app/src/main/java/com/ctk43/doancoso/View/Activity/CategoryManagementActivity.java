@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.CalendarAdapter;
@@ -33,8 +34,7 @@ public class CategoryManagementActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_management);
-        innitView();
-
+        initView();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CategoryManagementActivity extends AppCompatActivity {
         searchView = (SearchView) menu.findItem(R.id.action_category_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
-        innitView();
+        initView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -62,17 +62,18 @@ public class CategoryManagementActivity extends AppCompatActivity {
         return true;
     }
 
-    private void innitView() {
+    private void initView() {
         rcv_categories = findViewById(R.id.rcv_categories);
+        rcv_categories.setLayoutManager(new LinearLayoutManager(CategoryManagementActivity.this));
+        fab_add_cate =findViewById(R.id.fab_add_category);
         categoryViewModel = new CategoryViewModel();
         categoryViewModel.setContext(CategoryManagementActivity.this);
-        List<Category> categories = categoryViewModel.getCategoryList();
-        fab_add_cate = findViewById(R.id.fab_add_category);
-        adapter = new CategoryManagementAdapter(CategoryManagementActivity.this, categories);
-        rcv_categories.setLayoutManager(new LinearLayoutManager(CategoryManagementActivity.this));
-        rcv_categories.setAdapter(adapter);
+        categoryViewModel.getCategories().observe(this, categories -> {
+            adapter = new CategoryManagementAdapter(CategoryManagementActivity.this, categories);
+            rcv_categories.setAdapter(adapter);
+        });
         fab_add_cate.setOnClickListener(v->{
-            
+            DialogExtension.onOpenCategoryDiaLog(null,CategoryManagementActivity.this,categoryViewModel);
         });
     }
 }
