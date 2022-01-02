@@ -1,5 +1,6 @@
 package com.ctk43.doancoso.Library;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -17,15 +18,12 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.CategoryManagementActivity;
 import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
-import com.ctk43.doancoso.View.Fragment.JobFragment;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 
 public class DialogExtension {
@@ -69,7 +67,7 @@ public class DialogExtension {
         dialog.setCancelable(true);
         RadioButton rd_priority_0 = dialog.findViewById(R.id.rb_priority_0);
         RadioButton rd_priority_1 = dialog.findViewById(R.id.rb_priority_1);
-        RadioButton rd_priority_2= dialog.findViewById(R.id.rb_priority_2);
+        RadioButton rd_priority_2 = dialog.findViewById(R.id.rb_priority_2);
         RadioButton rd_priority_3 = dialog.findViewById(R.id.rb_priority_3);
         rd_priority_0.setText(GeneralData.getPriority(0));
         rd_priority_1.setText(GeneralData.getPriority(1));
@@ -90,13 +88,13 @@ public class DialogExtension {
             @Override
             public void onClick(View view) {
                 if (rd_priority_0.isChecked()) {
-                    priority[0] =0;
+                    priority[0] = 0;
                 } else if (rd_priority_1.isChecked()) {
-                    priority[0] =1;
+                    priority[0] = 1;
                 } else if (rd_priority_2.isChecked()) {
-                    priority[0] =2;
+                    priority[0] = 2;
                 } else if (rd_priority_3.isChecked()) {
-                    priority[0] =3;
+                    priority[0] = 3;
                 }
                 if (rd_status_0.isChecked()) {
                     status[0] = 0;
@@ -109,10 +107,10 @@ public class DialogExtension {
                 } else if (rd_status_4.isChecked()) {
                     status[0] = 4;
                 }
-                if(!dayToDay&& priority[0] == -1 && status[0] ==-1){
+                if (!dayToDay && priority[0] == -1 && status[0] == -1) {
                     Toast.makeText(mContext, "Vui lòng chọn lọc", Toast.LENGTH_LONG).show();
-                } else{
-                    if(dayToDay){
+                } else {
+                    if (dayToDay) {
                         ///jobAdapter.FilterByDateToDate();
                     }
                     jobAdapter.FilterByPriority(priority[0]);
@@ -124,51 +122,74 @@ public class DialogExtension {
         dialog.show();
     }
 
-    public static void onOpenMenuDialog(Context context){
+    @SuppressLint("RtlHardcoded")
+    public static void onOpenMenuDialog(Context context) {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_menu);
+        dialog.setCancelable(true);
+
         Window window = dialog.getWindow();
         if (window == null) return;
+
         window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         WindowManager.LayoutParams windowAttribute = window.getAttributes();
         windowAttribute.gravity = Gravity.RIGHT;
         window.setAttributes(windowAttribute);
-        dialog.setCancelable(true);
+
         LinearLayout ln_category_management = dialog.findViewById(R.id.dialog_menu_category);
-        ln_category_management.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CategoryManagementActivity.class);
-                context.startActivity(intent);
-                if(!(context instanceof MainActivity))
-                    ((Activity)context).finish();;
-                dialog.dismiss();
-            }
+        ln_category_management.setOnClickListener(view -> {
+            Intent intent = new Intent(context, CategoryManagementActivity.class);
+            context.startActivity(intent);
+            if (!(context instanceof MainActivity))
+                ((Activity) context).finish();
+            ;
+            dialog.dismiss();
         });
         dialog.show();
     }
-    public static void onOpenCategoryDiaLog(Category category, Context context, CategoryViewModel categoryViewModel) {
+
+    public static void onOpenCategoryDiaLog(Context context, CategoryViewModel categoryViewModel, Category category) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.floating_dialog_add_job_type);
+        dialog.setCancelable(true);
+
         Window window = dialog.getWindow();
         if (window == null) return;
+
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         WindowManager.LayoutParams windowAttribute = window.getAttributes();
         windowAttribute.gravity = Gravity.CENTER;
         window.setAttributes(windowAttribute);
-        dialog.setCancelable(true);
+
         TextView tv_title = dialog.findViewById(R.id.tv_add_category_title);
-        tv_title.setText(R.string.category_title);
         EditText edt_job_type_name = dialog.findViewById(R.id.edt_dlg_job_type);
-        edt_job_type_name.setText(category.getName());
+
+        if (category == null) {
+            tv_title.setText(R.string.add_category_title);
+        } else {
+            tv_title.setText(R.string.update_category_title);
+            edt_job_type_name.setText(category.getName());
+        }
+
         Button btn_add_job_type = dialog.findViewById(R.id.btn_dlg_add_job_type);
         btn_add_job_type.setOnClickListener(view -> {
-            category.setName(edt_job_type_name.getText().toString());
-            categoryViewModel.update(category);
+            String name = edt_job_type_name.getText().toString();
+            if (Extension.isEmpty(context, name,  context.getString(R.string.category_name),false)) {
+                return;
+            }
+
+            if (category == null) {
+                categoryViewModel.insert(new Category(name, DataLocalManager.getEmail()));
+            } else {
+                category.setName(name);
+                categoryViewModel.update(category);
+            }
             dialog.dismiss();
         });
         dialog.show();

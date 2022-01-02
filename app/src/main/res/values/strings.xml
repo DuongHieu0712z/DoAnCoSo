@@ -131,7 +131,9 @@
     <!-- Category-->
     <string name="number_of_job">Số công việc :</string>
     <string name="category_management">Quản lý danh mục</string>
-    <string name="category_title">Cập nhật danh mục</string>
+    <string name="add_category_title">Thêm danh mục</string>
+    <string name="update_category_title">Cập nhật danh mục</string>
+    <string name="category_name">Tên danh mục</string>
 
     <!-- notification-->
     <string name="notification_new">Mới</string>

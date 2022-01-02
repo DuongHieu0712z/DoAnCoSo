@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Library.CalendarExtension;
+import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Model.Category;
@@ -91,7 +92,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         });
 
         ImageView img_add_job_type = findViewById(R.id.img_add_job_type);
-        img_add_job_type.setOnClickListener(v -> onOpenDialog());
+        img_add_job_type.setOnClickListener(v -> DialogExtension.onOpenCategoryDiaLog(this, categoryViewModel, null));
 
         ImageView img_close = findViewById(R.id.img_close);
         img_close.setOnClickListener(v -> onBackPressed());
@@ -262,29 +263,5 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         jobToUpdate.setEndDate(end);
         jobToUpdate.setPriority(priority);
         jobToUpdate.setCategoryId(categoryId);
-    }
-
-    private void onOpenDialog() {
-        final Dialog dialog = new Dialog(AddJobActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.floating_dialog_add_job_type);
-        Window window = dialog.getWindow();
-        if (window == null) return;
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams windowAttribute = window.getAttributes();
-        windowAttribute.gravity = Gravity.CENTER;
-        window.setAttributes(windowAttribute);
-        dialog.setCancelable(true);
-
-        EditText edt_job_type_name = dialog.findViewById(R.id.edt_dlg_job_type);
-
-        Button btn_add_job_type = dialog.findViewById(R.id.btn_dlg_add_job_type);
-        btn_add_job_type.setOnClickListener(view -> {
-            //xu ly them loai cong viec
-            categoryViewModel.insert(new Category(edt_job_type_name.getText().toString(), DataLocalManager.getEmail()));
-            dialog.dismiss();
-        });
-        dialog.show();
     }
 }
