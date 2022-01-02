@@ -1,7 +1,6 @@
 package com.ctk43.doancoso.View.Activity;
 
 
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -16,24 +15,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.Service.NotificationService;
-import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
-import com.ctk43.doancoso.View.Fragment.JobFragment;
-import com.ctk43.doancoso.View.Fragment.ManagerJobFragment;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -49,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
     public String currentDate;
     public List<Job> listjob = new ArrayList<>();
     public String result = "";
+    ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
     private BottomNavigationView bottomMenu;
     private JobViewModel jobViewModel;
     private ViewPager2 viewPager;
     private int dlg_mode = 0;
-    ViewPagerAdapter viewPagerAdapter;
     private SearchView searchView;
     private MenuItem addition_menu;
     private MenuItem notificationManagement;
@@ -76,16 +69,16 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(viewPager.getCurrentItem() == 0){
-                    Extension.filterSearch(viewPager,viewPagerAdapter,query);
+                if (viewPager.getCurrentItem() == 0) {
+                    Extension.filterSearch(viewPager, viewPagerAdapter, query);
                 }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String search) {
-                if(viewPager.getCurrentItem() == 0){
-                    Extension.filterSearch(viewPager,viewPagerAdapter,search);
+                if (viewPager.getCurrentItem() == 0) {
+                    Extension.filterSearch(viewPager, viewPagerAdapter, search);
                 }
                 return false;
             }
@@ -114,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         StartService();
         viewPager = findViewById(R.id.view_pager_main);
         bottomMenu = findViewById(R.id.bottom_Menu);
-        viewPagerAdapter= new ViewPagerAdapter(this);
+        viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setUserInputEnabled(false);
         bottomMenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -146,11 +139,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private void StartService(){
+
+    private void StartService() {
         Intent intent = new Intent(this, NotificationService.class);
         this.startService(intent);
     }
-    public void SelectBottomMenuPosition(int position){
+
+    public void SelectBottomMenuPosition(int position) {
         bottomMenu.getMenu().getItem(position).setChecked(true);
         viewPager.setCurrentItem(0);
     }
@@ -160,7 +155,9 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-    private void onOpenMenuDialog(){
+
+    @SuppressLint("RtlHardcoded")
+    private void onOpenMenuDialog() {
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_menu);

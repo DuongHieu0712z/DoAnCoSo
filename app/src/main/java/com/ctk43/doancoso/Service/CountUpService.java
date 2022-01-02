@@ -1,7 +1,6 @@
 package com.ctk43.doancoso.Service;
 
-
-import android.app.Notification;
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -10,32 +9,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.RemoteViews;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.CountUpTimer;
-import com.ctk43.doancoso.Library.Extension;
-import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 
 public class CountUpService extends Service {
-    private NotificationCompat.Builder mBuilder;
-    private NotificationManager mNotificationManager;
-    public boolean isRuning = false;
-    private JobDetail jobDetail;
+    public boolean isRunning = false;
     CountUpTimer timer;
     RemoteViews remoteViews;
     int actionTime;
+    private NotificationCompat.Builder mBuilder;
+    private NotificationManager mNotificationManager;
+    private JobDetail jobDetail;
 
     @Override
     public void onCreate() {
@@ -87,9 +83,9 @@ public class CountUpService extends Service {
     }
 
     private void pause() {
-        if(isRuning && timer !=null){
+        if (isRunning && timer != null) {
             sendActionToActivity(Action.ACTION_PAUSE);
-            isRuning = false;
+            isRunning = false;
             timer = null;
             stopSelf();
         }
@@ -97,14 +93,14 @@ public class CountUpService extends Service {
 
     public void complete() {
         sendActionToActivity(Action.ACTION_COMPLETE);
-        isRuning = false;
+        isRunning = false;
         timer = null;
         stopSelf();
     }
 
     private void resume() {
-        if(!isRuning && timer ==null){
-            isRuning = true;
+        if (!isRunning && timer == null) {
+            isRunning = true;
             sendActionToActivity(Action.ACTION_RESUME);
             startTime();
         }
@@ -113,10 +109,11 @@ public class CountUpService extends Service {
     private void cancel() {
         sendActionToActivity(Action.ACTION_CANCEL);
         timer = null;
-        isRuning = false;
+        isRunning = false;
         stopSelf();
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private void sendNotification(JobDetail jobDetail) {
         Intent intent = new Intent(this, JobDetailActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -128,7 +125,7 @@ public class CountUpService extends Service {
         remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(0));
         remoteViews.setTextViewText(R.id.tv_notification_descripsion, jobDetail.getDescription());
         remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_pause);
-        if (isRuning) {
+        if (isRunning) {
             remoteViews.setOnClickPendingIntent(R.id.img_pause_or_resume, getPendingIntent(this, Action.ACTION_PAUSE));
             remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_continue);
         } else {
@@ -143,18 +140,18 @@ public class CountUpService extends Service {
                 .setSilent(true)
                 .setAutoCancel(true)
                 .setCustomContentView(remoteViews);
-        startForeground(Key.COUNT_UP_ID,mBuilder.build());
-      //  mNotificationManager.notify(Key.COUNT_UP_ID, mBuilder.build());
+        startForeground(Key.COUNT_UP_ID, mBuilder.build());
+        //  mNotificationManager.notify(Key.COUNT_UP_ID, mBuilder.build());
     }
 
     private void startTime() {
         timer = new CountUpTimer() {
             public void onTick(int second) {
-                if(!isRuning){
+                if (!isRunning) {
                     cancel();
                     return;
                 }
-                updateNotification(jobDetail.getActualCompletedTime()+second);
+                updateNotification(jobDetail.getActualCompletedTime() + second);
 
             }
         };
@@ -162,12 +159,12 @@ public class CountUpService extends Service {
     }
 
     private void startCount() {
-        if (isRuning == false) {
-            isRuning = true;
+        if (!isRunning) {
+            isRunning = true;
             startTime();
             sendActionToActivity(Action.ACTION_START);
         } else {
-            isRuning = false;
+            isRunning = false;
             startCount();
         }
     }
@@ -185,7 +182,7 @@ public class CountUpService extends Service {
     private void sendActionToActivity(int action) {
         Intent intent = new Intent(Key.SEND_ACTION_TO_ACTIVITY);
         Bundle bundle = new Bundle();
-        bundle.putBoolean(Key.SEND_STATUS_OF_COUNT_UP, isRuning);
+        bundle.putBoolean(Key.SEND_STATUS_OF_COUNT_UP, isRunning);
         bundle.putInt(Key.SEND_ACTION, action);
         bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_SERVICE, jobDetail);
         intent.putExtras(bundle);
@@ -199,15 +196,16 @@ public class CountUpService extends Service {
         intent.putExtras(bundle);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    @NonNull
     private Intent callBackActivity() {
         Intent intent = new Intent(this, JobDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Key.SEND_JOB_DETAIL,jobDetail);
-        bundle.putBoolean(Key.IS_RUNNING,isRuning);
+        bundle.putSerializable(Key.SEND_JOB_DETAIL, jobDetail);
+        bundle.putBoolean(Key.IS_RUNNING, isRunning);
         intent.putExtras(bundle);
         return intent;
     }
-
 
     @Override
     public void onDestroy() {

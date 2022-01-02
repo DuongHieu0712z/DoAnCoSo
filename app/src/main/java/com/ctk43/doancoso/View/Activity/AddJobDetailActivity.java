@@ -52,12 +52,7 @@ public class AddJobDetailActivity extends AppCompatActivity {
 
     private void initViews() {
         ImageView img_back = findViewById(R.id.img_close_detail);
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        img_back.setOnClickListener(view -> onBackPressed());
 
         edt_job_detail_name = findViewById(R.id.edt_dlg_job_detail_name);
         edt_job_detail_des = findViewById(R.id.edt_dlg_job_detail_des);
@@ -79,12 +74,7 @@ public class AddJobDetailActivity extends AppCompatActivity {
         tv_title = findViewById(R.id.tv_title_add_new_job_detail);
 
         Button btn_add_job_detail = findViewById(R.id.btn_dlg_add_new_job_detail);
-        btn_add_job_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveJobDetail();
-            }
-        });
+        btn_add_job_detail.setOnClickListener(view -> saveJobDetail());
     }
 
     private void loadJobDetail() {
