@@ -81,13 +81,18 @@ public class JobViewModel extends ViewModel {
     }
 
     public LiveData<List<Job>> getJobsWeek(Date date,int position){
-        Date start = CalendarExtension.getStartTimeOfWeek(date,position);
-        Date end = CalendarExtension.getEndTimeOfWeek(date,position);
+
         return jobRepository.getJobAboutTime(CalendarExtension.getStartTimeOfWeek(date,position),CalendarExtension.getEndTimeOfWeek(date,position));
     }
 
     public List<Job> getJobsByCategory(int id){
         return jobRepository.getJobByCategory(id);
+    }
+
+    public int getCountJobOneDate(Date date){
+        Date start = CalendarExtension.getStartTimeOfDate(date);
+        Date end = CalendarExtension.getEndTimeOfDate(date);
+        return jobRepository.getListEndTimeByTime(CalendarExtension.getStartTimeOfDate(date),CalendarExtension.getEndTimeOfDate(date));
     }
 
     public int countStatusMonth(int status,int month,int year){

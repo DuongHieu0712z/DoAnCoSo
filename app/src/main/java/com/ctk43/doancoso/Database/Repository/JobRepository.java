@@ -43,6 +43,10 @@ public class JobRepository {
         return jobDAO.getRowCountByStatusMonth(status,start,end);
     }
 
+    public int getListEndTimeByTime(Date start,Date end){
+        return jobDAO.getRowCountByTimeEndDate(start,end);
+    }
+
     public int getSumRow(int status) {
         return jobDAO.getRowCountByStatus(status);
     }

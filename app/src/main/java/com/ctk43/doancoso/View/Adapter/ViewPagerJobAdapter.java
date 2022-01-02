@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.ctk43.doancoso.Library.KeyFragment;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
 
@@ -28,22 +29,22 @@ public class ViewPagerJobAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position)
         {
-            case 0:
-                jobFragment = new JobFragment();
-                jobFragment.setJobs(jobsAgo);
-                hashMap.put(position, jobFragment);
-                return jobFragment;
-            case 1:
+
+            case KeyFragment.MANAGE_JOBS_CURR:
                 jobFragment = new JobFragment();
                 jobFragment.setJobs(jobsCurr);
                 hashMap.put(position, jobFragment);
                return jobFragment;
-            case 2:
+            case KeyFragment.MANAGE_JOBS_NEXT:
                 jobFragment = new JobFragment();
                 jobFragment.setJobs(jobsNext);
                 hashMap.put(position, jobFragment);
                 return jobFragment;
+            case KeyFragment.MANAGE_JOBS_PREVIOUS:
             default:
+                jobFragment = new JobFragment();
+                jobFragment.setJobs(jobsAgo);
+                hashMap.put(position, jobFragment);
                 return jobFragment;
         }
 
@@ -66,35 +67,5 @@ public class ViewPagerJobAdapter extends FragmentStateAdapter {
     public HashMap<Integer, Fragment> getHashMap() {
         return hashMap;
     }
-    /*public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
-    }
 
-    @NonNull
-    @Override
-    public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return new JobFragment();
-            default:
-                return  new JobFragment();
-        }
-    }
-
-    @Override
-    public int getCount() {
-        return 1;
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        String title = "";
-        switch (position){
-            case 0:
-                title = "Công Việc";
-                break;
-        }
-        return title;
-    }*/
 }

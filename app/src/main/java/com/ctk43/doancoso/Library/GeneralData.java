@@ -13,8 +13,6 @@ public class GeneralData {
     public static final int  STATUS_OVER = 2;
     public static final int  STATUS_FINISH_LATE = 4;
 
-
-
     public static final int ID_CATEGORY_ALL = 0;
     public static final int ID_CATEGORY_WEEK = -1;
     public static final int ID_CATEGORY_MONTH = -2;
