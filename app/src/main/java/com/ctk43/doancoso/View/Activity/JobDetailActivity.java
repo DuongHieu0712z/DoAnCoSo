@@ -76,8 +76,7 @@ public class JobDetailActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        int jobID = -1;
-        jobID = getIntent().getIntExtra(Key.JOB_ID, -1);
+        int jobID = getIntent().getIntExtra(Key.JOB_ID, -1);
         if (jobID == -1) {
             Bundle bundle = getIntent().getExtras();
             jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL);
@@ -272,7 +271,7 @@ public class JobDetailActivity extends AppCompatActivity {
     }
 
     private void sendActionToService(int action) {
-        Log.e("TAG", "sendActionToService: " + action );
+        Log.e("TAG", "sendActionToService: " + action);
         Intent intent = new Intent(this, CountUpService.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY, jobDetail);

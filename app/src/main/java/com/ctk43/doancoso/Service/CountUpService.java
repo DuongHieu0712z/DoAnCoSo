@@ -1,6 +1,5 @@
 package com.ctk43.doancoso.Service;
 
-
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -57,7 +56,10 @@ public class CountUpService extends Service {
 
         actionTime = intent.getIntExtra(Key.SEND_ACTION, Action.NONE);
         handleActionTime(actionTime);
-        sendNotification(jobDetail);
+
+        if (jobDetail != null) {
+            sendNotification(jobDetail);
+        }
 
         return START_NOT_STICKY;
     }
