@@ -21,6 +21,7 @@
             android:src="@drawable/goback1" />
 
         <TextView
+            android:id="@+id/tv_title_add_new_job_detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -60,6 +61,36 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="@color/LightSlateGray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/bg_tab_layout">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:text="Độ ưu tiên:"
+            android:textColor="@color/sub_bg_color"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spiner_jobdetail_priority"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="2"
+            android:outlineAmbientShadowColor="@color/orange"
+            android:outlineSpotShadowColor="@color/orange"
+            android:textColor="@color/orange" />
     </LinearLayout>
 
     <LinearLayout
@@ -123,7 +154,6 @@
 
     </LinearLayout>
 
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -138,7 +168,7 @@
         android:layout_marginTop="-5dp"
         android:background="@drawable/bg_btn_1"
         android:backgroundTint="@null"
-        android:text="@string/add"
+        android:text="@string/save"
         android:textColor="@color/text_title_color" />
 
     <ImageView

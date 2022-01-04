@@ -7,11 +7,13 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(foreignKeys = @ForeignKey(entity = Job.class,
         parentColumns = "ID",
         childColumns = "JobID",
         onDelete = ForeignKey.CASCADE))
-public class JobDetail {
+public class JobDetail implements Serializable {
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -36,16 +38,23 @@ public class JobDetail {
     private boolean priority = false;
 
     @ColumnInfo(name = "Status")
-    private boolean status = false; // 0 - on going; -1 - drop; 1 - complete; 2- over
+    private boolean status = false;
 
-    @ColumnInfo(name = "IDParent")
-    private int idParent;
 
+    @Ignore
     public JobDetail(int jobId, @NonNull String name, int estimatedCompletedTime, String description) {
         this.jobId = jobId;
         this.name = name;
         this.estimatedCompletedTime = estimatedCompletedTime;
         this.description = description;
+    }
+
+    public JobDetail(int jobId, boolean priority, @NonNull String name, int estimatedCompletedTime, String description) {
+        this.jobId = jobId;
+        this.name = name;
+        this.estimatedCompletedTime = estimatedCompletedTime;
+        this.description = description;
+        this.priority = priority;
     }
 
     @Ignore
@@ -57,7 +66,6 @@ public class JobDetail {
         this.actualCompletedTime = actualCompletedTime;
         this.description = description;
         this.status = status;
-        this.idParent = idParent;
     }
 
     public int getId() {
@@ -125,11 +133,4 @@ public class JobDetail {
         this.status = status;
     }
 
-    public int getIdParent() {
-        return idParent;
-    }
-
-    public void setIdParent(int idParent) {
-        this.idParent = idParent;
-    }
 }

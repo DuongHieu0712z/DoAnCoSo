@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.DoAnCoSo" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#3E4556</item>
+        <item name="colorPrimary">@color/bg_color_2</item>
         <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/text_title_color</item>
+        <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/text_title_color</item>
         <item name="colorSecondaryVariant">@color/text_title_color</item>
@@ -18,6 +18,10 @@
     <style name="Theme.DoAnCoSo.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Theme.DoAnCoSo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

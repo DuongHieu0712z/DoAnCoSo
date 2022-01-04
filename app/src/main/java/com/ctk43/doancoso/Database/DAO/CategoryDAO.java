@@ -16,6 +16,15 @@ public interface CategoryDAO {
     @Query("SELECT * FROM Category")
     LiveData<List<Category>> getAll();
 
+    @Query("SELECT * FROM Category")
+    List<Category> getList();
+
+    @Query("SELECT * FROM Category WHERE ID = :id")
+    Category get(int id);
+
+    @Query("SELECT COUNT(:id) FROM Job WHERE CategoryID = :id")
+    int countJob(int id);
+
     @Insert
     void insert(Category... categories);
 

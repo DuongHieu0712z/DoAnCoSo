@@ -3,166 +3,181 @@ package com.ctk43.doancoso.Library;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
+import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.View.Activity.JobActivity;
+import com.ctk43.doancoso.View.Adapter.JobAdapter;
+import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
+import com.ctk43.doancoso.View.Fragment.ManagerJobFragment;
+import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
+import com.ctk43.doancoso.ViewModel.JobViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class Extension {
 
-    public static Dialog dialogYesNo(Dialog dialog, String title, String content) {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_yes_no);
-        Window window = dialog.getWindow();
-        if (window == null) {
-            return null;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams windownAtrributes = window.getAttributes();
-        windownAtrributes.gravity = Gravity.CENTER;
-        window.setAttributes(windownAtrributes);
-        TextView textView = dialog.findViewById(R.id.txt_dialog_string);
-        textView.setText(title);
-        Button btnYes = dialog.findViewById(R.id.btn_dialog_yes);
-        btnYes.setBackgroundTintMode(null);
-        Button btnNo = dialog.findViewById(R.id.btn_dialog_no);
-        btnNo.setBackgroundTintMode(null);
-        TextView tv_des = dialog.findViewById(R.id.tv_dialog_description);
-        tv_des.setText(content);
-        return dialog;
-    }
-
-    public static boolean isEmty(Context context, String value, String name, boolean isdefaut) {
-        if (value.isEmpty() || isdefaut) {
+    public static boolean isEmpty(Context context, String value, String name, boolean isDefault) {
+        if (value.isEmpty() || isDefault) {
             Toast.makeText(context, "Không được để " + name + " trống, vui lòng nhập " + name + "!", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
     }
 
-    public static int Curr_Week() {
-        Date date = Calendar.getInstance().getTime();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal.get(Calendar.DAY_OF_WEEK);
-    }
-
-    public static int Last_Week(int week) {
-        if (week == 1)
-            return 52;
-        return week - 1;
-    }
-
-    public static int Next_Week(int week) {
-        if (week == 52)
-            return 1;
-        return week + 1;
-    }
-
-    public static Date StartOfWeek(Date date) {
-        Calendar Cal = Calendar.getInstance();
-        Cal.setTime(date);
-        Cal.setFirstDayOfWeek(Calendar.SUNDAY);
-        return Cal.getTime();
-
-    }
-
-    public static Date EndOfWeek(Date date) {
-        Calendar Cal = Calendar.getInstance();
-        Cal.setTime(date);
-        Cal.setFirstDayOfWeek(Calendar.SATURDAY);
-        return Cal.getTime();
-    }
-
-    public static int Remaning_day(Date start, Date end) {
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(start);
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(end);
-        return (int) ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) / (1000 * 60 * 60 * 24));
-    }
-
-    public static int Remaning_hour(Date start, Date end) {
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(start);
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(end);
-        double time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        return (int) time / (1000 * 60 * 60);
-    }
-
-    public static int Remaning_minute(Date start, Date end) {
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(start);
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(end);
-        double time = ((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) % (1000 * 60 * 60 * 24));
-        return (int) time % (1000 * 60 * 60);
-    }
-
-    public static String over_time(int minute) {
-        int day = minute % 60 % 24;
-        int hour = minute / 60 % 24;
-        int _minute = minute / 60 / 24;
-        return getTime(day, hour, _minute, true);
-    }
-
-    public static String getTime(int day, int hour, int minute, boolean negative) {
-        if (negative) {
-            day *= -1;
-            hour *= -1;
-            minute *= -1;
-        }
-        String timeRe;
-        if (day > 0 && hour > 0) {
-            timeRe = day + " ngày " + hour + " giờ";
-        } else if (day > 0) {
-            timeRe = day + " ngày ";
-        } else if (minute > 0 && hour > 0) {
-            timeRe = hour + " giờ " + minute + " phút";
-        } else if (hour > 0) {
-            timeRe = hour + " giờ ";
-        } else {
-            timeRe = minute + " phút ";
-        }
-        return timeRe;
-    }
-
-    public static String TimeRemaining(Date start, Date end) {
-        int day = Remaning_day(start, end);
-        int hour = Remaning_hour(start, end);
-        int minute = Remaning_minute(start, end);
-        String timeRe;
-        if (minute > 0) {
-            timeRe = getTime(day, hour, minute, false);
-        } else {
-            timeRe = over_time(minute);
-        }
-        return timeRe;
-    }
-
     public static int CheckStatus(Job job) {
-        if (Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) >= 0 && job.getProgress() ==1) {
-            return 2;
-        }else if(Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) > 0 && job.getProgress() != 1)
-            return 1;
-        else if (Remaning_minute(Calendar.getInstance().getTime(),job.getEndDate()) < 0 && job.getProgress() != 1)
-            return 3;
-        else if(Remaning_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() == 1){
-            return 4;
+        if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(),job.getStartDate() ) > 0) {
+            return GeneralData.STATUS_COMING;
+        } else if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(), job.getEndDate()) > 0 && job.getProgress() != 1) {
+            return GeneralData.STATUS_ON_GOING;
+        } else if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(), job.getEndDate()) <= 0 && job.getProgress() != 1) {
+            return GeneralData.STATUS_OVER;
+        } else if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() == 1) {
+            return GeneralData.STATUS_FINISH;
+        } else {
+            return GeneralData.STATUS_FINISH_LATE;
         }
-        return 0;
     }
+
+
+
+    public static List<Job> getJobsChange(List<Job> jobList,int statusTarget) {
+        List<Job> jobs = new ArrayList<>();
+        for (Job job : jobList) {
+            job.setStatus(CheckStatus(job));
+            if (job.getStatus()== statusTarget) {
+                jobs.add(job);
+            }
+        }
+        return jobs;
+    }
+    public static boolean canCheck(Context context,CheckBox checkBox, Job job){
+        if(job.getStatus() == GeneralData.STATUS_COMING){
+            Toast.makeText(context,R.string.toast_can_not_do_that,Toast.LENGTH_SHORT).show();
+            checkBox.setChecked(false);
+            return false;
+        }
+        return true;
+    }
+
+   public static void CheckOrUncheckJob(Context context,CheckBox checkBox,Job job,TextView tv_progress, ProgressBar progressBar) {
+        Dialog dialogYesNo = new Dialog(context);
+        String confirm = context.getString(R.string.confirm);
+        dialogYesNo.setCancelable(false);
+        if (checkBox.isChecked()) {
+            DialogExtension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_finish_all_job_detail));
+            Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+            Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+            btn_yes.setOnClickListener(v -> {
+                updateStatus(context,job, true);
+                checkBox.setChecked(Extension.isFinishJob(job));
+                if(tv_progress !=null && progressBar !=null)
+                    setProgress(tv_progress,progressBar,job);
+                dialogYesNo.dismiss();
+            });
+            btn_no.setOnClickListener(v -> {
+                checkBox.setChecked(Extension.isFinishJob(job));
+                dialogYesNo.dismiss();
+            });
+        } else {
+            DialogExtension.dialogYesNo(dialogYesNo, confirm, context.getString(R.string.message_delete_progress));
+            Button btn_yes = dialogYesNo.findViewById(R.id.btn_dialog_yes);
+            Button btn_no = dialogYesNo.findViewById(R.id.btn_dialog_no);
+            btn_yes.setOnClickListener(v -> {
+                updateStatus(context,job, false);
+                checkBox.setChecked(Extension.isFinishJob(job));
+                if(tv_progress !=null && progressBar !=null)
+                setProgress(tv_progress,progressBar,job);
+                dialogYesNo.dismiss();
+            });
+            btn_no.setOnClickListener(v -> {
+                checkBox.setChecked(Extension.isFinishJob(job));
+                dialogYesNo.cancel();
+                dialogYesNo.dismiss();
+            });
+        }
+        dialogYesNo.show();
+    }
+
+    public static void updateStatus(Context context, Job job, boolean isFinish) {
+        JobViewModel jobViewModel = new JobViewModel();
+        jobViewModel.setData(context);
+        jobViewModel.checkOrUncheck(job, isFinish);
+        JobDetailViewModel jobDetailViewModel = new JobDetailViewModel();
+        jobDetailViewModel.setContext(context,job.getId());
+        jobDetailViewModel.syncJob(job);
+    }
+    public static boolean isFinishJob(Job job){
+        if(job.getStatus() == GeneralData.STATUS_FINISH || job.getStatus() == GeneralData.STATUS_FINISH_LATE)
+            return true;
+        return false;
+    }
+    public static void setProgress(TextView tv_progress, ProgressBar progressBar, Job job) {
+        int progress = (int) (job.getProgress() * 100.0);
+        String prgString = progress + " %";
+        tv_progress.setText(prgString);
+        progressBar.setProgress(progress);
+    }
+    public static void filterSearch(ViewPager2 viewPager, ViewPagerAdapter viewPagerAdapter , String text){
+        if(viewPager.getCurrentItem() == 0){
+            ManagerJobFragment managerJobFragment = (ManagerJobFragment) viewPagerAdapter.getHashMap().get(0);
+            JobAdapter jobAdapter = managerJobFragment.getJobFragment().getAdapter();
+            jobAdapter.getFilter().filter(text);
+        }
+    }
+    public static void callJobActivity(Context context, Job job, Boolean dateToDate){
+        Intent intent = new Intent(context, JobActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Key.SEND_JOB,job);
+        bundle.putSerializable(Key.DATE_TO_DATE,dateToDate);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+    public static String getStringTotalJob(int count, int status, Context context){
+        String str = "";
+        if(count !=0){
+            str =  " "+count+ " " + context.getString(R.string.job_non_cap)+" "+context.getString(GeneralData.getStatus(status));
+        }
+        return str;
+    }
+
+    public static Spannable setContent(Context context,Job job) {
+        String strStart = context.getString(R.string.notification_job_show) + " " + context.getString(R.string.job);
+        int start = strStart.length() + 1;
+        String name = job.getName() + " " + context.getString(GeneralData.getStatus(job.getStatus()));
+        strStart = strStart + " " + name +" ";
+        SpannableString spannable = new SpannableString(strStart +job.getDescription());
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(ResourcesCompat.getColor(context.getResources(), GeneralData.getColorStatus(job.getStatus()), null));
+        spannable.setSpan(foregroundColorSpan, start, strStart.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
+    }
+
 }

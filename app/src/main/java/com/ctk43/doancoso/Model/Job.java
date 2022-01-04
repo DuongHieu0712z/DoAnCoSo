@@ -8,16 +8,18 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.ctk43.doancoso.Database.DateTypeConvertor;
+import com.ctk43.doancoso.Database.DateConvertor;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(foreignKeys = @ForeignKey(
         entity = Category.class,
         parentColumns = "ID",
         childColumns = "CategoryID",
         onDelete = ForeignKey.CASCADE))
-public class Job {
+public class Job implements Serializable {
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -30,12 +32,12 @@ public class Job {
     private String name;
 
     @ColumnInfo(name = "StartDate")
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateConvertor.class})
     @NonNull
     private Date startDate;
 
     @ColumnInfo(name = "EndDate")
-    @TypeConverters({DateTypeConvertor.class})
+    @TypeConverters({DateConvertor.class})
     @NonNull
     private Date endDate;
 
@@ -49,14 +51,24 @@ public class Job {
     private double progress = 0.0;
 
     @ColumnInfo(name = "Status")
-    private int status = 0; // 0-in coming-1 - on going; 2 - complete; 3- over
+    private int status = 0;
 
+    @Ignore
     public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {
         this.categoryId = categoryId;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+    }
+
+    public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description, int priority) {
+        this.categoryId = categoryId;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.priority = priority;
     }
 
     @Ignore
@@ -69,6 +81,16 @@ public class Job {
         this.description = description;
         this.priority = priority;
         this.progress = progress;
+        this.status = status;
+    }
+
+    @Ignore
+    public Job(int categoryId,String name ,@NonNull Date startDate, @NonNull Date endDate,int status) {
+        this.id = 0;
+        this.categoryId = categoryId;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.status = status;
     }
 

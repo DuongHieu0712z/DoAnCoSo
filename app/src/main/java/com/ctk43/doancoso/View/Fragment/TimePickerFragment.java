@@ -1,4 +1,4 @@
-package com.ctk43.doancoso.View;
+package com.ctk43.doancoso.View.Fragment;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -16,6 +16,5 @@ public class TimePickerFragment extends DialogFragment {
         int minute = c.get(Calendar.MINUTE);
 
         return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), hour, minute, DateFormat.is24HourFormat(getActivity()));
-
     }
 }

@@ -7,8 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.DAO.JobDAO;
+import com.ctk43.doancoso.Database.DateConvertor;
 import com.ctk43.doancoso.Model.Job;
 
+import java.util.Date;
 import java.util.List;
 
 public class JobRepository {
@@ -23,6 +25,51 @@ public class JobRepository {
 
     public LiveData<List<Job>> getJobs() {
         return jobs;
+    }
+
+    public List<Job> getJobByCategory(int categoryId) {
+        return jobDAO.getJobByCategory(categoryId);
+    }
+
+    public List<Job> getJobByPriority(int priority) {
+        return jobDAO.getJobByPriority(priority);
+    }
+
+    public List<Job> getJobByStatus(int status) {
+        return jobDAO.getJobByStatus(status);
+    }
+
+    public LiveData<List<Job>> getJobByStatus(int status,Date start,Date end) {
+        return jobDAO.getJobByStatusTime(status,start,end);
+    }
+    public int getSumJobByStatusMonth(int status, Date start,Date end) {
+        return jobDAO.getRowCountByStatusMonth(status,start,end);
+    }
+
+    public int getListEndTimeByTime(Date start,Date end){
+        return jobDAO.getRowCountByTimeEndDate(start,end);
+    }
+
+    public int getTotalStatus(int status) {
+        return jobDAO.getTotalStatus(status);
+    }
+
+    public LiveData<List<Job>> getJobAboutTime(Date start, Date end) {
+        return jobDAO.getJobAboutTimeEndDate(start,end);
+    }
+    public LiveData<List<Job>> getJobs(Date endDate) {
+        return jobDAO.getJobs(endDate);
+    }
+
+    public LiveData<List<Job>> getJobs(Date startDate, Date endDate) {
+        return jobDAO.getJobs(startDate, endDate);
+    }
+
+    public LiveData<List<Job>> getByCategoryId(int categoryId) {
+        return jobDAO.getByCategoryId(categoryId);
+    }
+    public List<Job> getListAboutTime(Date start, Date end) {
+        return jobDAO.getListJobAboutTimeEndDate(start,end);
     }
 
     public Job getById(int id) {

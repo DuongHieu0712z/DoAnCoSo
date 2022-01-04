@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.DAO.CategoryDAO;
 import com.ctk43.doancoso.Model.Category;
+import com.ctk43.doancoso.Model.JobDetail;
 
 import java.util.List;
 
@@ -21,8 +22,20 @@ public class CategoryRepository {
         categories = categoryDAO.getAll();
     }
 
+    public Category get(int id) {
+        return categoryDAO.get(id);
+    }
+
     public LiveData<List<Category>> getCategories() {
         return categories;
+    }
+
+    public List<Category> getList(){
+        return categoryDAO.getList();
+    }
+
+    public int countJob(int id) {
+        return categoryDAO.countJob(id);
     }
 
     public void insert(Category... categories) {

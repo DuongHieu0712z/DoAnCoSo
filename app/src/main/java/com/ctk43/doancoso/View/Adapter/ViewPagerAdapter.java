@@ -5,11 +5,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.ctk43.doancoso.View.JobFragment;
-import com.ctk43.doancoso.View.ManagerJobFragment;
-import com.ctk43.doancoso.View.MonthFragment;
+import com.ctk43.doancoso.Library.KeyFragment;
+import com.ctk43.doancoso.View.Fragment.ManagerJobFragment;
+import com.ctk43.doancoso.View.Fragment.MonthFragment;
+import com.ctk43.doancoso.View.Fragment.ProfleFragment;
+import com.ctk43.doancoso.View.Fragment.SettingFragment;
+
+import java.util.HashMap;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
+    private HashMap<Integer, Fragment> hashMap = new HashMap<>();
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -19,16 +24,23 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position)
         {
-            case 0:
-                  return new ManagerJobFragment();
-            case 1:
-               return new MonthFragment();
-            case 2:
-         //       return new JobFragment();
-            case 3:
-           //     return new JobFragment();
+            case KeyFragment.MONTH:
+                MonthFragment monthFragment = new MonthFragment();
+                hashMap.put(position, monthFragment);
+                return monthFragment;
+            case KeyFragment.SETTING:
+                SettingFragment settingFragment = new SettingFragment();
+                hashMap.put(position, settingFragment);
+                return settingFragment;
+            case KeyFragment.PROFILE:
+                ProfleFragment profleFragment = new ProfleFragment();
+                hashMap.put(position, profleFragment);
+                return profleFragment;
+            case KeyFragment.MANAGE_JOBS:
             default:
-                return new ManagerJobFragment();
+                ManagerJobFragment managerJobFragment = new ManagerJobFragment();
+                hashMap.put(position, managerJobFragment);
+                return managerJobFragment;
         }
 
     }
@@ -38,35 +50,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         return 4;
     }
 
-    /*public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+    public HashMap<Integer, Fragment> getHashMap() {
+        return hashMap;
     }
 
-    @NonNull
-    @Override
-    public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return new JobFragment();
-            default:
-                return  new JobFragment();
-        }
-    }
-
-    @Override
-    public int getCount() {
-        return 1;
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        String title = "";
-        switch (position){
-            case 0:
-                title = "Công Việc";
-                break;
-        }
-        return title;
-    }*/
 }
