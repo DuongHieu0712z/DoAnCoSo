@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rb_status_2"
-                android:text="@string/complete"
+                android:text="@string/finish"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:layout_marginTop="-15dp"/>
@@ -116,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rb_status_4"
-                android:text="@string/over_complete"
+                android:text="@string/finish_late"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:layout_marginTop="-15dp"/>

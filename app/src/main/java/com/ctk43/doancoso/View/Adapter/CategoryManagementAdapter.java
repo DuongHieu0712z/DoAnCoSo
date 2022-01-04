@@ -15,14 +15,18 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.DialogExtension;
+import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Category;
+import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Activity.CategoryManagementActivity;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
@@ -59,6 +63,10 @@ public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryMana
         int numberOfJobs = categoryViewModel.countJob(category.getId());
         holder.tv_category_number_job.setText(String.valueOf(numberOfJobs));
 
+        holder.ln_category_item.setOnClickListener(v -> {
+            Job job = new Job(category.getId(),category.getName(), CalendarExtension.currDate(),CalendarExtension.currDate(),null);
+            Extension.callJobActivity(mContext,job,false);
+        });
         holder.update.setOnClickListener(view -> {
             DialogExtension.onOpenCategoryDiaLog(category, mContext,categoryViewModel);
         });
@@ -83,10 +91,10 @@ public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryMana
             categoryViewModel.delete(category);
             dialogYesNo.dismiss();
         });
+
         btn_no.setOnClickListener(v -> dialogYesNo.dismiss());
         dialogYesNo.show();
     }
-
 
 
     @Override
@@ -123,16 +131,16 @@ public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryMana
         TextView tv_category_name;
         TextView tv_category_number_job;
         SwipeRevealLayout swipeRevealLayout;
-
         FrameLayout delete;
         FrameLayout update;
+        LinearLayout ln_category_item;
 
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             swipeRevealLayout = itemView.findViewById(R.id.item_category_topic);
             tv_category_name = itemView.findViewById(R.id.tv_category_name);
             tv_category_number_job = itemView.findViewById(R.id.tv_category_number_job);
-
+            ln_category_item = itemView.findViewById(R.id.ln_category_item);
             delete = itemView.findViewById(R.id.frm_function_delete);
             update = itemView.findViewById(R.id.frm_function_update);
         }

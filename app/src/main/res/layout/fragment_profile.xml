@@ -38,19 +38,24 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="20dp">
         <TextView
+            android:padding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
-            android:text="Thống kê"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:text="@string/statistics"
             android:textColor="@color/black"/>
         <LinearLayout
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:background="@color/bg_color_2"
+            android:background="@color/bg_color"
             >
             <ImageView
+                android:background="@drawable/bg_round_color"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/btn_profile_prv_month"
                 android:layout_width="30dp"
@@ -69,6 +74,7 @@
                 android:textColor="@color/text_title_color"
                 android:textSize="22sp"/>
             <ImageView
+                android:background="@drawable/bg_round_color"
                 android:layout_marginRight="10dp"
                 android:id="@+id/btn_profile_next_month"
                 android:layout_width="30dp"
@@ -79,6 +85,7 @@
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/f_on_coming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/in_coming"
@@ -87,7 +94,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sắp diễn ra"
+                android:text="@string/coming_soon"
                 android:textSize="22sp"
                 android:layout_marginVertical="5dp"
                 android:layout_marginLeft="10dp"
@@ -104,6 +111,7 @@
                 android:layout_gravity="right"/>
         </FrameLayout>
         <FrameLayout
+            android:id="@+id/f_on_going"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/on_ongoing"
@@ -112,7 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đang diễn ra"
+                android:text="@string/on_going"
                 android:textSize="22sp"
                 android:layout_marginVertical="5dp"
                 android:layout_marginLeft="10dp"
@@ -129,15 +137,16 @@
                 android:layout_gravity="right"/>
         </FrameLayout>
         <FrameLayout
+            android:id="@+id/f_complete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/complete"
+            android:background="@color/finish"
             android:layout_marginTop="10dp"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đã hoàn thành"
+                android:text="@string/complete"
                 android:textSize="22sp"
                 android:layout_marginVertical="5dp"
                 android:layout_marginLeft="10dp"
@@ -154,6 +163,7 @@
                 android:layout_gravity="right"/>
         </FrameLayout>
         <FrameLayout
+            android:id="@+id/f_over"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/over"
@@ -162,7 +172,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quá hạn"
+                android:text="@string/over"
                 android:textSize="22sp"
                 android:layout_marginVertical="5dp"
                 android:layout_marginLeft="10dp"
@@ -179,15 +189,16 @@
                 android:layout_gravity="right"/>
         </FrameLayout>
         <FrameLayout
+            android:id="@+id/f_complete_late"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/over_complete"
+            android:background="@color/fisnish_late"
             android:layout_marginTop="10dp"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hoàn thành trễ"
+                android:text="@string/finish_late"
                 android:textSize="22sp"
                 android:layout_marginVertical="5dp"
                 android:layout_marginLeft="10dp"

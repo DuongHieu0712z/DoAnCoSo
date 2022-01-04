@@ -29,6 +29,8 @@
 
     <!--Job-->
     <string name="job">Công việc</string>
+    <string name="notification_job_show">Thông báo công việc:</string>
+
     <string name="job_name">Tên công việc</string>
     <string name="tv_add_job_type">Thêm danh mục</string>
     <string name="hint_add_job_type">Nhập tên loại công việc</string>
@@ -51,9 +53,9 @@
     <!--Status-->
     <string name="coming_soon">Sắp diễn ra</string><!--0-->
     <string name="on_going">Đang diễn ra</string><!--1-->
-    <string name="complete">Đã hoàn thành</string><!--2-->
+    <string name="finish">Đã hoàn thành</string><!--2-->
     <string name="over">Đã quá hạn</string><!--3-->
-    <string name="over_complete">Hoàn thành trễ</string><!--4-->
+    <string name="finish_late">Hoàn thành trễ</string><!--4-->
 
     <!--Priority-->
     <string name="priority_0">Không quan trọng, không khẩn cấp</string><!--0-->
@@ -84,11 +86,12 @@
     <string name="pause">Tạm dừng</string>
     <string name="resume">Tạm dừng</string>
     <string name="reset">Tính lại</string>
-    <string name="finish">hoàn thành</string>
+    <string name="complete">Hoàn thành</string>
     <string name="cancel">hủy</string>
     <!--notification name-->
     <string name="notification_count_up">Tính giờ</string>
-    <string name="notification_job">Thông báo công việc</string>
+    <string name="notification">Thông báo công việc</string>
+    <string name="notification_job">Thông báo từng công việc</string>
 
     <!--Category name-->
     <string name="category_all">Tất cả</string>
@@ -98,9 +101,14 @@
     <string name="week_current">Tuần này</string>
     <string name="week_ago">Tuần trước</string>
     <string name="next_week">Tuần sau</string>
+
+    <!--more-->
+    <string name="all">Tất cả</string>
+    <string name="statistics">Thống kê</string>
     <!--Toast-->
     <string name="toast_can_not_do_that">Không thể đánh dấu hoàn thành vì công việc chưa bắt đầu</string>
-
+    <string name="job_non_cap">công việc</string>
+    <string name="you_have">Bạn có</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->

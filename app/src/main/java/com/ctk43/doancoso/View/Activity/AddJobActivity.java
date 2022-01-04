@@ -183,10 +183,12 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         if (validateInput()) {
             if (jobToUpdate == null) {
                 Job job = getJob();
+                job.setStatus(GeneralData.STATUS_ON_GOING);
                 jobViewModel.insert(job);
                 Toast.makeText(AddJobActivity.this, getString(R.string.add_job_sucess), Toast.LENGTH_LONG).show();
             } else {
                 updateJob();
+                jobToUpdate.setStatus(GeneralData.STATUS_ON_GOING);
                 jobViewModel.update(jobToUpdate);
                 Toast.makeText(AddJobActivity.this, getString(R.string.update_job_sucess), Toast.LENGTH_LONG).show();
             }
@@ -276,7 +278,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         windowAttribute.gravity = Gravity.CENTER;
         window.setAttributes(windowAttribute);
         dialog.setCancelable(true);
-
         EditText edt_job_type_name = dialog.findViewById(R.id.edt_dlg_job_type);
 
         Button btn_add_job_type = dialog.findViewById(R.id.btn_dlg_add_job_type);

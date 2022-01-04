@@ -2,6 +2,7 @@ package com.ctk43.doancoso.ViewModel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.security.keystore.StrongBoxUnavailableException;
 import android.util.Log;
 
@@ -12,8 +13,11 @@ import com.ctk43.doancoso.Database.Repository.JobDetailRepository;
 import com.ctk43.doancoso.Database.Repository.JobRepository;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.JobDetail;
+import com.ctk43.doancoso.Model.NotificationModel;
+import com.ctk43.doancoso.Service.NotificationJobService;
 import com.ctk43.doancoso.Service.NotificationService;
 
 import java.util.ArrayList;
@@ -39,14 +43,18 @@ public class JobViewModel extends ViewModel {
 
     public void insert(Job... jobs) {
         jobRepository.insert(jobs);
+        startService();
     }
 
     public void update(Job... jobs) {
+        Log.e("TAG", "update: " );
         jobRepository.update(jobs);
+        startService();
     }
 
     public void delete(Job... jobs) {
         jobRepository.delete(jobs);
+        startService();
     }
     public LiveData<List<Job>> getJobs(Date endDate) {
         return jobRepository.getJobs(endDate);
@@ -102,8 +110,8 @@ public class JobViewModel extends ViewModel {
         return jobRepository.getSumJobByStatusMonth(status,CalendarExtension.getStartTimeOfMonth(month,year),CalendarExtension.getEndTimeOfMonth(month,year));
     }
 
-    public int sumStatus(int status){
-        return jobRepository.getSumRow(status);
+    public int getTotalStatus(int status){
+        return jobRepository.getTotalStatus(status);
     }
 
     public void getJobBy(Job... jobs) {
@@ -129,4 +137,6 @@ public class JobViewModel extends ViewModel {
         Intent intent = new Intent(context, NotificationService.class);
         context.startService(intent);
     }
+
+
 }

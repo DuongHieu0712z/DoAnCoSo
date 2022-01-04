@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
             android:text="Category name"
             android:textColor="@color/text_title_color"
             android:textSize="18sp" />
@@ -36,6 +37,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:orientation="horizontal">
 
             <TextView
@@ -48,10 +50,11 @@
 
             <TextView
                 android:id="@+id/tv_category_number_job"
-                android:layout_width="match_parent"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="00"
+               android:layout_marginRight="5dp"
                 android:textAlignment="gravity"
                 android:textColor="@color/text_title_color"
                 android:textSize="16sp" />

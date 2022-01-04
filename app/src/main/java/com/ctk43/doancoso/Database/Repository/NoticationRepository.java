@@ -11,25 +11,37 @@ import com.ctk43.doancoso.Database.DAO.NotificationModelDAO;
 import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.Model.NotificationModel;
 
+import java.util.Date;
 import java.util.List;
 
 public class NoticationRepository {
     NotificationModelDAO notificationModelDAO;
-    LiveData<List<NotificationModel>> notifications;
-    List<NotificationModel> notificationList;
 
     public NoticationRepository(Context context) {
         AppDatabase data = AppDatabase.getInstance(context);
         notificationModelDAO = data.getNotificationModelDAO();
-        notifications = notificationModelDAO.getAllNotification();
-        notificationList = notificationModelDAO.getListAllNotification();
     }
 
     public LiveData<List<NotificationModel>> geAllNotification(){
-        return notifications;
+        return notificationModelDAO.getAllNotification();
     }
-    public List<NotificationModel> geListNotification(){
-        return notificationList;
+
+    public LiveData<List<NotificationModel>> geListNotificationStatus(int statusJob,String status){
+        return notificationModelDAO.getListAllNotificationStatus(statusJob,status);
+    }
+
+    public LiveData<List<NotificationModel>> geListNotificationByStatus(String status){
+        return notificationModelDAO.geListNotificationByStatus(status);
+    }
+
+    public int getTotalNotificationStatus(int statusJob,String status){
+        return notificationModelDAO.getTotalNotificationStatus(statusJob,status);
+    }
+    public NotificationModel getNotificationById(int id){
+        return notificationModelDAO.getNotificationById(id);
+    }
+    public NotificationModel getNotificationByJobIDNew(int jobId){
+        return notificationModelDAO.getNotificationByJobIDNew(jobId);
     }
 
     public void insert(NotificationModel... notifications) {

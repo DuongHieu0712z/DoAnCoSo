@@ -20,17 +20,24 @@ public class myApplication extends Application {
     private void createChanelNotification() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel(
-                    Key.CHANNEL_NOTIFICATION_JOB,
+                    Key.CHANNEL_NOTIFICATION,
                     this.getString(R.string.notification_job),
-                    NotificationManager.IMPORTANCE_HIGH);
+                    NotificationManager.IMPORTANCE_NONE);
             NotificationChannel channelCountUp = new NotificationChannel(
                     Key.CHANNEL_COUNT_UP,
                     this.getString(R.string.notification_count_up),
                     NotificationManager.IMPORTANCE_NONE);
+            NotificationChannel notificationJobChannel = new NotificationChannel(
+                    Key.CHANNEL_NOTIFICATION_JOB,
+                    this.getString(R.string.notification_job),
+                    NotificationManager.IMPORTANCE_HIGH);
             NotificationManager manager = getSystemService(NotificationManager.class);
-            if(manager !=null)
+            if(manager !=null){
                 manager.createNotificationChannel(channelCountUp);
-            manager.createNotificationChannel(notificationChannel);
+                manager.createNotificationChannel(notificationChannel);
+                manager.createNotificationChannel(notificationJobChannel);
+            }
+
         }
     }
 

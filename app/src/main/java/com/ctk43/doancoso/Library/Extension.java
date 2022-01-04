@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -50,32 +54,26 @@ public class Extension {
     }
 
     public static int CheckStatus(Job job) {
-        if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(),job.getStartDate() ) > 0) {
+        if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(),job.getStartDate() ) > 0) {
             return GeneralData.STATUS_COMING;
-        } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() != 1) {
-            long test= CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate());
+        } else if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(), job.getEndDate()) > 0 && job.getProgress() != 1) {
             return GeneralData.STATUS_ON_GOING;
-        } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) < 0 && job.getProgress() != 1) {
+        } else if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(), job.getEndDate()) <= 0 && job.getProgress() != 1) {
             return GeneralData.STATUS_OVER;
-        } else if (CalendarExtension.Remaining_minute(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() == 1) {
+        } else if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(), job.getEndDate()) >= 0 && job.getProgress() == 1) {
             return GeneralData.STATUS_FINISH;
         } else {
             return GeneralData.STATUS_FINISH_LATE;
         }
     }
 
-    public static boolean statusIsChange(Job job) {
-        int status = job.getStatus();
-        job.setStatus(CheckStatus(job));
-        if (status != job.getStatus())
-            return true;
-        return false;
-    }
 
-    public static List<Job> getJobsChange(List<Job> jobList) {
+
+    public static List<Job> getJobsChange(List<Job> jobList,int statusTarget) {
         List<Job> jobs = new ArrayList<>();
         for (Job job : jobList) {
-            if (statusIsChange(job)) {
+            job.setStatus(CheckStatus(job));
+            if (job.getStatus()== statusTarget) {
                 jobs.add(job);
             }
         }
@@ -85,7 +83,7 @@ public class Extension {
         if(job.getStatus() == GeneralData.STATUS_COMING){
             Toast.makeText(context,R.string.toast_can_not_do_that,Toast.LENGTH_SHORT).show();
             checkBox.setChecked(false);
-            return true;
+            return false;
         }
         return true;
     }
@@ -162,6 +160,24 @@ public class Extension {
         bundle.putSerializable(Key.DATE_TO_DATE,dateToDate);
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+    public static String getStringTotalJob(int count, int status, Context context){
+        String str = "";
+        if(count !=0){
+            str =  " "+count+ " " + context.getString(R.string.job_non_cap)+" "+context.getString(GeneralData.getStatus(status));
+        }
+        return str;
+    }
+
+    public static Spannable setContent(Context context,Job job) {
+        String strStart = context.getString(R.string.notification_job_show) + " " + context.getString(R.string.job);
+        int start = strStart.length() + 1;
+        String name = job.getName() + " " + context.getString(GeneralData.getStatus(job.getStatus()));
+        strStart = strStart + " " + name +" ";
+        SpannableString spannable = new SpannableString(strStart +job.getDescription());
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(ResourcesCompat.getColor(context.getResources(), GeneralData.getColorStatus(job.getStatus()), null));
+        spannable.setSpan(foregroundColorSpan, start, strStart.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
     }
 
 }

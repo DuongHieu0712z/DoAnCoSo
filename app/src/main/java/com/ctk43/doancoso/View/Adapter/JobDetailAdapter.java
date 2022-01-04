@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.ctk43.doancoso.Library.Action;
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
@@ -36,17 +39,20 @@ import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobDetailHolder> {
+public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobDetailHolder> implements Filterable {
     private final Context mContext;
+    private List<JobDetail> listShowJobDetail;
     private List<JobDetail> listJobDetail;
     private JobDetailViewModel jobDetailViewModel;
     private JobViewModel jobViewModel;
     private Job job;
     private ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public JobDetailAdapter(Context mContext, JobDetailViewModel jobDetailViewModel,Job job) {
+    public JobDetailAdapter(Context mContext, JobDetailViewModel jobDetailViewModel, Job job) {
         this.jobDetailViewModel = jobDetailViewModel;
         this.mContext = mContext;
         this.job = job;
@@ -54,6 +60,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
     public void setData(List<JobDetail> jobDetails) {
         listJobDetail = jobDetails;
+        listShowJobDetail = jobDetails;
     }
 
     @Override
@@ -64,16 +71,15 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
     @Override
     public void onBindViewHolder(@NonNull JobDetailHolder holder, int position) {
-        JobDetail item = listJobDetail.get(position);
+        JobDetail item = listShowJobDetail.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
-
         holder.tvJdName.setText(item.getName());
         holder.tvJdDes.setText(item.getDescription());
         holder.tvEstimatedTime.setText(String.valueOf(item.getEstimatedCompletedTime()));
         holder.tvActualTime.setText(String.valueOf(item.getActualCompletedTime()));
-        if (item.isPriority() == true)
+        if (item.isPriority())
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_24);
-        else if (item.isPriority() == false)
+        else
             holder.img_Priority.setImageResource(R.drawable.ic_baseline_star_outline_24);
         holder.checkBox.setChecked(item.getStatus());
         holder.jobDetailItem.setOnClickListener(v -> {
@@ -88,7 +94,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
 
         holder.checkBox.setOnClickListener(v -> {
             if (Extension.canCheck(mContext, holder.checkBox, job))
-                 IsFinish(holder.checkBox, item);
+                IsFinish(holder.checkBox, item);
         });
         holder.swipeRevealLayout.setOnClickListener(v -> {
             JobClock(item);
@@ -169,8 +175,60 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
     }
 
     @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strsearch = charSequence.toString();
+                if (strsearch.isEmpty()) {
+                    listShowJobDetail = listJobDetail;
+                } else {
+                    List<JobDetail> list = new ArrayList<>();
+                    for (JobDetail j : listJobDetail) {
+                        if (j.getName().toLowerCase().contains(strsearch.toLowerCase())) {
+                            list.add(j);
+                        }
+                    }
+                    listShowJobDetail = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = listShowJobDetail;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                listShowJobDetail = (List<JobDetail>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public int getNumJobDetail(int status) {
+        switch (status) {
+            case GeneralData.NON_STATUS:
+                return listJobDetail.size();
+            case GeneralData.STATUS_DETAIL_FINISH:
+                return numByStatus(true);
+            default:
+                return numByStatus(false);
+        }
+    }
+
+    private int numByStatus(boolean status) {
+        int num = 0;
+        for (JobDetail jobDetail : listJobDetail
+        ) {
+            if (jobDetail.getStatus() == status)
+                num++;
+        }
+        return num;
+    }
+
+
+    @Override
     public int getItemCount() {
-        return listJobDetail.size();
+        return listShowJobDetail.size();
     }
 
     public class JobDetailHolder extends RecyclerView.ViewHolder {

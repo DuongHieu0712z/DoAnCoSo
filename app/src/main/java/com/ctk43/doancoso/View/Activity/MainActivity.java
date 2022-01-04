@@ -26,10 +26,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
+import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.R;
+import com.ctk43.doancoso.Service.NotificationJobService;
 import com.ctk43.doancoso.Service.NotificationService;
 import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;

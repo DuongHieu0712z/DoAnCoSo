@@ -179,7 +179,7 @@ public class CountUpService extends Service {
         bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY, jobDetail);
         bundle.putInt(Key.SEND_ACTION, action);
         intent.putExtras(bundle);
-        return PendingIntent.getBroadcast(context.getApplicationContext(), action, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(this, action, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void sendActionToActivity(int action) {

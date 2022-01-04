@@ -8,11 +8,18 @@ public class GeneralData {
 
 
     public static final int  STATUS_COMING = 1;
+    public static final int  NON_STATUS = -1;
     public static final int  STATUS_ON_GOING = 0;
     public static final int  STATUS_FINISH = 3;
     public static final int  STATUS_OVER = 2;
     public static final int  STATUS_FINISH_LATE = 4;
 
+    public static final String  STATUS_NOTIFICATION_ACTIVE = "A";
+    public static final String  STATUS_NOTIFICATION_SEEN = "S";
+    public static final String  STATUS_NOTIFICATION_DELETE = "D";
+
+    public static final int  STATUS_DETAIL_FINISH = 1;
+    public static final int  STATUS_DETAIL_ONGOING = 0;
     public static final int ID_CATEGORY_ALL = 0;
     public static final int ID_CATEGORY_WEEK = -1;
     public static final int ID_CATEGORY_MONTH = -2;
@@ -34,8 +41,8 @@ public class GeneralData {
             R.string.on_going,
             R.string.coming_soon,
             R.string.over,
-            R.string.complete,
-            R.string.over_complete
+            R.string.finish,
+            R.string.finish_late
     };
 
     public static final int[] statusTime = {
@@ -48,8 +55,8 @@ public class GeneralData {
             R.color.on_ongoing,
             R.color.in_coming,
             R.color.over,
-            R.color.complete,
-            R.color.over_complete,
+            R.color.finish,
+            R.color.fisnish_late,
     };
 
     public static int getColorStatus(int status){

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:orientation="vertical"
-    android:background="@drawable/bg_job_titlte">
+    android:background="@drawable/bg_job_titlte"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,7 +16,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_toStartOf="@+id/ln_function_job_title">
-
 
         <TextView
             android:id="@+id/tv_jt_description"
@@ -114,29 +113,30 @@
         android:id="@+id/ln_title_job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_toStartOf="@+id/ln_function_job_title"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="15dp"
-        android:weightSum="1">
+        android:layout_toStartOf="@+id/ln_function_job_title"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/job_title_priority"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_baseline_star_priority_important"/>
+            android:src="@drawable/ic_baseline_star_priority_important" />
+
         <TextView
             android:id="@+id/tv_jt_job_name"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:fontFamily="@font/arial_bold"
             android:text="Tên Công Việc"
             android:textAlignment="center"
-            android:textStyle="bold"
             android:textColor="@color/text_title_color"
-            android:textSize="20sp"
-             />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -155,16 +155,17 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="20dp"
             android:layout_weight="1.5"
             android:src="@drawable/ic_baseline_edit_24" />
+
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_weight="2.5"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <FrameLayout
@@ -207,6 +208,7 @@
                 android:textSize="12sp" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

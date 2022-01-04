@@ -8,12 +8,11 @@ import androidx.lifecycle.ViewModel;
 import com.ctk43.doancoso.Database.Repository.NoticationRepository;
 import com.ctk43.doancoso.Model.NotificationModel;
 
+import java.util.Date;
 import java.util.List;
 
 public class NotificationViewModel extends ViewModel {
     private NoticationRepository noticationRepository;
-    private LiveData<List<NotificationModel>> notifications;
-    private List<NotificationModel> notificationList;
     Context context;
 
     public NotificationViewModel() {
@@ -22,17 +21,30 @@ public class NotificationViewModel extends ViewModel {
     public void setData(Context context) {
         this.context = context;
         noticationRepository = new NoticationRepository(context);
-        notifications = noticationRepository.geAllNotification();
-        notificationList = noticationRepository.geListNotification();
-        
     }
 
     public LiveData<List<NotificationModel>> getNotifications() {
-        return notifications;
+        return noticationRepository.geAllNotification();
     }
 
-    public List<NotificationModel> getNotificationList() {
-        return notificationList;
+    public NotificationModel getNotificationByJobIDNew(int jobId) {
+        return noticationRepository.getNotificationByJobIDNew(jobId);
+    }
+
+    public NotificationModel getNotificationById(int id) {
+        return noticationRepository.getNotificationById(id);
+    }
+
+    public LiveData<List<NotificationModel>> getNotificationsStatus(int statusJob, String status) {
+        return noticationRepository.geListNotificationStatus(statusJob, status);
+    }
+
+    public LiveData<List<NotificationModel>> geListNotificationByStatus(String status) {
+        return noticationRepository.geListNotificationByStatus(status);
+    }
+
+    public int getTotalNotificationStatus(int statusJob, String string) {
+        return noticationRepository.getTotalNotificationStatus(statusJob, string);
     }
 
     public void insert(NotificationModel... notificationModels) {

@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.DoAnCoSo" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/bg_color</item>
+        <item name="colorPrimary">@color/bg_color_2</item>
         <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/text_title_color</item>
+        <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/text_title_color</item>
         <item name="colorSecondaryVariant">@color/text_title_color</item>

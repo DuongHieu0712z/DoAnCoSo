@@ -46,7 +46,7 @@ public interface JobDAO {
     List<Job> getJobByCategory(int categoryId);
 
     @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status")
-    int getRowCountByStatus(int status);
+    int getTotalStatus(int status);
 
     @Query("SELECT COUNT(1) FROM JOB WHERE Status =:status AND EndDate >=:start AND EndDate<=:end")
     @TypeConverters(DateConvertor.class)

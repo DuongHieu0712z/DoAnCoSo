@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ctk43.doancoso.Library.CalendarExtension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.View.Adapter.CalendarAdapter;
@@ -105,26 +106,33 @@ public class MonthFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setMonthView() throws ParseException {
-        String str = "";
+
         tv_current_month.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
         JobViewModel jobViewModel = new JobViewModel();
         jobViewModel.setData(mContext);
-        Date currentDay;
         ArrayList<Date> datesHaveJob = new ArrayList<>();
-        datesHaveJob.clear();
-        for (int i = 0; i < daysInMonth.size(); i++) {
-            if (daysInMonth.get(i) == "")
-                datesHaveJob.add(null);
-            if (daysInMonth.get(i) != "") {
-                if (month == 1 && Integer.parseInt(daysInMonth.get(i)) > 29)
+        jobViewModel.getJobsMonth(month, year).observe(requireActivity(), jobs ->
+        {
+            Date currentDay;
+            String str = "";
+            datesHaveJob.clear();
+            for (int i = 0; i < daysInMonth.size(); i++) {
+                if (daysInMonth.get(i) == "")
                     datesHaveJob.add(null);
-                else if ((month == 3 || month == 8 || month == 5 || month == 10) && Integer.parseInt(daysInMonth.get(i)) > 30)
-                    datesHaveJob.add(null);
-                else {
-                    str = daysInMonth.get(i) + "/" + (month + 1) + "/" + year;
-                    currentDay = new SimpleDateFormat("dd/MM/yyyy").parse(str);
-                    int j ;
+                if (daysInMonth.get(i) != "") {
+                    if (month == 1 && Integer.parseInt(daysInMonth.get(i)) > 29)
+                        datesHaveJob.add(null);
+                    else if ((month == 3 || month == 8 || month == 5 || month == 10) && Integer.parseInt(daysInMonth.get(i)) > 30)
+                        datesHaveJob.add(null);
+                    else {
+                        str = daysInMonth.get(i) + "/" + (month + 1) + "/" + year;
+                        try {
+                            currentDay = new SimpleDateFormat("dd/MM/yyyy").parse(str);
+                        } catch (ParseException e) {
+                            currentDay = null;
+                        }
+                        int j ;
                         if (jobViewModel.getCountJobOneDate(currentDay) >0)
                         {
                             j = jobViewModel.getCountJobOneDate(currentDay);
@@ -135,11 +143,12 @@ public class MonthFragment extends Fragment implements View.OnClickListener {
                     datesHaveJob.add(null);
                 }
             }
+            CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,datesHaveJob , mContext, month, year);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(mContext, 7);
+            rcv_calendar.setLayoutManager(layoutManager);
+            rcv_calendar.setAdapter(calendarAdapter);
+        });
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,datesHaveJob , mContext, month, year);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(mContext, 7);
-        rcv_calendar.setLayoutManager(layoutManager);
-        rcv_calendar.setAdapter(calendarAdapter);
     }
 
 

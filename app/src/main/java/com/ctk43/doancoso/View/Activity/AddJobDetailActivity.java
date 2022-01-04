@@ -57,7 +57,6 @@ public class AddJobDetailActivity extends AppCompatActivity {
         edt_job_detail_name = findViewById(R.id.edt_dlg_job_detail_name);
         edt_job_detail_des = findViewById(R.id.edt_dlg_job_detail_des);
         edt_estimate_time = findViewById(R.id.edt_dlg_job_detail_estimate_time);
-//        edt_actual_time = findViewById(R.id.edt_dlg_job_detail_actual_time);
 
         spn_priority = findViewById(R.id.spiner_jobdetail_priority);
         String[] priorities = {"Quan trọng", "Không quan trọng"};

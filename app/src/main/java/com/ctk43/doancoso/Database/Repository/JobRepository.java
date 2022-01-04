@@ -50,8 +50,8 @@ public class JobRepository {
         return jobDAO.getRowCountByTimeEndDate(start,end);
     }
 
-    public int getSumRow(int status) {
-        return jobDAO.getRowCountByStatus(status);
+    public int getTotalStatus(int status) {
+        return jobDAO.getTotalStatus(status);
     }
 
     public LiveData<List<Job>> getJobAboutTime(Date start, Date end) {

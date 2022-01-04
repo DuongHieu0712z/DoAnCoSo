@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,7 +70,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
     public void onBindViewHolder(JobHolder holder, @SuppressLint("RecyclerView") int position) {
         Job item = jobsShow.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(item.getId()));
-        holder.tv_job_name.setText(item.getName());
+        if(item.getName().length()>20){
+            holder.tv_job_name.setText(item.getName().substring(0,17)+"...");
+        }else{
+            holder.tv_job_name.setText(item.getName());
+        }
         holder.tv_job_des.setText(item.getDescription());
         holder.img_priority.setImageResource(GeneralData.getImgPriority(item.getPriority()));
         holder.checkBox.setChecked(item.getStatus() == 3 || item.getStatus() == 4);
@@ -234,12 +239,27 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
 
     public void Revert() {
         jobsShow = jobs;
-       /* List<Job> list = new ArrayList<>();
-        for (Job job : jobs) {
-                list.add(job);
-        }
-        jobsShow = list;*/
         notifyDataSetChanged();
+    }
+
+    public int getNumJob(int status) {
+        int temp;
+        switch (status) {
+            case GeneralData.NON_STATUS:
+                return jobs.size();
+            default:
+                return numJobsByStatus(status);
+        }
+    }
+
+    private int numJobsByStatus(int status) {
+        int num = 0;
+        for (Job job : jobs
+        ) {
+            if (job.getStatus() == status)
+                num++;
+        }
+        return num;
     }
 
     public static class JobHolder extends RecyclerView.ViewHolder {
@@ -254,11 +274,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         ProgressBar progressBar;
         CheckBox checkBox;
         ImageView img_priority;
-
         FrameLayout delete;
         FrameLayout update;
-
-
         public JobHolder(View view) {
             super(view);
             swipeRevealLayout = view.findViewById(R.id.item_topic);

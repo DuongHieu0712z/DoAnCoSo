@@ -28,9 +28,9 @@
     <!--status-->
     <color name="in_coming">#1f7ef2</color>
     <color name="on_ongoing">#A7E461</color>
-    <color name="complete">#ffcc00</color>
+    <color name="finish">#ffcc00</color>
     <color name="over">#FF0000</color>
-    <color name="over_complete">#FF5722</color>
+    <color name="fisnish_late">#FF5722</color>
 
     <!--HaveJob-->
     <color name="Have_job">#DF5B31</color>

@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import com.ctk43.doancoso.Database.DateConvertor;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
         parentColumns = "ID",
         childColumns = "JobID",
         onDelete = ForeignKey.CASCADE))
-public class NotificationModel {
+public class NotificationModel implements Serializable {
 
     @ColumnInfo(name = "ID")
     @PrimaryKey(autoGenerate = true)
@@ -35,10 +36,11 @@ public class NotificationModel {
     @NonNull
     private Date dateOfRecord;
 
-    public NotificationModel(int jobId,int statusJob) {
+    public NotificationModel(int jobId,int statusJob,Date dateOfRecord,String status) {
         this.jobId = jobId;
         this.statusJob =statusJob;
-        dateOfRecord= Calendar.getInstance().getTime();
+        this.dateOfRecord=dateOfRecord;
+        this.status =status;
     }
 
     @NonNull

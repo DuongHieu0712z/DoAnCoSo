@@ -38,10 +38,8 @@ public class JobDetail implements Serializable {
     private boolean priority = false;
 
     @ColumnInfo(name = "Status")
-    private boolean status = false; // 0 - on going; -1 - drop; 1 - complete; 2- over
+    private boolean status = false;
 
-    @ColumnInfo(name = "IDParent")
-    private int idParent;
 
     @Ignore
     public JobDetail(int jobId, @NonNull String name, int estimatedCompletedTime, String description) {
@@ -68,7 +66,6 @@ public class JobDetail implements Serializable {
         this.actualCompletedTime = actualCompletedTime;
         this.description = description;
         this.status = status;
-        this.idParent = idParent;
     }
 
     public int getId() {
@@ -136,11 +133,4 @@ public class JobDetail implements Serializable {
         this.status = status;
     }
 
-    public int getIdParent() {
-        return idParent;
-    }
-
-    public void setIdParent(int idParent) {
-        this.idParent = idParent;
-    }
 }

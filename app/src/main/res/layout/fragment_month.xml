@@ -5,20 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".View.Fragment.MonthFragment"
     android:orientation="vertical"
-    android:background="@color/bg_color">
+    android:background="@color/bg_color_2">
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:background="@color/bg_color"
+        android:background="@color/bg_color_2"
         >
         <ImageView
             android:layout_marginLeft="10dp"
             android:id="@+id/btn_prv_month"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="@drawable/bg_round_color"
             android:src="@drawable/ic_baseline_navigate_before_24"
             android:tint="@color/white_two"
             tools:ignore="UseAppTint" />
@@ -36,6 +37,7 @@
             android:layout_marginRight="10dp"
             android:id="@+id/btn_next_month"
             android:layout_width="40dp"
+            android:background="@drawable/bg_round_color"
             android:layout_height="40dp"
             android:src="@drawable/ic_baseline_navigate_next_24"
             android:tint="@color/white_two"

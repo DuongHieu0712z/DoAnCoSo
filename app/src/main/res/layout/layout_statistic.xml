@@ -2,22 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:grid="http://schemas.android.com/apk/res-auto"
-    android:padding="4dp"
+    android:id="@+id/ln_statistic"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
     android:weightSum="12"
     android:gravity="center"
     android:orientation="horizontal"
-    grid:alignmentMode="alignBounds"
+
     >
     <LinearLayout
+        android:layout_marginLeft="10dp"
         android:layout_width="0dp"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_weight="4.5">
+        android:layout_weight="4.3">
         <TextView
             android:textStyle="bold"
             android:layout_marginLeft="5dp"
+            android:textColor="@color/on_ongoing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/on_going"
@@ -25,6 +28,7 @@
 
         <TextView
             android:id="@+id/tv_ongoing"
+            android:textColor="@color/on_ongoing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10000" />
@@ -35,9 +39,10 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_weight="4">
+        android:layout_weight="4.3">
         <TextView
             android:textStyle="bold"
+            android:textColor="@color/finish"
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,6 +51,7 @@
 
         <TextView
             android:id="@+id/tv_finish"
+            android:textColor="@color/finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10000" />
@@ -56,9 +62,11 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_weight="3.5">
+        android:layout_marginLeft="5dp"
+        android:layout_weight="3.3">
         <TextView
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +74,8 @@
             android:layout_marginRight="3dp"/>
 
         <TextView
-            android:id="@+id/tv_all"
+            android:id="@+id/tv_total"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10000" />

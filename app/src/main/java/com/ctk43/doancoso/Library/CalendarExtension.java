@@ -1,6 +1,7 @@
 package com.ctk43.doancoso.Library;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -12,9 +13,9 @@ import java.util.Locale;
 
 public class CalendarExtension {
     // to milisecon
-    public static final int ONE_DAY = 24 * 60 * 60 * 1000;
-    public static final int ONE_HOUR = 60 * 60 * 1000;
-    public static final int ONE_MINUTE = 60 * 1000;
+    public static final long ONE_DAY = 24 * 60 * 60 * 1000;
+    public static final long ONE_HOUR = 60 * 60 * 1000;
+    public static final long ONE_MINUTE = 60 * 1000;
     private static final Calendar calendar = Calendar.getInstance();
     @SuppressLint("ConstantLocale")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -175,9 +176,10 @@ public class CalendarExtension {
         calStart.setTime(start);
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(end);
-        return((calEnd.getTimeInMillis() - calStart.getTimeInMillis()) /1000);
+        long test = ((calEnd.getTimeInMillis()-calStart.getTimeInMillis()));
+        Log.e("Tính toán", "timeRemaining: "+test );
+        return test;
     }
-
 
     public static String getTime(long day, long hour, long minute, boolean negative) {
         if (negative) {
@@ -215,10 +217,10 @@ public class CalendarExtension {
 
     public static String getTimeText(double time) {
         int rounded = (int) Math.round(time);
-        int seconds = ((rounded % 86400) % 3600) % 60;
-        int minutes = ((rounded % 86400) % 3600) / 60;
-        int hour = (rounded % 86400) / 3600;
-        return formatTime(seconds, minutes, hour);
+        int hour = (rounded / 60) ;
+        int day = (rounded % 60) / 24;
+        int minutes = (rounded % 60);
+        return formatTime(minutes, hour, day);
     }
 
     public static String dateToString(Date date) {
@@ -230,8 +232,8 @@ public class CalendarExtension {
 
     @NonNull
     @SuppressLint("DefaultLocale")
-    public static String formatTime(int seconds, int minutes, int hour) {
-        return String.format("%02d:%02d:%02d", hour, minutes, seconds);
+    public static String formatTime(int minute, int hour, int day) {
+        return String.format("%02d:%02d:%02d", day, day, minute);
     }
 
     public static Date getDate(String date) throws ParseException {
