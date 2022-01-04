@@ -29,6 +29,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.DialogExtension;
 import com.ctk43.doancoso.Library.Extension;
+import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.Model.NotificationModel;
@@ -40,6 +41,7 @@ import com.ctk43.doancoso.View.Adapter.ViewPagerAdapter;
 import com.ctk43.doancoso.View.Fragment.JobFragment;
 import com.ctk43.doancoso.View.Fragment.ManagerJobFragment;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
+import com.ctk43.doancoso.ViewModel.NotificationViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         notificationManagement = menu.findItem(R.id.menu_item_notification);
+        updateNotification();
         notificationManagement.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -158,5 +162,20 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+    public void updateNotification(){
+        NotificationViewModel notificationViewModel = new NotificationViewModel();
+        notificationViewModel.setData(this);
+        if(notificationViewModel.geNotificationTotal(GeneralData.STATUS_NOTIFICATION_ACTIVE)>0){
+            notificationManagement.setIcon(R.drawable.ic_notifications);
+        }else{
+            notificationManagement.setIcon(R.drawable.ic_baseline_notifications_24);
+        }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.invalidateOptionsMenu();
+
+    }
 }

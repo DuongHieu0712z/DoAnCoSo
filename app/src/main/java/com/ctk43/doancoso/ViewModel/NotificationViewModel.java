@@ -31,6 +31,10 @@ public class NotificationViewModel extends ViewModel {
         return noticationRepository.getNotificationByJobIDNew(jobId);
     }
 
+    public int geNotificationTotal(String status) {
+        return noticationRepository.geNotificationTotal(status);
+    }
+
     public NotificationModel getNotificationById(int id) {
         return noticationRepository.getNotificationById(id);
     }

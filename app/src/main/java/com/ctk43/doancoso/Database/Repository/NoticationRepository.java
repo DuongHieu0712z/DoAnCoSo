@@ -7,11 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import com.ctk43.doancoso.Database.AppDatabase;
 import com.ctk43.doancoso.Database.DAO.NotificationModelDAO;
-import com.ctk43.doancoso.Database.DAO.NotificationModelDAO;
-import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.Model.NotificationModel;
 
-import java.util.Date;
 import java.util.List;
 
 public class NoticationRepository {
@@ -30,17 +27,23 @@ public class NoticationRepository {
         return notificationModelDAO.getListAllNotificationStatus(statusJob,status);
     }
 
-    public LiveData<List<NotificationModel>> geListNotificationByStatus(String status){
+    public LiveData<List<NotificationModel>> geListNotificationByStatus(String status) {
         return notificationModelDAO.geListNotificationByStatus(status);
     }
 
-    public int getTotalNotificationStatus(int statusJob,String status){
-        return notificationModelDAO.getTotalNotificationStatus(statusJob,status);
+    public int getTotalNotificationStatus(int statusJob, String status) {
+        return notificationModelDAO.getTotalNotificationStatus(statusJob, status);
     }
-    public NotificationModel getNotificationById(int id){
+
+    public NotificationModel getNotificationById(int id) {
         return notificationModelDAO.getNotificationById(id);
     }
-    public NotificationModel getNotificationByJobIDNew(int jobId){
+
+    public int geNotificationTotal(String status) {
+        return notificationModelDAO.geNotificationTotal(status);
+    }
+
+    public NotificationModel getNotificationByJobIDNew(int jobId) {
         return notificationModelDAO.getNotificationByJobIDNew(jobId);
     }
 

@@ -1,6 +1,6 @@
 package com.ctk43.doancoso.Service;
 
-
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,19 +10,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.ctk43.doancoso.Database.DataLocal.DataLocalManager;
 import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.CountUpTimer;
-import com.ctk43.doancoso.Library.Extension;
-import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.R;
@@ -33,7 +29,7 @@ public class CountUpService extends Service {
     CountUpTimer timer;
     RemoteViews remoteViews;
     int actionTime;
-    private NotificationCompat.Builder mBuilder;
+    private Notification notification;
     private NotificationManager mNotificationManager;
     private JobDetail jobDetail;
 
@@ -52,12 +48,20 @@ public class CountUpService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            this.jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL_BY_ACTIVITY);
-            actionTime = (int) bundle.get(Key.SEND_ACTION);
-            handleActionTime(actionTime);
-            sendNotification(this.jobDetail);
+            JobDetail jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL_BY_ACTIVITY);
+            if (jobDetail != null) {
+                this.jobDetail = jobDetail;
+            }
         }
-        return START_REDELIVER_INTENT;
+
+        actionTime = intent.getIntExtra(Key.SEND_ACTION, Action.NONE);
+        handleActionTime(actionTime);
+
+        if (jobDetail != null) {
+            sendNotification(jobDetail);
+        }
+
+        return START_NOT_STICKY;
     }
 
     private void handleActionTime(int action) {
@@ -83,68 +87,72 @@ public class CountUpService extends Service {
     private void updateNotification(int second) {
         sendSecondToActivity(second);
         remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(second));
-        mNotificationManager.notify(Key.CHANNEL_COUNT_UP_ID, mBuilder.build());
-    }
-
-    private void pause() {
-        if(isRunning && timer !=null){
-            sendActionToActivity(Action.ACTION_PAUSE);
-            isRunning = false;
-            timer = null;
-            stopSelf();
-        }
+        mNotificationManager.notify(Key.CHANNEL_COUNT_UP_ID, notification);
     }
 
     public void complete() {
-        sendActionToActivity(Action.ACTION_COMPLETE);
         isRunning = false;
         timer = null;
+        sendActionToActivity(Action.ACTION_COMPLETE);
         stopSelf();
     }
 
     private void resume() {
         if (!isRunning && timer == null) {
+            startTime();
             isRunning = true;
             sendActionToActivity(Action.ACTION_RESUME);
-            startTime();
+        }
+    }
+
+    private void pause() {
+        if (isRunning && timer != null) {
+            timer = null;
+            isRunning = false;
+            sendActionToActivity(Action.ACTION_PAUSE);
         }
     }
 
     private void cancel() {
-        sendActionToActivity(Action.ACTION_CANCEL);
         timer = null;
         isRunning = false;
+        sendActionToActivity(Action.ACTION_CANCEL);
         stopSelf();
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private void sendNotification(JobDetail jobDetail) {
         Intent intent = new Intent(this, JobDetailActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, Key.CHANNEL_COUNT_UP_ID, callBackActivity(), PendingIntent.FLAG_UPDATE_CURRENT);
+
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_count_up);
         remoteViews.setTextViewText(R.id.tv_notification_title, jobDetail.getName());
-        remoteViews.setTextViewText(R.id.tv_clock_notification, CalendarExtension.getTimeText(0));
         remoteViews.setTextViewText(R.id.tv_notification_descripsion, jobDetail.getDescription());
-        remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_pause);
+
         if (isRunning) {
-            remoteViews.setOnClickPendingIntent(R.id.img_pause_or_resume, getPendingIntent(this, Action.ACTION_PAUSE));
-            remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_continue);
-        } else {
-            remoteViews.setOnClickPendingIntent(R.id.img_pause_or_resume, getPendingIntent(this, Action.ACTION_RESUME));
             remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_pause);
+            remoteViews.setOnClickPendingIntent(R.id.img_pause_or_resume, getPendingIntent(this, Action.ACTION_PAUSE));
+        } else {
+            remoteViews.setImageViewResource(R.id.img_pause_or_resume, R.drawable.ic_continue);
+            remoteViews.setOnClickPendingIntent(R.id.img_pause_or_resume, getPendingIntent(this, Action.ACTION_RESUME));
         }
+
         remoteViews.setOnClickPendingIntent(R.id.img_finish, getPendingIntent(this, Action.ACTION_COMPLETE));
         remoteViews.setOnClickPendingIntent(R.id.img_cancel_notification, getPendingIntent(this, Action.ACTION_CANCEL));
-        mBuilder = new NotificationCompat.Builder(this, Key.CHANNEL_COUNT_UP)
+
+        notification = new NotificationCompat.Builder(this, Key.CHANNEL_COUNT_UP)
                 .setSmallIcon(R.drawable.ic_notifications)
                 .setContentIntent(pendingIntent)
                 .setSilent(true)
                 .setAutoCancel(true)
-                .setCustomContentView(remoteViews);
-        startForeground(Key.CHANNEL_COUNT_UP_ID,mBuilder.build());
-      //  mNotificationManager.notify(Key.COUNT_UP_ID, mBuilder.build());
+                .setContent(remoteViews)
+                .build();
+
+        startForeground(Key.CHANNEL_COUNT_UP_ID, notification);
     }
 
     private void startTime() {
@@ -179,7 +187,7 @@ public class CountUpService extends Service {
         bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY, jobDetail);
         bundle.putInt(Key.SEND_ACTION, action);
         intent.putExtras(bundle);
-        return PendingIntent.getBroadcast(this, action, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, action, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void sendActionToActivity(int action) {

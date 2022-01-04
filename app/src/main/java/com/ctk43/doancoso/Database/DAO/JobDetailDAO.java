@@ -16,7 +16,7 @@ public interface JobDetailDAO {
     @Query("SELECT * FROM JobDetail")
     LiveData<List<JobDetail>> getAll();
 
-    @Query("SELECT * FROM JobDetail WHERE JobID = :jobId")
+    @Query("SELECT * FROM JobDetail WHERE JobID = :jobId ORDER BY Status,Priority DESC")
     LiveData<List<JobDetail>> getByJobId(int jobId);
 
     @Query("SELECT * FROM JobDetail WHERE JobID = :jobId")

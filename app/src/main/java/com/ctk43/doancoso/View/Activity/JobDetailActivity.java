@@ -34,32 +34,28 @@ import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.R;
 import com.ctk43.doancoso.Service.CountUpService;
-import com.ctk43.doancoso.View.Adapter.JobAdapter;
 import com.ctk43.doancoso.View.Adapter.JobDetailAdapter;
 import com.ctk43.doancoso.ViewModel.JobDetailViewModel;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.ctk43.doancoso.ViewModel.NotificationViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
-
 public class JobDetailActivity extends AppCompatActivity {
-
+    public boolean isRunning;
+    CheckBox chk_job_title_finish_job;
+    ProgressBar sb;
+    TextView tv_job_progress;
+    private FloatingActionButton btn_Add_New_Job_detail;
     private JobDetailViewModel jobDetailViewModel;
     private JobViewModel jobViewModel;
     private Job job;
     private JobDetailAdapter adapter;
-
     private int second;
-    private FloatingActionButton btn_Add_New_Job_detail;
-    private CheckBox chk_job_title_finish_job;
-    private ProgressBar sb;
-    private TextView tv_job_progress;
+
     private ImageView img_finish, img_resumOrPause, img_cancel;
     private TextView tv_title, tv_desciption, tv_time;
     private RelativeLayout layout_count_up;
     private JobDetail jobDetail;
-    public boolean isRunning;
     private int action;
     private TextView tv_ongoing;
     private TextView tv_finish;
@@ -73,9 +69,9 @@ public class JobDetailActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
-            if (bundle == null)
-                return;
-            else if (Key.SEND_ACTION_TO_ACTIVITY.equals(intent.getAction())) {
+            if (bundle == null) return;
+
+            if (Key.SEND_ACTION_TO_ACTIVITY.equals(intent.getAction())) {
                 jobDetail = (JobDetail) bundle.get(Key.SEND_JOB_DETAIL_BY_SERVICE);
                 isRunning = (boolean) bundle.get(Key.SEND_STATUS_OF_COUNT_UP);
                 action = (int) bundle.get(Key.SEND_ACTION);
@@ -96,8 +92,7 @@ public class JobDetailActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        int jobID = -1;
-        jobID = getIntent().getIntExtra(Key.JOB_ID, -1);
+        int jobID = getIntent().getIntExtra(Key.JOB_ID, -1);
         int notificationID = getIntent().getIntExtra(Key.SEND_ID_NOTIFICATION, -1);
         if (jobID == -1) {
             Bundle bundle = getIntent().getExtras();
@@ -132,13 +127,12 @@ public class JobDetailActivity extends AppCompatActivity {
         ImageView img_priority = findViewById(R.id.job_title_priority);
         ImageView img_edit = findViewById(R.id.job_title_edit);
 
+        tv_job_progress = findViewById(R.id.tv_jt_prg);
+        chk_job_title_finish_job = findViewById(R.id.chk_job_title_finish_job);
+        sb = findViewById(R.id.sb_jt_progress);
         tv_ongoing = findViewById(R.id.tv_ongoing);
         tv_finish = findViewById(R.id.tv_finish);
-        tv_Total = findViewById(R.id.tv_total);
-        tv_job_progress = findViewById(R.id.tv_jt_prg);
-        chk_job_title_finish_job= findViewById(R.id.chk_job_title_finish_job);
-        sb = findViewById(R.id.sb_jt_progress);
-
+        tv_Total= findViewById(R.id.tv_total);
         img_finish = findViewById(R.id.img_finish);
         img_resumOrPause = findViewById(R.id.img_pause_or_resume);
         img_cancel = findViewById(R.id.img_cancel_notification);
@@ -176,8 +170,8 @@ public class JobDetailActivity extends AppCompatActivity {
         chk_job_title_finish_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Extension.canCheck(getApplicationContext(),chk_job_title_finish_job,job)) {
-                    Extension.CheckOrUncheckJob(JobDetailActivity.this, chk_job_title_finish_job, job,tv_job_progress,sb);
+                if (Extension.canCheck(getApplicationContext(), chk_job_title_finish_job, job)) {
+                    Extension.CheckOrUncheckJob(JobDetailActivity.this, chk_job_title_finish_job, job, tv_job_progress, sb);
                 }
             }
         });
@@ -216,6 +210,7 @@ public class JobDetailActivity extends AppCompatActivity {
             }
         });
         notificationManagement = menu.findItem(R.id.menu_item_notification);
+        updateNotification();
         notificationManagement.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -227,24 +222,23 @@ public class JobDetailActivity extends AppCompatActivity {
         return true;
     }
 
-    private void syncJob(){
-        if((job.getProgress() == jobDetailViewModel.updateProgress()) )
+    private void syncJob() {
+        if ((job.getProgress() == jobDetailViewModel.updateProgress()))
             return;
-        if(jobDetailViewModel.checkList().size() ==0 && Extension.isFinishJob(job)){
+
+        if (jobDetailViewModel.checkList().size() == 0 && Extension.isFinishJob(job)) {
             job.setProgress(1);
-            job.setStatus(Extension.CheckStatus(job));
-        }
-        else{
+        } else {
             job.setProgress(jobDetailViewModel.updateProgress());
-            job.setStatus(Extension.CheckStatus(job));
         }
+        job.setStatus(Extension.CheckStatus(job));
         jobViewModel.update(job);
     }
 
-    private void onOpenUpdateJobActivity(Job job){
+    private void onOpenUpdateJobActivity(Job job) {
         Intent intent = new Intent(JobDetailActivity.this, AddJobActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("JobToUpdate", (Serializable) job);
+        bundle.putSerializable("JobToUpdate", job);
         intent.putExtras(bundle);
         JobDetailActivity.this.startActivity(intent);
     }
@@ -256,96 +250,111 @@ public class JobDetailActivity extends AppCompatActivity {
     }
 
     private void handleLayoutCountUp(int action) {
-            switch (action) {
-                case Action.ACTION_COMPLETE:
-                    complete();
-                    break;
-                case Action.ACTION_PAUSE:
-                    pause();
-                    break;
-                case Action.ACTION_RESUME:
-                    resume();
-                    break;
-                case Action.ACTION_CANCEL:
-                    cancel();
-                    break;
-                case Action.ACTION_START:
-                    start();
-                    break;
-            }
+        switch (action) {
+            case Action.ACTION_COMPLETE:
+                complete();
+                break;
+            case Action.ACTION_PAUSE:
+                pause();
+                break;
+            case Action.ACTION_RESUME:
+                resume();
+                break;
+            case Action.ACTION_CANCEL:
+                cancel();
+                break;
+            case Action.ACTION_START:
+                start();
+                break;
+        }
     }
 
-    private void registerReceiver(){
+    private void registerReceiver() {
         IntentFilter filter = new IntentFilter(Key.SEND_ACTION_TO_ACTIVITY);
         filter.addAction(Key.SEND_SECOND_BY_SERVICE);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
     }
-    private void start(){
+
+    private void start() {
         layout_count_up.setVisibility(View.VISIBLE);
-        showInforCountUp();
-        setStatusButtonPlayORPause();
+        showInfoCountUp();
+        setStatusButtonPlayOrPause();
     }
-    private void cancel(){
+
+    private void cancel() {
         layout_count_up.setVisibility(View.GONE);
     }
 
     private void resume() {
-        setStatusButtonPlayORPause();
-        SendActionToService(Action.ACTION_RESUME);
+        isRunning = true;
+        setStatusButtonPlayOrPause();
+        sendActionToService(Action.ACTION_RESUME);
     }
 
     private void pause() {
-        setStatusButtonPlayORPause();
-        SendActionToService(Action.ACTION_PAUSE);
-        UpdateJobDetail(false,false);
+        isRunning = false;
+        setStatusButtonPlayOrPause();
+        UpdateJobDetail(false, false);
+        sendActionToService(Action.ACTION_PAUSE);
     }
 
     public void complete() {
         layout_count_up.setVisibility(View.GONE);
-        SendActionToService(Action.ACTION_CANCEL);
-        UpdateJobDetail(true,false);
+        sendActionToService(Action.ACTION_CANCEL);
+        UpdateJobDetail(true, false);
     }
 
-    private void UpdateJobDetail(boolean isFinish,boolean isCancel){
-            jobDetail.setStatus(isFinish);
-            if(!isCancel)
+    private void UpdateJobDetail(boolean isFinish, boolean isCancel) {
+        jobDetail.setStatus(isFinish);
+        if (!isCancel)
             jobDetail.setActualCompletedTime(second);
-            jobDetailViewModel.update(jobDetail);
+        jobDetailViewModel.update(jobDetail);
+    }
+    public void updateNotification(){
+        NotificationViewModel notificationViewModel = new NotificationViewModel();
+        notificationViewModel.setData(this);
+        if(notificationViewModel.geNotificationTotal(GeneralData.STATUS_NOTIFICATION_ACTIVE)>0){
+            notificationManagement.setIcon(R.drawable.ic_notifications);
+        }else{
+            notificationManagement.setIcon(R.drawable.ic_baseline_notifications_24);
+        }
     }
 
-    private void showInforCountUp() {
+    private void showInfoCountUp() {
         if (jobDetail == null)
             return;
         tv_title.setText(jobDetail.getName());
         tv_desciption.setText(jobDetail.getDescription());
         img_resumOrPause.setOnClickListener(v -> {
-            if(isRunning){
-                SendActionToService(Action.ACTION_PAUSE);
+            if (isRunning) {
+                setStatusButtonPlayOrPause();
+                sendActionToService(Action.ACTION_PAUSE);
                 pause();
-            }else{
-                SendActionToService(Action.ACTION_RESUME);
+            } else {
+                setStatusButtonPlayOrPause();
+                sendActionToService(Action.ACTION_RESUME);
                 resume();
             }
         });
-        img_cancel.setOnClickListener(v->{
-            SendActionToService(Action.ACTION_CANCEL);
+        img_cancel.setOnClickListener(v -> {
+            sendActionToService(Action.ACTION_CANCEL);
         });
-        img_finish.setOnClickListener(v->{
-            SendActionToService(Action.ACTION_COMPLETE);
+        img_finish.setOnClickListener(v -> {
+            sendActionToService(Action.ACTION_COMPLETE);
             complete();
         });
     }
-    private void setStatusButtonPlayORPause(){
-        if(isRunning)
-            img_resumOrPause.setImageResource(R.drawable.ic_pause);
-        else
-            img_resumOrPause.setImageResource(R.drawable.ic_continue);
+
+    private void setStatusButtonPlayOrPause() {
+        img_resumOrPause.setImageResource(isRunning ? R.drawable.ic_pause : R.drawable.ic_continue);
     }
-    private void SendActionToService(int action){
-        Intent intent = new Intent(this,CountUpService.class);
+
+    private void sendActionToService(int action) {
+        Log.e("TAG", "sendActionToService: " + action);
+        Intent intent = new Intent(this, CountUpService.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY,jobDetail);
-        bundle.putInt(Key.SEND_ACTION,action);
+        bundle.putSerializable(Key.SEND_JOB_DETAIL_BY_ACTIVITY, jobDetail);
+        bundle.putInt(Key.SEND_ACTION, action);
         intent.putExtras(bundle);
         startService(intent);
     }
@@ -355,9 +364,16 @@ public class JobDetailActivity extends AppCompatActivity {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
     }
-    private void getSecond(int second){
+
+    private void getSecond(int second) {
         this.second = second;
-        tv_time.setText(CalendarExtension.getTimeText(second) );
+        tv_time.setText(CalendarExtension.getTimeText(second));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
     }
 
     @Override

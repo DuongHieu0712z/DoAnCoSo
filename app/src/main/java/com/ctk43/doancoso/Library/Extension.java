@@ -42,7 +42,7 @@ public class Extension {
     }
 
     public static int CheckStatus(Job job) {
-        if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(),job.getStartDate() ) > 0) {
+        if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(),job.getStartDate()) > 0) {
             return GeneralData.STATUS_COMING;
         } else if (CalendarExtension.timeRemaining(Calendar.getInstance().getTime(), job.getEndDate()) > 0 && job.getProgress() != 1) {
             return GeneralData.STATUS_ON_GOING;

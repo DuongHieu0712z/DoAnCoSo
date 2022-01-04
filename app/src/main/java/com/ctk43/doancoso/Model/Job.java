@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.ctk43.doancoso.Database.DateConvertor;
+import com.ctk43.doancoso.Library.GeneralData;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -51,7 +52,7 @@ public class Job implements Serializable {
     private double progress = 0.0;
 
     @ColumnInfo(name = "Status")
-    private int status = 0;
+    private int status = GeneralData.STATUS_COMING;
 
     @Ignore
     public Job(int categoryId, @NonNull String name, @NonNull Date startDate, @NonNull Date endDate, String description) {

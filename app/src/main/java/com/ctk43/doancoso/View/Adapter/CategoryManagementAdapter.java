@@ -2,16 +2,10 @@ package com.ctk43.doancoso.View.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
@@ -28,7 +22,6 @@ import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Model.Category;
 import com.ctk43.doancoso.Model.Job;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Activity.CategoryManagementActivity;
 import com.ctk43.doancoso.ViewModel.CategoryViewModel;
 
 import java.util.ArrayList;
@@ -63,17 +56,12 @@ public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryMana
         int numberOfJobs = categoryViewModel.countJob(category.getId());
         holder.tv_category_number_job.setText(String.valueOf(numberOfJobs));
 
+        holder.update.setOnClickListener(view -> DialogExtension.onOpenCategoryDiaLog(mContext, categoryViewModel, category));
         holder.ln_category_item.setOnClickListener(v -> {
-            Job job = new Job(category.getId(),category.getName(), CalendarExtension.currDate(),CalendarExtension.currDate(),null);
-            Extension.callJobActivity(mContext,job,false);
+            Job job = new Job(category.getId(), category.getName(), CalendarExtension.currDate(), CalendarExtension.currDate(), null);
+            Extension.callJobActivity(mContext, job, false);
         });
-        holder.update.setOnClickListener(view -> {
-            DialogExtension.onOpenCategoryDiaLog(category, mContext,categoryViewModel);
-        });
-
-        holder.delete.setOnClickListener(view -> {
-            DialogDeleteCategory(category);
-        });
+        holder.delete.setOnClickListener(view -> DialogDeleteCategory(category));
     }
 
     @Override
@@ -91,11 +79,9 @@ public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryMana
             categoryViewModel.delete(category);
             dialogYesNo.dismiss();
         });
-
         btn_no.setOnClickListener(v -> dialogYesNo.dismiss());
         dialogYesNo.show();
     }
-
 
     @Override
     public Filter getFilter() {
@@ -131,6 +117,7 @@ public class CategoryManagementAdapter extends RecyclerView.Adapter<CategoryMana
         TextView tv_category_name;
         TextView tv_category_number_job;
         SwipeRevealLayout swipeRevealLayout;
+
         FrameLayout delete;
         FrameLayout update;
         LinearLayout ln_category_item;

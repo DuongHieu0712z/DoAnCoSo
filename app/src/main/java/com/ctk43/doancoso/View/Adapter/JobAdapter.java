@@ -75,7 +75,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> imple
         }else{
             holder.tv_job_name.setText(item.getName());
         }
-        holder.tv_job_des.setText(item.getDescription());
+
+        if(item.getDescription().length()>30){
+            holder.tv_job_des.setText(item.getDescription().substring(0,27)+"...");
+        }else{
+            holder.tv_job_des.setText(item.getDescription());
+        }
         holder.img_priority.setImageResource(GeneralData.getImgPriority(item.getPriority()));
         holder.checkBox.setChecked(item.getStatus() == 3 || item.getStatus() == 4);
         Extension.setProgress(holder.tv_job_prg, holder.progressBar, item);

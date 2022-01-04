@@ -29,12 +29,14 @@ public interface NotificationModelDAO {
     @Query("SELECT * FROM NotificationModel ")
     List<NotificationModel> getListAllNotification();
 
-    @Query("SELECT * FROM NotificationModel WHERE statusJob =:statusJob AND status =:status")
+    @Query("SELECT * FROM NotificationModel WHERE statusJob =:statusJob AND status =:status ORDER BY DateOfRecord ASC")
     LiveData<List<NotificationModel>> getListAllNotificationStatus(int statusJob, String status);
 
-
-    @Query("SELECT * FROM NotificationModel WHERE status =:status")
+    @Query("SELECT * FROM NotificationModel WHERE status =:status ORDER BY DateOfRecord ASC")
     LiveData<List<NotificationModel>> geListNotificationByStatus(String status);
+
+    @Query("SELECT COUNT(1) FROM NotificationModel WHERE status =:status")
+    int geNotificationTotal(String status);
 
     @Query("SELECT * FROM NotificationModel WHERE ID=:id")
     NotificationModel getNotificationById(int id);
@@ -46,6 +48,6 @@ public interface NotificationModelDAO {
     @Query("SELECT COUNT(1) FROM NotificationModel WHERE statusJob =:statusJob AND status =:status")
     int getTotalNotificationStatus(int statusJob, String status);
 
-    @Query("SELECT * FROM NotificationModel ORDER BY DateOfRecord DESC")
+    @Query("SELECT * FROM NotificationModel ORDER BY DateOfRecord ASC")
     LiveData<List<NotificationModel>> getAllNotification();
 }

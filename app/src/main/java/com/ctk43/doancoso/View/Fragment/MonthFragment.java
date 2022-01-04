@@ -80,7 +80,6 @@ public class MonthFragment extends Fragment implements View.OnClickListener {
         setMonthView();
         ImageView btn_prv_month = view.findViewById(R.id.btn_prv_month);
         ImageView btn_next_month = view.findViewById(R.id.btn_next_month);
-
         btn_next_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

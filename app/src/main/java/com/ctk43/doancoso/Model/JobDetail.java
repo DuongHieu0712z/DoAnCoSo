@@ -48,6 +48,14 @@ public class JobDetail implements Serializable {
         this.estimatedCompletedTime = estimatedCompletedTime;
         this.description = description;
     }
+    @Ignore
+    public JobDetail(int jobId, @NonNull String name, int estimatedCompletedTime, String description,boolean priority) {
+        this.jobId = jobId;
+        this.name = name;
+        this.estimatedCompletedTime = estimatedCompletedTime;
+        this.description = description;
+        this.priority = priority;
+    }
 
     public JobDetail(int jobId, boolean priority, @NonNull String name, int estimatedCompletedTime, String description) {
         this.jobId = jobId;

@@ -5,45 +5,34 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.ctk43.doancoso.Library.Action;
 import com.ctk43.doancoso.Library.CalendarExtension;
 import com.ctk43.doancoso.Library.Extension;
 import com.ctk43.doancoso.Library.GeneralData;
 import com.ctk43.doancoso.Library.Key;
 import com.ctk43.doancoso.Model.Job;
-import com.ctk43.doancoso.Model.JobDetail;
 import com.ctk43.doancoso.Model.NotificationModel;
 import com.ctk43.doancoso.R;
-import com.ctk43.doancoso.View.Activity.JobDetailActivity;
 import com.ctk43.doancoso.View.Activity.MainActivity;
 import com.ctk43.doancoso.ViewModel.JobViewModel;
 import com.ctk43.doancoso.ViewModel.NotificationViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 
 public class NotificationService extends Service {
@@ -123,21 +112,27 @@ public class NotificationService extends Service {
     }
 
     private List<Job> setJobAndUpDate(int status) {
-        List<Job> jobs = new ArrayList<>();
         List<Job> jobList = jobViewModel.getListByStatus(status);
         switch (status) {
             case GeneralData.STATUS_COMING:
-                jobs = Extension.getJobsChange(jobList, GeneralData.STATUS_ON_GOING);
+                jobList = updateJob(jobList,GeneralData.STATUS_ON_GOING);
+                jobList = updateJob(jobList,GeneralData.STATUS_OVER);
                 break;
             case GeneralData.STATUS_ON_GOING:
-                jobs = Extension.getJobsChange(jobList, GeneralData.STATUS_OVER);
+                jobList = updateJob(jobList,GeneralData.STATUS_COMING);
+                jobList = updateJob(jobList,GeneralData.STATUS_OVER);
                 break;
         }
+        return jobList;
+    }
+
+    private List<Job> updateJob(List<Job> jobList,int statusTarget) {
+        List<Job> jobs =  Extension.getJobsChange(jobList, statusTarget);
         if (jobs.size() != 0) {
             AddNotificationModel(jobs);
-            jobList.removeAll(jobs);
             jobViewModel.update(jobs.toArray(new Job[0]));
         }
+        jobList.removeAll(jobs);
         return jobList;
     }
 

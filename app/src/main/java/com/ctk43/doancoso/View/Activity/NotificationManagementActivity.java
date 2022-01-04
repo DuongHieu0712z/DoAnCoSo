@@ -39,11 +39,14 @@ public class NotificationManagementActivity extends AppCompatActivity {
         notificationViewModel.setData(this);
         rcv_new = findViewById(R.id.rcv_notification_new);
         rcv_old = findViewById(R.id.rcv_notification_old);
+        rcv_new.setNestedScrollingEnabled(false);
+        rcv_old.setNestedScrollingEnabled(false);
         ImageButton imageButton = findViewById(R.id.img_finish_notification);
         notificationViewModel.geListNotificationByStatus(GeneralData.STATUS_NOTIFICATION_ACTIVE).observe(this, notificationModels -> {
             notificationAdapterNew = new NotificationAdapter(this, notificationModels);
             rcv_new.setLayoutManager(new LinearLayoutManager(this));
             rcv_new.setAdapter(notificationAdapterNew);
+
             imageButton.setOnClickListener(v -> {
                 seenAll(notificationModels);
             });

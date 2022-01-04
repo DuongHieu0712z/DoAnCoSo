@@ -1,5 +1,6 @@
 package com.ctk43.doancoso.View.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -117,6 +118,7 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void IsFinish(CheckBox checkBox, JobDetail jobDetail) {
         if (checkBox.isChecked()) {
             if (((JobDetailActivity) mContext).isRunning) {
@@ -257,8 +259,6 @@ public class JobDetailAdapter extends RecyclerView.Adapter<JobDetailAdapter.JobD
             checkBox = itemView.findViewById(R.id.chk_finish_job_detail);
             delete = itemView.findViewById(R.id.frm_function_delete);
             update = itemView.findViewById(R.id.frm_function_update);
-
         }
     }
-
 }
