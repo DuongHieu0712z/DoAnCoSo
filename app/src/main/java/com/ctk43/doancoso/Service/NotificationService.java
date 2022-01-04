@@ -144,7 +144,7 @@ public class NotificationService extends Service {
         remoteViews.setTextViewText(R.id.tv_app_name, getApplicationContext().getString(R.string.app_name));
         remoteViews.setTextViewText(R.id.tv_content, contentText());
         mBuilder = new NotificationCompat.Builder(this, Key.CHANNEL_NOTIFICATION)
-                .setSmallIcon(R.drawable.ic_delete)
+                .setSmallIcon(R.drawable.logo_final)
                 .setContentIntent(pendingIntent)
                 .setSilent(true)
                 .setAutoCancel(true)
