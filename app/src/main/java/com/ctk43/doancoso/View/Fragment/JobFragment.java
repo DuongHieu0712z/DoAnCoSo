@@ -64,11 +64,12 @@ public class JobFragment extends Fragment {
         TextView tv_onGoing = v.findViewById(R.id.tv_ongoing);
         TextView tv_finish = v.findViewById(R.id.tv_finish);
         TextView tv_total = v.findViewById(R.id.tv_total);
-        jobAdapter = new JobAdapter(mContext, jobViewModel);
+
         if(jobs == null )
             Toast.makeText(mContext,"Đã xảy ra lỗi vui lòng kiểm tra lại",Toast.LENGTH_LONG).show();
         try{
             jobs.observe(requireActivity(), jobs -> {
+                jobAdapter = new JobAdapter(mContext, jobViewModel);
                 jobAdapter.setJob(jobs);
                 rcv.setLayoutManager(new LinearLayoutManager(mContext));
                 rcv.setAdapter(jobAdapter);

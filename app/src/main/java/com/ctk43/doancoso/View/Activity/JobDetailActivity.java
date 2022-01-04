@@ -142,9 +142,9 @@ public class JobDetailActivity extends AppCompatActivity {
         layout_count_up = findViewById(R.id.layout_count_up_bottom);
         ProgressBar sb = findViewById(R.id.sb_jt_progress);
         btn_Add_New_Job_detail = findViewById(R.id.add_new_job_detail);
-        adapter = new JobDetailAdapter(this, jobDetailViewModel,job);
         jobDetailViewModel.getJobDetails().observe(this, jobDetails -> {
             syncJob();
+            adapter = new JobDetailAdapter(this, jobDetailViewModel,job);
             adapter.setData(jobDetails);
             recyclerView.setAdapter(adapter);
             tv_job_name.setText(job.getName());
@@ -159,7 +159,6 @@ public class JobDetailActivity extends AppCompatActivity {
             tv_finish.setText(String.valueOf(adapter.getNumJobDetail(GeneralData.STATUS_DETAIL_FINISH)));
             tv_Total.setText(String.valueOf(adapter.getNumJobDetail(GeneralData.NON_STATUS)));
             Extension.setProgress(tv_job_progress,sb,job);
-
         });
         img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
