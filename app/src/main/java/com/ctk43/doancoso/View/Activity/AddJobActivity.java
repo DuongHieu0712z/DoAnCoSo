@@ -122,7 +122,6 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
         btn_Add.setOnClickListener(view -> {
             try {
                 saveJob();
-                finish();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -191,6 +190,7 @@ public class AddJobActivity extends AppCompatActivity implements DatePickerDialo
                 jobViewModel.update(jobToUpdate);
                 Toast.makeText(AddJobActivity.this, getString(R.string.update_job_sucess), Toast.LENGTH_LONG).show();
             }
+            finish();
         }
     }
 
